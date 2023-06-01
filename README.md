@@ -4,6 +4,3 @@
 Prima o poi ce la faremo!
 Daje
 # FNS
-
-# TEST
-ciao
