@@ -1,0 +1,15 @@
+<button
+  mat-raised-button color="primary"
+  class="menu-item"
+  [matMenuTriggerFor]="menu"
+>
+  <span class="menuTitle">{{ menuTitle }}</span>
+  <!--span><mat-icon>keyboard_arrow_down</mat-icon></span-->
+</button>
+<mat-menu #menu="matMenu" yPosition="above">
+
+  <button *ngFor="let route of menuroutes" mat-menu-item (click)="setMenuVoiceAndNavigate(route.title,route.path)">
+    <app-menu-item [title]="route.title" [path]="route.path"></app-menu-item>
+  </button>
+
+</mat-menu>
