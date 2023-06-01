@@ -2,6 +2,8 @@
 /scheduler/src/main/resources/profile*
 /web/src/main/resources/profile*
 /node_modules
+/frontend/.angular
+/frontend/.vscode
 ##############################
 ## Java
 ##############################
