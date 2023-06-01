@@ -10,6 +10,7 @@ import { SkillsComponent } from './core/components/pages/skills/skills.component
 import { MenteesComponent } from './core/components/pages/mentees/mentees.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoadmapsModule } from './core/components/pages/roadmaps/roadmaps.module';
+
 @NgModule({
   declarations: [
     AppComponent,
