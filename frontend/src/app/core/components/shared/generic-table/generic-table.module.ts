@@ -1,19 +1,24 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatTableModule} from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+
 import { GenericTableComponent } from './generic-table.component';
-import { GenericFormComponent } from '../generic-form/generic-form.component';
 
 
 
 @NgModule({
   declarations: [
-    GenericTableComponent
+    GenericTableComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatTableModule,
+    MatIconModule,
   ],
   exports: [
-    GenericTableComponent
+    GenericTableComponent,
   ]
 })
-export class GenericTableModule { }
+export class GenericTableModule {
+}
