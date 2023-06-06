@@ -26,8 +26,10 @@ export class RoadmapsComponent implements OnInit {
   }
 
   getRoadmaps(): void {
-    this.roadmapService.getRoadmap().subscribe((data: Roadmap[]) => {
-      this.dataSource = data;
+    this.roadmapService.getRoadmap().subscribe( {
+      next: (data: Roadmap[]) => {
+        this.dataSource = data;
+      }
       // this.getType();
     });
   }
