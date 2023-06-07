@@ -12,7 +12,7 @@ export class RoadmapsComponent implements OnInit {
 
   dataSource: Roadmap[] = [];
   // displayedColumns: string[] = [];
-  displayedColumns = ["title"];
+  displayedColumns = ["id", "title"];
   tableOptions = {
     "displayedColumns": this.displayedColumns,
     "canDelete": true,
@@ -26,13 +26,20 @@ export class RoadmapsComponent implements OnInit {
   }
 
   getRoadmaps(): void {
-    this.roadmapService.getRoadmap().subscribe( {
-      next: (data: Roadmap[]) => {
+    this.roadmapService.getRoadmap().subscribe((data) => {
         this.dataSource = data;
-      }
       // this.getType();
     });
   }
+
+  // getRoadmaps(): void {
+  //   this.roadmapService.getRoadmap().subscribe( {
+  //     next: (data: Roadmap[]) => {
+  //       this.dataSource = data;
+  //     }
+  //     // this.getType();
+  //   });
+  // }
 
   // getType(): void{
   //   this.displayedColumns = Object.keys(this.dataSource[0]);
