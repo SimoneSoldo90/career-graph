@@ -1,6 +1,11 @@
 export interface Roadmap {
-  "id": number,
+
+  "id"?: number,
+
   "title": string,
+
   "description": string | null,
+
   "enabled": boolean
+
 }

@@ -12,11 +12,13 @@ import { RoadmapsModule } from '../../components/pages/roadmaps/roadmaps.module'
 export class RoadmapService {
 
   baseUrl = environment.serverHost + "roadmaps/";
-  // roadMaps!: Roadmap[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http:HttpClient) { }
 
-  getRoadmap(): Observable<Roadmap[]> {
+  getRoadmap(id:number): Observable<any> {
+    return this.http.get(this.baseUrl + "id");
+  }
+  getRoadmaps(): Observable<Roadmap[]> {
     return this.http.get<Roadmap[]>(this.baseUrl);
   }
 }

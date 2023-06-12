@@ -19,7 +19,7 @@ export class RoadmapsComponent implements OnInit {
     "canDelete": true,
     "canModify": true,
     btnCreate:{
-      "canCreate":  false,
+      "canCreate":  true,
       "canView": true
     }
   };
@@ -31,7 +31,7 @@ export class RoadmapsComponent implements OnInit {
   }
 
   getRoadmaps(): void {
-    this.roadmapService.getRoadmap().subscribe((data) => {
+    this.roadmapService.getRoadmaps().subscribe((data) => {
         this.dataSource = data;
       // this.getType();
     });
