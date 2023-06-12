@@ -1,5 +1,4 @@
 export const environment = {
-serverHost: "http://localhost:8080/",
   paths:{
     login:"Login",
     skills:"Skills",
@@ -9,7 +8,5 @@ serverHost: "http://localhost:8080/",
     skillspath:"skills",
     roadmapspath:"roadmaps",
     menteespath:"mentees",
-    formpath: "form",
-    form: "Form",
   }
 }

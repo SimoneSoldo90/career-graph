@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { Roadmap } from 'src/app/core/models/roadmap';
 import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
 
@@ -7,20 +8,34 @@ import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
   templateUrl: './roadmaps.component.html',
   styleUrls: ['./roadmaps.component.css']
 })
-export class RoadmapsComponent {
+export class RoadmapsComponent implements OnInit {
 
-  roadmaps!: Roadmap[];
+  dataSource: Roadmap[] = [];
+  // displayedColumns: string[] = [];
+  displayedColumns = ["title"];
+  tableOptions = {
+    "displayedColumns": this.displayedColumns,
+    "canDelete": true,
+    "canModify": true,
+  };
+  constructor(private roadmapService: RoadmapService) {}
 
   ngOnInit(): void {
-
-    //this.getRoadmapData();
+    this.getRoadmaps();
+    // can delete e can modify da modificare in base al ruolo!!
   }
 
-  // getRoadmapData(){
-  //   this.RoadmapService.getRoadmap().subscribe({
-  //     next: (roadmap: Roadmap) => {
-  //       this.roadmaps = roadmap;
-  //   }})
-  // }
+  getRoadmaps(): void {
+    this.roadmapService.getRoadmap().subscribe( {
+      next: (data: Roadmap[]) => {
+        this.dataSource = data;
+      }
+      // this.getType();
+    });
+  }
 
+  // getType(): void{
+  //   this.displayedColumns = Object.keys(this.dataSource[0]);
+  //   console.log(this.displayedColumns);
+  // }
 }

@@ -1,0 +1,16 @@
+.mat-row:nth-child(2n+1){
+  background-color: #e4f0ec;
+}
+.mat-row:not(:nth-child(4n+1)){
+  background-color:#ffffff;
+}
+
+/* Structure */
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}

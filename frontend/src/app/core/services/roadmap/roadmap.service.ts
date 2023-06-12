@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from 'src/environment/environment';
+import { Roadmap } from '../../models/roadmap';
 import { Observable, map } from 'rxjs';
+import { environment } from 'src/environment/environment';
+import { RoadmapsModule } from '../../components/pages/roadmaps/roadmaps.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class RoadmapService {
 
@@ -15,5 +17,8 @@ export class RoadmapService {
 
   getRoadmap(id:number): Observable<any> {
     return this.http.get(this.baseUrl + "id");
+  }
+  getRoadmaps(): Observable<Roadmap[]> {
+    return this.http.get<Roadmap[]>(this.baseUrl);
   }
 }
