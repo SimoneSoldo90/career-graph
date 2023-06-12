@@ -11,6 +11,7 @@ import { MenteesComponent } from './core/components/pages/mentees/mentees.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoadmapsModule } from './core/components/pages/roadmaps/roadmaps.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FormPageModule } from './core/components/pages/form-page/form-page.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     RoadmapsModule,
     HttpClientModule,
+    FormPageModule,
     ],
   bootstrap: [AppComponent]
 })
