@@ -16,6 +16,7 @@ export class GenericFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    console.log(this.formOptions.isCreation);
     if (!this.formOptions.isCreation){
       this.populateForm()
     }
@@ -61,6 +62,7 @@ export class GenericFormComponent implements OnInit {
   }
 
   populateForm() {
+    console.log(this.formOptions.formObject)
     if (this.formOptions.formObject) {
       this.genericForm.patchValue({
         id:this.formOptions.formObject.id,

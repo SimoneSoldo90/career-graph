@@ -12,9 +12,9 @@ import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
 export class RoadmapsComponent implements OnInit {
 
   dataSource: Roadmap[] = [];
-  // displayedColumns: string[] = [];
   displayedColumns = ["id", "title"];
   tableOptions = {
+    "type": "roadmap",
     "displayedColumns": this.displayedColumns,
     "canDelete": true,
     "canModify": true,
@@ -41,7 +41,7 @@ export class RoadmapsComponent implements OnInit {
   createNewRoadmap(event: boolean){
     if(event){
       console.log('Redirect alla pagina di creazione Roadmap')
-      this.router.navigate(['/skills']);
+      this.router.navigate(['/skills',]);
       // this.router.navigate(['/skills', { id: heroId }]);
     }
   }

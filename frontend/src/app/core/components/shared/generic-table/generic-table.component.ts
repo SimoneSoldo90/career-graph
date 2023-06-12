@@ -9,6 +9,7 @@ import {
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-generic-table',
@@ -22,12 +23,13 @@ export class GenericTableComponent implements OnInit {
   @Input() tableOptions: any;
   dataSource: any;
   actionButtonValue: string = '';
-  // Input()
   buttonMenu: string[] = [];
   @Output() createNewRoadmap = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(private router: Router){}
 
   ngOnInit(): void {
     this.setColumns();
@@ -70,8 +72,19 @@ export class GenericTableComponent implements OnInit {
     console.log(element)
   }
 
-  modifyRow(elementId: number){
-    console.log('Elemento: id ' + elementId + ' - modificato')
+  modifyRow(element: object){
+    const queryParams = {
+      item: JSON.stringify(element),
+      type: this.tableOptions.type,
+      createMode: false
+    }
+    this.router.navigate(
+      ['/form'],
+      {
+        queryParams: queryParams,
+        queryParamsHandling: "merge"
+    }
+  );
   }
 
   deleteRow(elementId: number){
