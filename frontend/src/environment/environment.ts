@@ -1,4 +1,5 @@
 export const environment = {
+serverHost: "http://localhost:8080/",
   paths:{
     login:"Login",
     skills:"Skills",
@@ -8,5 +9,7 @@ export const environment = {
     skillspath:"skills",
     roadmapspath:"roadmaps",
     menteespath:"mentees",
+    formpath: "form",
+    form: "Form",
   }
 }
