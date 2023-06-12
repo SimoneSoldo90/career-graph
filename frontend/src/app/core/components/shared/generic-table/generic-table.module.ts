@@ -5,6 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import  {MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {CdkMenuModule} from '@angular/cdk/menu';
 
 import { GenericTableComponent } from './generic-table.component';
 
@@ -21,6 +24,9 @@ import { GenericTableComponent } from './generic-table.component';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatPaginatorModule,
+    MatSortModule,
+    CdkMenuModule,
   ],
   exports: [
     GenericTableComponent,
