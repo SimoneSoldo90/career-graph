@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-form-page',
@@ -8,15 +9,18 @@ import { Component, OnInit } from '@angular/core';
 export class FormPageComponent implements OnInit {
 
   formOptions!: any;
+  inputData: any;
+  item: any;
+
+  constructor(private route: ActivatedRoute){}
 
   ngOnInit(): void {
+    this.takeData();
     this.formOptions = {
-      "formObject": {
-                      "id": 1, "title": "Java", "description": "Java è uno dei linuguaggi OOP più utilizzati", "enabled": true
-                    },
+      "formObject": this.item,
       "typeRoadmap": "roadmap",
       "pageTitle": "Roadmap",
-      "isCreation": false,
+      "isCreation": JSON.parse(this.inputData.get("createMode")),
       "method": "/roadmaps",
       "fields":[
         {"type":"text",
@@ -39,5 +43,10 @@ export class FormPageComponent implements OnInit {
         },
     ]
     }
+  }
+
+  takeData(){
+    this.inputData = this.route.snapshot.queryParamMap;
+    this.item = JSON.parse(this.inputData.get("item"))
   }
 }
