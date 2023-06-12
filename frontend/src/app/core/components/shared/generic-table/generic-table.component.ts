@@ -26,7 +26,7 @@ export class GenericTableComponent implements OnInit {
   buttonMenu: string[] = [];
   @Output() createNewRoadmap = new EventEmitter<boolean>();
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {

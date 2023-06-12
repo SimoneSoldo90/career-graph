@@ -5,9 +5,38 @@
   background-color:#ffffff;
 }
 
+div {
+  width: 100%; /* Imposta la larghezza al 90% della larghezza del contenitore genitore */
+  /* margin: 0 auto; Centra il div orizzontalmente nella pagina */
+}
+
+.headDiv{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+ }
+
+ /* BUTTON */
+ .actionButton{
+  margin-top: 10px;
+ }
+
+ .viewButton,
+ .modifyButton,
+ .deleteButton {
+  background: white;
+  border: none;
+  cursor: pointer;
+ }
+
 /* Structure */
 table {
-  width: 100%;
+  width: 1000px;
+  /* width: 150vh; */
+}
+
+div .filterField{
+  width: 200px;
 }
 
 .mat-mdc-form-field {
@@ -24,8 +53,9 @@ table {
   padding: 6px 0;
 }
 
-.mentor-menu-item,
-.mentor-standalone-trigger {
+.mentor-menu-item
+/* .mentor-standalone-trigger */
+{
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -38,7 +68,7 @@ table {
   display: flex;
   align-items: center;
   flex-direction: row;
-  flex: 1;
+  /* flex: 1; */
 }
 
 .mentor-menu-item:hover {
