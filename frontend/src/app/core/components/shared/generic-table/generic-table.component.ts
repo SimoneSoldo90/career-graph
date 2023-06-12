@@ -1,47 +1,107 @@
-import { Component, Input, OnInit, AfterContentChecked } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-generic-table',
   templateUrl: './generic-table.component.html',
-  styleUrls: ['./generic-table.component.css']
+  styleUrls: ['./generic-table.component.css'],
 })
-export class GenericTableComponent implements OnInit, AfterContentChecked {
-
-  @Input() preDataSource: any;
+export class GenericTableComponent implements OnInit {
+  @Input() set preDataSource(data: any[]) {
+    this.setUpDataInput(data);
+  }
   @Input() tableOptions: any;
   dataSource: any;
-  tmpDataSource: any;
+  actionButtonValue: string = '';
+  // Input()
+  buttonMenu: string[] = [];
+  @Output() createNewRoadmap = new EventEmitter<boolean>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
     this.setColumns();
+    this.setActionButton();
+    this.createNewRoadmap.emit(false);
   }
 
-  // da implementare una view loading in caso di ritardo del caricamento dei dati
-  ngAfterContentChecked(): void {
-    const inputFilter = document.getElementById('inputFilter');
-    const filterValue = (inputFilter as HTMLInputElement).value;
-    if(filterValue === ''){
-      this.dataSource = new MatTableDataSource(this.preDataSource);
+  setUpDataInput(data: any[]): void {
+    if(data.length > 0){
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
-  displayDynamicColumns(): void{
-    if(this.tableOptions.canModify){
-      this.tableOptions.displayedColumns.push("modify");
-    }
-    if(this.tableOptions.canDelete) {
-      this.tableOptions.displayedColumns.push("delete")
-    }
-  }
-
-  setColumns(): void{
-    this.tableOptions.displayedColumns.push("visualizza");
+  setColumns(): void {
+    this.tableOptions.displayedColumns.push('visualizza');
     this.displayDynamicColumns();
+  }
+
+  displayDynamicColumns(): void {
+    if (this.tableOptions.canModify) {
+      this.tableOptions.displayedColumns.push('modify');
+    }
+    if (this.tableOptions.canDelete) {
+      this.tableOptions.displayedColumns.push('delete');
+    }
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  visualizeRow(element: any){
+    console.log(element)
+  }
+
+  modifyRow(elementId: number){
+    console.log('Elemento: id ' + elementId + ' - modificato')
+  }
+
+  deleteRow(elementId: number){
+    console.log('Elemento: id ' + elementId + ' - eliminato')
+  }
+
+  setActionButton(){
+    if(this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
+      this.actionButtonValue = 'admin';
+    }
+    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
+      this.actionButtonValue = 'mentor';
+      this.buttonMenu = [
+        'Radmap 1',
+        'Radmap 2',
+        'Radmap 3',
+        'Radmap 4',
+      ]
+    }
+    if(!this.tableOptions.btnCreate.canCreate && !this.tableOptions.btnCreate.canView){
+      this.actionButtonValue = 'mentee';
+    }
+    console.log(this.actionButtonValue)
+  }
+
+  createRoadmap(){
+    this.createNewRoadmap.emit(true);
+  }
+
+  selectionItemButtonMenu(item: string){
+    console.log(item);
   }
 }
