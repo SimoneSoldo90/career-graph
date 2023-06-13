@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Roadmap } from '../../models/roadmap';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { RoadmapsModule } from '../../components/pages/roadmaps/roadmaps.module';
 

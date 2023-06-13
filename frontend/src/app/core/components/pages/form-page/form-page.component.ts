@@ -4,84 +4,150 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-form-page',
   templateUrl: './form-page.component.html',
-  styleUrls: ['./form-page.component.css']
+  styleUrls: ['./form-page.component.css'],
 })
 export class FormPageComponent implements OnInit {
-
   formOptions!: any;
   inputData: any;
   item: any;
 
-  constructor(private route: ActivatedRoute){}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.takeData();
-    if (this.inputData.get("type") === "roadmap"){
-      if (JSON.parse(this.inputData.get("createMode"))){
-        console.log(this.inputData)
+    if (this.inputData.get('type') === 'roadmap') {
+      if (JSON.parse(this.inputData.get('createMode'))) {
+        console.log(this.inputData);
         this.formOptions = {
-          "typeRoadmap": "roadmap",
-          "pageTitle": "Roadmap",
-          "isCreation": JSON.parse(this.inputData.get("createMode")),
-          "method": "/roadmaps",
-          "fields":[
-            {"type":"text",
-             "placeholder":"Scrivi qui...",
-             "title":"Titolo",
-             "id":"title",
-             "required": true,
+          typeRoadmap: 'roadmap',
+          pageTitle: 'Roadmap',
+          isCreation: JSON.parse(this.inputData.get('createMode')),
+          method: '/roadmaps',
+          fields: [
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Titolo',
+              id: 'title',
+              required: true,
             },
-            {"type":"text",
-             "placeholder":"Scrivi qui...",
-             "title":"Descrizione",
-             "id": "description",
-             "required": true,
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Descrizione',
+              id: 'description',
+              required: true,
             },
-            {"type":"boolean",
-             "placeholder":null,
-             "title":"Enabled",
-             "id": "enabled",
-             "required": false,
+            {
+              type: 'boolean',
+              placeholder: null,
+              title: 'Enabled',
+              id: 'enabled',
+              required: false,
             },
-          ]
-        }
+          ],
+        };
       } else {
-      this.formOptions = {
-        "formObject": this.item,
-        "typeRoadmap": "roadmap",
-        "pageTitle": "Roadmap",
-        "isCreation": JSON.parse(this.inputData.get("createMode")),
-        "method": "/roadmaps",
-        "fields":[
-          {"type":"text",
-           "placeholder":"Scrivi qui...",
-           "title":"Titolo",
-           "id":"title",
-           "required": true,
-          },
-          {"type":"text",
-           "placeholder":"Scrivi qui...",
-           "title":"Descrizione",
-           "id": "description",
-           "required": true,
-          },
-          {"type":"boolean",
-           "placeholder":null,
-           "title":"Enabled",
-           "id": "enabled",
-           "required": false,
-          },
-        ]
+        this.formOptions = {
+          formObject: this.item,
+          typeRoadmap: 'roadmap',
+          pageTitle: 'Roadmap',
+          isCreation: JSON.parse(this.inputData.get('createMode')),
+          method: '/roadmaps',
+          fields: [
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Titolo',
+              id: 'title',
+              required: true,
+            },
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Descrizione',
+              id: 'description',
+              required: true,
+            },
+            {
+              type: 'boolean',
+              placeholder: null,
+              title: 'Enabled',
+              id: 'enabled',
+              required: false,
+            },
+          ],
+        };
+      }
+    } else if (this.inputData.get('type') === 'skills') {
+      if (JSON.parse(this.inputData.get('createMode'))) {
+        console.log(this.inputData);
+        this.formOptions = {
+          typeRoadmap: 'skill',
+          pageTitle: 'Skill',
+          isCreation: JSON.parse(this.inputData.get('createMode')),
+          method: '/skills',
+          fields: [
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Titolo',
+              id: 'title',
+              required: true,
+            },
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Descrizione',
+              id: 'description',
+              required: true,
+            },
+            {
+              type: 'boolean',
+              placeholder: null,
+              title: 'Enabled',
+              id: 'enabled',
+              required: false,
+            },
+          ],
+        };
+      } else {
+        this.formOptions = {
+          formObject: this.item,
+          typeRoadmap: 'skill',
+          pageTitle: 'Skill',
+          isCreation: JSON.parse(this.inputData.get('createMode')),
+          method: '/skills',
+          fields: [
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Titolo',
+              id: 'title',
+              required: true,
+            },
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Descrizione',
+              id: 'description',
+              required: true,
+            },
+            {
+              type: 'boolean',
+              placeholder: null,
+              title: 'Enabled',
+              id: 'enabled',
+              required: false,
+            },
+          ],
+        };
       }
     }
-    } else if (this.inputData.get("type") === "skills"){
+  }
 
-    }
-   }
-
-
-  takeData(){
+  takeData() {
     this.inputData = this.route.snapshot.queryParamMap;
-    this.item = JSON.parse(this.inputData.get("item"))
+    this.item = JSON.parse(this.inputData.get('item'));
   }
 }
