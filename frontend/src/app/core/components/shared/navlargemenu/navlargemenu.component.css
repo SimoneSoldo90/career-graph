@@ -1,0 +1,42 @@
+.largemenu{
+  background: blue;
+}
+
+.navbar{
+  display: flex;
+  align-items: center;
+  grid-column: 8/span 4;
+}
+
+.mat-mdc-button {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  min-width: 100px;
+  border-radius: 0!important;
+  outline: none!important;
+  border: none;
+  background-color: #fff;
+  font: normal normal bold;
+  font-size: medium;
+  text-align: center;
+  letter-spacing: 0;
+  color: #185fa2 !important;
+}
+
+/* .mat-mdc-button {
+  color: #185fa2 !important;
+} */
+
+.mat-mdc-button:hover {
+  color: #fff !important;
+  background: #185fa2 0 0 no-repeat padding-box;
+  border: 1px solid #185fa2;
+  box-shadow: 0 2px 10px rgba(0,31,60,.2);
+  height: 108px;
+  border-radius: 2px !important;
+}
+/* .mat-mdc-button:hover {
+  background-color: blue;
+  color: white !important;
+} */
+

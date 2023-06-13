@@ -1,0 +1,7 @@
+.itemmenu:hover{
+  color: white !important;
+}
+.itemmenu{
+  color: #185fa2 !important;
+  font-weight: 500;
+}

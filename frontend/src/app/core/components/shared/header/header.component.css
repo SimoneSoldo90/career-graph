@@ -23,15 +23,35 @@
   margin-left: 13%;
   margin-top: 15px;
 }
+
+#appNavMenu{
+  visibility: hidden;
+}
+
+/* @media screen and (max-width: 235px) {
+  .toolbar{
+
+  }
+} */
+
 @media screen and (max-width: 500px) {
   .logoToolbar {
       display: none !important;
   }
 }
-
-@media screen and (max-width: 600px) {
+#appLargeNavMenu{
+  margin-right: 10px;
+}
+@media screen and (max-width: 933px) {
   #logospan{
     margin-left: 1%;
     margin-top: 15px;
+  }
+  #appLargeNavMenu{
+    display: none;
+  }
+  #appNavMenu{
+    visibility: visible;
+    margin-left: 50%;
   }
 }

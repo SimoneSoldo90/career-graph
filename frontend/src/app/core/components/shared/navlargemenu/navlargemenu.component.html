@@ -1,0 +1,11 @@
+<nav class="navbar">
+  <span *ngFor="let route of menuroutes">
+  <button
+    mat-button
+    (click)="setMenuVoiceAndNavigate(route.title, route.path)"
+    [routerLink]="route.path"
+  >
+    {{ route.title }}
+  </button>
+</span>
+</nav>

@@ -6,6 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { HeaderComponent } from './header.component';
 import { AvatarModule } from '../avatar/avatar.module';
 import { NavmenuModule } from '../navmenu/navmenu.module';
+import { NavlargemenuModule } from '../navlargemenu/navlargemenu.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NavmenuModule } from '../navmenu/navmenu.module';
     MatButtonModule,
     AvatarModule,
     NavmenuModule,
+    NavlargemenuModule,
   ],
   exports:[
     HeaderComponent
