@@ -42,4 +42,16 @@ export class SkillsComponent implements OnInit {
       this.router.navigate(['/form', { createMode: true, type: "skill" }]);
     }
   }
+
+  getSkill(skillId: number): void {
+    this.skillService.getSkill(skillId).subscribe( {
+      next: (data: Skill) => {
+        console.log(data)
+      }
+    })
+  }
+
+  visualizeSkills(event: Skill){
+    console.log(event);
+  }
 }
