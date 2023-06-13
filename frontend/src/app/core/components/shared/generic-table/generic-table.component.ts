@@ -111,7 +111,16 @@ export class GenericTableComponent implements OnInit {
   }
 
   createRoadmap(){
-    this.createNewRoadmap.emit(true);
+    const queryParams = {
+      type: this.tableOptions.type,
+      createMode: true
+    }
+    this.router.navigate(
+      ['/form'],
+      {
+        queryParams: queryParams,
+        queryParamsHandling: "merge"
+    });
   }
 
   selectionItemButtonMenu(item: string){
