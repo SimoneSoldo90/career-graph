@@ -43,18 +43,4 @@ export class RoadmapsComponent implements OnInit {
       this.router.navigate(['/form', { createMode: true, type: "roadmap" }]);
     }
   }
-
-  // getRoadmaps(): void {
-  //   this.roadmapService.getRoadmap().subscribe( {
-  //     next: (data: Roadmap[]) => {
-  //       this.dataSource = data;
-  //     }
-  //     // this.getType();
-  //   });
-  // }
-
-  // getType(): void{
-  //   this.displayedColumns = Object.keys(this.dataSource[0]);
-  //   console.log(this.displayedColumns);
-  // }
 }

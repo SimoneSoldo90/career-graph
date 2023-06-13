@@ -24,7 +24,7 @@ export class GenericTableComponent implements OnInit {
   dataSource: any;
   actionButtonValue: string = '';
   buttonMenu: string[] = [];
-  @Output() createNewRoadmap = new EventEmitter<boolean>();
+  @Output() createNew = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -34,7 +34,7 @@ export class GenericTableComponent implements OnInit {
   ngOnInit(): void {
     this.setColumns();
     this.setActionButton();
-    this.createNewRoadmap.emit(false);
+    this.createNew.emit(false);
   }
 
   setUpDataInput(data: any[]): void {
