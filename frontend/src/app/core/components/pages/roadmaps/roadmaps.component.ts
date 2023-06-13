@@ -40,9 +40,7 @@ export class RoadmapsComponent implements OnInit {
 
   createNewRoadmap(event: boolean){
     if(event){
-      console.log('Redirect alla pagina di creazione Roadmap')
-      this.router.navigate(['/skills',]);
-      // this.router.navigate(['/skills', { id: heroId }]);
+      this.router.navigate(['/form', { createMode: true, type: "roadmap" }]);
     }
   }
 
