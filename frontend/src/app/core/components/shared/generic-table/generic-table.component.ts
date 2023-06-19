@@ -25,6 +25,7 @@ export class GenericTableComponent implements OnInit {
   actionButtonValue: string = '';
   buttonMenu: string[] = [];
   @Output() createNew = new EventEmitter<boolean>();
+  @Output() viewDetails = new EventEmitter<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -69,7 +70,7 @@ export class GenericTableComponent implements OnInit {
   }
 
   visualizeRow(element: any){
-    console.log(element)
+    this.viewDetails.emit(element);
   }
 
   modifyRow(element: object){
