@@ -12,7 +12,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import {Subject} from 'rxjs';
-import { localize } from '@angular/localize';
+import { $localize } from '@angular/localize/init';
 
 @Injectable()
 export class MyCustomPaginatorIntl implements MatPaginatorIntl {
