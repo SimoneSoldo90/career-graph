@@ -4,21 +4,20 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-form-page',
   templateUrl: './form-page.component.html',
-  styleUrls: ['./form-page.component.css']
+  styleUrls: ['./form-page.component.css'],
 })
 export class FormPageComponent implements OnInit {
-
   formOptions!: any;
   inputData: any;
   item: any;
 
-  constructor(private route: ActivatedRoute){}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.takeData();
-    if (this.inputData.get("type") === "roadmap"){
-      if (JSON.parse(this.inputData.get("createMode"))){
-        console.log(this.inputData)
+    if (this.inputData.get('type') === 'roadmap') {
+      if (JSON.parse(this.inputData.get('createMode'))) {
+        console.log(this.inputData);
         this.formOptions = {
           "type": "roadmap",
           "pageTitle": "Roadmap",
@@ -31,20 +30,22 @@ export class FormPageComponent implements OnInit {
              "id":"title",
              "required": true,
             },
-            {"type":"text",
-             "placeholder":"Scrivi qui...",
-             "title":"Descrizione",
-             "id": "description",
-             "required": true,
+            {
+              type: 'text',
+              placeholder: 'Scrivi qui...',
+              title: 'Descrizione',
+              id: 'description',
+              required: true,
             },
-            {"type":"boolean",
-             "placeholder":null,
-             "title":"Enabled",
-             "id": "enabled",
-             "required": false,
+            {
+              type: 'boolean',
+              placeholder: null,
+              title: 'Enabled',
+              id: 'enabled',
+              required: false,
             },
-          ]
-        }
+          ],
+        };
       } else {
       this.formOptions = {
         "formObject": this.item,
@@ -177,9 +178,8 @@ export class FormPageComponent implements OnInit {
    }
   }
 
-
-  takeData(){
+  takeData() {
     this.inputData = this.route.snapshot.queryParamMap;
-    this.item = JSON.parse(this.inputData.get("item"))
+    this.item = JSON.parse(this.inputData.get('item'));
   }
 }

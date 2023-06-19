@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Skill } from 'src/app/core/models/skill';
 import { Resource } from 'src/app/core/models/resource';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
 import { ResourceService } from 'src/app/core/services/resource/resource.service';
+
 
 @Component({
   selector: 'app-skills',
@@ -13,8 +14,20 @@ import { ResourceService } from 'src/app/core/services/resource/resource.service
 })
 export class SkillsComponent implements OnInit {
 
-  skillDataSource: Skill[] = [];
+  dataSource: Skill[] = [];
   resourceDataSource: Resource[] = [];
+  displayedColumns = ["id", "title"];
+  tableOptions = {
+    "type": "skills",
+    "displayedColumns": this.displayedColumns,
+    "canDelete": true,
+    "canModify": true,
+    btnCreate:{
+      "canCreate":  true,
+      "canView": true
+    }
+  };
+  @Output() skillToView = new EventEmitter<any>();
 
   constructor(private resourceService: ResourceService, private skillService: SkillService, private router: Router) {}
 
@@ -34,7 +47,7 @@ export class SkillsComponent implements OnInit {
   getSkills(): void {
     this.skillService.getSkills().subscribe( {
       next: (data: Skill[]) => {
-        this.skillDataSource = data;
+        this.dataSource = data;
     }});
   }
 
@@ -44,4 +57,16 @@ export class SkillsComponent implements OnInit {
     }
   }
 
+  visualizeSkills(event: Skill){
+    this.getSkill(Number(event.id));
+  }
+
+  getSkill(skillId: number): void {
+    this.skillService.getSkill(skillId).subscribe( {
+      next: (data: Skill) => {
+        let dataToPass = data;
+        this.skillService.changeMessage(dataToPass);
+      }
+    })
+  }
 }

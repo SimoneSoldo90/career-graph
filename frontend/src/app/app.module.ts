@@ -9,8 +9,10 @@ import { HeaderModule } from './core/components/shared/header/header.module';
 import { MenteesComponent } from './core/components/pages/mentees/mentees.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoadmapsModule } from './core/components/pages/roadmaps/roadmaps.module';
+import { SkillsModule } from './core/components/pages/skills/skills.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormPageModule } from './core/components/pages/form-page/form-page.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -26,8 +28,10 @@ import { FormPageModule } from './core/components/pages/form-page/form-page.modu
     HeaderModule,
     BrowserAnimationsModule,
     RoadmapsModule,
+    SkillsModule,
     HttpClientModule,
     FormPageModule,
+    MatSidenavModule,
     ],
   bootstrap: [AppComponent]
 })
