@@ -20,7 +20,7 @@ export class FormPageComponent implements OnInit {
       if (JSON.parse(this.inputData.get("createMode"))){
         console.log(this.inputData)
         this.formOptions = {
-          "typeRoadmap": "roadmap",
+          "type": "roadmap",
           "pageTitle": "Roadmap",
           "isCreation": JSON.parse(this.inputData.get("createMode")),
           "method": "/roadmaps",
@@ -48,7 +48,7 @@ export class FormPageComponent implements OnInit {
       } else {
       this.formOptions = {
         "formObject": this.item,
-        "typeRoadmap": "roadmap",
+        "type": "roadmap",
         "pageTitle": "Roadmap",
         "isCreation": JSON.parse(this.inputData.get("createMode")),
         "method": "/roadmaps",
@@ -74,10 +74,108 @@ export class FormPageComponent implements OnInit {
         ]
       }
     }
-    } else if (this.inputData.get("type") === "skills"){
-
-    }
+  } else if (this.inputData.get("type") === "skill"){
+     if (JSON.parse(this.inputData.get("createMode"))){
+      console.log(this.inputData)
+       this.formOptions = {
+        "type": "skill",
+        "pageTitle": "Skill",
+        "isCreation": JSON.parse(this.inputData.get("createMode")),
+        "referenced": JSON.parse(this.inputData.get("referenced")),
+        "method": "/skills",
+        "fields":[
+          {"type":"select",
+          "placeholder":"Scrivi qui...",
+          "title":"Skill Padre",
+          "id":"skillpadre",
+          "required": false,
+          "options":[
+            "Opzione 1",
+            "Opzione 2",
+            "Opzione 3",
+            "Opzione 4",
+          ]},
+          {"type":"text",
+          "placeholder":"Scrivi qui...",
+          "title":"Titolo",
+          "id":"title",
+          "required": true,
+          },
+           {"type":"text",
+          "placeholder":"Scrivi qui...",
+          "title":"Descrizione",
+           "id": "description",
+           "required": true,
+          },
+          {"type":"select",
+          "placeholder":"Scrivi qui...",
+          "title":"Risorsa web",
+          "id":"webresource",
+          "required": false,
+          "options":[
+            "Opzione 1",
+            "Opzione 2",
+            "Opzione 3",
+            "Opzione 4",
+          ]},
+          {"type":"boolean",
+          "placeholder":null,
+          "title":"Enabled",
+           "id": "enabled",
+           "required": false,
+           },
+         ]
+       }
+     } else {
+      this.formOptions = {
+        "formObject": this.item,
+        "type": "skill",
+        "pageTitle": "Skill",
+        "isCreation": JSON.parse(this.inputData.get("createMode")),
+        "referenced": JSON.parse(this.inputData.get("referenced")),
+        "method": "/skills",
+        "fields":[
+          {"type":"text",
+          "placeholder":"Scrivi qui...",
+          "title":"Skill Padre",
+          "id":"skillpadre",
+          "required": false,
+          },
+          {"type":"select",
+          "placeholder":"Scrivi qui...",
+          "title":"Risorsa web",
+          "id":"webresource",
+          "required": true,
+          "options":[
+            "Opzione 1",
+            "Opzione 2",
+            "Opzione 3",
+            "Opzione 4",
+          ]
+          },
+          {"type":"text",
+          "placeholder":"Scrivi qui...",
+          "title":"Titolo",
+          "id":"title",
+          "required": true,
+          },
+           {"type":"text",
+          "placeholder":"Scrivi qui...",
+          "title":"Descrizione",
+           "id": "description",
+           "required": true,
+          },
+          {"type":"boolean",
+          "placeholder":null,
+         "title":"Enabled",
+           "id": "enabled",
+           "required": false,
+           },
+         ]
+       }
+     }
    }
+  }
 
 
   takeData(){
