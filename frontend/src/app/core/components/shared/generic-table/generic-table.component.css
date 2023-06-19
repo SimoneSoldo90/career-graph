@@ -7,7 +7,7 @@
 
 div {
   width: 100%; /* Imposta la larghezza al 90% della larghezza del contenitore genitore */
-  /* margin: 0 auto; Centra il div orizzontalmente nella pagina */
+  margin: 0 auto;
 }
 
 .headDiv{
@@ -32,7 +32,6 @@ div {
 /* Structure */
 table {
   width: 1000px;
-  /* width: 150vh; */
 }
 
 div .filterField{
@@ -54,7 +53,6 @@ div .filterField{
 }
 
 .mentor-menu-item
-/* .mentor-standalone-trigger */
 {
   background-color: transparent;
   cursor: pointer;

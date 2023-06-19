@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Skill } from 'src/app/core/models/skill';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
+
 
 @Component({
   selector: 'app-skills',
@@ -23,6 +24,7 @@ export class SkillsComponent implements OnInit {
       "canView": true
     }
   };
+  @Output() skillToView = new EventEmitter<any>();
   constructor(private skillService: SkillService, private router: Router) {}
 
   ngOnInit(): void {
@@ -43,15 +45,16 @@ export class SkillsComponent implements OnInit {
     }
   }
 
+  visualizeSkills(event: Skill){
+    this.getSkill(Number(event.id));
+  }
+
   getSkill(skillId: number): void {
     this.skillService.getSkill(skillId).subscribe( {
       next: (data: Skill) => {
-        console.log(data)
+        let dataToPass = data;
+        this.skillService.changeMessage(dataToPass);
       }
     })
-  }
-
-  visualizeSkills(event: Skill){
-    console.log(event);
   }
 }

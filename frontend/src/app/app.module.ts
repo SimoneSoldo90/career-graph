@@ -12,6 +12,7 @@ import { RoadmapsModule } from './core/components/pages/roadmaps/roadmaps.module
 import { SkillsModule } from './core/components/pages/skills/skills.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormPageModule } from './core/components/pages/form-page/form-page.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { FormPageModule } from './core/components/pages/form-page/form-page.modu
     SkillsModule,
     HttpClientModule,
     FormPageModule,
+    MatSidenavModule,
     ],
   bootstrap: [AppComponent]
 })
