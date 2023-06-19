@@ -23,8 +23,6 @@ export class SkillService {
   getSkills(): Observable<Skill[]> {
     return this.http.get<Skill[]>(this.baseUrl);
   }
-
-
   changeMessage(message: any) {
     this.messageSource.next(message)
   }
