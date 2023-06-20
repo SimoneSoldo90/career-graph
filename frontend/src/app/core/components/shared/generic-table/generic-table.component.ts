@@ -70,6 +70,7 @@ export class GenericTableComponent implements OnInit  {
 
   setUpDataInput(data: any[]): void {
     if(data.length > 0){
+      console.log(data)
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

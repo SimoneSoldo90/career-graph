@@ -2,7 +2,7 @@
   <div class="headDiv">
 
     <mat-paginator class="custom-paginator"
-      [pageSizeOptions]="[5, 10, 20, 50]" aria-label="Select page"
+      [pageSizeOptions]="[5, 10, 15, 20, 50]" aria-label="Select page"
     ></mat-paginator>
 
 
@@ -12,6 +12,7 @@
           <mat-icon>add</mat-icon>Aggiungi Roadmap
         </button>
       </ng-container>
+
       <ng-container *ngSwitchCase="'mentor'">
         <button
           mat-raised-button
@@ -20,7 +21,6 @@
         >
           <mat-icon>add</mat-icon>Roadmap
         </button>
-
         <ng-template #menu>
           <div class="mentor-menu" cdkMenu>
             <ng-container *ngFor="let item of buttonMenu">

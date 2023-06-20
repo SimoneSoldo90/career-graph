@@ -16,8 +16,8 @@ export class RoadmapsComponent implements OnInit {
   tableOptions = {
     "type": "roadmap",
     "displayedColumns": this.displayedColumns,
-    "canDelete": true,
-    "canModify": true,
+    "canDelete": false,
+    "canModify": false,
     btnCreate:{
       "canCreate":  true,
       "canView": true

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GenericTableModule } from '../../shared/generic-table/generic-table.module';
 import { MenteesComponent } from './mentees.component';
+import { GenericTableModule } from '../../shared/generic-table/generic-table.module';
 
 
 
