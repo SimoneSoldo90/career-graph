@@ -70,7 +70,6 @@ export class GenericTableComponent implements OnInit  {
 
   setUpDataInput(data: any[]): void {
     if(data.length > 0){
-      console.log(data)
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -78,16 +77,28 @@ export class GenericTableComponent implements OnInit  {
   }
 
   setColumns(): void {
+    this.tableOptions.tableDef.push({
+      key: 'visualizza',
+      header: 'Visualizza',
+    });
     this.tableOptions.displayedColumns.push('visualizza');
     this.displayDynamicColumns();
   }
 
   displayDynamicColumns(): void {
     if (this.tableOptions.canModify) {
-      this.tableOptions.displayedColumns.push('modify');
+      this.tableOptions.tableDef.push({
+        key: 'modifica',
+        header: 'Modifica',
+      });
+      this.tableOptions.displayedColumns.push('modifica');
     }
     if (this.tableOptions.canDelete) {
-      this.tableOptions.displayedColumns.push('delete');
+      this.tableOptions.tableDef.push({
+        key: 'cancella',
+        header: 'Cancella',
+      });
+      this.tableOptions.displayedColumns.push('cancella');
     }
   }
 

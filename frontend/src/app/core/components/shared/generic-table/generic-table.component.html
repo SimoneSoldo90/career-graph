@@ -55,30 +55,30 @@
     [dataSource]="dataSource"
     class="mat-elevation-z8 my-table"
   >
-    <ng-container *ngFor="let column of tableOptions.displayedColumns">
-      <ng-container matColumnDef="{{ column }}">
+    <ng-container *ngFor="let column of tableOptions.tableDef">
+      <ng-container matColumnDef="{{ column.key }}">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ column | titlecase }}
+          {{ column.header }}
         </th>
         <td mat-cell *matCellDef="let element">
-          <ng-container [ngSwitch]="column">
+          <ng-container [ngSwitch]="column.key">
             <ng-container *ngSwitchCase="'visualizza'">
               <button class="viewButton" (click)="visualizeRow(element)">
                 <mat-icon>visibility</mat-icon>
               </button>
             </ng-container>
-            <ng-container *ngSwitchCase="'modify'">
+            <ng-container *ngSwitchCase="'modifica'">
               <button class="modifyButton" (click)="modifyRow(element)">
                 <mat-icon>edit</mat-icon>
               </button>
             </ng-container>
-            <ng-container *ngSwitchCase="'delete'">
+            <ng-container *ngSwitchCase="'cancella'">
               <button class="deleteButton" (click)="deleteRow(element.id)">
                 <mat-icon>delete</mat-icon>
               </button>
             </ng-container>
             <ng-container *ngSwitchDefault>
-              {{ element[column] }}
+              {{ element[column.key] }}
             </ng-container>
           </ng-container>
         </td>

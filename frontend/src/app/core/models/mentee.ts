@@ -1,6 +1,6 @@
 export interface Mentee {
   "id": number,
-  "first_name": string,
-  "last_name": string,
+  "firstName": string,
+  "lastName": string,
   "email": string
 }
