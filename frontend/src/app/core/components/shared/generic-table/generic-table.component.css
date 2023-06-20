@@ -43,6 +43,10 @@ div .filterField{
   width: 100%;
 }
 
+.mat-mdc-paginator {
+  background-color: transparent;
+}
+
 .mentor-menu {
   display: inline-flex;
   flex-direction: column;

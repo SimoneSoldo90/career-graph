@@ -14,9 +14,19 @@ export class SkillsComponent implements OnInit {
 
   dataSource: Skill[] = [];
   displayedColumns = ["id", "title"];
+  tableDef: Array<any> = [
+    {
+      key: 'id',
+      header: 'ID',
+    },    {
+      key: 'title',
+      header: 'Title',
+    },
+  ]
   tableOptions = {
     "type": "skills",
     "displayedColumns": this.displayedColumns,
+    "tableDef": this.tableDef,
     "canDelete": true,
     "canModify": true,
     btnCreate:{

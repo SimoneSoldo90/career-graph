@@ -8,10 +8,6 @@ import { Resourcedetail, getKeys } from './core/models/resourcedetail';
 
 import { keys } from 'ts-transformer-keys';
 
-interface ResourceDetail {
-  [key: string]: Resource[];
-}
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,12 +18,6 @@ export class AppComponent implements OnInit {
 
   skills!: any;
   resourceDetail: Resourcedetail = {
-    LINK: [],
-    LINK_VIDEO: [],
-    NOTE: []
-  };
-
-  emptyResourceDetail: Resourcedetail = {
     LINK: [],
     LINK_VIDEO: [],
     NOTE: []
@@ -58,6 +48,15 @@ export class AppComponent implements OnInit {
   }
 
   onClosedSideNav(){
-    this.resourceDetail = JSON.parse(JSON.stringify(this.emptyResourceDetail));
+    this.resourceDetail = this.resetSkill();
+  }
+
+  resetSkill(): Resourcedetail {
+    let skillTmp: Resourcedetail = {
+      LINK: [],
+      LINK_VIDEO: [],
+      NOTE: []
+    };
+    return skillTmp;
   }
 }

@@ -13,11 +13,21 @@ export class RoadmapsComponent implements OnInit {
 
   dataSource: Roadmap[] = [];
   displayedColumns = ["id", "title"];
+  tableDef: Array<any> = [
+    {
+      key: 'id',
+      header: 'ID',
+    },    {
+      key: 'title',
+      header: 'Titolo',
+    },
+  ]
   tableOptions = {
     "type": "roadmap",
     "displayedColumns": this.displayedColumns,
-    "canDelete": true,
-    "canModify": true,
+    "tableDef": this.tableDef,
+    "canDelete": false,
+    "canModify": false,
     btnCreate:{
       "canCreate":  true,
       "canView": true
