@@ -46,6 +46,7 @@ export class SkillsComponent implements OnInit {
     this.skillService.getSkills().subscribe( {
       next: (data: Skill[]) => {
         this.dataSource = data;
+        console.log(this.dataSource)
     }});
   }
 

@@ -13,7 +13,7 @@ import { MenteesModule } from './core/components/pages/mentees/mentees.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormPageModule } from './core/components/pages/form-page/form-page.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
+import { RoadmapModule } from './core/components/pages/roadmap/roadmap.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     HeaderModule,
     BrowserAnimationsModule,
     RoadmapsModule,
+    RoadmapModule,
     SkillsModule,
     MenteesModule,
     HttpClientModule,
