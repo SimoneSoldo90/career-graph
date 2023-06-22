@@ -38,6 +38,14 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
   }
 }
 
+//////////////////////////////////////////////////
+/////                                        /////
+/////   ----------------------------------   /////
+/////   -------- INIZIO COMPONENT --------   /////
+/////   ----------------------------------   /////
+/////                                        /////
+//////////////////////////////////////////////////
+
 @Component({
   selector: 'app-generic-table',
   templateUrl: './generic-table.component.html',
@@ -45,7 +53,6 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
   providers: [{provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}],
 })
 export class GenericTableComponent implements OnInit  {
-
 
   @Input() set preDataSource(data: any[]) {
     this.setUpDataInput(data);
@@ -56,7 +63,6 @@ export class GenericTableComponent implements OnInit  {
   @Input() tableOptions: any;
   totalList: any[] = [];      // totale lista SKILLS esistenti
   dataSource: any;      // Dati che riempiranno la tabella
-  roadmapSkillsDataSource: any;
   actionButtonValue: string = '';     // Stringa che viene usata come switchCase per il comportamento del BUTTON di aggiunta
   buttonTitle!: string;       //  Titolo del BUTTON
   buttonMenu: any[] = [];   //  Array che riempie la lista che fuoriesce dal BUTTON
@@ -64,6 +70,7 @@ export class GenericTableComponent implements OnInit  {
   dataSourceMenuButton: any[] = [];   // Qui vengono mantenuti i dati dell'array che riempie il BUTTON per poi compararli con quelli presenti in tabella
   @Output() createNew = new EventEmitter<boolean>();
   @Output() viewDetails = new EventEmitter<any>();
+  @Output() updateData = new EventEmitter<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -76,26 +83,18 @@ export class GenericTableComponent implements OnInit  {
     this.createNew.emit(false);
   }
 
-  setUpDataInput(data: any[]): void {
+  public setUpDataInput(data: any[]): void {
     if(data.length > 0){
-      if (this.tableOptions.type === 'roadmapSkills') {
-        this.roadmapSkillsDataSource = this.returnData(data);
-        data.forEach((parentSkill: any) => {
-          this.tmpData.push(parentSkill.skill);
-        });
-        this.dataSource = new MatTableDataSource(this.tmpData);
-      } else {
-        this.dataSource = new MatTableDataSource(data);
-      }
-      this.dataSourceMenuButton = this.returnData(this.tmpData);
+      this.tmpData = data;
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSourceMenuButton = this.tmpData;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
   }
 
   // Riempie "this.totalList" con tutti i dati passati da tenere come base per comparazioni a posteriori
-  setUpDataMenuButton(data: any): void {
-    // data.push({id: 100, title: 'Provaprova', description: 'Se funziona è sicuramente una bella cosa', enabled: true})
+  public setUpDataMenuButton(data: any): void {
     this.totalList = data;
     this.compareListButtonMenu();
   }
@@ -112,17 +111,6 @@ export class GenericTableComponent implements OnInit  {
     if(this.buttonMenu.length === 0){
       this.buttonMenu.push({title: 'Nessun elemento da aggiungere'})
     }
-  }
-
-  // Ritorna la lista completa di dati passati dal componente padre
-  getTotalList(): any[] {
-    return this.totalList;
-  }
-
-  // Ritorna dati passatigli, usato per non far puntare due oggetti uguali
-  // alla stessa parte di memoria
-  returnData(data: any[]): any[] {
-    return data;
   }
 
   // Aggiunge la colonna visualizza nella tabella
@@ -173,8 +161,6 @@ export class GenericTableComponent implements OnInit  {
   // Funzione al click del tasto visualizza generico
   visualizeRow(element: any){
     this.viewDetails.emit(element);
-    console.log(this.buttonMenu)
-    console.log(this.actionButtonValue)
   }
 
   // Funzione al click del tasto modifica
@@ -184,9 +170,7 @@ export class GenericTableComponent implements OnInit  {
       type: this.tableOptions.type,
       createMode: false
     }
-    this.router.navigate(
-      ['/form'],
-      {
+    this.router.navigate(['/form'], {
         queryParams: queryParams,
         queryParamsHandling: "merge"
     }
@@ -204,11 +188,12 @@ export class GenericTableComponent implements OnInit  {
   }
 
   // Per la tabella Roadmap, reindirizza alla pagina di visualizzazione della roadmap
-  roadmapViewer(element: number): void {
-    this.router.navigate(['roadmap'], { state: { options: element } })
+  roadmapViewer(elementId: number, elementTitle: string): void {
+    this.router.navigate(['roadmap'], { state: { options: {elementId, elementTitle} } })
   }
 
 
+  // Questa parte non è ancora chiara come deve funzionare...
   setActionButton(){
     if(this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
       if(this.tableOptions.type === 'roadmapSkills'){
@@ -218,9 +203,11 @@ export class GenericTableComponent implements OnInit  {
         this.actionButtonValue = 'admin';
       }
     }
-    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView && this.tableOptions.type !== 'mentee'){
+    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView && this.tableOptions.type === 'mentee'){
+      this.actionButtonValue = 'mentee';
+    }
+    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
       this.actionButtonValue = 'menuButton';
-      console.log('sei sulla strada giusta')
       this.buttonTitle = 'Associa Skill';
       this.buttonMenu = [
         {title: 'Radmap 1'},
@@ -230,10 +217,6 @@ export class GenericTableComponent implements OnInit  {
 
       ]
     }
-    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView && this.tableOptions.type === 'mentee'){
-      this.actionButtonValue = 'mentee';
-    }
-    console.log(this.actionButtonValue)
   }
 
   createRoadmap(){
@@ -242,14 +225,13 @@ export class GenericTableComponent implements OnInit  {
       createMode: true
     }
     this.router.navigate(
-      ['/form'],
-      {
+      ['/form'], {
         queryParams: queryParams,
         queryParamsHandling: "merge"
     });
   }
 
-  selectionItemButtonMenu(item: string){
-    console.log(item);
+  selectionItemButtonMenu(item: any){
+    this.updateData.emit(item);
   }
 }

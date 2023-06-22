@@ -11,6 +11,7 @@ import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
 })
 export class RoadmapsComponent implements OnInit {
 
+  title = 'Lista Roadmap';
   dataSource: Roadmap[] = [];
   displayedColumns = ["id", "title"];
   tableDef: Array<any> = [
@@ -31,7 +32,8 @@ export class RoadmapsComponent implements OnInit {
     btnCreate:{
       "canCreate":  true,
       "canView": true
-    }
+    },
+    "title": this.title,
   };
   constructor(private roadmapService: RoadmapService, private router: Router) {}
 
@@ -44,7 +46,6 @@ export class RoadmapsComponent implements OnInit {
     this.roadmapService.getRoadmaps().subscribe( {
       next: (data: Roadmap[]) => {
         this.dataSource = data;
-      // this.getType();
     }});
   }
 

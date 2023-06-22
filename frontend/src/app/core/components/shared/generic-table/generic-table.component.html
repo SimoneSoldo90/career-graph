@@ -1,4 +1,5 @@
 <div>
+  <div class="title">{{tableOptions.title}}</div>
   <div class="headDiv">
 
     <mat-paginator class="custom-paginator"
@@ -13,7 +14,7 @@
         </button>
       </ng-container>
 
-      <!-- Il tasto carica una lista di iyem da aggiungere, sia mentor che admin -->
+      <!-- Il tasto carica una lista di item da aggiungere, sia mentor che admin -->
       <ng-container *ngSwitchCase="'menuButton'">
         <button mat-raised-button [cdkMenuTriggerFor]="menu" class="actionButton">
           <mat-icon>add</mat-icon>{{buttonTitle}}
@@ -21,7 +22,7 @@
         <ng-template #menu>
           <div class="mentor-menu" cdkMenu>
             <ng-container *ngFor="let item of buttonMenu">
-              <button class="mentor-menu-item" cdkMenuItem (click)="selectionItemButtonMenu(item)">
+              <button [disabled]="item.title === 'Nessun elemento da aggiungere'" class="mentor-menu-item" cdkMenuItem (click)="selectionItemButtonMenu(item)">
                 {{ item.title }}
               </button>
             </ng-container>
@@ -65,7 +66,7 @@
 
               <div *ngIf="tableOptions.type === 'roadmap'; then roadmapView else skillView"></div>
               <ng-template #roadmapView>
-                <button class="viewButton" (click)="roadmapViewer(element.id)">
+                <button class="viewButton" (click)="roadmapViewer(element.id, element.title)">
                   <mat-icon>visibility</mat-icon>
                 </button>
               </ng-template>

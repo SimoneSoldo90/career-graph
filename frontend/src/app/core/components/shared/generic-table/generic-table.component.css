@@ -98,3 +98,9 @@ div .filterField{
 .mentor-standalone-item[aria-expanded='true'] {
   background-color: rgb(208, 208, 208);
 }
+
+.title {
+  font-size: 37px;
+  margin-top: 3.5%;
+  margin-bottom: 2.5%;
+}
