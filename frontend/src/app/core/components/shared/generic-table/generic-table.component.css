@@ -47,6 +47,14 @@ div .filterField{
   background-color: transparent;
 }
 
+.mat-sort-header-content, .mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, .mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row, .mat-mdc-table .mat-mdc-header-cell {
+  max-width: 50px;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
 .mentor-menu {
   display: inline-flex;
   flex-direction: column;
@@ -89,4 +97,10 @@ div .filterField{
 }
 .mentor-standalone-item[aria-expanded='true'] {
   background-color: rgb(208, 208, 208);
+}
+
+.title {
+  font-size: 37px;
+  margin-top: 3.5%;
+  margin-bottom: 2.5%;
 }

@@ -1,4 +1,5 @@
 <div>
+  <div class="title">{{tableOptions.title}}</div>
   <div class="headDiv">
 
     <mat-paginator class="custom-paginator"
@@ -13,23 +14,16 @@
         </button>
       </ng-container>
 
-      <ng-container *ngSwitchCase="'mentor'">
-        <button
-          mat-raised-button
-          [cdkMenuTriggerFor]="menu"
-          class="actionButton"
-        >
-          <mat-icon>add</mat-icon>Roadmap
+      <!-- Il tasto carica una lista di item da aggiungere, sia mentor che admin -->
+      <ng-container *ngSwitchCase="'menuButton'">
+        <button mat-raised-button [cdkMenuTriggerFor]="menu" class="actionButton">
+          <mat-icon>add</mat-icon>{{buttonTitle}}
         </button>
         <ng-template #menu>
           <div class="mentor-menu" cdkMenu>
             <ng-container *ngFor="let item of buttonMenu">
-              <button
-                class="mentor-menu-item"
-                cdkMenuItem
-                (click)="selectionItemButtonMenu(item)"
-              >
-                {{ item }}
+              <button [disabled]="item.title === 'Nessun elemento da aggiungere'" class="mentor-menu-item" cdkMenuItem (click)="selectionItemButtonMenu(item)">
+                {{ item.title }}
               </button>
             </ng-container>
           </div>
@@ -62,11 +56,29 @@
         </th>
         <td mat-cell *matCellDef="let element">
           <ng-container [ngSwitch]="column.key">
-            <ng-container *ngSwitchCase="'visualizza'">
-              <button class="viewButton" (click)="visualizeRow(element)">
-                <mat-icon>visibility</mat-icon>
-              </button>
+            <ng-container *ngSwitchCase="'visualizzazione_grafica'">
+                <button class="viewButton" (click)="graphicVisualizeRow(element)">
+                  <mat-icon>explore</mat-icon>
+                </button>
             </ng-container>
+
+            <ng-container *ngSwitchCase="'visualizza'">
+
+              <div *ngIf="tableOptions.type === 'roadmap'; then roadmapView else skillView"></div>
+              <ng-template #roadmapView>
+                <button class="viewButton" (click)="roadmapViewer(element.id, element.title)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </ng-template>
+
+              <ng-template #skillView>
+                <button class="viewButton" (click)="visualizeRow(element)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </ng-template>
+
+            </ng-container>
+
             <ng-container *ngSwitchCase="'modifica'">
               <button class="modifyButton" (click)="modifyRow(element)">
                 <mat-icon>edit</mat-icon>

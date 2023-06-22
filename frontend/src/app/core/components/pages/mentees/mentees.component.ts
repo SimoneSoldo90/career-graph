@@ -10,6 +10,7 @@ import { MenteeService } from 'src/app/core/services/mentee/mentee.service';
 })
 export class MenteesComponent implements OnInit {
 
+  title = 'Mentee';
   dataSource: Mentee[] = [];
   displayedColumns = ["id", "firstName", "lastName", "email"];
   tableDef: Array<any> = [
@@ -36,7 +37,8 @@ export class MenteesComponent implements OnInit {
     btnCreate:{
       "canCreate":  false,
       "canView": true
-    }
+    },
+    "title": this.title,
   };
 
   constructor(private menteeService: MenteeService) { }

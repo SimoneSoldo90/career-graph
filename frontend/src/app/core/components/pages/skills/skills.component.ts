@@ -12,6 +12,7 @@ import { SkillService } from 'src/app/core/services/skill/skill.service';
 })
 export class SkillsComponent implements OnInit {
 
+  title = 'Skills'
   dataSource: Skill[] = [];
   displayedColumns = ["id", "title"];
   tableDef: Array<any> = [
@@ -32,7 +33,8 @@ export class SkillsComponent implements OnInit {
     btnCreate:{
       "canCreate":  true,
       "canView": true
-    }
+    },
+    "title": this.title,
   };
   @Output() skillToView = new EventEmitter<any>();
   constructor(private skillService: SkillService, private router: Router) {}
