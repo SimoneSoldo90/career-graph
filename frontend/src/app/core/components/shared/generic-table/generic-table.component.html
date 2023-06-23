@@ -6,16 +6,28 @@
       [pageSizeOptions]="[5, 10, 15, 20, 50]" aria-label="Select page"
     ></mat-paginator>
 
-
+    <!-- ------------------------------------------------- -->
+    <!-- BUTTON di aggiunta Skills/Roadmaps/Skillresources -->
+    <!-- ------------------------------------------------- -->
     <ng-container [ngSwitch]="actionButtonValue">
       <ng-container *ngSwitchCase="'admin'">
-        <button class="actionButton" mat-raised-button (click)="createRoadmap()">
-          <mat-icon>add</mat-icon>Aggiungi Roadmap
-        </button>
+        <ng-container *ngIf="tableOptions.type === 'skills'">
+          <button class="actionButton" mat-raised-button (click)="createRoadmap()">
+            <mat-icon>add</mat-icon>Aggiungi Skill
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="tableOptions.type === 'roadmap'">
+          <button class="actionButton" mat-raised-button (click)="createRoadmap()">
+            <mat-icon>add</mat-icon>Aggiungi Roadmap
+          </button>
+        </ng-container>
+
+
       </ng-container>
 
       <!-- Il tasto carica una lista di item da aggiungere, sia mentor che admin -->
-      <ng-container *ngSwitchCase="'menuButton'">
+      <ng-container *ngSwitchCase="'roadmapSkills'">
         <button mat-raised-button [cdkMenuTriggerFor]="menu" class="actionButton">
           <mat-icon>add</mat-icon>{{buttonTitle}}
         </button>
@@ -31,16 +43,22 @@
       </ng-container>
     </ng-container>
 
+    <!-- ------------------------------------------------- -->
+    <!-- ------------------  FINE BUTTON  ---------------- -->
+    <!-- ------------------------------------------------- -->
+
+    <!-- Inizio -- Input Field Filter tabella -->
     <mat-form-field class="filterField">
       <mat-label>Filter</mat-label>
       <input
-        matInput
-        id="inputFilter"
-        (keyup)="applyFilter($event)"
-        placeholder="Cerca"
-        #input
+      matInput
+      id="inputFilter"
+      (keyup)="applyFilter($event)"
+      placeholder="Cerca"
+      #input
       />
     </mat-form-field>
+    <!-- Fine -- Input Field Filter tabella -->
 
   </div>
   <table
@@ -49,11 +67,17 @@
     [dataSource]="dataSource"
     class="mat-elevation-z8 my-table"
   >
+  <!-- Inizio - TABELLA -->
     <ng-container *ngFor="let column of tableOptions.tableDef">
+
+      <!-- Inizio - Intestazione tabella -->
       <ng-container matColumnDef="{{ column.key }}">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ column.header }}
         </th>
+      <!-- Fine - Intestazione tabella -->
+
+        <!-- Inizio - Corpo tabella -->
         <td mat-cell *matCellDef="let element">
           <ng-container [ngSwitch]="column.key">
             <ng-container *ngSwitchCase="'visualizzazione_grafica'">
@@ -94,8 +118,11 @@
             </ng-container>
           </ng-container>
         </td>
+        <!-- Fine - Corpo tabella -->
       </ng-container>
     </ng-container>
+
+    <!-- Fine - TABELLA -->
 
     <tr mat-header-row *matHeaderRowDef="tableOptions.displayedColumns"></tr>
     <tr

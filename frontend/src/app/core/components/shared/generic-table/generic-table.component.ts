@@ -193,11 +193,11 @@ export class GenericTableComponent implements OnInit  {
   }
 
 
-  // Questa parte non è ancora chiara come deve funzionare...
+  // Questa parte non è ancora chiara come deve funzionare...bisogna rimetterci le mani
   setActionButton(){
     if(this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
       if(this.tableOptions.type === 'roadmapSkills'){
-        this.actionButtonValue = 'menuButton';
+        this.actionButtonValue = 'roadmapSkills';
         this.buttonTitle = 'Associa Skill';
       } else {
         this.actionButtonValue = 'admin';
@@ -205,18 +205,6 @@ export class GenericTableComponent implements OnInit  {
     }
     if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView && this.tableOptions.type === 'mentee'){
       this.actionButtonValue = 'mentee';
-    }
-    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView  && this.tableOptions.type !== 'mentee'){
-      console.log('esticazzi')
-      this.actionButtonValue = 'menuButton';
-      this.buttonTitle = 'Associa Skill';
-      this.buttonMenu = [
-        {title: 'Radmap 1'},
-        {title: 'Radmap 2'},
-        {title: 'Radmap 3'},
-        {title: 'Radmap 4'},
-
-      ]
     }
   }
 
