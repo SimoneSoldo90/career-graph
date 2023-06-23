@@ -206,7 +206,8 @@ export class GenericTableComponent implements OnInit  {
     if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView && this.tableOptions.type === 'mentee'){
       this.actionButtonValue = 'mentee';
     }
-    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
+    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView  && this.tableOptions.type !== 'mentee'){
+      console.log('esticazzi')
       this.actionButtonValue = 'menuButton';
       this.buttonTitle = 'Associa Skill';
       this.buttonMenu = [

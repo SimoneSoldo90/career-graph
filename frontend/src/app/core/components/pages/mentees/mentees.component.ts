@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { Mentee } from 'src/app/core/models/mentee';
@@ -10,7 +11,8 @@ import { MenteeService } from 'src/app/core/services/mentee/mentee.service';
 })
 export class MenteesComponent implements OnInit {
 
-  title = 'Mentee';
+  title = 'Mentees';
+  detailTitle = '';
   dataSource: Mentee[] = [];
   displayedColumns = ["id", "firstName", "lastName", "email"];
   tableDef: Array<any> = [
@@ -39,6 +41,8 @@ export class MenteesComponent implements OnInit {
       "canView": true
     },
     "title": this.title,
+    "detailTitle": this.detailTitle,
+    "emptyData": false,
   };
 
   constructor(private menteeService: MenteeService) { }
@@ -51,6 +55,13 @@ export class MenteesComponent implements OnInit {
     this.menteeService.getMentees().subscribe( {
       next: (data: Mentee[]) => {
         this.dataSource = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status === HttpStatusCode.NotFound){
+          this.tableOptions.emptyData = true;
+        } else {
+          console.log(error.message)
+        }
       }
     })
   }

@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,6 +13,7 @@ import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
 export class RoadmapsComponent implements OnInit {
 
   title = 'Lista Roadmap';
+  detailTitle = '';
   dataSource: Roadmap[] = [];
   displayedColumns = ["id", "title"];
   tableDef: Array<any> = [
@@ -27,13 +29,15 @@ export class RoadmapsComponent implements OnInit {
     "type": "roadmap",
     "displayedColumns": this.displayedColumns,
     "tableDef": this.tableDef,
-    "canDelete": false,
-    "canModify": false,
+    "canDelete": true,
+    "canModify": true,
     btnCreate:{
       "canCreate":  true,
       "canView": true
     },
     "title": this.title,
+    "detailTitle": this.detailTitle,
+    "emptyData": false,
   };
   constructor(private roadmapService: RoadmapService, private router: Router) {}
 
@@ -46,7 +50,15 @@ export class RoadmapsComponent implements OnInit {
     this.roadmapService.getRoadmaps().subscribe( {
       next: (data: Roadmap[]) => {
         this.dataSource = data;
-    }});
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status === HttpStatusCode.NotFound){
+          this.tableOptions.emptyData = true;
+        } else {
+          console.log(error.message)
+        }
+      }
+    });
   }
 
   createNewRoadmap(event: boolean){
