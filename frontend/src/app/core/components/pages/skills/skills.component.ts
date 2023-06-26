@@ -18,7 +18,7 @@ export class SkillsComponent implements OnInit {
   resourceDataSource: Resource[] = [];
   displayedColumns = ["id", "title"];
   tableOptions = {
-    "type": "skills",
+    "type": "skill",
     "displayedColumns": this.displayedColumns,
     "canDelete": true,
     "canModify": true,
@@ -64,8 +64,7 @@ export class SkillsComponent implements OnInit {
   getSkill(skillId: number): void {
     this.skillService.getSkill(skillId).subscribe( {
       next: (data: Skill) => {
-        let dataToPass = data;
-        this.skillService.changeMessage(dataToPass);
+        this.skillService.changeMessage(data);
       }
     })
   }

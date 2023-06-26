@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Resource } from '../../models/resource';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environment/environment';
+import { Skill } from '../../models/skill';
 
 
 @Injectable({
@@ -18,4 +19,5 @@ export class ResourceService {
   getResources(): Observable<Resource[]> {
     return this.http.get<Resource[]>(this.baseUrl);
   }
+
 }

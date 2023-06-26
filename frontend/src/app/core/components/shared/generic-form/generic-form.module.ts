@@ -9,6 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -28,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatCheckboxModule,
     MatOptionModule,
     MatSelectModule,
+    MatListModule,
     HttpClientModule,
   ],
   exports: [

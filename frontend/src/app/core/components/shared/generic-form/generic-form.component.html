@@ -17,12 +17,21 @@
           </mat-form-field>
         </ng-container>
         <ng-container *ngIf="field.type === 'select'">
-          <mat-form-field *ngFor="let dataSource of dataSources">
-            <mat-label attr.for="{{field.id}}">{{field.title}}:</mat-label>
-            <mat-select [(value)] = "selected">
-              <mat-option *ngFor="let option of dataSource[field.id]" [value]="option">{{option.id}}</mat-option>
+          <mat-form-field>
+            <mat-label attr.for="{{ field.id }}">{{ field.title }}:</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option *ngFor="let option of getDataSource(field.id)" [value]="option" (click)="selectOption(field.id, option)">{{ option.title }}</mat-option>
             </mat-select>
+            <a mat-raised-button *ngIf="isAddButtonVisible(field.id, selected)" (click)="addElement(field.id, selected)">Aggiungi risorsa</a>
           </mat-form-field>
+          <mat-list *ngIf="resourcesList.length > 0 && field.hasDetails">
+            <mat-list-item *ngFor="let resource of resourcesList, let i = index">
+              <span>{{ resource.type }}: {{ resource.id }}</span>
+              <span>
+                <a mat-raised-button (click)="removeElement(field.id, selected, i)">Rimuovi risorsa</a>
+              </span>
+            </mat-list-item>
+          </mat-list>
         </ng-container>
       </p>
     <button mat-raised-button type="submit" color = "primary">Crea</button>

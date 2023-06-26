@@ -30,7 +30,7 @@ export class GenericTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private router: Router){}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.setColumns();
@@ -39,7 +39,7 @@ export class GenericTableComponent implements OnInit {
   }
 
   setUpDataInput(data: any[]): void {
-    if(data.length > 0){
+    if (data.length > 0) {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -69,62 +69,61 @@ export class GenericTableComponent implements OnInit {
     }
   }
 
-  visualizeRow(element: any){
+  visualizeRow(element: any) {
     this.viewDetails.emit(element);
   }
 
-  modifyRow(element: object){
+  modifyRow(element: object) {
     const queryParams = {
       item: JSON.stringify(element),
       type: this.tableOptions.type,
-      createMode: false
-    }
-    this.router.navigate(
-      ['/form'],
-      {
-        queryParams: queryParams,
-        queryParamsHandling: "merge"
-    }
-  );
-  }
-
-  deleteRow(elementId: number){
-    console.log('Elemento: id ' + elementId + ' - eliminato')
-  }
-
-  setActionButton(){
-    if(this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
-      this.actionButtonValue = 'admin';
-    }
-    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
-      this.actionButtonValue = 'mentor';
-      this.buttonMenu = [
-        'Radmap 1',
-        'Radmap 2',
-        'Radmap 3',
-        'Radmap 4',
-      ]
-    }
-    if(!this.tableOptions.btnCreate.canCreate && !this.tableOptions.btnCreate.canView){
-      this.actionButtonValue = 'mentee';
-    }
-    console.log(this.actionButtonValue)
-  }
-
-  createRoadmap(){
-    const queryParams = {
-      type: this.tableOptions.type,
-      createMode: true
-    }
-    this.router.navigate(
-      ['/form'],
-      {
-        queryParams: queryParams,
-        queryParamsHandling: "merge"
+      createMode: false,
+    };
+    this.router.navigate(['/form'], {
+      queryParams: queryParams,
+      queryParamsHandling: 'merge',
     });
   }
 
-  selectionItemButtonMenu(item: string){
+  deleteRow(elementId: number) {
+    console.log('Elemento: id ' + elementId + ' - eliminato');
+  }
+
+  setActionButton() {
+    if (
+      this.tableOptions.btnCreate.canCreate &&
+      this.tableOptions.btnCreate.canView
+    ) {
+      this.actionButtonValue = 'admin';
+    }
+    if (
+      !this.tableOptions.btnCreate.canCreate &&
+      this.tableOptions.btnCreate.canView
+    ) {
+      this.actionButtonValue = 'mentor';
+      this.buttonMenu = ['Radmap 1', 'Radmap 2', 'Radmap 3', 'Radmap 4'];
+    }
+    if (
+      !this.tableOptions.btnCreate.canCreate &&
+      !this.tableOptions.btnCreate.canView
+    ) {
+      this.actionButtonValue = 'mentee';
+    }
+    console.log(this.actionButtonValue);
+  }
+
+  createRoadmap() {
+    const queryParams = {
+      type: this.tableOptions.type,
+      createMode: true,
+    };
+    this.router.navigate(['/form'], {
+      queryParams: queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  selectionItemButtonMenu(item: string) {
     console.log(item);
   }
 }

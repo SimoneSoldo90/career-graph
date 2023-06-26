@@ -1,4 +1,8 @@
+import { Resource } from "./resource";
+
 export interface Skill {
+
+  "parentSkill"?: Skill;
 
   "id"?: number,
 
@@ -6,7 +10,7 @@ export interface Skill {
 
   "description": string | null,
 
-  "webresource": string[],
+  "resources": Resource[],
 
   "enabled": boolean
 

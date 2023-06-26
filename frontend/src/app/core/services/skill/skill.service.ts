@@ -19,7 +19,7 @@ export class SkillService {
   getSkills(): Observable<Skill[]> {
     return this.http.get<Skill[]>(this.baseUrl);
   }
-  getSkill(id:number): Observable<any> {
+  getSkill(id:number): Observable<Skill> {
     return this.http.get<Skill>(this.baseUrl + id);
   }
   changeMessage(message: any) {

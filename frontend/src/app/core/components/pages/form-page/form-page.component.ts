@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SkillService } from 'src/app/core/services/skill/skill.service';
 
 @Component({
   selector: 'app-form-page',
@@ -11,7 +12,7 @@ export class FormPageComponent implements OnInit {
   inputData: any;
   item: any;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private skillService: SkillService) {}
 
   ngOnInit(): void {
     this.takeData();
@@ -31,18 +32,18 @@ export class FormPageComponent implements OnInit {
              "required": true,
             },
             {
-              type: 'text',
-              placeholder: 'Scrivi qui...',
-              title: 'Descrizione',
-              id: 'description',
-              required: true,
+              "type": "text",
+              "placeholder": "Scrivi qui...",
+              "title": "Descrizione",
+              "id": "description'",
+              "required": true,
             },
             {
-              type: 'boolean',
-              placeholder: null,
-              title: 'Enabled',
-              id: 'enabled',
-              required: false,
+              "type": "boolean",
+              "placeholder": null,
+              "title": "Enabled",
+              "id": "enabled",
+              "required": false,
             },
           ],
         };
@@ -88,14 +89,10 @@ export class FormPageComponent implements OnInit {
           {"type":"select",
           "placeholder":"Scrivi qui...",
           "title":"Skill Padre",
-          "id":"skillpadre",
+          "id":"parentSkill",
           "required": false,
-          "options":[
-            "Opzione 1",
-            "Opzione 2",
-            "Opzione 3",
-            "Opzione 4",
-          ]},
+          "options":[],
+          "hasDetails": false},
           {"type":"text",
           "placeholder":"Scrivi qui...",
           "title":"Titolo",
@@ -111,14 +108,11 @@ export class FormPageComponent implements OnInit {
           {"type":"select",
           "placeholder":"Scrivi qui...",
           "title":"Risorsa web",
-          "id":"webresource",
+          "id":"resources",
           "required": false,
-          "options":[
-            "Opzione 1",
-            "Opzione 2",
-            "Opzione 3",
-            "Opzione 4",
-          ]},
+          "options":[],
+          "hasDetails": true
+          },
           {"type":"boolean",
           "placeholder":null,
           "title":"Enabled",
@@ -128,6 +122,7 @@ export class FormPageComponent implements OnInit {
          ]
        }
      } else {
+      console.log(this.item);
       this.formOptions = {
         "formObject": this.item,
         "type": "skill",
@@ -136,23 +131,13 @@ export class FormPageComponent implements OnInit {
         "referenced": JSON.parse(this.inputData.get("referenced")),
         "method": "/skills",
         "fields":[
-          {"type":"text",
-          "placeholder":"Scrivi qui...",
-          "title":"Skill Padre",
-          "id":"skillpadre",
-          "required": false,
-          },
           {"type":"select",
           "placeholder":"Scrivi qui...",
-          "title":"Risorsa web",
-          "id":"webresource",
-          "required": true,
-          "options":[
-            "Opzione 1",
-            "Opzione 2",
-            "Opzione 3",
-            "Opzione 4",
-          ]
+          "title":"Skill Padre",
+          "id":"parentSkill",
+          "required": false,
+          "hasDetails": false,
+          "options": []
           },
           {"type":"text",
           "placeholder":"Scrivi qui...",
@@ -167,11 +152,19 @@ export class FormPageComponent implements OnInit {
            "required": true,
           },
           {"type":"boolean",
-          "placeholder":null,
-         "title":"Enabled",
+           "placeholder":null,
+           "title":"Enabled",
            "id": "enabled",
            "required": false,
            },
+           {"type":"select",
+          "placeholder":"Scrivi qui...",
+          "title":"Risorsa web",
+          "id":"resources",
+          "required": true,
+          "hasDetails": true,
+          "options":[]
+          }
          ]
        }
      }
@@ -181,5 +174,6 @@ export class FormPageComponent implements OnInit {
   takeData() {
     this.inputData = this.route.snapshot.queryParamMap;
     this.item = JSON.parse(this.inputData.get('item'));
+    }
   }
-}
+
