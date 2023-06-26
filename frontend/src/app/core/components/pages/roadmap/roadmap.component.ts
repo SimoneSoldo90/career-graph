@@ -84,10 +84,19 @@ export class RoadmapComponent implements OnInit {
     })
   }
 
+  // Qui dentro quando arriverà il backend dovremo scrivere un'update
   updateRoadmapSkill(data: Skill): void {
-    this.dataSource.push(data);
-    this.genericTable.setUpDataInput(this.dataSource);
-    this.genericTable.setUpDataMenuButton(this.totalSkills);
+
+    const tmp = this.dataSource.filter((obj1: any) => {
+      return obj1.id === data.id;
+      });
+    if(tmp.length > 0) {
+      this.genericTable.compareListButtonMenu();
+    } else {
+      this.dataSource.push(data);
+      this.genericTable.setUpDataInput(this.dataSource);
+      this.genericTable.setUpDataMenuButton(this.totalSkills);
+    }
   }
 
   visualizeSkills(event: Skill){

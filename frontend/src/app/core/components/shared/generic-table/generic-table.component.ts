@@ -106,7 +106,7 @@ export class GenericTableComponent implements OnInit  {
       return !this.dataSourceMenuButton.some((obj2: any) => {
         return obj1.id === obj2.id;
       })
-    })
+    });
     this.buttonMenu = data;
     if(this.buttonMenu.length === 0){
       this.buttonMenu.push({title: 'Nessun elemento da aggiungere'})
