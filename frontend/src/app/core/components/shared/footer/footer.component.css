@@ -4,4 +4,9 @@
   bottom: 0;
   width: 100%;
   text-align: center;
+  height: 70px;
+  background-color: #2268a4;
+  color: white;
+  padding: 20px;
+  margin: 20px 0px 0px 0px;
 }

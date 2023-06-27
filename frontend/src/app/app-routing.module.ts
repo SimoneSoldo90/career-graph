@@ -12,7 +12,6 @@ export const menuroutes: any = [
   getRoute(environment.paths.skillspath,environment.paths.skills,SkillsComponent,null),
   getRoute(environment.paths.roadmapspath,environment.paths.roadmaps,RoadmapsComponent,null),
   getRoute(environment.paths.menteespath,environment.paths.mentees,MenteesComponent,null),
-  getRoute(environment.paths.formpath,environment.paths.form,FormPageComponent,null)
 ];
 
 const routes: Routes = [

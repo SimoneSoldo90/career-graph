@@ -1,52 +1,7 @@
 
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="over" position="end" (closedStart)="onClosedSideNav()">
-    <p class="skillsTitle commonSkill">{{skills.title}}</p>
-    <h4 class="skillsDescription commonSkill">{{skills.description}}</h4>
 
-      <div>
-      <ng-container *ngIf="resourceDetail.LINK!.length > 0">
-        <p class="secondTitle commonSkill">Documentazione:</p>
-        <li *ngFor="let resource of resourceDetail.LINK" class="skillsLink commonSkill">
-          <ng-container *ngIf="resource.description !== ''">
-            <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
-            </a>
-          </ng-container>
-          <ng-container *ngIf="resource.description === ''">
-            <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.link }}</a>
-          </ng-container>
-        </li>
-      </ng-container>
-
-      <ng-container *ngIf="resourceDetail.LINK_VIDEO!.length > 0" >
-        <p class="secondTitle commonSkill">Video:</p>
-        <li *ngFor="let resource of resourceDetail.LINK_VIDEO" class="skillsLink commonSkill">
-          <ng-container *ngIf="resource.description !== ''">
-            <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
-            </a>
-          </ng-container>
-          <ng-container *ngIf="resource.description === ''">
-            <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.link }}</a>
-          </ng-container>
-        </li>
-      </ng-container>
-
-      <ng-container *ngIf="resourceDetail.NOTE!.length > 0" >
-        <p class="secondTitle commonSkill">Note:</p>
-        <li *ngFor="let resource of resourceDetail.NOTE" class="skillsLink commonSkill">
-          <ng-container *ngIf="resource.description !== ''">
-            <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
-            </a>
-          </ng-container>
-          <ng-container *ngIf="resource.description === ''">
-            <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.link }}</a>
-          </ng-container>
-        </li>
-      </ng-container>
-    </div>
-
-
-  </mat-drawer>
+  <app-drawer [allStates]="allStates" [currentState]="statoCorrente" [menuTitle]="titleMenuDrawer"></app-drawer>
 
   <div class="example-sidenav-content">
 
