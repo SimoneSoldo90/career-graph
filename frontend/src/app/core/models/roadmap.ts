@@ -1,3 +1,5 @@
+import { Skill } from "./skill"
+
 export interface Roadmap {
 
   "id"?: number,
@@ -8,4 +10,5 @@ export interface Roadmap {
 
   "enabled": boolean
 
+  "skill":Skill
 }

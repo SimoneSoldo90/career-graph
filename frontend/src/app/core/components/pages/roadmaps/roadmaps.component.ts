@@ -1,10 +1,9 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 import { Roadmap } from 'src/app/core/models/roadmap';
 import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
-
 @Component({
   selector: 'app-roadmaps',
   templateUrl: './roadmaps.component.html',
@@ -65,5 +64,16 @@ export class RoadmapsComponent implements OnInit {
     if(event){
       this.router.navigate(['/form', { createMode: true, type: "roadmap" }]);
     }
+  }
+  visualizeRoadmaps(event: Roadmap){
+    console.log("Ricevuto evento")
+    this.router.navigate(["/roadmap",{elementId:event.id}])
+  }
+  visualizzaGrafo(event: Roadmap){
+
+    this.router.navigate(["/roadmapgraph", {
+      queryParams: JSON.stringify({ 'elementId': event.id }),
+      queryParamsHandling: "merge"
+  }])
   }
 }

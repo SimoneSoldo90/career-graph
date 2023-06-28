@@ -1,1 +1,7 @@
-<app-generic-table [preDataSource]="dataSource" [tableOptions]="tableOptions" (createNew)="createNewRoadmap($event)"></app-generic-table>
+<app-generic-table
+  [preDataSource]="dataSource"
+  [tableOptions]="tableOptions"
+  (createNew)="createNewRoadmap($event)"
+  (viewDetails)="visualizeRoadmaps($event)"
+  (viewGraph)="visualizzaGrafo($event)"
+></app-generic-table>

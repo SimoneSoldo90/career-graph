@@ -47,9 +47,10 @@ export class RoadmapComponent implements OnInit {
     "emptyData": false
   };
 
-  constructor(private roadmapService: RoadmapService, private skillService: SkillService) { }
+  constructor(private roadmapService: RoadmapService, private skillService: SkillService) {  }
 
   ngOnInit() {
+    console.log(window.history.state)
     this.id = window.history.state.options.elementId;
     this.getRoadmapSkills();
     this.getAllSkills();
@@ -59,15 +60,16 @@ export class RoadmapComponent implements OnInit {
     this.roadmapService.getRoadmap(this.id).subscribe( {
       next: (data: Skill[]) => {
         data.forEach((parentSkill: any) => {
-          this.tmpData.push(parentSkill.skill);
+          this.tmpData.push(parentSkill);
         });
         this.dataSource = this.tmpData;
+
       },
       error: (error: HttpErrorResponse) => {
         if(error.status === HttpStatusCode.NotFound){
           this.tableOptions.emptyData = true;
         } else {
-          console.log(error.message)
+          //console.log(error.message)
         }
       }
     });

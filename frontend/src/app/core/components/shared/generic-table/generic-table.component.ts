@@ -61,6 +61,15 @@ export class GenericTableComponent implements OnInit  {
     this.setUpDataMenuButton(data);
   }
   @Input() tableOptions: any;
+  @Output() createNew = new EventEmitter<boolean>();
+  @Output() viewDetails = new EventEmitter<any>();
+  @Output() updateData = new EventEmitter<any>();
+  @Output() viewGraph = new EventEmitter<any>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+
   totalList: any[] = [];      // totale lista SKILLS esistenti
   dataSource: any;      // Dati che riempiranno la tabella
   actionButtonValue: string = '';     // Stringa che viene usata come switchCase per il comportamento del BUTTON di aggiunta
@@ -68,12 +77,6 @@ export class GenericTableComponent implements OnInit  {
   buttonMenu: any[] = [];   //  Array che riempie la lista che fuoriesce dal BUTTON
   tmpData: any[] = [];    //  Array di appoggio per dati temporanei
   dataSourceMenuButton: any[] = [];   // Qui vengono mantenuti i dati dell'array che riempie il BUTTON per poi compararli con quelli presenti in tabella
-  @Output() createNew = new EventEmitter<boolean>();
-  @Output() viewDetails = new EventEmitter<any>();
-  @Output() updateData = new EventEmitter<any>();
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private router: Router){}
 
@@ -184,7 +187,7 @@ export class GenericTableComponent implements OnInit  {
 
   // Funzione al click del tasto visualizza graficamente
   graphicVisualizeRow(element: object): void {
-    console.log(element);
+    this.viewGraph.emit(element);
   }
 
   // Per la tabella Roadmap, reindirizza alla pagina di visualizzazione della roadmap

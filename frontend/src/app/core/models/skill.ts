@@ -6,5 +6,6 @@ export interface Skill {
 
   "description": string | null,
 
-  "enabled": boolean
+  "enabled": boolean,
+  "parentSkill":Skill
 }

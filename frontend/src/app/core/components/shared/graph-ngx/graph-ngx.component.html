@@ -1,17 +1,27 @@
-<ngx-graph [nodes]="nodes">
-  <ng-template #nodeTemplate let-node>
-    <svg:g class="node">
-      <svg:rect
-        [attr.width]="rectWidth"
-        [attr.height]="rectHeight"
-        [attr.fill]="node.data.color"
-      ></svg:rect>
-      <svg:text class="node-name" [attr.fill]="node.data.textColor">
-        {{ node.data.title }}
-      </svg:text>
-      <svg:text class="node-description" [attr.fill]="node.data.textColor">
-        {{ node.data.description }}
-      </svg:text>
-    </svg:g>
-  </ng-template>
-</ngx-graph>
+<div class="ngx-charts" width="100%" height="100%">
+  <ngx-graph
+  class="chart-container"
+  [view]="[1000, 800]"
+  [showMiniMap]="true"
+  [nodes]="nodes"
+  [links]="links"
+  [layoutSettings]="layoutSettings">
+    <ng-template #nodeTemplate let-node>
+      <svg:g class="organization-node">
+        <svg:rect
+          [attr.width]="rectWidth"
+          [attr.height]="rectHeight"
+          [attr.fill]="node.data.color"
+        >{{ node.data.description }}
+      </svg:rect>
+        <svg:text class="label" [attr.fill]="node.data.textColor">
+          {{ node.data.title }}
+        </svg:text>
+        <svg:text class="description" [attr.fill]="node.data.textColor">
+        </svg:text>
+      </svg:g>
+    </ng-template>
+
+
+  </ngx-graph>
+</div>

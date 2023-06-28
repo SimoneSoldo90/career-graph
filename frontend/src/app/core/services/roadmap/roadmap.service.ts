@@ -28,4 +28,5 @@ export class RoadmapService {
   getAllSkills(): Observable<Skill[]> {
     return this.http.get<Skill[]>(this.serverHostUrl + "skills/");
   }
+
 }

@@ -14,12 +14,12 @@ export class StatusManagerComponent {
   onStateChanged(newState: string) {
     if (newState === 'menu') {
     } else {
-      console.log('Nuovo stato selezionato:', newState);
+      //console.log('Nuovo stato selezionato:', newState);
     }
   }
 
   onMenuOptionSelected(newState: string) {
     this.currentState = newState
-    console.log('Nuovo stato selezionato:', newState);
+    //console.log('Nuovo stato selezionato:', newState);
   }
 }

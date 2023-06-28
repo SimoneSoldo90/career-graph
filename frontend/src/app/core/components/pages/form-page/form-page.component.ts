@@ -17,7 +17,6 @@ export class FormPageComponent implements OnInit {
     this.takeData();
     if (this.inputData.get('type') === 'roadmap') {
       if (JSON.parse(this.inputData.get('createMode'))) {
-        console.log(this.inputData);
         this.formOptions = {
           typeRoadmap: 'roadmap',
           pageTitle: 'Roadmap',
@@ -81,7 +80,6 @@ export class FormPageComponent implements OnInit {
       }
     } else if (this.inputData.get('type') === 'skills') {
       if (JSON.parse(this.inputData.get('createMode'))) {
-        console.log(this.inputData);
         this.formOptions = {
           typeRoadmap: 'skill',
           pageTitle: 'Skill',

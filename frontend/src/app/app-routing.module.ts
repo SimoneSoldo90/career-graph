@@ -17,7 +17,6 @@ export const menuroutes: any = [
 
 const routes: Routes = [
   getRoute("",environment.paths.roadmaps,RoadmapsComponent,null),
-  getRoute(environment.paths.loginpath,environment.paths.login,LoginComponent,null),
   getRoute(environment.paths.skillspath,environment.paths.skills,SkillsComponent,null),
   getRoute(environment.paths.roadmapspath,environment.paths.roadmaps,RoadmapsComponent,null),
   getRoute(environment.paths.roadmappath,environment.paths.roadmap,RoadmapComponent,null),
