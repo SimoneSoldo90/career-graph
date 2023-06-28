@@ -66,4 +66,8 @@ export class RoadmapsComponent implements OnInit {
       this.router.navigate(['/form', { createMode: true, type: "roadmap" }]);
     }
   }
+
+  viewRoadmapGraph(item: any): void {
+    this.router.navigate(['roadmapgraph'], { state: { options: item } });
+  }
 }

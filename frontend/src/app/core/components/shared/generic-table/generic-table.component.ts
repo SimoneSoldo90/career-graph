@@ -71,6 +71,7 @@ export class GenericTableComponent implements OnInit  {
   @Output() createNew = new EventEmitter<boolean>();
   @Output() viewDetails = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();
+  @Output() viewGraph = new EventEmitter<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -184,12 +185,12 @@ export class GenericTableComponent implements OnInit  {
 
   // Funzione al click del tasto visualizza graficamente
   graphicVisualizeRow(element: object): void {
-    console.log(element);
+    this.viewGraph.emit(element);
   }
 
   // Per la tabella Roadmap, reindirizza alla pagina di visualizzazione della roadmap
   roadmapViewer(elementId: number, elementTitle: string): void {
-    this.router.navigate(['roadmap'], { state: { options: {elementId, elementTitle} } })
+    this.router.navigate(['roadmap'], { state: { options: {elementId, elementTitle} } });
   }
 
 

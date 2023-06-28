@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormPageModule } from './core/components/pages/form-page/form-page.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RoadmapModule } from './core/components/pages/roadmap/roadmap.module';
+import { RoadmapGraphModule } from './core/components/pages/roadmap-graph/roadmap-graph.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { RoadmapModule } from './core/components/pages/roadmap/roadmap.module';
     HeaderModule,
     BrowserAnimationsModule,
     RoadmapsModule,
+    RoadmapGraphModule,
     RoadmapModule,
     SkillsModule,
     MenteesModule,
