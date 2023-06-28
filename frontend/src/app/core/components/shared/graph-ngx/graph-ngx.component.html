@@ -1,0 +1,17 @@
+<ngx-graph [nodes]="nodes">
+  <ng-template #nodeTemplate let-node>
+    <svg:g class="node">
+      <svg:rect
+        [attr.width]="rectWidth"
+        [attr.height]="rectHeight"
+        [attr.fill]="node.data.color"
+      ></svg:rect>
+      <svg:text class="node-name" [attr.fill]="node.data.textColor">
+        {{ node.data.title }}
+      </svg:text>
+      <svg:text class="node-description" [attr.fill]="node.data.textColor">
+        {{ node.data.description }}
+      </svg:text>
+    </svg:g>
+  </ng-template>
+</ngx-graph>

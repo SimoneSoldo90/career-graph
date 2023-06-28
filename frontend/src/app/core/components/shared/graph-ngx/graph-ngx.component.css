@@ -1,0 +1,13 @@
+
+.node {
+  cursor: pointer;
+}
+
+.node rect {
+  stroke-width: 2px;
+}
+
+.node-name,
+.node-description {
+  font-size: 12px;
+}

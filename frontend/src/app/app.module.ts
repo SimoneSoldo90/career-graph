@@ -17,6 +17,9 @@ import { RoadmapModule } from './core/components/pages/roadmap/roadmap.module';
 import { StatusManagerComponent } from './core/components/shared/status-manager/status-manager.component';
 import { StatusManagerModule } from './core/components/shared/status-manager/status-manager.module';
 import { DrawerModule } from './core/components/shared/drawer/drawer.module';
+import { GraphNgxComponent } from './core/components/shared/graph-ngx/graph-ngx.component';
+import { RoadmapgraphComponent } from './core/components/pages/roadmapgraph/roadmapgraph.component';
+import { RoadmapgraphModule } from './core/components/pages/roadmapgraph/roadmapgraph.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { DrawerModule } from './core/components/shared/drawer/drawer.module';
     MatSidenavModule,
     StatusManagerModule,
     DrawerModule,
+    RoadmapgraphModule,
     ],
   bootstrap: [AppComponent]
 })
