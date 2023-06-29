@@ -3,11 +3,19 @@
   class="chart-container"
   [view]="[1000, 800]"
   [showMiniMap]="true"
+  [miniMapMaxWidth]=150
+  [miniMapMaxHeight]=800
   [nodes]="nodes"
   [links]="links"
-  [layoutSettings]="layoutSettings">
+  [layoutSettings]="layoutSettings"
+  [autoCenter]=false
+  [draggingEnabled]=false
+  [panningEnabled]=true
+  [autoZoom]=true
+  [curve]="curve"
+  >
     <ng-template #nodeTemplate let-node>
-      <svg:g class="organization-node">
+      <svg:g class="organization-node" (click)="show(node)">
         <svg:rect
           [attr.width]="rectWidth"
           [attr.height]="rectHeight"
@@ -16,8 +24,6 @@
       </svg:rect>
         <svg:text class="label" [attr.fill]="node.data.textColor">
           {{ node.data.title }}
-        </svg:text>
-        <svg:text class="description" [attr.fill]="node.data.textColor">
         </svg:text>
       </svg:g>
     </ng-template>

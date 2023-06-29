@@ -3,6 +3,7 @@ import { Skill } from 'src/app/core/models/skill';
 import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { GraphNgxComponent } from '../../shared/graph-ngx/graph-ngx.component';
+import { SkillService } from 'src/app/core/services/skill/skill.service';
 
 @Component({
   selector: 'app-roadmapgraph',
@@ -15,7 +16,7 @@ export class RoadmapgraphComponent implements OnInit{
   yourLinks: any[] = []
   id:number;
   inputData:any;
-  constructor(private roadmapservice: RoadmapService,private route: ActivatedRoute){
+  constructor(private roadmapservice: RoadmapService,private route: ActivatedRoute, private skillService: SkillService){
     this.inputData= this.route.snapshot.queryParamMap;
     this.id = JSON.parse(this.inputData.get('id'))
     console.log(this.id)
@@ -52,5 +53,16 @@ export class RoadmapgraphComponent implements OnInit{
       },
     });
   }
+  visualizeSkills(event: Skill){
+    this.getSkill(Number(event.id));
+  }
 
+  getSkill(skillId: number): void {
+    this.skillService.getSkill(skillId).subscribe( {
+      next: (data: Skill) => {
+        let dataToPass = data;
+        this.skillService.changeMessage(dataToPass);
+      }
+    })
+  }
 }

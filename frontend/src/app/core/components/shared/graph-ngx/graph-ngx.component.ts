@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component,Output,  EventEmitter,
+} from '@angular/core';
 import { Node } from '@swimlane/ngx-graph';
+import * as shape from 'd3-shape';
 
 @Component({
   selector: 'graph-ngx',
@@ -8,8 +10,10 @@ import { Node } from '@swimlane/ngx-graph';
 })
 export class GraphNgxComponent {
 
+  @Output() showelement = new EventEmitter<any>();
 
   data:any;
+  public curve: any = shape.curveLinear;
 
   constructor(){
     console.log("Costruttore graph-ngx")
@@ -47,6 +51,7 @@ export class GraphNgxComponent {
           color: '#ffffff',
           textColor: '#000000'
         },
+        position:{x:100,y:0}
       };
       nodes.push(node);
     });
@@ -54,4 +59,9 @@ export class GraphNgxComponent {
     return nodes;
   }
 
+  show(event:any){
+    console.log(event)
+    this.showelement.emit(event);
+
+  }
 }
