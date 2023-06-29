@@ -44,7 +44,7 @@ export class RoadmapComponent implements OnInit {
     "idRoadmap": Number(this.id),
     "title": this.title,
     "detailTitle": this.detailTitle,
-    "emptyData": false
+    "emptyData": false,
   };
 
   constructor(private roadmapService: RoadmapService, private skillService: SkillService) {  }

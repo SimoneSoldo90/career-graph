@@ -1,6 +1,6 @@
 import { Component,Output,  EventEmitter,
 } from '@angular/core';
-import { Node } from '@swimlane/ngx-graph';
+import { DagreLayout, Node } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 
 @Component({
@@ -16,7 +16,7 @@ export class GraphNgxComponent {
   public curve: any = shape.curveLinear;
 
   constructor(){
-    console.log("Costruttore graph-ngx")
+
   }
   setGraphLinks(data: any[]) {
     this.links = data
@@ -25,6 +25,7 @@ export class GraphNgxComponent {
   rectWidth = 100;
   rectHeight = 50;
   links!: any[];
+
   public layoutSettings = {
     orientation: 'TB'
   };
@@ -50,8 +51,7 @@ export class GraphNgxComponent {
           description: item.description,
           color: '#ffffff',
           textColor: '#000000'
-        },
-        position:{x:100,y:0}
+        }
       };
       nodes.push(node);
     });
@@ -60,8 +60,19 @@ export class GraphNgxComponent {
   }
 
   show(event:any){
-    console.log(event)
     this.showelement.emit(event);
+  }
 
+  public getStyles(node: Node): any {
+    return {
+      'heigth':'30',
+      'width':'100',
+      'background-color': 'red',
+      'margin': '20px',
+      'border-radius': '5px',
+      'padding': '5px',
+      'text-decoration': 'solid',
+      'overflow-wrap': 'normal'
+    };
   }
 }

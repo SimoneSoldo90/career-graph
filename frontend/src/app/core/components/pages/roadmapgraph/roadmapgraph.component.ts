@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Skill } from 'src/app/core/models/skill';
 import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { GraphNgxComponent } from '../../shared/graph-ngx/graph-ngx.component';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class RoadmapgraphComponent implements OnInit{
   constructor(private roadmapservice: RoadmapService,private route: ActivatedRoute, private skillService: SkillService){
     this.inputData= this.route.snapshot.queryParamMap;
     this.id = JSON.parse(this.inputData.get('id'))
-    console.log(this.id)
   }
 
   ngOnInit(): void {
@@ -45,11 +43,10 @@ export class RoadmapgraphComponent implements OnInit{
           this.yourLinks.push({ source: element.id, target: element.id })
         }
         })
-        console.log(this.yourData)
         this.childGraph.createGraph(this.yourData,this.yourLinks)
       },
       error(err) {
-        console.log(err)
+
       },
     });
   }

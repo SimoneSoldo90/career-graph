@@ -8,23 +8,18 @@
   [nodes]="nodes"
   [links]="links"
   [layoutSettings]="layoutSettings"
-  [autoCenter]=false
+  [autoCenter]=true
   [draggingEnabled]=false
   [panningEnabled]=true
   [autoZoom]=true
-  [curve]="curve"
   >
     <ng-template #nodeTemplate let-node>
-      <svg:g class="organization-node" (click)="show(node)">
-        <svg:rect
-          [attr.width]="rectWidth"
-          [attr.height]="rectHeight"
-          [attr.fill]="node.data.color"
-        >{{ node.data.description }}
-      </svg:rect>
-        <svg:text class="label" [attr.fill]="node.data.textColor">
-          {{ node.data.title }}
-        </svg:text>
+      <svg:g #defsTemplate xmlns="http://www.w3.org/2000/xhtml" width="150" height="100">
+        <svg:foreignObject width="100" height="30" (click)="show(node)" [ngStyle]="getStyles(node)">
+          <xhtml:div  xmlns="http://www.w3.org/1999/xhtml" >
+            <label class="node">{{ node.data.title }}</label>
+          </xhtml:div>
+        </svg:foreignObject>
       </svg:g>
     </ng-template>
 
