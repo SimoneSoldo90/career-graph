@@ -22,7 +22,7 @@
     "lib": [
       "ES2022",
       "dom"
-    ],
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -30,5 +30,8 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src", "typings"]
+  "include": [
+    "src",
+    "typings"
+  ]
 }

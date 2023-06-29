@@ -9,11 +9,10 @@ import { Node } from '@swimlane/ngx-graph';
 export class GraphNgxComponent {
 
 
-  @Input() set data(data:{ id: string; title: string; description: string; parent: string }[]){
-    this.nodes = data;
-  }
-  @Input() set graphlinks(data : any[]){
-    this.setGraphLinks(data);
+  data:any;
+
+  constructor(){
+    console.log("Costruttore graph-ngx")
   }
   setGraphLinks(data: any[]) {
     this.links = data
@@ -28,13 +27,17 @@ export class GraphNgxComponent {
   ngOnChanges() {
     this.nodes = this.createNodes();
   }
-
-  public createNodes(): Node[] {
-    this.links = this.graphlinks;
+  public createGraph(data:any,links:any){
+    this.data = data;
+    this.setGraphLinks(links);
+    this.nodes = this.createNodes();
+  }
+  createNodes(): Node[] {
+    //this.links = this.graphlinks;
 
     const nodes: Node[] = [];
 
-    this.data.forEach(item => {
+    this.data.forEach((item:any) => {
       const node: Node = {
         id: item.id,
         label: item.title,

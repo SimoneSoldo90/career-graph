@@ -1,5 +1,5 @@
 <div class="ngx-charts" width="100%" height="100%">
-  <ngx-graph
+  <ngx-graph *ngIf="nodes.length>0 && links.length>0"
   class="chart-container"
   [view]="[1000, 800]"
   [showMiniMap]="true"

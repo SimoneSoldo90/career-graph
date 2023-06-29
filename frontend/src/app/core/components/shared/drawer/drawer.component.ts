@@ -40,7 +40,7 @@ export class DrawerComponent implements OnInit {
           });
         });
         this.drawer.toggle();
-        console.log(this.resourceDetail);
+        //console.log(this.resourceDetail);
       }
     });
   }

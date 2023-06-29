@@ -81,7 +81,7 @@
         <td mat-cell *matCellDef="let element">
           <ng-container [ngSwitch]="column.key">
             <ng-container *ngSwitchCase="'visualizzazione_grafica'">
-                <button class="viewButton" (click)="graphicVisualizeRow(element)">
+                <button type="button" class="viewButton" [routerLink]="['/roadmapgraph']" [queryParams]="{id:1}">
                   <mat-icon>explore</mat-icon>
                 </button>
             </ng-container>

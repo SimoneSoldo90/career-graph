@@ -16,7 +16,6 @@ export class GenericFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    console.log(this.formOptions.isCreation);
     if (!this.formOptions.isCreation){
       this.populateForm()
     }
@@ -54,15 +53,12 @@ export class GenericFormComponent implements OnInit {
          description: form.description,
          enabled: form.enabled,
        };
-      console.log(this.formOptions.formObject);
     }
     else {
-      console.log(this.genericForm.value);
     }
   }
 
   populateForm() {
-    console.log(this.formOptions.formObject)
     if (this.formOptions.formObject) {
       this.genericForm.patchValue({
         id:this.formOptions.formObject.id,
@@ -70,8 +66,6 @@ export class GenericFormComponent implements OnInit {
         description: this.formOptions.formObject.description,
         enabled: this.formOptions.formObject.enabled
       });
-
-      console.log(this.formOptions.formObject);
     }
   }
 }

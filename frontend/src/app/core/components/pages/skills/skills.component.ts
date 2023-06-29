@@ -57,7 +57,7 @@ export class SkillsComponent implements OnInit {
         if(error.status === HttpStatusCode.NotFound){
           this.tableOptions.emptyData = true;
         } else {
-          console.log(error.message)
+          //console.log(error.message)
         }
       }
     });
