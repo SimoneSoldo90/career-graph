@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Skill } from 'src/app/core/models/skill';
 import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
-
+import { Edge } from '@swimlane/ngx-graph';
 @Component({
   selector: 'app-roadmapgraph',
   templateUrl: './roadmapgraph.component.html',
@@ -12,7 +12,7 @@ import { SkillService } from 'src/app/core/services/skill/skill.service';
 export class RoadmapgraphComponent implements OnInit{
   @ViewChild('childGraph',{static:true}) childGraph!: any;
   yourData: any = []
-  yourLinks: any[] = []
+  yourLinks: Edge[] = []
   id:number;
   inputData:any;
   constructor(private roadmapservice: RoadmapService,private route: ActivatedRoute, private skillService: SkillService){
@@ -25,6 +25,7 @@ export class RoadmapgraphComponent implements OnInit{
     this.roadmapservice.getRoadmap(this.id).subscribe({
       next: (data:Skill[])=>{
         data.forEach(element => {
+          console.log(element)
           if(element.parentSkillId){
           this.yourData.push( {
             id: element.id,
@@ -32,7 +33,8 @@ export class RoadmapgraphComponent implements OnInit{
             description:element.description,
             parent: element.parentSkillId
           })
-          this.yourLinks.push({ source: element.parentSkillId, target: element.id })
+          const link : Edge = { source: String(element.parentSkillId), target: String(element.id),label:"Pollo"}
+          this.yourLinks.push(link)
         } else {
           this.yourData.push( {
             id: element.id,
@@ -40,7 +42,8 @@ export class RoadmapgraphComponent implements OnInit{
             description:element.description,
             parent: element.id
           })
-          this.yourLinks.push({ source: element.id, target: element.id })
+          // const link : Edge = { source: String(element.id), target: String(element.id),label:"Pollo"}
+          // this.yourLinks.push(link);
         }
         })
         this.childGraph.createGraph(this.yourData,this.yourLinks)
