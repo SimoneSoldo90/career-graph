@@ -1,12 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
-
-import { Skill } from './core/models/skill';
-import { Resource } from './core/models/resource';
-import { SkillService } from './core/services/skill/skill.service';
-import { Resourcedetail, getKeys } from './core/models/resourcedetail';
-
-import { keys } from 'ts-transformer-keys';
 
 @Component({
   selector: 'app-root',

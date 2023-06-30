@@ -1,6 +1,7 @@
 import { Component,Output,  EventEmitter,
 } from '@angular/core';
 import { DagreLayout, DagreNodesOnlySettings, Node, Orientation } from '@swimlane/ngx-graph';
+import { Edge } from '@swimlane/ngx-graph/lib/models/edge.model';
 import * as shape from 'd3-shape';
 
 @Component({
@@ -13,7 +14,7 @@ export class GraphNgxComponent {
   @Output() showelement = new EventEmitter<any>();
 
   data:any;
-  public curve: any = shape.curveLinear;
+  public curve: any = shape.curveBundle.beta(0.5);
 
   constructor(){
 
@@ -24,7 +25,7 @@ export class GraphNgxComponent {
   nodes: Node[] = [];
   rectWidth = 100;
   rectHeight = 50;
-  links!: any[];
+  links!: Edge[];
 
   public layoutSettings = {
     orientation: 'TB'
