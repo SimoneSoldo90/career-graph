@@ -37,7 +37,12 @@ export class RoadmapsComponent implements OnInit {
     "title": this.title,
     "detailTitle": this.detailTitle,
     "emptyData": false,
-    "visualizzazioneGraficaPath":"/roadmapgraph"
+    btnVisualize:{
+      canView:false,
+      tooltip:"Visualizza roadmap",
+      routerLink:"/roadmapgraph",
+      queryParams:{id:1}
+    }
   };
   constructor(private roadmapService: RoadmapService, private router: Router) {}
 

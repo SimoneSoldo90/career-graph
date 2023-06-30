@@ -5,6 +5,7 @@ import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
 import { GenericTableComponent } from '../../shared/generic-table/generic-table.component';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-roadmap',
@@ -45,12 +46,19 @@ export class RoadmapComponent implements OnInit {
     "title": this.title,
     "detailTitle": this.detailTitle,
     "emptyData": false,
+    btnVisualize:{
+      canView:true,
+      tooltip:"Visualizza grafo",
+      routerLink:"/roadmapgraph",
+      queryParams:{id:1}
+    }
   };
 
-  constructor(private roadmapService: RoadmapService, private skillService: SkillService) {  }
+  constructor(private roadmapService: RoadmapService, private skillService: SkillService,private router: Router) {
+    console.log(this.id)
+    }
 
   ngOnInit() {
-    console.log(window.history.state)
     this.id = window.history.state.options.elementId;
     this.getRoadmapSkills();
     this.getAllSkills();

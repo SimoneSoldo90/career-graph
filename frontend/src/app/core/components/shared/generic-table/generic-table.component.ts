@@ -53,6 +53,8 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
   providers: [{provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}],
 })
 export class GenericTableComponent implements OnInit  {
+  btnVisualizeQP!: { id: any; };
+
 
   @Input() set preDataSource(data: any[]) {
     this.setUpDataInput(data);
@@ -65,6 +67,7 @@ export class GenericTableComponent implements OnInit  {
   @Output() viewDetails = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();
   @Output() viewGraph = new EventEmitter<any>();
+  @Output() viewGraphIdType = new EventEmitter<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -85,6 +88,7 @@ export class GenericTableComponent implements OnInit  {
     this.setActionButton();
     this.createNew.emit(false);
   }
+
 
   public setUpDataInput(data: any[]): void {
     if(data.length > 0){
@@ -225,5 +229,9 @@ export class GenericTableComponent implements OnInit  {
 
   selectionItemButtonMenu(item: any){
     this.updateData.emit(item);
+  }
+  view(id: any) {
+    console.log(id)
+    this.viewGraphIdType.emit({"id":id})
   }
 }

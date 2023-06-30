@@ -25,14 +25,14 @@ export class RoadmapgraphComponent implements OnInit{
     this.roadmapservice.getRoadmap(this.id).subscribe({
       next: (data:Skill[])=>{
         data.forEach(element => {
-          if(element.parentSkill){
+          if(element.parentSkillId){
           this.yourData.push( {
             id: element.id,
             title: element.title,
             description:element.description,
-            parent: element.parentSkill.id
+            parent: element.parentSkillId
           })
-          this.yourLinks.push({ source: element.parentSkill.id, target: element.id })
+          this.yourLinks.push({ source: element.parentSkillId, target: element.id })
         } else {
           this.yourData.push( {
             id: element.id,
