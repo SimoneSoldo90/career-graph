@@ -1,6 +1,6 @@
 import { Component,Output,  EventEmitter,
 } from '@angular/core';
-import { DagreLayout, Node } from '@swimlane/ngx-graph';
+import { DagreLayout, DagreNodesOnlySettings, Node, Orientation } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 
 @Component({
@@ -66,13 +66,8 @@ export class GraphNgxComponent {
   public getStyles(node: Node): any {
     return {
       'heigth':'30',
-      'width':'100',
-      'background-color': 'red',
-      'margin': '20px',
-      'border-radius': '5px',
-      'padding': '5px',
-      'text-decoration': 'solid',
-      'overflow-wrap': 'normal'
-    };
+      'width':'130',
+      'padding':'10px'
+    }
   }
 }
