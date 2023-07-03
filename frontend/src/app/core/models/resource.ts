@@ -1,7 +1,12 @@
 export interface Resource {
-  "id": number,
+
+  "id"?: number,
+
   "skillId": number,
+
   "type": string,
+
   "description": string | null,
-  "link": string
+
+  "link": string | null
 }

@@ -11,7 +11,7 @@ import { GenericTableModule } from '../../shared/generic-table/generic-table.mod
     CommonModule,
     GenericTableModule,
   ],
-  exports: [
+  exports:[
     SkillsComponent
   ]
 })

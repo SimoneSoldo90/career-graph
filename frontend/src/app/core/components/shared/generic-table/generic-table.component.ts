@@ -72,6 +72,8 @@ export class GenericTableComponent implements OnInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  constructor(private router: Router) {}
+
 
   totalList: any[] = [];      // totale lista SKILLS esistenti
   dataSource: any;      // Dati che riempiranno la tabella
@@ -81,7 +83,6 @@ export class GenericTableComponent implements OnInit  {
   tmpData: any[] = [];    //  Array di appoggio per dati temporanei
   dataSourceMenuButton: any[] = [];   // Qui vengono mantenuti i dati dell'array che riempie il BUTTON per poi compararli con quelli presenti in tabella
 
-  constructor(private router: Router){}
 
   ngOnInit(): void {
     this.setColumns();
@@ -165,6 +166,47 @@ export class GenericTableComponent implements OnInit  {
     }
   }
 
+  visualizeRow(element: any) {
+    this.viewDetails.emit(element);
+  }
+
+  modifyRow(element: object) {
+    const queryParams = {
+      item: JSON.stringify(element),
+      type: this.tableOptions.type,
+      createMode: false,
+    };
+    this.router.navigate(['/form'], {
+      queryParams: queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  deleteRow(elementId: number) {
+    console.log('Elemento: id ' + elementId + ' - eliminato');
+  }
+
+  setActionButton() {
+    if (
+      this.tableOptions.btnCreate.canCreate &&
+      this.tableOptions.btnCreate.canView
+    ) {
+      this.actionButtonValue = 'admin';
+    }
+    if (
+      !this.tableOptions.btnCreate.canCreate &&
+      this.tableOptions.btnCreate.canView
+    ) {
+      this.actionButtonValue = 'mentor';
+      this.buttonMenu = ['Radmap 1', 'Radmap 2', 'Radmap 3', 'Radmap 4'];
+    }
+    if (
+      !this.tableOptions.btnCreate.canCreate &&
+      !this.tableOptions.btnCreate.canView
+    ) {
+      this.actionButtonValue = 'mentee';
+    }
+    console.log(this.actionButtonValue);
   // Funzione al click del tasto visualizza generico
   visualizeRow(element: any){
     this.viewDetails.emit(element);
@@ -213,11 +255,22 @@ export class GenericTableComponent implements OnInit  {
     if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView && this.tableOptions.type === 'mentee'){
       this.actionButtonValue = 'mentee';
     }
+
   }
 
-  createRoadmap(){
+  createRoadmap() {
     const queryParams = {
       type: this.tableOptions.type,
+      createMode: true,
+    };
+    this.router.navigate(['/form'], {
+      queryParams: queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  selectionItemButtonMenu(item: string) {
+    console.log(item);
       createMode: true
     }
     this.router.navigate(

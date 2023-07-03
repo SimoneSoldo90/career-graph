@@ -6,7 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -24,6 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatSlideToggleModule,
     MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatListModule,
     HttpClientModule,
   ],
   exports: [

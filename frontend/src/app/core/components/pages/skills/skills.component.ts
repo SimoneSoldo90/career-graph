@@ -3,7 +3,9 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { Router } from '@angular/router';
 
 import { Skill } from 'src/app/core/models/skill';
+import { Resource } from 'src/app/core/models/resource';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
+import { ResourceService } from 'src/app/core/services/resource/resource.service';
 
 
 @Component({
@@ -16,6 +18,7 @@ export class SkillsComponent implements OnInit {
   title = 'Skills'
   detailTitle = '';
   dataSource: Skill[] = [];
+  resourceDataSource: Resource[] = [];
   displayedColumns = ["id", "title"];
   tableDef: Array<any> = [
     {
@@ -27,7 +30,7 @@ export class SkillsComponent implements OnInit {
     },
   ]
   tableOptions = {
-    "type": "skills",
+    "type": "skill",
     "displayedColumns": this.displayedColumns,
     "tableDef": this.tableDef,
     "canDelete": true,
@@ -41,11 +44,20 @@ export class SkillsComponent implements OnInit {
     "emptyData": false,
   };
   @Output() skillToView = new EventEmitter<any>();
-  constructor(private skillService: SkillService, private router: Router) {}
 
-  ngOnInit(): void {
+  constructor(private resourceService: ResourceService, private skillService: SkillService, private router: Router) {}
+
+   ngOnInit(): void {
+    this.getResources();
     this.getSkills();
-    // can delete e can modify da modificare in base al ruolo!!
+   }
+
+  getResources(): void {
+    this.resourceService.getResources().subscribe( {
+      next: (data: Resource[]) => {
+        this.resourceDataSource = data;
+    }});
+    console.log(this.resourceDataSource);
   }
 
   getSkills(): void {
@@ -65,7 +77,7 @@ export class SkillsComponent implements OnInit {
 
   createNewSkill(event: boolean){
     if(event){
-      this.router.navigate(['/form', { createMode: true, type: "skill" }]);
+      this.router.navigate(['/form', { createMode: true, type: "skill", referenced: false }]);
     }
   }
 
@@ -76,8 +88,7 @@ export class SkillsComponent implements OnInit {
   getSkill(skillId: number): void {
     this.skillService.getSkill(skillId).subscribe( {
       next: (data: Skill) => {
-        let dataToPass = data;
-        this.skillService.changeMessage(dataToPass);
+        this.skillService.changeMessage(data);
       }
     })
   }
