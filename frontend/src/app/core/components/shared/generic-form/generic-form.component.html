@@ -8,13 +8,30 @@
   <form [formGroup]="genericForm" (ngSubmit)="onSubmit()">
       <p *ngFor="let field of formOptions.fields">
         <ng-container *ngIf="field.type === 'boolean'">
-          <mat-checkbox class="example-margin" color = "primary" [id]="field.id" [formControlName]="field.id" [checked] = false>Abilita roadmap</mat-checkbox>
+          <mat-checkbox class="example-margin" color = "primary" [id]="field.id" [formControlName]="field.id" [checked] = false>Abilita</mat-checkbox>
         </ng-container>
-        <ng-container *ngIf="field.type !== 'boolean'">
+        <ng-container *ngIf="field.type === 'text'">
           <mat-form-field>
             <mat-label attr.for="{{field.id}}">{{field.title}}:</mat-label>
             <input matInput [type]="field.type" [id]="field.id" [formControlName]="field.id">
           </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="field.type === 'select'">
+          <mat-form-field>
+            <mat-label attr.for="{{ field.id }}">{{ field.title }}:</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option *ngFor="let option of getDataSource(field.id)" [value]="option" (click)="selectOption(field.id, option)">{{ option.title }}</mat-option>
+            </mat-select>
+            <a mat-raised-button *ngIf="isAddButtonVisible(field.id, selected)" (click)="addElement(field.id, selected)">Aggiungi risorsa</a>
+          </mat-form-field>
+          <mat-list *ngIf="resourcesList.length > 0 && field.hasDetails">
+            <mat-list-item *ngFor="let resource of resourcesList, let i = index">
+              <span>{{ resource.type }}: {{ resource.id }}</span>
+              <span>
+                <a mat-raised-button (click)="removeElement(field.id, selected, i)">Rimuovi risorsa</a>
+              </span>
+            </mat-list-item>
+          </mat-list>
         </ng-container>
       </p>
     <button mat-raised-button type="submit" color = "primary">Crea</button>
