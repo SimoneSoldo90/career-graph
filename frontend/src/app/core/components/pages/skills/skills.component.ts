@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -14,18 +15,33 @@ import { ResourceService } from 'src/app/core/services/resource/resource.service
 })
 export class SkillsComponent implements OnInit {
 
+  title = 'Skills'
+  detailTitle = '';
   dataSource: Skill[] = [];
   resourceDataSource: Resource[] = [];
   displayedColumns = ["id", "title"];
+  tableDef: Array<any> = [
+    {
+      key: 'id',
+      header: 'ID',
+    },    {
+      key: 'title',
+      header: 'Title',
+    },
+  ]
   tableOptions = {
     "type": "skill",
     "displayedColumns": this.displayedColumns,
+    "tableDef": this.tableDef,
     "canDelete": true,
     "canModify": true,
     btnCreate:{
       "canCreate":  true,
       "canView": true
-    }
+    },
+    "title": this.title,
+    "detailTitle": this.detailTitle,
+    "emptyData": false,
   };
   @Output() skillToView = new EventEmitter<any>();
 
@@ -48,7 +64,15 @@ export class SkillsComponent implements OnInit {
     this.skillService.getSkills().subscribe( {
       next: (data: Skill[]) => {
         this.dataSource = data;
-    }});
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status === HttpStatusCode.NotFound){
+          this.tableOptions.emptyData = true;
+        } else {
+          //console.log(error.message)
+        }
+      }
+    });
   }
 
   createNewSkill(event: boolean){

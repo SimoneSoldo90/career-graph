@@ -22,6 +22,7 @@ export class SkillService {
   getSkill(id:number): Observable<Skill> {
     return this.http.get<Skill>(this.baseUrl + id);
   }
+
   changeMessage(message: any) {
     this.messageSource.next(message)
   }

@@ -1,0 +1,28 @@
+<div class="ngx-charts" width="100%" height="100%">
+  <ngx-graph *ngIf="nodes.length>0 && links.length>0"
+  class="chart-container"
+  [view]="[1000, 800]"
+  [showMiniMap]="true"
+  [miniMapMaxWidth]=150
+  [miniMapMaxHeight]=800
+  [nodes]="nodes"
+  [links]="links"
+  [layoutSettings]="layoutSettings"
+  [autoCenter]=true
+  [draggingEnabled]=false
+  [panningEnabled]=true
+  [autoZoom]=true
+  >
+    <ng-template #nodeTemplate let-node>
+      <svg:g #defsTemplate xmlns="http://www.w3.org/2000/xhtml" width="150" height="100">
+        <svg:foreignObject width="100" height="30" (click)="show(node)" [ngStyle]="getStyles(node)">
+          <xhtml:div  xmlns="http://www.w3.org/1999/xhtml" >
+            <label class="node">{{ node.data.title }}</label>
+          </xhtml:div>
+        </svg:foreignObject>
+      </svg:g>
+    </ng-template>
+
+
+  </ngx-graph>
+</div>

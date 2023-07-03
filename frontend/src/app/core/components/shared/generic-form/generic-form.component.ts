@@ -32,8 +32,8 @@ export class GenericFormComponent implements OnInit {
     }
     this.createForm();
     console.log(this.formOptions.isCreation);
-    if (!this.formOptions.isCreation) {
-      this.populateForm();
+    if (!this.formOptions.isCreation){
+      this.populateForm()
     }
   }
 
@@ -71,6 +71,13 @@ export class GenericFormComponent implements OnInit {
       console.log(this.formOptions.formObject);
     } else {
       console.log(this.genericForm.value);
+      const form = this.genericForm.value
+       this.formOptions.formObject = {
+         id: this.formOptions.formObject.id,
+         title: form.title,
+         description: form.description,
+         enabled: form.enabled,
+       };
     }
   }
 
