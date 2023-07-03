@@ -19,7 +19,7 @@
     <!-- ------------------------------------------------- -->
     <ng-container [ngSwitch]="actionButtonValue">
       <ng-container *ngSwitchCase="'admin'">
-        <ng-container *ngIf="tableOptions.type === 'skills'">
+        <ng-container *ngIf="tableOptions.type === 'skill'">
           <button class="actionButton" mat-raised-button (click)="createRoadmap()">
             <mat-icon>add</mat-icon>Aggiungi Skill
           </button>

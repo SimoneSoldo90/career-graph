@@ -170,22 +170,6 @@ export class GenericTableComponent implements OnInit  {
     this.viewDetails.emit(element);
   }
 
-  modifyRow(element: object) {
-    const queryParams = {
-      item: JSON.stringify(element),
-      type: this.tableOptions.type,
-      createMode: false,
-    };
-    this.router.navigate(['/form'], {
-      queryParams: queryParams,
-      queryParamsHandling: 'merge',
-    });
-  }
-
-  deleteRow(elementId: number) {
-    console.log('Elemento: id ' + elementId + ' - eliminato');
-  }
-
   setActionButton() {
     if (
       this.tableOptions.btnCreate.canCreate &&
@@ -207,9 +191,6 @@ export class GenericTableComponent implements OnInit  {
       this.actionButtonValue = 'mentee';
     }
     console.log(this.actionButtonValue);
-  // Funzione al click del tasto visualizza generico
-  visualizeRow(element: any){
-    this.viewDetails.emit(element);
   }
 
   // Funzione al click del tasto modifica
@@ -242,22 +223,6 @@ export class GenericTableComponent implements OnInit  {
   }
 
 
-  // Questa parte non è ancora chiara come deve funzionare...bisogna rimetterci le mani
-  setActionButton(){
-    if(this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView){
-      if(this.tableOptions.type === 'roadmapSkills'){
-        this.actionButtonValue = 'roadmapSkills';
-        this.buttonTitle = 'Associa Skill';
-      } else {
-        this.actionButtonValue = 'admin';
-      }
-    }
-    if(!this.tableOptions.btnCreate.canCreate && this.tableOptions.btnCreate.canView && this.tableOptions.type === 'mentee'){
-      this.actionButtonValue = 'mentee';
-    }
-
-  }
-
   createRoadmap() {
     const queryParams = {
       type: this.tableOptions.type,
@@ -271,8 +236,7 @@ export class GenericTableComponent implements OnInit  {
 
   selectionItemButtonMenu(item: string) {
     console.log(item);
-      createMode: true
-    }
+    var queryParams={"id":item,  createMode: true}
     this.router.navigate(
       ['/form'], {
         queryParams: queryParams,
@@ -280,9 +244,7 @@ export class GenericTableComponent implements OnInit  {
     });
   }
 
-  selectionItemButtonMenu(item: any){
-    this.updateData.emit(item);
-  }
+
   view(id: any) {
     console.log(id)
     this.viewGraphIdType.emit({"id":id})
