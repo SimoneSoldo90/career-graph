@@ -7,7 +7,7 @@ import { RoadmapComponent } from './core/components/pages/roadmap/roadmap.compon
 import { MenteesComponent } from './core/components/pages/mentees/mentees.component';
 import { environment } from 'src/environment/environment';
 import { FormPageComponent } from './core/components/pages/form-page/form-page.component';
-import { RoadmapgraphComponent } from './core/components/pages/roadmapgraph/roadmapgraph.component';
+import { MindMapComponent } from './core/components/shared/mind-map/mind-map.component';
 
 export const menuroutes: any = [
   getRoute(environment.paths.skillspath,environment.paths.skills,SkillsComponent,null),
@@ -22,7 +22,7 @@ const routes: Routes = [
   getRoute(environment.paths.roadmappath,environment.paths.roadmap,RoadmapComponent,null),
   getRoute(environment.paths.menteespath,environment.paths.mentees,MenteesComponent,null),
   getRoute(environment.paths.formpath,environment.paths.form,FormPageComponent,null),
-  getRoute('roadmapgraph','Roadmap Graph',RoadmapgraphComponent,null),
+  getRoute("mindmap","Mind map",MindMapComponent,null),
 ];
 
 @NgModule({

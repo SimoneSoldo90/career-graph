@@ -49,7 +49,7 @@ export class RoadmapComponent implements OnInit {
     btnVisualize:{
       canView:true,
       tooltip:"Visualizza grafo",
-      routerLink:"/roadmapgraph",
+      routerLink:"/mindmap",
       queryParams:{id:1}
     }
   };

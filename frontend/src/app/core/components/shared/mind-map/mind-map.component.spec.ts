@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GraphNgxComponent } from './graph-ngx.component';
+import { MindMapComponent } from './mind-map.component';
 
-describe('GraphNgxComponent', () => {
-  let component: GraphNgxComponent;
-  let fixture: ComponentFixture<GraphNgxComponent>;
+describe('MindMapComponent', () => {
+  let component: MindMapComponent;
+  let fixture: ComponentFixture<MindMapComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GraphNgxComponent]
+      declarations: [MindMapComponent]
     });
-    fixture = TestBed.createComponent(GraphNgxComponent);
+    fixture = TestBed.createComponent(MindMapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

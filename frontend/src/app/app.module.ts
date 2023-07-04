@@ -14,12 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormPageModule } from './core/components/pages/form-page/form-page.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RoadmapModule } from './core/components/pages/roadmap/roadmap.module';
-import { StatusManagerComponent } from './core/components/shared/status-manager/status-manager.component';
 import { StatusManagerModule } from './core/components/shared/status-manager/status-manager.module';
 import { DrawerModule } from './core/components/shared/drawer/drawer.module';
-import { GraphNgxComponent } from './core/components/shared/graph-ngx/graph-ngx.component';
-import { RoadmapgraphComponent } from './core/components/pages/roadmapgraph/roadmapgraph.component';
-import { RoadmapgraphModule } from './core/components/pages/roadmapgraph/roadmapgraph.module';
+import { MindMapModule } from './core/components/shared/mind-map/mind-map.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +38,7 @@ import { RoadmapgraphModule } from './core/components/pages/roadmapgraph/roadmap
     MatSidenavModule,
     StatusManagerModule,
     DrawerModule,
-    RoadmapgraphModule,
+    MindMapModule
     ],
   bootstrap: [AppComponent]
 })
