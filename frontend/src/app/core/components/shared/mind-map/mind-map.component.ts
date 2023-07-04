@@ -4,6 +4,8 @@ import {
   ElementRef,
   HostListener,
   OnInit,
+  Renderer2,
+  RendererFactory2,
   ViewChild,
 } from '@angular/core';
 
@@ -51,9 +53,7 @@ import {
   ],
 })
 export class MindMapComponent implements AfterViewInit {
-  @ViewChild('canvasRef') canvasRef!: ElementRef;
-  @ViewChild('parent') parentRef!: ElementRef;
-  @ViewChild('child') childRef!: ElementRef;
+
 
   ngAfterViewInit() {
     this.drawLine();
@@ -65,12 +65,17 @@ export class MindMapComponent implements AfterViewInit {
   }
 
   drawLine() {
-    const canvas = this.canvasRef.nativeElement;
-
+    let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvasRef')!;
+    const canvasRef = new ElementRef(canvasHtml);
+    const canvas:HTMLCanvasElement = canvasRef.nativeElement;
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
-    const parentElement = this.parentRef.nativeElement;
-    const childElement = this.childRef.nativeElement;
+    let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('parent')!;
+    let childHtml: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('child')!;
+    const parentRef = new ElementRef(parentHtml);
+    const childRef = new ElementRef(childHtml);
+    const parentElement = parentRef.nativeElement;
+    const childElement = childRef.nativeElement;
     const parentRect = parentElement.getBoundingClientRect();
     const childRect = childElement.getBoundingClientRect();
 
@@ -84,6 +89,7 @@ export class MindMapComponent implements AfterViewInit {
       childRect.top + childRect.height / 2 - canvas.offsetTop;
 
     const context = canvas.getContext('2d');
+    if(context!=null){
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
     context.moveTo(parentCenterX, parentCenterY);
@@ -91,5 +97,6 @@ export class MindMapComponent implements AfterViewInit {
     context.strokeStyle = '#000';
     context.lineWidth = 2;
     context.stroke();
+    }
   }
 }
