@@ -40,7 +40,7 @@ export class RoadmapsComponent implements OnInit {
     btnVisualize:{
       canView:false,
       tooltip:"Visualizza roadmap",
-      routerLink:"/roadmapgraph",
+      routerLink:"/mindmap",
       queryParams:{id:1}
     }
   };
@@ -76,6 +76,6 @@ export class RoadmapsComponent implements OnInit {
     this.router.navigate(["/roadmap",{elementId:event.id}])
   }
   visualizzaGrafo(event: Roadmap){
-    this.router.navigate(['/roadmapgraph', { id: event.id }])
+    this.router.navigate(['/mindmap', { id: event.id }])
   }
 }
