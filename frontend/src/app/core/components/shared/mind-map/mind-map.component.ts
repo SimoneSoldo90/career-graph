@@ -187,12 +187,14 @@ export class MindMapComponent implements AfterViewInit {
         if (context != null) {
           context.beginPath();
           context.moveTo(parentCenterX, parentCenterY);
-          context.quadraticCurveTo(
-            parentCenterX,
-            childCenterY, // Control point
-            childCenterX,
-            childCenterY // Destination point
-          );
+          context.lineTo(childCenterX, childCenterY);
+
+          // context.quadraticCurveTo(
+          //   parentCenterX,
+          //   childCenterY, // Control point
+          //   childCenterX,
+          //   childCenterY // Destination point
+          // );
           context.setLineDash([15, 5]); // Set the line dash pattern
           context.strokeStyle = '#144d83';
           context.lineWidth = 2;
