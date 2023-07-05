@@ -46,6 +46,9 @@ import {
         box-shadow: 0 0 0 3px #000000 inset;
         margin-top: 25px;
       }
+      [id^="parent"] {
+        margin-top: 75px;
+      }
       .button-skill:hover {
         transform: translateY(-2px);
       }
