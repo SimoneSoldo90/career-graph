@@ -2,11 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   OnInit,
-  Renderer2,
-  RendererFactory2,
-  ViewChild,
+  Output,
 } from '@angular/core';
 
 @Component({
@@ -75,7 +74,9 @@ import {
     `,
   ],
 })
-export class MindMapComponent implements AfterViewInit {
+export class MindMapComponent implements AfterViewInit, OnInit {
+  @Output() viewDetails = new EventEmitter<any>();
+
   firsthalfchilds: { id: number; title: string }[] = [];
   parents: { id: number; title: string; childs: number[] }[] = [];
 
@@ -127,6 +128,9 @@ export class MindMapComponent implements AfterViewInit {
     this.drawLine();
   }
 
+  ngOnInit(){
+    this.drawLine();
+  }
   @HostListener('window:resize')
   onWindowResize() {
     this.drawLine();
@@ -218,12 +222,16 @@ export class MindMapComponent implements AfterViewInit {
           context.beginPath();
           context.moveTo(parentCenterX, parentCenterY);
           context.lineTo(childCenterX, childCenterY);
-          context.setLineDash([3, 3]); // Set the line dash pattern
+          context.setLineDash([5, 5]); // Set the line dash pattern
           context.strokeStyle = '#14833F';
           context.lineWidth = 2;
           context.stroke();
         }
       }
     }
+  }
+
+  visualizeDetail(element: any) {
+    this.viewDetails.emit(element);
   }
 }

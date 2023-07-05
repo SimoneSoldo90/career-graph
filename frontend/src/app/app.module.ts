@@ -16,7 +16,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RoadmapModule } from './core/components/pages/roadmap/roadmap.module';
 import { StatusManagerModule } from './core/components/shared/status-manager/status-manager.module';
 import { DrawerModule } from './core/components/shared/drawer/drawer.module';
-import { MindMapModule } from './core/components/shared/mind-map/mind-map.module';
+import { RoadmapgraphModule } from './core/components/pages/roadmapgraph/roadmapgraph.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { MindMapModule } from './core/components/shared/mind-map/mind-map.module
     MatSidenavModule,
     StatusManagerModule,
     DrawerModule,
-    MindMapModule
+    RoadmapgraphModule,
     ],
   bootstrap: [AppComponent]
 })
