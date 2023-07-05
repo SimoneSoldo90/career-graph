@@ -1,9 +1,11 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   HostListener,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -37,7 +39,7 @@ import {
         border-radius: 5px;
         padding: 10px 12px 10px;
         font-size: 18px;
-        font-weight: 700;
+        font-weight: lighter;
         line-height: 1;
         background-color: white;
         transition: transform 200ms, background 200ms;
@@ -45,7 +47,7 @@ import {
         box-shadow: 0 0 0 3px #000000 inset;
         margin-top: 25px;
       }
-      [id^="parent"] {
+      [id^='parent'] {
         margin-top: 75px;
       }
       .button-skill:hover {
@@ -74,47 +76,15 @@ import {
     `,
   ],
 })
-export class MindMapComponent implements AfterViewInit, OnInit {
+export class MindMapComponent implements AfterViewInit {
   @Output() viewDetails = new EventEmitter<any>();
 
-  firsthalfchilds: { id: number; title: string }[] = [];
-  parents: { id: number; title: string; childs: number[] }[] = [];
-
-  nodes = [
-    {
-      id: 1,
-      title: 'Java',
-      childs: [2, 6],
-    },
-    {
-      id: 2,
-      title: 'OOP',
-    },
-    {
-      id: 3,
-      title: 'Build Tools',
-      childs: [4, 5],
-    },
-    {
-      id: 4,
-      title: 'Maven',
-    },
-    {
-      id: 5,
-      title: 'Gradle',
-    },
-    {
-      id: 6,
-      title: 'Types',
-    },
-  ];
-
-  constructor() {
-    this.nodes.forEach((node) => {
+  @Input() set nodes(nodes:any){
+    nodes.forEach((node: any) => {
       if (node.childs) {
         this.parents.push(node);
-        node.childs.forEach((child) => {
-          let childFounded = this.nodes.filter((element) => {
+        node.childs.forEach((child: any) => {
+          let childFounded = nodes.filter((element: any) => {
             if (element.id == child) return element;
             else return null;
           });
@@ -122,15 +92,18 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         });
       }
     });
+    this.drawLine();
   }
+  firsthalfchilds: { id: number; title: string }[] = [];
+  parents: { id: number; title: string; childs: number[] }[] = [];
+  secondhalfchilds: { id: number; title: string }[] = [];
+
+  constructor() {}
 
   ngAfterViewInit() {
-    this.drawLine();
+      this.drawLine();
   }
 
-  ngOnInit(){
-    this.drawLine();
-  }
   @HostListener('window:resize')
   onWindowResize() {
     this.drawLine();
@@ -148,12 +121,21 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     //-----------------------------------------------------------------------------
     //-----------------------------------------------------------------------------
 
-    this.parents.forEach((parent: any) => {
+    this.parents.forEach((parent: any,index:number) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + parent.id)!
       );
+      if(index===0){
+        const firstelement = document.getElementById('parent'+ parent.id);
+        if(firstelement!=null){
+          firstelement.style.backgroundColor="#144d83"
+          firstelement.style.color="white"
+          firstelement.style.fontWeight="400"
+        }
+      }
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
+      console.log('parent' + parent.id)
       const parentRect = parentElement.getBoundingClientRect();
       const parentCenterX =
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
@@ -199,13 +181,11 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
-        console.log("i = "+i)
-        console.log("(this.parents.length - 1) =  "+(this.parents.length - 1))
-      if (i < (this.parents.length-1)) {
+
+      if (i < this.parents.length - 1) {
         let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('parent' + (this.parents[i+1].id))!
+          document.getElementById('parent' + this.parents[i + 1].id)!
         );
-        console.log('parent' + (this.parents[i].id))
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
         const childRect = childElement.getBoundingClientRect();
@@ -216,9 +196,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         const context = canvas.getContext('2d');
 
         if (context != null) {
-          console.log("Parent "+this.parents[i])
-          console.log("Coordinates "+parentCenterX+parentCenterY)
-          console.log("Coordinates Child "+childCenterX+childCenterY)
           context.beginPath();
           context.moveTo(parentCenterX, parentCenterY);
           context.lineTo(childCenterX, childCenterY);
@@ -231,7 +208,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     }
   }
 
-  visualizeDetail(element: any) {
+  public visualizeDetail(element: any) {
     this.viewDetails.emit(element);
   }
 }
