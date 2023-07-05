@@ -35,7 +35,7 @@ import {
         outline: 0;
         border: 0;
         cursor: pointer;
-        border-radius: 8px;
+        border-radius: 5px;
         padding: 10px 12px 10px;
         font-size: 18px;
         font-weight: 700;
@@ -73,7 +73,7 @@ import {
   ],
 })
 export class MindMapComponent implements AfterViewInit {
-  firsthalfchilds: {id:number;title:string}[] = [];
+  firsthalfchilds: { id: number; title: string }[] = [];
   parents: { id: number; title: string; childs: number[] }[] = [];
 
   nodes = [
@@ -140,6 +140,7 @@ export class MindMapComponent implements AfterViewInit {
     canvas.height = window.innerHeight;
     //-----------------------------------------------------------------------------
     //-----------------------------------------------------------------------------
+
     this.parents.forEach((parent: any) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + parent.id)!
@@ -153,58 +154,73 @@ export class MindMapComponent implements AfterViewInit {
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
       parent.childs.forEach((childId: number) => {
         let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('child'+childId)!
+          document.getElementById('child' + childId)!
         );
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
         const childRect = childElement.getBoundingClientRect();
-        const childCenterX = childRect.left + childRect.width / 2 - canvas.offsetLeft;
-        const childCenterY = childRect.top + childRect.height / 2 - canvas.offsetTop;
+        const childCenterX =
+          childRect.left + childRect.width / 2 - canvas.offsetLeft;
+        const childCenterY =
+          childRect.top + childRect.height / 2 - canvas.offsetTop;
         const context = canvas.getContext('2d');
 
         if (context != null) {
           context.beginPath();
           context.moveTo(parentCenterX, parentCenterY);
-          context.lineTo(childCenterX, childCenterY);
-          context.strokeStyle = '#000';
+          context.quadraticCurveTo(
+            parentCenterX,
+            childCenterY, // Control point
+            childCenterX,
+            childCenterY // Destination point
+          );
+          context.setLineDash([15, 5]); // Set the line dash pattern
+          context.strokeStyle = '#144d83';
           context.lineWidth = 2;
           context.stroke();
         }
       });
     });
-/*
-    let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-      document.getElementById('parent1')!
-    );
-    let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-      document.getElementById('child6')!
-    );
-    const parentRef = new ElementRef(parentHtml);
-    const childRef = new ElementRef(childHtml);
-    const parentElement = parentRef.nativeElement;
-    const childElement = childRef.nativeElement;
-    const parentRect = parentElement.getBoundingClientRect();
-    const childRect = childElement.getBoundingClientRect();
+    for (let i = 0; i < this.parents.length; i++) {
+      let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+        document.getElementById('parent' + this.parents[i].id)!
+      );
+      const parentRef = new ElementRef(parentHtml);
+      const parentElement = parentRef.nativeElement;
+      const parentRect = parentElement.getBoundingClientRect();
+      const parentCenterX =
+        parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
+      const parentCenterY =
+        parentRect.top + parentRect.height / 2 - canvas.offsetTop;
+        console.log("i = "+i)
+        console.log("(this.parents.length - 1) =  "+(this.parents.length - 1))
+      if (i < (this.parents.length-1)) {
+        let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+          document.getElementById('parent' + (this.parents[i+1].id))!
+        );
+        console.log('parent' + (this.parents[i].id))
+        const childRef = new ElementRef(childHtml);
+        const childElement = childRef.nativeElement;
+        const childRect = childElement.getBoundingClientRect();
+        const childCenterX =
+          childRect.left + childRect.width / 2 - canvas.offsetLeft;
+        const childCenterY =
+          childRect.top + childRect.height / 2 - canvas.offsetTop;
+        const context = canvas.getContext('2d');
 
-    const parentCenterX =
-      parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
-    const parentCenterY =
-      parentRect.top + parentRect.height / 2 - canvas.offsetTop;
-    const childCenterX =
-      childRect.left + childRect.width / 2 - canvas.offsetLeft;
-    const childCenterY =
-      childRect.top + childRect.height / 2 - canvas.offsetTop;
-
-    const context = canvas.getContext('2d');
-    if (context != null) {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.beginPath();
-      context.moveTo(parentCenterX, parentCenterY);
-      context.lineTo(childCenterX, childCenterY);
-      context.strokeStyle = '#000';
-      context.lineWidth = 2;
-      context.stroke();
-    }*/
-
+        if (context != null) {
+          console.log("Parent "+this.parents[i])
+          console.log("Coordinates "+parentCenterX+parentCenterY)
+          console.log("Coordinates Child "+childCenterX+childCenterY)
+          context.beginPath();
+          context.moveTo(parentCenterX, parentCenterY);
+          context.lineTo(childCenterX, childCenterY);
+          context.setLineDash([3, 3]); // Set the line dash pattern
+          context.strokeStyle = '#14833F';
+          context.lineWidth = 2;
+          context.stroke();
+        }
+      }
+    }
   }
 }
