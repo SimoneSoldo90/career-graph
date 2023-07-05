@@ -79,19 +79,27 @@ import {
 export class MindMapComponent implements AfterViewInit {
   @Output() viewDetails = new EventEmitter<any>();
 
-  @Input() set nodes(nodes:any){
+  @Input() set nodes(nodes:any[]){
     nodes.forEach((node: any) => {
       if (node.childs) {
+        var firsthalflength = (node.childs.length/2)-1 === -1 ? 0 : (node.childs.length/2)-1;
         this.parents.push(node);
-        node.childs.forEach((child: any) => {
+        node.childs.forEach((child: any,index:number) => {
           let childFounded = nodes.filter((element: any) => {
             if (element.id == child) return element;
             else return null;
           });
-          this.firsthalfchilds.push(childFounded[0]);
+
+          if(index<=firsthalflength){
+            this.firsthalfchilds.push(childFounded[0]);
+           } else{
+            this.secondhalfchilds.push(childFounded[0]);
+           }
         });
       }
     });
+    console.log(this.firsthalfchilds)
+    console.log(this.secondhalfchilds)
     this.drawLine();
   }
   firsthalfchilds: { id: number; title: string }[] = [];
@@ -143,7 +151,7 @@ export class MindMapComponent implements AfterViewInit {
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
       parent.childs.forEach((childId: number) => {
         let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('child' + childId)!
+          document.getElementById('childsx' + childId)!
         );
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;

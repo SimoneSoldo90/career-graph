@@ -2,7 +2,7 @@
   <div *ngIf="parents!==null && firsthalfchilds!==null" width="800" height="600">
   <table class="leftTable">
     <tr  *ngFor="let firstcolchild of firsthalfchilds">
-      <td (click)="visualizeDetail(firstcolchild)" class="button-skill" id="child{{firstcolchild.id}}" style="background-color: aqua;">{{firstcolchild.title}}</td>
+      <td (click)="visualizeDetail(firstcolchild)" class="button-skill" id="childsx{{firstcolchild.id}}" style="background-color: aqua;">{{firstcolchild.title}}</td>
     </tr>
   </table>
   <table class="centerTable">
@@ -11,8 +11,8 @@
     </tr>
   </table>
   <table class="rightTable">
-    <tr  *ngFor="let firstcolchild of firsthalfchilds">
-      <td (click)="visualizeDetail(firstcolchild)" class="button-skill" id="child{{firstcolchild.id}}" style="background-color: aqua;">{{firstcolchild.title}}</td>
+    <tr  *ngFor="let secondhalfchild of secondhalfchilds">
+      <td (click)="visualizeDetail(secondhalfchild)" class="button-skill" id="childdx{{secondhalfchild.id}}" style="background-color: aqua;">{{secondhalfchild.title}}</td>
     </tr>
   </table>
 </div>
