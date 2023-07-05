@@ -150,11 +150,33 @@ export class MindMapComponent implements AfterViewInit {
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
       parent.childs.forEach((childId: number) => {
-        let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('childsx' + childId)!
-        );
+
+        let childHtml: HTMLCanvasElement | null = null;
+        let childsxFounded = this.firsthalfchilds.filter((element: any) => {
+          if (element.id == childId) return element;
+          else return null;
+        });
+        let childdxFounded = this.secondhalfchilds.filter((element: any) => {
+          if (element.id == childId) return element;
+          else return null;
+        });
+        console.log(childdxFounded)
+        console.log(childsxFounded)
+
+        if(childsxFounded.length>0){
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childsx' + childId)!
+          );
+        } else if(childdxFounded.length>0){
+          console.log('childdx' + childId)
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childdx' + childId)!
+          );
+        }
+
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
+        if(childElement){
         const childRect = childElement.getBoundingClientRect();
         const childCenterX =
           childRect.left + childRect.width / 2 - canvas.offsetLeft;
@@ -176,6 +198,7 @@ export class MindMapComponent implements AfterViewInit {
           context.lineWidth = 2;
           context.stroke();
         }
+      }
       });
     });
     for (let i = 0; i < this.parents.length; i++) {
