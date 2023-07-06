@@ -14,7 +14,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatGridListModule,
   ],
   exports: [
-    MindMapComponent
+    MindMapComponent,
   ],
 })
 export class MindMapModule { }

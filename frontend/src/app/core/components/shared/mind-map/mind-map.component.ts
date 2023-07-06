@@ -32,6 +32,8 @@ import {
         background: lightblue;
       }
       .button-skill {
+        word-break: break-word;
+        width: 100px;
         display: inline-block;
         outline: 0;
         border: 0;
@@ -66,11 +68,51 @@ import {
         float: left;
         position: relative;
       }
-      @media only screen and (max-width: 500px) {
+
+      @media screen and (min-width: 651px) and (max-width: 1200px) {
+        .button-skill {
+          width: 75px;
+          font-size: 16px;
+        }
+      }
+
+      /* Window width from 501px to 649px */
+      @media screen and (min-width: 501px) and (max-width: 649px) {
         .centerTable {
-          float: left;
-          position: relative;
           margin: 20px 25px 0px 25px;
+        }
+        .button-skill {
+          width: 75px;
+          font-size: 16px;
+        }
+      }
+
+      /* Window width less than 500px */
+      @media screen and (min-width: 360px) and (max-width: 500px) {
+        .centerTable {
+          margin: 20px 25px 0px 25px;
+        }
+        .button-skill {
+          width: 60px;
+          font-size: 14px;
+        }
+      }
+      @media screen and (min-width: 250px) and (max-width: 360px) {
+        .centerTable {
+          margin: 20px 15px 0px 15px;
+        }
+        .button-skill {
+          width: 30px;
+          font-size: 10px;
+        }
+      }
+      @media screen and (max-width: 250px) {
+        .centerTable {
+          margin: 20px 10px 0px 10px;
+        }
+        .button-skill {
+          width: 20px;
+          font-size: 10px;
         }
       }
     `,
