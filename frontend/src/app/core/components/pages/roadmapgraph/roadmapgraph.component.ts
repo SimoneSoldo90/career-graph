@@ -13,7 +13,7 @@ export class RoadmapgraphComponent {
     {
       id: 1,
       title: 'Java',
-      childs: [2,6,7,8,11,12,13,14,15,16,17,18,19,20],
+      childs: [2,6,7,8,11,12,13,14,15,16,17,18,19,20,21],
       // childs: [2,6,7,8,11,12,13,14]
     },
     {

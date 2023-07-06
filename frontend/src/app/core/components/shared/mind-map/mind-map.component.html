@@ -3,12 +3,12 @@
   <table id="tablecontainer">
   <table class="leftTable">
     <tr  *ngFor="let firstcolchild of firsthalfchilds">
-      <td (click)="visualizeDetail(firstcolchild)" class="button-skill" id="childsx{{firstcolchild.id}}">{{firstcolchild.title}}</td>
+      <td (click)="visualizeDetail(firstcolchild,true)" class="button-skill" id="childsx{{firstcolchild.id}}">{{firstcolchild.title}}</td>
     </tr>
   </table>
   <table class="centerTable">
     <tr *ngFor="let parent of parents ">
-      <td (click)="visualizeDetail(parent)" class="button-skill" id="parent{{parent.id}}">{{parent.title}}</td>
+      <td (click)="visualizeDetail(parent,false)" class="button-skill" id="parent{{parent.id}}">{{parent.title}}</td>
       <div *ngFor="let child of parent.childs">
         <br>
       </div>
@@ -16,7 +16,7 @@
   </table>
   <table class="rightTable">
     <tr  *ngFor="let secondhalfchild of secondhalfchilds">
-      <td (click)="visualizeDetail(secondhalfchild)" class="button-skill" id="childdx{{secondhalfchild.id}}">{{secondhalfchild.title}}</td>
+      <td (click)="visualizeDetail(secondhalfchild,true)" class="button-skill" id="childdx{{secondhalfchild.id}}">{{secondhalfchild.title}}</td>
     </tr>
 
   </table>
