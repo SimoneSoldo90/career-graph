@@ -79,27 +79,33 @@ import {
 export class MindMapComponent implements AfterViewInit {
   @Output() viewDetails = new EventEmitter<any>();
 
-  @Input() set nodes(nodes:any[]){
+  @Input() set nodes(nodes: any[]) {
     nodes.forEach((node: any) => {
       if (node.childs) {
-        var firsthalflength = (node.childs.length/2)-1 === -1 ? 0 : (node.childs.length/2)-1;
+        var firsthalflength =
+          node.childs.length / 2 - 1 === -1 ? 0 : node.childs.length / 2 - 1;
         this.parents.push(node);
-        node.childs.forEach((child: any,index:number) => {
+        node.childs.forEach((child: any, index: number) => {
           let childFounded = nodes.filter((element: any) => {
             if (element.id == child) return element;
             else return null;
           });
-
-          if(index<=firsthalflength){
-            this.firsthalfchilds.push(childFounded[0]);
-           } else{
-            this.secondhalfchilds.push(childFounded[0]);
-           }
+          if (childFounded.length > 0) {
+            if (index <= firsthalflength) {
+              if (!this.firsthalfchilds.includes(childFounded[0])) {
+                this.firsthalfchilds.push(childFounded[0]);
+              }
+            } else {
+              if (!this.secondhalfchilds.includes(childFounded[0])) {
+                this.secondhalfchilds.push(childFounded[0]);
+              }
+            }
+          }
         });
       }
     });
-    console.log(this.firsthalfchilds)
-    console.log(this.secondhalfchilds)
+    console.log(this.firsthalfchilds);
+    console.log(this.secondhalfchilds);
     this.drawLine();
   }
   firsthalfchilds: { id: number; title: string }[] = [];
@@ -109,7 +115,7 @@ export class MindMapComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit() {
-      this.drawLine();
+    this.drawLine();
   }
 
   @HostListener('window:resize')
@@ -129,28 +135,27 @@ export class MindMapComponent implements AfterViewInit {
     //-----------------------------------------------------------------------------
     //-----------------------------------------------------------------------------
 
-    this.parents.forEach((parent: any,index:number) => {
+    this.parents.forEach((parent: any, index: number) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + parent.id)!
       );
-      if(index===0){
-        const firstelement = document.getElementById('parent'+ parent.id);
-        if(firstelement!=null){
-          firstelement.style.backgroundColor="#144d83"
-          firstelement.style.color="white"
-          firstelement.style.fontWeight="400"
+      if (index === 0) {
+        const firstelement = document.getElementById('parent' + parent.id);
+        if (firstelement != null) {
+          firstelement.style.backgroundColor = '#144d83';
+          firstelement.style.color = 'white';
+          firstelement.style.fontWeight = '400';
         }
       }
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
-      console.log('parent' + parent.id)
+      console.log('parent' + parent.id);
       const parentRect = parentElement.getBoundingClientRect();
       const parentCenterX =
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
       parent.childs.forEach((childId: number) => {
-
         let childHtml: HTMLCanvasElement | null = null;
         let childsxFounded = this.firsthalfchilds.filter((element: any) => {
           if (element.id == childId) return element;
@@ -160,15 +165,15 @@ export class MindMapComponent implements AfterViewInit {
           if (element.id == childId) return element;
           else return null;
         });
-        console.log(childdxFounded)
-        console.log(childsxFounded)
+        console.log(childdxFounded);
+        console.log(childsxFounded);
 
-        if(childsxFounded.length>0){
+        if (childsxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
             document.getElementById('childsx' + childId)!
           );
-        } else if(childdxFounded.length>0){
-          console.log('childdx' + childId)
+        } else if (childdxFounded.length > 0) {
+          console.log('childdx' + childId);
           childHtml = <HTMLCanvasElement>(
             document.getElementById('childdx' + childId)!
           );
@@ -176,31 +181,31 @@ export class MindMapComponent implements AfterViewInit {
 
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
-        if(childElement){
-        const childRect = childElement.getBoundingClientRect();
-        const childCenterX =
-          childRect.left + childRect.width / 2 - canvas.offsetLeft;
-        const childCenterY =
-          childRect.top + childRect.height / 2 - canvas.offsetTop;
-        const context = canvas.getContext('2d');
+        if (childElement) {
+          const childRect = childElement.getBoundingClientRect();
+          const childCenterX =
+            childRect.left + childRect.width / 2 - canvas.offsetLeft;
+          const childCenterY =
+            childRect.top + childRect.height / 2 - canvas.offsetTop;
+          const context = canvas.getContext('2d');
 
-        if (context != null) {
-          context.beginPath();
-          context.moveTo(parentCenterX, parentCenterY);
-          context.lineTo(childCenterX, childCenterY);
+          if (context != null) {
+            context.beginPath();
+            context.moveTo(parentCenterX, parentCenterY);
+            context.lineTo(childCenterX, childCenterY);
 
-          // context.quadraticCurveTo(
-          //   parentCenterX,
-          //   childCenterY, // Control point
-          //   childCenterX,
-          //   childCenterY // Destination point
-          // );
-          context.setLineDash([15, 5]); // Set the line dash pattern
-          context.strokeStyle = '#144d83';
-          context.lineWidth = 2;
-          context.stroke();
+            // context.quadraticCurveTo(
+            //   parentCenterX,
+            //   childCenterY, // Control point
+            //   childCenterX,
+            //   childCenterY // Destination point
+            // );
+            context.setLineDash([15, 5]); // Set the line dash pattern
+            context.strokeStyle = '#144d83';
+            context.lineWidth = 2;
+            context.stroke();
+          }
         }
-      }
       });
     });
     for (let i = 0; i < this.parents.length; i++) {
