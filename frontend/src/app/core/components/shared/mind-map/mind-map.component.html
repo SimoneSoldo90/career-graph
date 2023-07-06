@@ -1,5 +1,4 @@
-
-  <div *ngIf="parents!==null && firsthalfchilds!==null" width="800" height="600">
+<div *ngIf="parents!==null && firsthalfchilds!==null" width="800" height="600">
   <table class="leftTable">
     <tr  *ngFor="let firstcolchild of firsthalfchilds">
       <td (click)="visualizeDetail(firstcolchild)" class="button-skill" id="childsx{{firstcolchild.id}}" style="background-color: aqua;">{{firstcolchild.title}}</td>
