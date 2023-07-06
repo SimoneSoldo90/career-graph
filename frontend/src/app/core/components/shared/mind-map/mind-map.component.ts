@@ -319,7 +319,14 @@ export class MindMapComponent implements AfterViewInit {
     }
     return moltiplicatoreAltezza;
   }
-  public visualizeDetail(element: any) {
-    this.viewDetails.emit(element);
+  public visualizeDetail(element: any,isSideNode : boolean) {
+    if (element.childs && isSideNode) {
+      const targetElement = document.getElementById('parent' + element.id);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      this.viewDetails.emit(element);
+    }
   }
 }
