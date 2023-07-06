@@ -13,7 +13,8 @@ export class RoadmapgraphComponent {
     {
       id: 1,
       title: 'Java',
-      childs: [2,6,7,8,11,12,13,14],
+      childs: [2,6,7,8,11,12,13,14,15,16,17,18,19,20],
+      // childs: [2,6,7,8,11,12,13,14]
     },
     {
       id: 2,
@@ -75,6 +76,102 @@ export class RoadmapgraphComponent {
     {
       id: 14,
       title: 'Qua',
+    },
+
+    {
+      id: 15,
+      title: 'Gimli',
+    },
+
+    {
+      id: 16,
+      title: 'Legolas',
+    },
+
+    {
+      id: 17,
+      title: 'Pipino',
+    },
+
+    {
+      id: 18,
+      title: 'Merry',
+    },
+
+    {
+      id: 19,
+      title: 'Frodo',
+    },
+
+    {
+      id: 20,
+      title: 'Gandalf',
+    },
+    {
+      id: 21,
+      title: 'Softwareopoli',
+      childs: [22,23,24,25,26,27,28,29,30,31,32,33],
+      // childs: [2,6,7,8,11,12,13,14]
+    },
+
+    {
+      id: 22,
+      title: 'Simone',
+    },
+
+    {
+      id: 23,
+      title: 'Paolo',
+    },
+
+    {
+      id: 24,
+      title: 'Antonio',
+    },
+
+    {
+      id: 25,
+      title: 'Giuseppe',
+    },
+
+    {
+      id: 26,
+      title: 'Roberto',
+    },
+
+    {
+      id: 27,
+      title: 'Federico',
+    },
+
+    {
+      id: 28,
+      title: 'Nick',
+    },
+
+    {
+      id: 29,
+      title: 'Giuseppe P',
+    },
+
+    {
+      id: 30,
+      title: 'Daniele',
+    },
+
+    {
+      id: 31,
+      title: 'Gabriele',
+    },
+
+    {
+      id: 32,
+      title: 'Pier',
+    },
+
+    {
+      id: 33,
+      title: 'Carmine',
     }
   ];
 
