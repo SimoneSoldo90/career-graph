@@ -25,7 +25,7 @@ import {
         z-index: -1;
         background-color: #e5e5f7;
         opacity: 0.8;
-        background-image: radial-gradient(#444cf7 0.5px, #F8F8FF 0.5px);
+        background-image: radial-gradient(#444cf7 0.5px, #f8f8ff 0.5px);
         background-size: 10px 10px;
       }
       td {
