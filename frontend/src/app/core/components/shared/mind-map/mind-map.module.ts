@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MindMapComponent } from './mind-map.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 
@@ -12,6 +13,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
   imports: [
     CommonModule,
     MatGridListModule,
+    MatSlideToggleModule,
   ],
   exports: [
     MindMapComponent,
