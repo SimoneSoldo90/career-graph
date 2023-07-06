@@ -1,13 +1,12 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   HostListener,
   Input,
-  OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 
 @Component({
@@ -25,11 +24,8 @@ import {
         left: 0;
         z-index: -1;
       }
-      mat-grid-list {
-        padding: 150px;
-      }
-      mat-grid-tile {
-        background: lightblue;
+      td {
+        text-align: center;
       }
       .button-skill {
         word-break: break-word;
@@ -38,7 +34,7 @@ import {
         outline: 0;
         border: 0;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 3px;
         padding: 10px 12px 10px;
         font-size: 18px;
         font-weight: lighter;
@@ -46,14 +42,16 @@ import {
         background-color: white;
         transition: transform 200ms, background 200ms;
         color: #000000;
-        box-shadow: 0 0 0 3px #000000 inset;
+        box-shadow: 0 0 0 2px #000000 inset;
         margin-top: 25px;
       }
       [id^='parent'] {
         margin-top: 75px;
       }
       .button-skill:hover {
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 2px 2px 3px #144d83;
+        font-weight: 400;
       }
       .leftTable {
         float: left;
@@ -68,15 +66,12 @@ import {
         float: left;
         position: relative;
       }
-
       @media screen and (min-width: 651px) and (max-width: 1200px) {
         .button-skill {
           width: 75px;
           font-size: 16px;
         }
       }
-
-      /* Window width from 501px to 649px */
       @media screen and (min-width: 501px) and (max-width: 649px) {
         .centerTable {
           margin: 20px 25px 0px 25px;
@@ -86,8 +81,6 @@ import {
           font-size: 16px;
         }
       }
-
-      /* Window width less than 500px */
       @media screen and (min-width: 360px) and (max-width: 500px) {
         .centerTable {
           margin: 20px 25px 0px 25px;
@@ -120,7 +113,8 @@ import {
 })
 export class MindMapComponent implements AfterViewInit {
   @Output() viewDetails = new EventEmitter<any>();
-
+  @ViewChild('scrollContainer', { static: true })
+  scrollContainerRef!: ElementRef;
   @Input() set nodes(nodes: any[]) {
     nodes.forEach((node: any) => {
       if (node.childs) {
@@ -146,10 +140,10 @@ export class MindMapComponent implements AfterViewInit {
         });
       }
     });
-    console.log(this.firsthalfchilds);
-    console.log(this.secondhalfchilds);
     this.drawLine();
   }
+
+  private resizeTimeout: any;
   firsthalfchilds: { id: number; title: string }[] = [];
   parents: { id: number; title: string; childs: number[] }[] = [];
   secondhalfchilds: { id: number; title: string }[] = [];
@@ -166,32 +160,40 @@ export class MindMapComponent implements AfterViewInit {
   }
 
   drawLine() {
-    //Si settano larghezza e altezza del canvas in base alla dimensione della pagina
     let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
       document.getElementById('canvasRef')!
     );
     const canvasRef = new ElementRef(canvasHtml);
-    const canvas: HTMLCanvasElement = canvasRef.nativeElement;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    //-----------------------------------------------------------------------------
-    //-----------------------------------------------------------------------------
-
+    let canvas: HTMLCanvasElement = this.getCanvas(canvasRef);
+    this.disegnaLinkTraParentEChilds(this.parents, canvas);
+    this.disegnaLinkTraParents(this.parents, canvas);
+  }
+  private disegnaLinkTraParentEChilds(
+    parents: { id: number; title: string; childs: number[] }[],
+    canvas: HTMLCanvasElement
+  ) {
     this.parents.forEach((parent: any, index: number) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + parent.id)!
       );
+
       if (index === 0) {
-        const firstelement = document.getElementById('parent' + parent.id);
-        if (firstelement != null) {
-          firstelement.style.backgroundColor = '#144d83';
-          firstelement.style.color = 'white';
-          firstelement.style.fontWeight = '400';
+        const elementHtml = document.getElementById('parent' + parent.id);
+        if (elementHtml != null) {
+          elementHtml.style.backgroundColor = '#144d83';
+          elementHtml.style.color = 'white';
+          elementHtml.style.fontWeight = '400';
+        }
+      } else {
+        const elementHtml = document.getElementById('parent' + parent.id);
+        if (elementHtml != null) {
+          elementHtml.style.backgroundColor = '#acd0fb';
+          elementHtml.style.color = 'black';
+          elementHtml.style.fontWeight = '400';
         }
       }
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
-      console.log('parent' + parent.id);
       const parentRect = parentElement.getBoundingClientRect();
       const parentCenterX =
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
@@ -207,15 +209,11 @@ export class MindMapComponent implements AfterViewInit {
           if (element.id == childId) return element;
           else return null;
         });
-        console.log(childdxFounded);
-        console.log(childsxFounded);
-
         if (childsxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
             document.getElementById('childsx' + childId)!
           );
         } else if (childdxFounded.length > 0) {
-          console.log('childdx' + childId);
           childHtml = <HTMLCanvasElement>(
             document.getElementById('childdx' + childId)!
           );
@@ -242,7 +240,7 @@ export class MindMapComponent implements AfterViewInit {
             //   childCenterX,
             //   childCenterY // Destination point
             // );
-            context.setLineDash([15, 5]); // Set the line dash pattern
+            context.setLineDash([25, 5]); // Set the line dash pattern
             context.strokeStyle = '#144d83';
             context.lineWidth = 2;
             context.stroke();
@@ -250,6 +248,11 @@ export class MindMapComponent implements AfterViewInit {
         }
       });
     });
+  }
+  private disegnaLinkTraParents(
+    parents: { id: number; title: string; childs: number[] }[],
+    canvas: HTMLCanvasElement
+  ) {
     for (let i = 0; i < this.parents.length; i++) {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + this.parents[i].id)!
@@ -279,7 +282,7 @@ export class MindMapComponent implements AfterViewInit {
           context.beginPath();
           context.moveTo(parentCenterX, parentCenterY);
           context.lineTo(childCenterX, childCenterY);
-          context.setLineDash([5, 5]); // Set the line dash pattern
+          context.setLineDash([3, 3]); // Set the line dash pattern
           context.strokeStyle = '#14833F';
           context.lineWidth = 2;
           context.stroke();
@@ -287,7 +290,31 @@ export class MindMapComponent implements AfterViewInit {
       }
     }
   }
+  private getCanvas(
+    canvasRef: ElementRef<HTMLCanvasElement>
+  ): HTMLCanvasElement {
+    let canvas = canvasRef.nativeElement;
+    canvas.width = window.innerWidth;
 
+    canvas.height = window.innerHeight * this.getMoltiplicatoreAltezza();
+    return canvas;
+  }
+  private getMoltiplicatoreAltezza(): number {
+    const rapporto: number = window.innerHeight * 0.0125;
+    let moltiplicatoreAltezza = 1.3;
+    if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
+      moltiplicatoreAltezza =
+        this.firsthalfchilds.length > 10
+          ? this.firsthalfchilds.length / rapporto
+          : 1.3;
+    } else {
+      moltiplicatoreAltezza =
+        this.secondhalfchilds.length > 10
+          ? this.secondhalfchilds.length / rapporto
+          : 1.3;
+    }
+    return moltiplicatoreAltezza;
+  }
   public visualizeDetail(element: any) {
     this.viewDetails.emit(element);
   }
