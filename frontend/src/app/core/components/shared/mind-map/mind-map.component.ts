@@ -6,7 +6,6 @@ import {
   HostListener,
   Input,
   Output,
-  ViewChild,
 } from '@angular/core';
 
 @Component({
@@ -117,8 +116,6 @@ import {
 })
 export class MindMapComponent implements AfterViewInit {
   @Output() viewDetails = new EventEmitter<any>();
-  @ViewChild('scrollContainer', { static: true })
-  scrollContainerRef!: ElementRef;
   @Input() set nodes(nodes: any[]) {
     nodes.forEach((node: any) => {
       if (node.childs) {
@@ -146,8 +143,6 @@ export class MindMapComponent implements AfterViewInit {
     });
     this.drawLine();
   }
-
-  private resizeTimeout: any;
   firsthalfchilds: { id: number; title: string }[] = [];
   parents: { id: number; title: string; childs: number[] }[] = [];
   secondhalfchilds: { id: number; title: string }[] = [];
@@ -160,7 +155,9 @@ export class MindMapComponent implements AfterViewInit {
 
   @HostListener('window:resize')
   onWindowResize() {
-    this.drawLine();
+    // this.drawLine();
+    window.location.reload()
+
   }
 
   drawLine() {
