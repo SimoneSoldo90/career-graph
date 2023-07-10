@@ -9,6 +9,5 @@
 }
 
 
-  mat-drawer-container {
-    height: 100%;
-  }
+mat-drawer-container { flex: 1 1 auto; }
+
