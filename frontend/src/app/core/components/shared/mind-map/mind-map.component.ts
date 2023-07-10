@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -147,19 +148,22 @@ export class MindMapComponent implements AfterViewInit {
   parents: { id: number; title: string; childs: number[] }[] = [];
   secondhalfchilds: { id: number; title: string }[] = [];
 
-  constructor() {}
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.drawLine();
   }
 
-  @HostListener('window:resize')
-  onWindowResize() {
-    // this.drawLine();
-    window.location.reload()
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: Event) {
+    this.drawLine();
+    //window.location.reload()
   }
 
+
+
   drawLine() {
+    document.getElementById('canvasRef')?.scrollIntoView()
     let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
       document.getElementById('canvasRef')!
     );
@@ -315,7 +319,7 @@ export class MindMapComponent implements AfterViewInit {
     }
     return moltiplicatoreAltezza;
   }
-  public visualizeDetail(element: any,isSideNode : boolean) {
+  public visualizeDetail(element: any, isSideNode: boolean) {
     if (element.childs && isSideNode) {
       const targetElement = document.getElementById('parent' + element.id);
       if (targetElement) {
