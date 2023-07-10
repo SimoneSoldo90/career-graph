@@ -70,7 +70,16 @@ import {
         float: left;
         position: relative;
       }
-      @media screen and (min-width: 651px) and (max-width: 840px) {
+      @media screen and (min-width: 801px) and (max-width: 900px) {
+        .centerTable {
+          margin: 20px 150px 0px 150px;
+        }
+        .button-skill {
+          width: 75px;
+          font-size: 16px;
+        }
+      }
+      @media screen and (min-width: 651px) and (max-width: 800px) {
         .centerTable {
           margin: 20px 75px 0px 75px;
         }
