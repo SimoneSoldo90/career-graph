@@ -54,8 +54,8 @@ import {
       }
       .button-skill:hover {
         transform: translateY(-3px);
-        box-shadow: 2px 2px 3px #144d83;
-        font-weight: 400;
+        box-shadow: 0 0 0 3px #000000 inset;
+        font-weight: 500;
       }
       .leftTable {
         float: left;
