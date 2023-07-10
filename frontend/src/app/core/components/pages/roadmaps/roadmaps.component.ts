@@ -31,6 +31,7 @@ export class RoadmapsComponent implements OnInit {
     "canDelete": true,
     "canModify": true,
     btnCreate:{
+      "title":"Aggiungi Roadmap",
       "canCreate":  true,
       "canView": true
     },

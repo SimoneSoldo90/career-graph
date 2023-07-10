@@ -39,6 +39,7 @@ export class RoadmapComponent implements OnInit {
     "canDelete": true,
     "canModify": true,
     btnCreate:{
+      "title":"Associa Skill",
       "canCreate":  true,
       "canView": true
     },
@@ -95,9 +96,12 @@ export class RoadmapComponent implements OnInit {
   }
 
   updateRoadmapSkill(data: Skill): void {
-    this.dataSource.push(data);
-    this.genericTable.setUpDataInput(this.dataSource);
-    this.genericTable.setUpDataMenuButton(this.totalSkills);
+    if(!this.dataSource.filter(element=>element.id === data.id)){
+      console.log(this.dataSource)
+      this.dataSource.push(data);
+      this.genericTable.setUpDataInput(this.dataSource);
+      this.genericTable.setUpDataMenuButton(this.totalSkills);
+    }
   }
 
   visualizeSkills(event: Skill){

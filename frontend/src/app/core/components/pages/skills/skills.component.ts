@@ -36,6 +36,7 @@ export class SkillsComponent implements OnInit {
     "canDelete": true,
     "canModify": true,
     btnCreate:{
+      "title":"Aggiungi Skill",
       "canCreate":  true,
       "canView": true
     },
