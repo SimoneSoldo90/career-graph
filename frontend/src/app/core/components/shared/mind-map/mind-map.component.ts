@@ -235,15 +235,14 @@ export class MindMapComponent implements AfterViewInit {
           if (context != null) {
             context.beginPath();
             context.moveTo(parentCenterX, parentCenterY);
-            context.lineTo(childCenterX, childCenterY);
-
-            // context.quadraticCurveTo(
-            //   parentCenterX,
-            //   childCenterY, // Control point
-            //   childCenterX,
-            //   childCenterY // Destination point
-            // );
-            context.setLineDash([25, 5]); // Set the line dash pattern
+            // context.lineTo(childCenterX, childCenterY);
+            //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
+            context.bezierCurveTo(
+              parentCenterX + 0, parentCenterY + 0,
+              childCenterX - 0, childCenterY - 0,
+              childCenterX, childCenterY
+            );
+            context.setLineDash([10, 5]);
             context.strokeStyle = '#144d83';
             context.lineWidth = 2;
             context.stroke();
