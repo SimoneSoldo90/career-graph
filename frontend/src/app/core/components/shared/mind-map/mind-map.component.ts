@@ -33,7 +33,7 @@ import {
       }
       .button-skill {
         word-break: break-word;
-        width: 100px;
+        width: 120px;
         display: inline-block;
         outline: 0;
         border: 0;
@@ -64,13 +64,16 @@ import {
       .centerTable {
         float: left;
         position: relative;
-        margin: 20px 100px 0px 100px;
+        margin: 20px 200px 0px 200px;
       }
       .rightTable {
         float: left;
         position: relative;
       }
-      @media screen and (min-width: 651px) and (max-width: 1200px) {
+      @media screen and (min-width: 651px) and (max-width: 840px) {
+        .centerTable {
+          margin: 20px 75px 0px 75px;
+        }
         .button-skill {
           width: 75px;
           font-size: 16px;
