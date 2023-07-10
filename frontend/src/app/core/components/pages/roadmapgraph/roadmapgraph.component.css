@@ -1,0 +1,9 @@
+.asideContent{
+  float: left;
+  width: 100px;
+  height: 100vh;
+  background-color: blue;
+}
+.content{
+  float: right;
+}
