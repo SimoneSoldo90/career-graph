@@ -74,18 +74,11 @@ import {
         .centerTable {
           margin: 20px 150px 0px 150px;
         }
-        .button-skill {
-          width: 75px;
-          font-size: 16px;
-        }
+
       }
       @media screen and (min-width: 651px) and (max-width: 800px) {
         .centerTable {
           margin: 20px 75px 0px 75px;
-        }
-        .button-skill {
-          width: 75px;
-          font-size: 16px;
         }
       }
       @media screen and (min-width: 501px) and (max-width: 649px) {
