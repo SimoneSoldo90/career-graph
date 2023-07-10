@@ -19,25 +19,16 @@
     <!-- ------------------------------------------------- -->
     <ng-container [ngSwitch]="actionButtonValue">
       <ng-container *ngSwitchCase="'admin'">
-        <ng-container *ngIf="tableOptions.type === 'skill'">
-          <button class="actionButton" mat-raised-button (click)="createRoadmap()">
-            <mat-icon>add</mat-icon>Aggiungi Skill
+        <ng-container *ngIf="tableOptions.type !== 'roadmapSkills'">
+          <button class="actionButton" mat-raised-button (click)="addObject()">
+            <mat-icon>add</mat-icon>{{tableOptions.btnCreate.title}}
           </button>
         </ng-container>
-
-        <ng-container *ngIf="tableOptions.type === 'roadmap'">
-          <button class="actionButton" mat-raised-button (click)="createRoadmap()">
-            <mat-icon>add</mat-icon>Aggiungi Roadmap
-          </button>
-        </ng-container>
-
-
-      </ng-container>
-
       <!-- Il tasto carica una lista di item da aggiungere, sia mentor che admin -->
-      <ng-container *ngSwitchCase="'roadmapSkills'">
+      <ng-container *ngIf="tableOptions.type === 'roadmapSkills'">
         <button mat-raised-button [cdkMenuTriggerFor]="menu" class="actionButton">
           <mat-icon>add</mat-icon>{{buttonTitle}}
+          {{tableOptions.btnCreate.title}}
         </button>
         <ng-template #menu>
           <div class="mentor-menu" cdkMenu>
@@ -48,6 +39,7 @@
             </ng-container>
           </div>
         </ng-template>
+      </ng-container>
       </ng-container>
     </ng-container>
 

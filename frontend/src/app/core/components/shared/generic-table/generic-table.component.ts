@@ -223,7 +223,7 @@ export class GenericTableComponent implements OnInit  {
   }
 
 
-  createRoadmap() {
+  addObject() {
     const queryParams = {
       type: this.tableOptions.type,
       createMode: true,
@@ -235,13 +235,7 @@ export class GenericTableComponent implements OnInit  {
   }
 
   selectionItemButtonMenu(item: string) {
-    console.log(item);
-    var queryParams={"id":item,  createMode: true}
-    this.router.navigate(
-      ['/form'], {
-        queryParams: queryParams,
-        queryParamsHandling: "merge"
-    });
+    this.updateData.emit(item);
   }
 
 

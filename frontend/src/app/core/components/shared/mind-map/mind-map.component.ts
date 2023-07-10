@@ -157,7 +157,6 @@ export class MindMapComponent implements AfterViewInit {
   onWindowResize() {
     // this.drawLine();
     window.location.reload()
-
   }
 
   drawLine() {
