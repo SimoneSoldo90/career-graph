@@ -157,7 +157,6 @@ export class MindMapComponent implements AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onWindowResize(event: Event) {
     this.drawLine();
-    //window.location.reload()
   }
 
 
