@@ -159,7 +159,15 @@ export class MindMapComponent implements AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
   onWindowResize(event: Event) {
+    //RIDISEGNA IL TUTTO AL RESIZE DELLA PAGINA
     this.drawLine();
+  }
+
+  @HostListener('window:beforeunload')
+  onBeforeUnload() {
+    //VIENE EFFETTUATO LO SCROLL ALL'ELEMENTO canvasRef CHE È POSIZIONATO ALLO 0,0 DELLA PAGINA
+    //QUESTO SERVE A FAR SI CHE AL REFRESH DELLA PAGINA IL DISEGNO SUL CANVA VENGA EFFETTUATO CORRETTAMENTE IN BASE ALLA POSIZIONE DEI NODI DEL GRAFO
+    document.getElementById('canvasRef')?.scrollIntoView();
   }
 
   drawLine() {
