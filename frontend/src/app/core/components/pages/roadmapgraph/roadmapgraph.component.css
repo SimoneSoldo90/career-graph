@@ -1,9 +1,14 @@
-.asideContent{
-  float: left;
-  width: 100px;
-  height: 100vh;
-  background-color: blue;
-}
-.content{
+
+.contentRoadmapGraph{
   float: right;
+  word-break: break-word;
+  width: 100vw;
+  padding:20px 150px;
+  background-color: white;
 }
+p.description{
+  word-break: break-word;
+  width: 80%;
+  background-color: white;
+}
+

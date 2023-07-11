@@ -5,3 +5,6 @@
 .rounded-button {
   border-radius: 16px;
 }
+#currentState{
+  font-weight: normal;
+}

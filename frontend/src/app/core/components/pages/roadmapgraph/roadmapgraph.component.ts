@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Skill } from 'src/app/core/models/skill';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
 
@@ -7,8 +7,11 @@ import { SkillService } from 'src/app/core/services/skill/skill.service';
   templateUrl: './roadmapgraph.component.html',
   styleUrls: ['./roadmapgraph.component.css'],
 })
-export class RoadmapgraphComponent {
+export class RoadmapgraphComponent implements AfterViewInit{
 
+  title="Java";
+  description="Oracle Java è al primo posto tra i linguaggi di programmazione e le piattaforme di sviluppo. Riduce i costi e i tempi di sviluppo, promuove l'innovazione e migliora i servizi applicativi. Con milioni di sviluppatori che eseguono oltre 60 miliardi di Java Virtual Machine in tutto il mondo, Java continua a essere la piattaforma di sviluppo preferita da aziende e sviluppatori.";
+  heightOffset = 0;
   dataset = [
     {
       id: 1,
@@ -181,7 +184,11 @@ export class RoadmapgraphComponent {
     }
   ];
 
-  constructor(private skillService: SkillService) {}
+  constructor(private skillService: SkillService) {
+  }
+  ngAfterViewInit(): void {
+    this.heightOffset=document.getElementById("description")!.clientHeight;
+  }
   visualizeSkills(event: Skill) {
     this.getSkill(Number(event.id));
   }
