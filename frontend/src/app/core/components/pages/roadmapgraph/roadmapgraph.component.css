@@ -2,8 +2,7 @@
 .contentRoadmapGraph{
   float: right;
   word-break: break-word;
-  width: 100vw;
-  padding:20px 150px;
+  padding:20px;
   background-color: white;
 }
 p.description{
