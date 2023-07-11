@@ -50,7 +50,6 @@ import {
         margin-top: 25px;
       }
       [id^='parent'] {
-        margin-top: 75px;
       }
       .button-skill:hover {
         transform: translateY(-3px);
@@ -168,13 +167,17 @@ export class MindMapComponent implements AfterViewInit {
 
   drawLine() {
     document.getElementById('canvasRef')?.scrollIntoView()
-    let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-      document.getElementById('canvasRef')!
-    );
-    const canvasRef = new ElementRef(canvasHtml);
-    let canvas: HTMLCanvasElement = this.getCanvas(canvasRef);
-    this.disegnaLinkTraParentEChilds(this.parents, canvas);
+
+    let canvas: HTMLCanvasElement = this.getCanvas();
+    this.adjustParentsMargins();
     this.disegnaLinkTraParents(this.parents, canvas);
+    this.disegnaLinkTraParentEChilds(this.parents, canvas);
+  }
+  adjustParentsMargins() {
+    this.parents.forEach((parent,index)=>{
+      document.getElementById('parent' + this.parents[index].id)!.style.marginTop = this.getParentMarginTopDown(this.parents[index]);
+      document.getElementById('parent' + this.parents[index].id)!.style.marginBottom = this.getParentMarginTopDown(this.parents[index]);
+    })
   }
   private disegnaLinkTraParentEChilds(
     parents: { id: number; title: string; childs: number[] }[],
@@ -243,8 +246,8 @@ export class MindMapComponent implements AfterViewInit {
             // context.lineTo(childCenterX, childCenterY);
             //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
             context.bezierCurveTo(
-              parentCenterX + 0, parentCenterY + 0,
-              childCenterX - 0, childCenterY - 0,
+              parentCenterX + 10, parentCenterY + 10,
+              childCenterX - 10, childCenterY - 10,
               childCenterX, childCenterY
             );
             context.setLineDash([10, 5]);
@@ -261,16 +264,17 @@ export class MindMapComponent implements AfterViewInit {
     canvas: HTMLCanvasElement
   ) {
     for (let i = 0; i < this.parents.length; i++) {
-      let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+
+     let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + this.parents[i].id)!
       );
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
       const parentRect = parentElement.getBoundingClientRect();
       const parentCenterX =
-        parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
-      const parentCenterY =
-        parentRect.top + parentRect.height / 2 - canvas.offsetTop;
+      parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
+    const parentCenterY =
+      parentRect.top + parentRect.height / 2 - canvas.offsetTop;
 
       if (i < this.parents.length - 1) {
         let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
@@ -280,26 +284,48 @@ export class MindMapComponent implements AfterViewInit {
         const childElement = childRef.nativeElement;
         const childRect = childElement.getBoundingClientRect();
         const childCenterX =
-          childRect.left + childRect.width / 2 - canvas.offsetLeft;
-        const childCenterY =
-          childRect.top + childRect.height / 2 - canvas.offsetTop;
+        childRect.left + childRect.width / 2- canvas.offsetLeft;
+      const childCenterY =
+        childRect.top + childRect.height / 2- canvas.offsetTop;
         const context = canvas.getContext('2d');
 
         if (context != null) {
           context.beginPath();
           context.moveTo(parentCenterX, parentCenterY);
-          context.lineTo(childCenterX, childCenterY);
-          context.setLineDash([3, 3]); // Set the line dash pattern
+          // context.lineTo(childCenterX, childCenterY);
+          context.bezierCurveTo(
+            parentCenterX + 0, parentCenterY + 0,
+            childCenterX - 0, childCenterY - 0,
+            childCenterX, childCenterY
+          );
+          context.setLineDash([0, 0]); // Set the line dash pattern
           context.strokeStyle = '#14833F';
-          context.lineWidth = 2;
+          context.lineWidth = 5;
           context.stroke();
         }
       }
     }
   }
-  private getCanvas(
-    canvasRef: ElementRef<HTMLCanvasElement>
-  ): HTMLCanvasElement {
+  getParentMarginTopDown(arg0: { id: number; title: string; childs: number[]; }): string {
+    let margin:number = this.getMarginParents(arg0);
+    return margin+"px";
+  }
+
+  getMarginParents(arg0: { id: number; title: string; childs: number[]; }):number{
+    let margin:number = 0;
+    if (arg0.childs){
+      if (arg0.childs.length>2){
+        margin = arg0.childs.length/2*25;
+      }
+    }
+    return margin;
+  }
+
+  private getCanvas(): HTMLCanvasElement {
+    let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+      document.getElementById('canvasRef')!
+    );
+    const canvasRef = new ElementRef(canvasHtml);
     let canvas = canvasRef.nativeElement;
     canvas.width = window.innerWidth;
 
