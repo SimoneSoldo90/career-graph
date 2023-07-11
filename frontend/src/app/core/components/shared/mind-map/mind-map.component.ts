@@ -246,11 +246,12 @@ export class MindMapComponent implements AfterViewInit {
             // context.lineTo(childCenterX, childCenterY);
             //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
             context.bezierCurveTo(
-              parentCenterX + 10, parentCenterY + 10,
-              childCenterX - 10, childCenterY - 10,
+              parentCenterX + 0, parentCenterY + 0,
+              childCenterX - 0, childCenterY - 0,
               childCenterX, childCenterY
             );
-            context.setLineDash([10, 5]);
+            context.setLineDash([2,2]);
+            context.setTransform
             context.strokeStyle = '#144d83';
             context.lineWidth = 2;
             context.stroke();
@@ -288,7 +289,7 @@ export class MindMapComponent implements AfterViewInit {
       const childCenterY =
         childRect.top + childRect.height / 2- canvas.offsetTop;
         const context = canvas.getContext('2d');
-
+        context?.clearRect(0,0,canvas.width,canvas.height)
         if (context != null) {
           context.beginPath();
           context.moveTo(parentCenterX, parentCenterY);
@@ -299,7 +300,7 @@ export class MindMapComponent implements AfterViewInit {
             childCenterX, childCenterY
           );
           context.setLineDash([0, 0]); // Set the line dash pattern
-          context.strokeStyle = '#14833F';
+          context.strokeStyle = '#00b894';
           context.lineWidth = 5;
           context.stroke();
         }
@@ -315,7 +316,7 @@ export class MindMapComponent implements AfterViewInit {
     let margin:number = 0;
     if (arg0.childs){
       if (arg0.childs.length>2){
-        margin = (arg0.childs.length/2)*(document.getElementById("parent"+arg0.id)!.clientHeight/1.45);
+        margin = (arg0.childs.length/2)*(document.getElementById("parent"+arg0.id)!.clientHeight/1.4);
       }
     }
     return margin;
