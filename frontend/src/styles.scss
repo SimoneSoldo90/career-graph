@@ -18,3 +18,7 @@ body {
 .mat-drawer-inner-container::-webkit-scrollbar {
   display: none;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
