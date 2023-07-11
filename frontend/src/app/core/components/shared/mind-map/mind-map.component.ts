@@ -73,7 +73,6 @@ import {
         .centerTable {
           margin: 20px 150px 0px 150px;
         }
-
       }
       @media screen and (min-width: 651px) and (max-width: 800px) {
         .centerTable {
@@ -163,10 +162,8 @@ export class MindMapComponent implements AfterViewInit {
     this.drawLine();
   }
 
-
-
   drawLine() {
-    document.getElementById('canvasRef')?.scrollIntoView()
+    document.getElementById('canvasRef')?.scrollIntoView();
 
     let canvas: HTMLCanvasElement = this.getCanvas();
     this.adjustParentsMargins();
@@ -174,10 +171,18 @@ export class MindMapComponent implements AfterViewInit {
     this.disegnaLinkTraParentEChilds(this.parents, canvas);
   }
   adjustParentsMargins() {
-    this.parents.forEach((parent,index)=>{
-      document.getElementById('parent' + this.parents[index].id)!.style.marginTop = this.getParentMarginTopDown(this.parents[index]);
-      document.getElementById('parent' + this.parents[index].id)!.style.marginBottom = this.getParentMarginTopDown(this.parents[index]);
-    })
+    this.parents.forEach((parent, index) => {
+      if (document.getElementById('parent' + this.parents[index].id)) {
+        document.getElementById(
+          'parent' + this.parents[index].id
+        )!.style.marginTop = this.getParentMarginTopDown(this.parents[index]);
+        document.getElementById(
+          'parent' + this.parents[index].id
+        )!.style.marginBottom = this.getParentMarginTopDown(
+          this.parents[index]
+        );
+      }
+    });
   }
   private disegnaLinkTraParentEChilds(
     parents: { id: number; title: string; childs: number[] }[],
@@ -205,59 +210,64 @@ export class MindMapComponent implements AfterViewInit {
       }
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
+      if (parentElement) {
       const parentRect = parentElement.getBoundingClientRect();
-      const parentCenterX =
-        parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
-      const parentCenterY =
-        parentRect.top + parentRect.height / 2 - canvas.offsetTop;
-      parent.childs.forEach((childId: number) => {
-        let childHtml: HTMLCanvasElement | null = null;
-        let childsxFounded = this.firsthalfchilds.filter((element: any) => {
-          if (element.id == childId) return element;
-          else return null;
-        });
-        let childdxFounded = this.secondhalfchilds.filter((element: any) => {
-          if (element.id == childId) return element;
-          else return null;
-        });
-        if (childsxFounded.length > 0) {
-          childHtml = <HTMLCanvasElement>(
-            document.getElementById('childsx' + childId)!
-          );
-        } else if (childdxFounded.length > 0) {
-          childHtml = <HTMLCanvasElement>(
-            document.getElementById('childdx' + childId)!
-          );
-        }
-
-        const childRef = new ElementRef(childHtml);
-        const childElement = childRef.nativeElement;
-        if (childElement) {
-          const childRect = childElement.getBoundingClientRect();
-          const childCenterX =
-            childRect.left + childRect.width / 2 - canvas.offsetLeft;
-          const childCenterY =
-            childRect.top + childRect.height / 2 - canvas.offsetTop;
-          const context = canvas.getContext('2d');
-
-          if (context != null) {
-            context.beginPath();
-            context.moveTo(parentCenterX, parentCenterY);
-            // context.lineTo(childCenterX, childCenterY);
-            //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
-            context.bezierCurveTo(
-              parentCenterX + 0, parentCenterY + 0,
-              childCenterX - 0, childCenterY - 0,
-              childCenterX, childCenterY
+        const parentCenterX =
+          parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
+        const parentCenterY =
+          parentRect.top + parentRect.height / 2 - canvas.offsetTop;
+        parent.childs.forEach((childId: number) => {
+          let childHtml: HTMLCanvasElement | null = null;
+          let childsxFounded = this.firsthalfchilds.filter((element: any) => {
+            if (element.id == childId) return element;
+            else return null;
+          });
+          let childdxFounded = this.secondhalfchilds.filter((element: any) => {
+            if (element.id == childId) return element;
+            else return null;
+          });
+          if (childsxFounded.length > 0) {
+            childHtml = <HTMLCanvasElement>(
+              document.getElementById('childsx' + childId)!
             );
-            context.setLineDash([2,2]);
-            context.setTransform
-            context.strokeStyle = '#144d83';
-            context.lineWidth = 2;
-            context.stroke();
+          } else if (childdxFounded.length > 0) {
+            childHtml = <HTMLCanvasElement>(
+              document.getElementById('childdx' + childId)!
+            );
           }
-        }
-      });
+
+          const childRef = new ElementRef(childHtml);
+          const childElement = childRef.nativeElement;
+          if (childElement) {
+            const childRect = childElement.getBoundingClientRect();
+            const childCenterX =
+              childRect.left + childRect.width / 2 - canvas.offsetLeft;
+            const childCenterY =
+              childRect.top + childRect.height / 2 - canvas.offsetTop;
+            const context = canvas.getContext('2d');
+
+            if (context != null) {
+              context.beginPath();
+              context.moveTo(parentCenterX, parentCenterY);
+              // context.lineTo(childCenterX, childCenterY);
+              //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
+              context.bezierCurveTo(
+                parentCenterX + 0,
+                parentCenterY + 0,
+                childCenterX - 0,
+                childCenterY - 0,
+                childCenterX,
+                childCenterY
+              );
+              context.setLineDash([2, 2]);
+              context.setTransform;
+              context.strokeStyle = '#144d83';
+              context.lineWidth = 2;
+              context.stroke();
+            }
+          }
+        });
+      }
     });
   }
   private disegnaLinkTraParents(
@@ -265,58 +275,71 @@ export class MindMapComponent implements AfterViewInit {
     canvas: HTMLCanvasElement
   ) {
     for (let i = 0; i < this.parents.length; i++) {
-
-     let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+      let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + this.parents[i].id)!
       );
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
-      const parentRect = parentElement.getBoundingClientRect();
-      const parentCenterX =
-      parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
-    const parentCenterY =
-      parentRect.top + parentRect.height / 2 - canvas.offsetTop;
+      if (parentElement) {
+        const parentRect = parentElement.getBoundingClientRect();
+        const parentCenterX =
+          parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
+        const parentCenterY =
+          parentRect.top + parentRect.height / 2 - canvas.offsetTop;
 
-      if (i < this.parents.length - 1) {
-        let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('parent' + this.parents[i + 1].id)!
-        );
-        const childRef = new ElementRef(childHtml);
-        const childElement = childRef.nativeElement;
-        const childRect = childElement.getBoundingClientRect();
-        const childCenterX =
-        childRect.left + childRect.width / 2- canvas.offsetLeft;
-      const childCenterY =
-        childRect.top + childRect.height / 2- canvas.offsetTop;
-        const context = canvas.getContext('2d');
-        context?.clearRect(0,0,canvas.width,canvas.height)
-        if (context != null) {
-          context.beginPath();
-          context.moveTo(parentCenterX, parentCenterY);
-          // context.lineTo(childCenterX, childCenterY);
-          context.bezierCurveTo(
-            parentCenterX + 0, parentCenterY + 0,
-            childCenterX - 0, childCenterY - 0,
-            childCenterX, childCenterY
+        if (i < this.parents.length - 1) {
+          let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+            document.getElementById('parent' + this.parents[i + 1].id)!
           );
-          context.setLineDash([0, 0]); // Set the line dash pattern
-          context.strokeStyle = '#00b894';
-          context.lineWidth = 5;
-          context.stroke();
+          const childRef = new ElementRef(childHtml);
+          const childElement = childRef.nativeElement;
+          const childRect = childElement.getBoundingClientRect();
+          const childCenterX =
+            childRect.left + childRect.width / 2 - canvas.offsetLeft;
+          const childCenterY =
+            childRect.top + childRect.height / 2 - canvas.offsetTop;
+          const context = canvas.getContext('2d');
+          if (context != null) {
+            context.beginPath();
+            context.moveTo(parentCenterX, parentCenterY);
+            // context.lineTo(childCenterX, childCenterY);
+            context.bezierCurveTo(
+              parentCenterX + 0,
+              parentCenterY + 0,
+              childCenterX - 0,
+              childCenterY - 0,
+              childCenterX,
+              childCenterY
+            );
+            context.setLineDash([0, 0]); // Set the line dash pattern
+            context.strokeStyle = '#00b894';
+            context.lineWidth = 5;
+            context.stroke();
+          }
         }
       }
     }
   }
-  getParentMarginTopDown(arg0: { id: number; title: string; childs: number[]; }): string {
-    let margin:number = this.getMarginParents(arg0);
-    return margin+"px";
+  getParentMarginTopDown(arg0: {
+    id: number;
+    title: string;
+    childs: number[];
+  }): string {
+    let margin: number = this.getMarginParents(arg0);
+    return margin + 'px';
   }
 
-  getMarginParents(arg0: { id: number; title: string; childs: number[]; }):number{
-    let margin:number = 0;
-    if (arg0.childs){
-      if (arg0.childs.length>2){
-        margin = (arg0.childs.length/2)*(document.getElementById("parent"+arg0.id)!.clientHeight/1.4);
+  getMarginParents(arg0: {
+    id: number;
+    title: string;
+    childs: number[];
+  }): number {
+    let margin: number = 0;
+    if (arg0.childs) {
+      if (arg0.childs.length > 2) {
+        margin =
+          (arg0.childs.length / 2) *
+          (document.getElementById('parent' + arg0.id)!.clientHeight / 1.4);
       }
     }
     return margin;
