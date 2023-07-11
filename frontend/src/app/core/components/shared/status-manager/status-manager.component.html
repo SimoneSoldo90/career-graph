@@ -1,9 +1,9 @@
 <mat-button-toggle-group [value]="currentState" (change)="onStateChanged($event.value)">
-  <mat-button-toggle [value]="currentState">{{ currentState }}</mat-button-toggle>
+  <mat-button-toggle id="currentState" [value]="currentState">{{ currentState }}</mat-button-toggle>
   <button mat-button [matMenuTriggerFor]="menu" class="menu-button">{{ menuTitle }}</button>
   <mat-menu #menu="matMenu">
-    <ng-container *ngFor="let state of allStates">
-      <button mat-menu-item [value]="state" (click)="onMenuOptionSelected(state)">{{ state }}</button>
+    <ng-container *ngFor="let state of states.allStates">
+      <button mat-menu-item [value]="state" (click)="onMenuOptionSelected(state)">{{ state.title }}</button>
     </ng-container>
   </mat-menu>
 </mat-button-toggle-group>

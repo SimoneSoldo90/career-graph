@@ -1,5 +1,5 @@
 <mat-drawer  #drawer class="example-sidenav" mode="over" position="end" (closedStart)="onClosedSideNav()">
-  <app-status-manager [currentState]="currentState" [allStates]="allStates" [showDropdown]="showDropdown" [menuTitle]="menuTitle"></app-status-manager>
+  <app-status-manager [currentState]="currentState" [states]="status" [showDropdown]="showDropdown" [menuTitle]="menuTitle"></app-status-manager>
   <button mat-icon-button class="close-button" (click)="drawer.close()">
     <mat-icon>close</mat-icon>
   </button>

@@ -11,7 +11,7 @@ import { SkillService } from 'src/app/core/services/skill/skill.service';
 })
 export class DrawerComponent implements OnInit {
   @Input() currentState: any;
-  @Input() allStates: any;
+  @Input() status: any;
   @Input() showDropdown!: boolean;
   @Input() menuTitle!: string;
   @ViewChild(MatDrawer) drawer!: MatDrawer;

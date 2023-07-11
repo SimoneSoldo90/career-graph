@@ -7,15 +7,30 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'career-graph';
-  allStates = ['Sato 1','Stato 2']
-  statoCorrente = 'Stato 0';
-  titleMenuDrawer = "Aggiorna Stato"
+  statoCorrente = 'To Do';
+  states = {
+    allStates: [
+      {
+          title: 'To Do',
+          statusColor: 'white',
+          color:'black'
+      },
+      {
+          title: 'Doing',
+          statusColor: '#74b9ff',
+          color:'black'
+      },
+      {
+          title: 'Done',
+          statusColor: '#00b894',
+          color:'black'
+      },
+    ],
+  };
+  titleMenuDrawer = 'Aggiorna Stato';
   constructor() {}
 
   ngOnInit(): void {
     localStorage.setItem('userFullName', 'Simone Soldo');
-
   }
-
-
 }

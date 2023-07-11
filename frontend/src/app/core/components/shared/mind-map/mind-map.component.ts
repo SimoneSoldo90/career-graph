@@ -6,6 +6,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 
@@ -118,7 +119,7 @@ import {
     `,
   ],
 })
-export class MindMapComponent implements AfterViewInit {
+export class MindMapComponent implements AfterViewInit, OnInit {
   @Output() viewDetails = new EventEmitter<any>();
   @Input() set nodes(nodes: any[]) {
     nodes.forEach((node: any) => {
@@ -152,6 +153,7 @@ export class MindMapComponent implements AfterViewInit {
   secondhalfchilds: { id: number; title: string }[] = [];
 
   constructor(private changeDetector: ChangeDetectorRef) {}
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.drawLine();
@@ -218,64 +220,62 @@ export class MindMapComponent implements AfterViewInit {
       }
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
-      if (parentElement) {
       const parentRect = parentElement.getBoundingClientRect();
-        const parentCenterX =
-          parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
-        const parentCenterY =
-          parentRect.top + parentRect.height / 2 - canvas.offsetTop;
-        parent.childs.forEach((childId: number) => {
-          let childHtml: HTMLCanvasElement | null = null;
-          let childsxFounded = this.firsthalfchilds.filter((element: any) => {
-            if (element.id == childId) return element;
-            else return null;
-          });
-          let childdxFounded = this.secondhalfchilds.filter((element: any) => {
-            if (element.id == childId) return element;
-            else return null;
-          });
-          if (childsxFounded.length > 0) {
-            childHtml = <HTMLCanvasElement>(
-              document.getElementById('childsx' + childId)!
-            );
-          } else if (childdxFounded.length > 0) {
-            childHtml = <HTMLCanvasElement>(
-              document.getElementById('childdx' + childId)!
-            );
-          }
-
-          const childRef = new ElementRef(childHtml);
-          const childElement = childRef.nativeElement;
-          if (childElement) {
-            const childRect = childElement.getBoundingClientRect();
-            const childCenterX =
-              childRect.left + childRect.width / 2 - canvas.offsetLeft;
-            const childCenterY =
-              childRect.top + childRect.height / 2 - canvas.offsetTop;
-            const context = canvas.getContext('2d');
-
-            if (context != null) {
-              context.beginPath();
-              context.moveTo(parentCenterX, parentCenterY);
-              // context.lineTo(childCenterX, childCenterY);
-              //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
-              context.bezierCurveTo(
-                parentCenterX + 0,
-                parentCenterY + 0,
-                childCenterX - 0,
-                childCenterY - 0,
-                childCenterX,
-                childCenterY
-              );
-              context.setLineDash([2, 2]);
-              context.setTransform;
-              context.strokeStyle = '#144d83';
-              context.lineWidth = 2;
-              context.stroke();
-            }
-          }
+      const parentCenterX =
+        parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
+      const parentCenterY =
+        parentRect.top + parentRect.height / 2 - canvas.offsetTop;
+      parent.childs.forEach((childId: number) => {
+        let childHtml: HTMLCanvasElement | null = null;
+        let childsxFounded = this.firsthalfchilds.filter((element: any) => {
+          if (element.id == childId) return element;
+          else return null;
         });
-      }
+        let childdxFounded = this.secondhalfchilds.filter((element: any) => {
+          if (element.id == childId) return element;
+          else return null;
+        });
+        if (childsxFounded.length > 0) {
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childsx' + childId)!
+          );
+        } else if (childdxFounded.length > 0) {
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childdx' + childId)!
+          );
+        }
+
+        const childRef = new ElementRef(childHtml);
+        const childElement = childRef.nativeElement;
+        if (childElement) {
+          const childRect = childElement.getBoundingClientRect();
+          const childCenterX =
+            childRect.left + childRect.width / 2 - canvas.offsetLeft;
+          const childCenterY =
+            childRect.top + childRect.height / 2 - canvas.offsetTop;
+          const context = canvas.getContext('2d');
+
+          if (context != null) {
+            context.beginPath();
+            context.moveTo(parentCenterX, parentCenterY);
+            // context.lineTo(childCenterX, childCenterY);
+            //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
+            context.bezierCurveTo(
+              parentCenterX + 0,
+              parentCenterY + 0,
+              childCenterX - 0,
+              childCenterY - 0,
+              childCenterX,
+              childCenterY
+            );
+            context.setLineDash([2, 2]);
+            context.setTransform;
+            context.strokeStyle = '#144d83';
+            context.lineWidth = 2;
+            context.stroke();
+          }
+        }
+      });
     });
   }
   private disegnaLinkTraParents(
@@ -288,42 +288,40 @@ export class MindMapComponent implements AfterViewInit {
       );
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
-      if (parentElement) {
-        const parentRect = parentElement.getBoundingClientRect();
-        const parentCenterX =
-          parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
-        const parentCenterY =
-          parentRect.top + parentRect.height / 2 - canvas.offsetTop;
+      const parentRect = parentElement.getBoundingClientRect();
+      const parentCenterX =
+        parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
+      const parentCenterY =
+        parentRect.top + parentRect.height / 2 - canvas.offsetTop;
 
-        if (i < this.parents.length - 1) {
-          let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-            document.getElementById('parent' + this.parents[i + 1].id)!
+      if (i < this.parents.length - 1) {
+        let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+          document.getElementById('parent' + this.parents[i + 1].id)!
+        );
+        const childRef = new ElementRef(childHtml);
+        const childElement = childRef.nativeElement;
+        const childRect = childElement.getBoundingClientRect();
+        const childCenterX =
+          childRect.left + childRect.width / 2 - canvas.offsetLeft;
+        const childCenterY =
+          childRect.top + childRect.height / 2 - canvas.offsetTop;
+        const context = canvas.getContext('2d');
+        if (context != null) {
+          context.beginPath();
+          context.moveTo(parentCenterX, parentCenterY);
+          // context.lineTo(childCenterX, childCenterY);
+          context.bezierCurveTo(
+            parentCenterX + 0,
+            parentCenterY + 0,
+            childCenterX - 0,
+            childCenterY - 0,
+            childCenterX,
+            childCenterY
           );
-          const childRef = new ElementRef(childHtml);
-          const childElement = childRef.nativeElement;
-          const childRect = childElement.getBoundingClientRect();
-          const childCenterX =
-            childRect.left + childRect.width / 2 - canvas.offsetLeft;
-          const childCenterY =
-            childRect.top + childRect.height / 2 - canvas.offsetTop;
-          const context = canvas.getContext('2d');
-          if (context != null) {
-            context.beginPath();
-            context.moveTo(parentCenterX, parentCenterY);
-            // context.lineTo(childCenterX, childCenterY);
-            context.bezierCurveTo(
-              parentCenterX + 0,
-              parentCenterY + 0,
-              childCenterX - 0,
-              childCenterY - 0,
-              childCenterX,
-              childCenterY
-            );
-            context.setLineDash([0, 0]); // Set the line dash pattern
-            context.strokeStyle = '#00b894';
-            context.lineWidth = 5;
-            context.stroke();
-          }
+          context.setLineDash([0, 0]); // Set the line dash pattern
+          context.strokeStyle = '#00b894';
+          context.lineWidth = 5;
+          context.stroke();
         }
       }
     }
@@ -365,7 +363,8 @@ export class MindMapComponent implements AfterViewInit {
     return canvas;
   }
   private getMoltiplicatoreAltezza(): number {
-    const rapporto: number = window.innerHeight * 0.0125;
+    // const rapporto: number = window.innerHeight * 0.0125;
+    const rapporto: number = window.innerHeight * 0.0100;
     let moltiplicatoreAltezza = 1.3;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       moltiplicatoreAltezza =
