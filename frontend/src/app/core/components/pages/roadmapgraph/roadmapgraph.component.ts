@@ -110,7 +110,7 @@ export class RoadmapgraphComponent {
     {
       id: 21,
       title: 'Softwareopoli',
-      childs: [22,23,24,25,26,27,28,29,30,31,32,33],
+      childs: [22,23,24,25,26,27,28,29],
       // childs: [2,6,7,8,11,12,13,14]
     },
 
@@ -172,6 +172,12 @@ export class RoadmapgraphComponent {
     {
       id: 33,
       title: 'Carmine',
+    },
+    {
+      id: 34,
+      title: 'Softwareopoli2',
+      childs: [30,31,32,33],
+      // childs: [2,6,7,8,11,12,13,14]
     }
   ];
 

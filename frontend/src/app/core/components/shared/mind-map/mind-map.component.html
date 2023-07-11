@@ -9,7 +9,6 @@
     <tr *ngFor="let parent of parents ">
       <td (click)="visualizeDetail(parent,false)" class="button-skill" id="parent{{parent.id}}">{{parent.title}}</td>
       <div *ngFor="let child of parent.childs">
-        <br>
       </div>
     </tr>
   </table>
