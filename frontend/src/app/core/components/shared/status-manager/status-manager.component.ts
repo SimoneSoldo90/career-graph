@@ -11,7 +11,7 @@ export class StatusManagerComponent implements AfterViewInit{
   @Input() showDropdown = false;
   @Input() menuTitle!: string;
   @Input() states!: any;
-
+  currentStateStyle: string = '';
   onStateChanged(newState: string) {
     if (newState === 'menu') {
     } else {
@@ -24,6 +24,7 @@ export class StatusManagerComponent implements AfterViewInit{
       this.states.forEach((state:any)=>{
         if(state.title === this.currentState){
           document.getElementById("currentState")!.style.backgroundColor = state.statusColor;
+          document.getElementById("currentState")!.style.fontWeight = state.fontWeight;
           document.getElementById("currentState")!.style.color = state.color;
         }
       })
@@ -31,6 +32,7 @@ export class StatusManagerComponent implements AfterViewInit{
   }
   onMenuOptionSelected(newState: any) {
     document.getElementById("currentState")!.style.backgroundColor = newState.statusColor;
+    document.getElementById("currentState")!.style.fontWeight = newState.fontWeight;
     document.getElementById("currentState")!.style.color = newState.color;
     this.currentState = newState.title
   }

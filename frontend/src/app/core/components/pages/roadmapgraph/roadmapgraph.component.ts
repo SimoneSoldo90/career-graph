@@ -119,7 +119,7 @@ export class RoadmapgraphComponent implements AfterViewInit{
     {
       id: 21,
       title: 'Softwareopoli',
-      childs: [22,23,24,25,26,27,28,29],
+      childs: [1,22,23,24,25,26,27,28,29],
       // childs: [2,6,7,8,11,12,13,14]
     },
 
