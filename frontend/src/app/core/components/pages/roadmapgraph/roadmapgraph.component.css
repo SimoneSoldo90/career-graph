@@ -11,7 +11,12 @@ p.description {
   margin: 0 auto;
   background-color: white;
 }
-
+.roadmapGraphPbar{
+  width: 40vw;
+}
+.roadmapGraphPbarCard{
+  margin-top: 25px;
+}
 @media screen and (min-width: 1011px) {
   .centerContent {
     padding: 0px 5.5%;
