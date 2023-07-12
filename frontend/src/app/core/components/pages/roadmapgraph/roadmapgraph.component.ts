@@ -1,4 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressBarMode } from '@angular/material/progress-bar';
 import { Skill } from 'src/app/core/models/skill';
 import { SkillService } from 'src/app/core/services/skill/skill.service';
 
@@ -8,8 +10,12 @@ import { SkillService } from 'src/app/core/services/skill/skill.service';
   styleUrls: ['./roadmapgraph.component.css'],
 })
 export class RoadmapgraphComponent implements AfterViewInit{
-
+  color: ThemePalette = 'primary';
+  mode: ProgressBarMode = 'buffer';
+  progressBarValue = 50;
+  progressBarBufferValue = 50;
   title="Java";
+  icon="java"
   description="Oracle Java è al primo posto tra i linguaggi di programmazione e le piattaforme di sviluppo. Riduce i costi e i tempi di sviluppo, promuove l'innovazione e migliora i servizi applicativi. Con milioni di sviluppatori che eseguono oltre 60 miliardi di Java Virtual Machine in tutto il mondo, Java continua a essere la piattaforma di sviluppo preferita da aziende e sviluppatori.";
   heightOffset = 0;
   dataset = [

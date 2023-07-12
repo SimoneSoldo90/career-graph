@@ -39,6 +39,7 @@ import { RoadmapgraphModule } from './core/components/pages/roadmapgraph/roadmap
     StatusManagerModule,
     DrawerModule,
     RoadmapgraphModule,
+    HttpClientModule,
     ],
   bootstrap: [AppComponent]
 })

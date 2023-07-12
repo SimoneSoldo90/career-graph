@@ -1,8 +1,24 @@
 <!-- <aside class="asideContent">Ciao</aside> -->
 <div class="contentRoadmapGraph">
   <div id="cardRoadmap">
-    <p class="title">Roadmap {{ title }}</p>
-    <p id="description" class="description">{{ description }}</p>
+    <p class="title">
+      Roadmap {{ title }} <mat-icon svgIcon="{{ icon }}"></mat-icon>
+    </p>
+    <p id="description" class="description">
+      {{ description }}
+    </p>
+    <div class="roadmapGraphPbarCard">
+      <p>Percentuale di completamento: {{progressBarValue}}%</p>
+      <p class="roadmapGraphPbar">
+        <mat-progress-bar
+          [color]="color"
+          [mode]="mode"
+          [value]="progressBarValue"
+          [bufferValue]="progressBarBufferValue"
+        >
+        </mat-progress-bar>
+      </p>
+    </div>
   </div>
 </div>
 <div class="centerContent">
