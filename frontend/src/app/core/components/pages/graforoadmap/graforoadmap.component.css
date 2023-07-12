@@ -1,0 +1,38 @@
+.contentgrafoRoadmap {
+  float: right;
+  word-break: break-word;
+  padding: 20px;
+  background-color: white;
+  width: 96vw;
+}
+p.description {
+  word-break: break-word;
+  width: 90%;
+  margin: 0 auto;
+  background-color: white;
+}
+.grafoRoadmapPbar{
+  width: 40vw;
+}.grafoRoadmapTitle{
+  margin-top: 0!important;
+}
+.grafoRoadmapPbarCard{
+  margin-top: 25px;
+}
+@media screen and (min-width: 1011px) {
+  .centerContent {
+    padding: 0px 5.5%;
+  }
+}
+
+@media screen and (min-width: 651px) and (max-width: 1010px) {
+  .centerContent {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .centerContent {
+    padding: 0 1%;
+  }
+}

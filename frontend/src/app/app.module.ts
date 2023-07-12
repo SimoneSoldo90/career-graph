@@ -17,6 +17,7 @@ import { RoadmapModule } from './core/components/pages/roadmap/roadmap.module';
 import { StatusManagerModule } from './core/components/shared/status-manager/status-manager.module';
 import { DrawerModule } from './core/components/shared/drawer/drawer.module';
 import { RoadmapgraphModule } from './core/components/pages/roadmapgraph/roadmapgraph.module';
+import { GraforoadmapModule } from './core/components/pages/graforoadmap/graforoadmap.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { RoadmapgraphModule } from './core/components/pages/roadmapgraph/roadmap
     StatusManagerModule,
     DrawerModule,
     RoadmapgraphModule,
+    GraforoadmapModule,
     HttpClientModule,
     ],
   bootstrap: [AppComponent]
