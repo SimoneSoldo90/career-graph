@@ -22,18 +22,27 @@ export class GraforoadmapComponent implements AfterViewInit{
     {
       id: 1,
       title: 'Java',
-      childs: [2,6,7,8,11,12,13,14,15,16,17,18,19,20,21],
+      childs: [2,3,6,7,8,11],
+      parent: true,
       // childs: [2,6,7,8,11,12,13,14]
     },
     {
       id: 2,
       title: 'OOP',
     },
-    // {
-    //   id: 3,
-    //   title: 'Build Tools',
-    //   childs: [4,5,9,10],
-    // },
+    {
+      id: 3,
+      title: 'Build Tools',
+      childs: [{
+        id: 4,
+        title: 'Maven',
+        childs: [2,3]
+      },
+      {
+        id: 5,
+        title: 'Gradle',
+      }],
+    },
     {
       id: 4,
       title: 'Maven',
@@ -72,50 +81,50 @@ export class GraforoadmapComponent implements AfterViewInit{
       title: 'Zio Paperone',
     }
     ,
-    {
-      id: 12,
-      title: 'Qui',
-    }
-    ,
-    {
-      id: 13,
-      title: 'Quo',
-    },
+    // {
+    //   id: 12,
+    //   title: 'Qui',
+    // }
+    // ,
+    // {
+    //   id: 13,
+    //   title: 'Quo',
+    // },
 
-    {
-      id: 14,
-      title: 'Qua',
-    },
+    // {
+    //   id: 14,
+    //   title: 'Qua',
+    // },
 
-    {
-      id: 15,
-      title: 'Gimli',
-    },
+    // {
+    //   id: 15,
+    //   title: 'Gimli',
+    // },
 
-    {
-      id: 16,
-      title: 'Legolas',
-    },
+    // {
+    //   id: 16,
+    //   title: 'Legolas',
+    // },
 
-    {
-      id: 17,
-      title: 'Pipino',
-    },
+    // {
+    //   id: 17,
+    //   title: 'Pipino',
+    // },
 
-    {
-      id: 18,
-      title: 'Merry',
-    },
+    // {
+    //   id: 18,
+    //   title: 'Merry',
+    // },
 
-    {
-      id: 19,
-      title: 'Frodo',
-    },
+    // {
+    //   id: 19,
+    //   title: 'Frodo',
+    // },
 
-    {
-      id: 20,
-      title: 'Gandalf',
-    },
+    // {
+    //   id: 20,
+    //   title: 'Gandalf',
+    // },
     // {
     //   id: 21,
     //   title: 'Softwareopoli',

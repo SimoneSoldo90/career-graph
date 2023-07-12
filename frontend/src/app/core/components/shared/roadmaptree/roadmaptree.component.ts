@@ -151,9 +151,7 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
   @Output() viewDetails = new EventEmitter<any>();
   @Input() set nodes(nodes: any[]) {
     nodes.forEach((node: any) => {
-      if (node.childs) {
-        var firsthalflength =
-          node.childs.length / 2 - 1 === -1 ? 0 : node.childs.length / 2 - 1;
+      if (node.parent) {
         this.parents.push(node);
         node.childs.forEach((child: any, index: number) => {
           let childFounded = nodes.filter((element: any) => {
@@ -161,24 +159,30 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
             else return null;
           });
           if (childFounded.length > 0) {
-            if (index <= firsthalflength) {
-              if (!this.firsthalfchilds.includes(childFounded[0])) {
-                this.firsthalfchilds.push(childFounded[0]);
+              if (!this.seconlevelchilds.includes(childFounded[0])) {
+                this.seconlevelchilds.push(childFounded[0]);
               }
-            } else {
-              if (!this.secondhalfchilds.includes(childFounded[0])) {
-                this.secondhalfchilds.push(childFounded[0]);
-              }
-            }
           }
         });
       }
+      this.seconlevelchilds.forEach((child,index)=>{
+        if(child.childs){
+          child.childs.forEach((element,index)=>{
+            if(!this.thirdlevelchilds.includes(element)){
+              this.thirdlevelchilds.push(element)
+            }
+          })
+
+        }
+      })
     });
     this.drawLine();
   }
   firsthalfchilds: { id: number; title: string }[] = [];
   parents: { id: number; title: string; childs: number[] }[] = [];
-  secondhalfchilds: { id: number; title: string }[] = [];
+  seconlevelchilds: { id: number; title: string ; childs: any[] }[] = [];
+  thirdlevelchilds: { id: number; title: string ; childs: any[] }[] = [];
+
 
   constructor(private changeDetector: ChangeDetectorRef) {}
   ngOnInit(): void {}
@@ -207,6 +211,7 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
     this.adjustParentsMargins();
     this.disegnaLinkTraParents(this.parents, canvas);
     this.disegnaLinkTraParentEChilds(this.parents, canvas);
+    this.disegnaLinkTraParentEChilds(this.seconlevelchilds, canvas);
   }
   adjustParentsMargins() {
     this.parents.forEach((parent, index) => {
@@ -259,7 +264,7 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
           if (element.id == childId) return element;
           else return null;
         });
-        let childdxFounded = this.secondhalfchilds.filter((element: any) => {
+        let childdxFounded = this.seconlevelchilds.filter((element: any) => {
           if (element.id == childId) return element;
           else return null;
         });
@@ -392,21 +397,21 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
     // const rapporto: number = window.innerHeight * 0.0125;
     const rapporto: number = window.innerHeight * 0.01;
     let moltiplicatoreAltezza = 1.4;
-    if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
+    if (this.firsthalfchilds.length > this.seconlevelchilds.length) {
       moltiplicatoreAltezza =
         this.firsthalfchilds.length > 10
           ? this.firsthalfchilds.length / rapporto
           : moltiplicatoreAltezza;
     } else {
       moltiplicatoreAltezza =
-        this.secondhalfchilds.length > 10
-          ? this.secondhalfchilds.length / rapporto
+        this.seconlevelchilds.length > 10
+          ? this.seconlevelchilds.length / rapporto
           : moltiplicatoreAltezza;
     }
     return moltiplicatoreAltezza;
   }
   public visualizeDetail(element: any, isSideNode: boolean) {
-    if (element.childs && isSideNode) {
+    if (element.parent && isSideNode) {
       const targetElement = document.getElementById('parent' + element.id);
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
