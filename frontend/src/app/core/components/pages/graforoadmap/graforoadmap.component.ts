@@ -29,11 +29,11 @@ export class GraforoadmapComponent implements AfterViewInit{
       id: 2,
       title: 'OOP',
     },
-    {
-      id: 3,
-      title: 'Build Tools',
-      childs: [4,5,9,10],
-    },
+    // {
+    //   id: 3,
+    //   title: 'Build Tools',
+    //   childs: [4,5,9,10],
+    // },
     {
       id: 4,
       title: 'Maven',
@@ -116,12 +116,12 @@ export class GraforoadmapComponent implements AfterViewInit{
       id: 20,
       title: 'Gandalf',
     },
-    {
-      id: 21,
-      title: 'Softwareopoli',
-      childs: [1,22,23,24,25,26,27,28,29],
-      // childs: [2,6,7,8,11,12,13,14]
-    },
+    // {
+    //   id: 21,
+    //   title: 'Softwareopoli',
+    //   childs: [1,22,23,24,25,26,27,28,29],
+    //   // childs: [2,6,7,8,11,12,13,14]
+    // },
 
     {
       id: 22,
@@ -178,17 +178,17 @@ export class GraforoadmapComponent implements AfterViewInit{
       title: 'Pier',
     },
 
-    {
-      id: 33,
-      title: 'Carmine',
-      childs: [30,31],
-    },
-    {
-      id: 34,
-      title: 'Softwareopoli2',
-      childs: [32,33],
-      // childs: [2,6,7,8,11,12,13,14]
-    }
+    // {
+    //   id: 33,
+    //   title: 'Carmine',
+    //   childs: [30,31],
+    // },
+    // {
+    //   id: 34,
+    //   title: 'Softwareopoli2',
+    //   childs: [32,33],
+    //   // childs: [2,6,7,8,11,12,13,14]
+    // }
   ];
 
   constructor(private skillService: SkillService) {

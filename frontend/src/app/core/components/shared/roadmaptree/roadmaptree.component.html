@@ -1,18 +1,37 @@
-<div  *ngIf="parents!==null && firsthalfchilds!==null" width="800" height="600">
+<div
+  *ngIf="parents !== null && firsthalfchilds !== null"
+  width="800"
+  height="600"
+>
   <table id="tablecontainer">
-  <table class="centerTable">
-    <tr *ngFor="let parent of parents ">
-      <td (click)="visualizeDetail(parent,false)" class="button-skill" id="parent{{parent.id}}">{{parent.title}}</td>
-      <div *ngFor="let child of parent.childs">
-      </div>
-    </tr>
-  </table>
-  <table class="rightTable">
-    <tr  *ngFor="let secondhalfchild of secondhalfchilds">
-      <td (click)="visualizeDetail(secondhalfchild,true)" class="button-skill" id="childdx{{secondhalfchild.id}}">{{secondhalfchild.title}}</td>
-    </tr>
-  </table>
-
+    <table class="centerTable">
+      <tr *ngFor="let parent of parents">
+        <td
+          (click)="visualizeDetail(parent, false)"
+          class="button-skill"
+          id="parent{{ parent.id }}"
+        >
+          {{ parent.title }}
+        </td>
+        <div *ngFor="let child of parent.childs"></div>
+      </tr>
+    </table>
+    <table class="rightTable">
+      <tr style="padding: 15px;" *ngFor="let secondhalfchild of secondhalfchilds">
+        <td
+          (click)="visualizeDetail(secondhalfchild, true)"
+          class="button-skill"
+          id="childdx{{ secondhalfchild.id }}"
+        >
+          {{ secondhalfchild.title }}
+        </td>
+        <td>
+          <button mat-mini-fab color="primary">
+            <mat-icon svgIcon="right-long-solid"></mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
   </table>
 </div>
-<canvas id="canvasRef" ></canvas>
+<canvas id="canvasRef"></canvas>

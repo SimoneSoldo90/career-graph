@@ -31,6 +31,7 @@ import {
       }
       td {
         text-align: center;
+        margin:0 25px;
       }
       .button-skill {
         word-break: break-word;
@@ -48,7 +49,6 @@ import {
         transition: transform 200ms, background 200ms;
         color: #000000;
         box-shadow: 0 0 0 2px #000000 inset;
-        margin-top: 25px;
       }
 
       .button-skill:hover {
@@ -58,6 +58,9 @@ import {
       }
       #tablecontainer{
         margin:0 auto;
+      }
+      table{
+        border-spacing: 0 30px;
       }
       .leftTable {
         float: left;
@@ -365,17 +368,17 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
   private getMoltiplicatoreAltezza(): number {
     // const rapporto: number = window.innerHeight * 0.0125;
     const rapporto: number = window.innerHeight * 0.0100;
-    let moltiplicatoreAltezza = 1.3;
+    let moltiplicatoreAltezza = 1.4;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       moltiplicatoreAltezza =
         this.firsthalfchilds.length > 10
           ? this.firsthalfchilds.length / rapporto
-          : 1.3;
+          : moltiplicatoreAltezza;
     } else {
       moltiplicatoreAltezza =
         this.secondhalfchilds.length > 10
           ? this.secondhalfchilds.length / rapporto
-          : 1.3;
+          : moltiplicatoreAltezza;
     }
     return moltiplicatoreAltezza;
   }
