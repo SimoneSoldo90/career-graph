@@ -44,6 +44,14 @@ export class AppComponent implements OnInit {
       `graduation-cap-solid`,
       this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/graduation-cap-solid.svg")
     );
+     this.matIconRegistry.addSvgIcon(
+      `circle-right-regular`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/circle-right-regular.svg")
+    );
+     this.matIconRegistry.addSvgIcon(
+      `right-long-solid`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/right-long-solid.svg")
+    );
   }
 
   ngOnInit(): void {
