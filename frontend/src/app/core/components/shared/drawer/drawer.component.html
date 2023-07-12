@@ -15,11 +15,11 @@
       <p class="secondTitle commonSkill">Documentazione:</p>
       <li  *ngFor="let resource of resourceDetail.LINK" class="skillsLink commonSkill">
         <ng-container *ngIf="resource.description !== ''">
-          <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
+          <a class="drawerLink" href="{{resource.link}}" target="_blank" >{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
           </a>
         </ng-container>
         <ng-container *ngIf="resource.description === ''">
-          <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.link }}</a>
+          <a class="drawerLink" href="{{resource.link}}" target="_blank" >{{ resource.link }}</a>
         </ng-container>
       </li>
     </ng-container>
@@ -28,11 +28,11 @@
       <p class="secondTitle commonSkill">Video:</p>
       <li *ngFor="let resource of resourceDetail.LINK_VIDEO" class="skillsLink commonSkill">
         <ng-container *ngIf="resource.description !== ''">
-          <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
+          <a class="drawerLink" href="{{resource.link}}" target="_blank" >{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
           </a>
         </ng-container>
         <ng-container *ngIf="resource.description === ''">
-          <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.link }}</a>
+          <a href="{{resource.link}}" target="_blank" >{{ resource.link }}</a>
         </ng-container>
       </li>
     </ng-container>
@@ -41,7 +41,7 @@
       <p class="secondTitle commonSkill">Note:</p>
       <li *ngFor="let resource of resourceDetail.NOTE" class="skillsLink commonSkill">
         <ng-container *ngIf="resource.description !== ''">
-          <a href="{{resource.link}}" target="_blank" class="linkItem">{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
+          <a class="drawerLink" href="{{resource.link}}" target="_blank" >{{ resource.description?.slice(0, 140) }}{{ (resource.description?.length ?? 0) > 140 ? '...' : '' }}
           </a>
         </ng-container>
       </li>

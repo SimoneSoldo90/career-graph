@@ -15,17 +15,21 @@ export class AppComponent implements OnInit {
       {
           title: 'To Do',
           statusColor: 'white',
-          color:'black'
+          color:'black',
+          fontWeight: '500',
       },
       {
           title: 'Doing',
           statusColor: '#74b9ff',
-          color:'black'
+          color:'white',
+          fontWeight: '500' ,
       },
       {
           title: 'Done',
           statusColor: '#00b894',
-          color:'black'
+          color:'white',
+          fontWeight: '500',
+
       },
     ],
   };
