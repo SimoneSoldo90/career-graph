@@ -57,6 +57,9 @@ import {
         box-shadow: 0 0 0 3px #000000 inset;
         font-weight: 500;
       }
+      #tablecontainer{
+        margin:0 auto;
+      }
       .leftTable {
         float: left;
         position: relative;
