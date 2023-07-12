@@ -10,6 +10,18 @@
   padding: 20px;
   max-width: 40%;
 }
+
+@media screen and (max-width: 500px) {
+  .example-sidenav {
+    max-width: 100%;
+  }
+}
+@media screen and (min-width: 501px) and (max-width: 800px) {
+  .example-sidenav {
+    max-width: 100%;
+  }
+}
+
 .skillsTitle {
   margin-top: 7%;
   margin-left: 2.2%;
