@@ -13,6 +13,8 @@ p.description {
 }
 .roadmapGraphPbar{
   width: 40vw;
+}.roadmapGraphTitle{
+  margin-top: 0!important;
 }
 .roadmapGraphPbarCard{
   margin-top: 25px;
