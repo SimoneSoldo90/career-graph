@@ -69,7 +69,7 @@ import {
       .centerTable {
         float: left;
         position: relative;
-        margin: 20px 200px 0px 0px;
+        margin: 20px 150px 0px 0px;
       }
       .rightTable {
         float: left;
@@ -155,7 +155,7 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
         this.parents.push(node);
         node.childs.forEach((child: any, index: number) => {
           let childFounded = nodes.filter((element: any) => {
-            if (element.id == child) return element;
+            if (element.id == child.id) return element;
             else return null;
           });
           if (childFounded.length > 0) {
@@ -167,6 +167,9 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
       }
       this.seconlevelchilds.forEach((child,index)=>{
         if(child.childs){
+          if(!this.secondLevelParents.includes(child)){
+            this.secondLevelParents.push(child)
+          }
           child.childs.forEach((element,index)=>{
             if(!this.thirdlevelchilds.includes(element)){
               this.thirdlevelchilds.push(element)
@@ -180,6 +183,7 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
   }
   firsthalfchilds: { id: number; title: string }[] = [];
   parents: { id: number; title: string; childs: number[] }[] = [];
+  secondLevelParents: { id: number; title: string; childs: number[] }[] = [];
   seconlevelchilds: { id: number; title: string ; childs: any[] }[] = [];
   thirdlevelchilds: { id: number; title: string ; childs: any[] }[] = [];
 
@@ -210,8 +214,8 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
     let canvas: HTMLCanvasElement = this.getCanvas();
     this.adjustParentsMargins();
     this.disegnaLinkTraParents(this.parents, canvas);
-    this.disegnaLinkTraParentEChilds(this.parents, canvas);
-    this.disegnaLinkTraParentEChilds(this.seconlevelchilds, canvas);
+    this.disegnaLinkTraParentEChilds(this.parents, canvas,'parent','secLevel');
+    this.disegnaLinkTraParentEChilds(this.secondLevelParents, canvas,'secLevel','thirdLevel');
   }
   adjustParentsMargins() {
     this.parents.forEach((parent, index) => {
@@ -229,22 +233,28 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
   }
   private disegnaLinkTraParentEChilds(
     parents: { id: number; title: string; childs: number[] }[],
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
+    parentPrefix: string,
+    childPrefix: string
   ) {
-    this.parents.forEach((parent: any, index: number) => {
+    console.log(parents)
+    console.log(parentPrefix)
+    console.log(childPrefix)
+
+    parents.forEach((parent: any, index: number) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-        document.getElementById('parent' + parent.id)!
+        document.getElementById(parentPrefix + parent.id)!
       );
 
       if (index === 0) {
-        const elementHtml = document.getElementById('parent' + parent.id);
+        const elementHtml = document.getElementById(parentPrefix + parent.id);
         if (elementHtml != null) {
           elementHtml.style.backgroundColor = '#144d83';
           elementHtml.style.color = 'white';
           elementHtml.style.fontWeight = '400';
         }
       } else {
-        const elementHtml = document.getElementById('parent' + parent.id);
+        const elementHtml = document.getElementById(parentPrefix + parent.id);
         if (elementHtml != null) {
           elementHtml.style.backgroundColor = '#acd0fb';
           elementHtml.style.color = 'black';
@@ -258,28 +268,15 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
-      parent.childs.forEach((childId: number) => {
+      parent.childs.forEach((childId: any) => {
         let childHtml: HTMLCanvasElement | null = null;
-        let childsxFounded = this.firsthalfchilds.filter((element: any) => {
-          if (element.id == childId) return element;
-          else return null;
-        });
-        let childdxFounded = this.seconlevelchilds.filter((element: any) => {
-          if (element.id == childId) return element;
-          else return null;
-        });
-        if (childsxFounded.length > 0) {
-          childHtml = <HTMLCanvasElement>(
-            document.getElementById('childsx' + childId)!
-          );
-        } else if (childdxFounded.length > 0) {
-          childHtml = <HTMLCanvasElement>(
-            document.getElementById('childdx' + childId)!
-          );
-        }
-
+        childHtml = <HTMLCanvasElement>(
+          document.getElementById(childPrefix + childId.id)!
+        );
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
+        console.log(childPrefix + childId)
+        console.log(childElement)
         if (childElement) {
           const childRect = childElement.getBoundingClientRect();
           const childCenterX =
@@ -315,9 +312,9 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
     parents: { id: number; title: string; childs: number[] }[],
     canvas: HTMLCanvasElement
   ) {
-    for (let i = 0; i < this.parents.length; i++) {
+    for (let i = 0; i < parents.length; i++) {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-        document.getElementById('parent' + this.parents[i].id)!
+        document.getElementById('parent' + parents[i].id)!
       );
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
@@ -327,9 +324,9 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
 
-      if (i < this.parents.length - 1) {
+      if (i < parents.length - 1) {
         let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('parent' + this.parents[i + 1].id)!
+          document.getElementById('parent' + parents[i + 1].id)!
         );
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
