@@ -36,6 +36,10 @@ export class AppComponent implements OnInit {
       `java`,
       this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/java.svg")
     );
+    this.matIconRegistry.addSvgIcon(
+      `graduation-cap-solid`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/graduation-cap-solid.svg")
+    );
   }
 
   ngOnInit(): void {
