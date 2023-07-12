@@ -22,7 +22,31 @@ export class GraforoadmapComponent implements AfterViewInit{
     {
       id: 1,
       title: 'Java',
-      childs: [2,3,6,7,8,11],
+      childs: [{
+        id: 2,
+        title: 'OOP',
+      },
+      {
+        id: 3,
+        title: 'Build Tools',
+        childs: [{
+          id: 4,
+          title: 'Maven',
+          childs: [2,3]
+        },
+        {
+          id: 5,
+          title: 'Gradle',
+        }],
+      },{
+        id: 6,
+        title: 'Types',
+      },
+      ,
+      {
+        id: 7,
+        title: 'Pippo',
+    }],
       parent: true,
       // childs: [2,6,7,8,11,12,13,14]
     },

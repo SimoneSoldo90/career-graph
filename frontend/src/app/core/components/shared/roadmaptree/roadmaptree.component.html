@@ -4,7 +4,7 @@
   height="600"
 >
   <table id="tablecontainer">
-    <table class="centerTable">
+    <table class="leftTable">
       <tr *ngFor="let parent of parents">
         <td
           (click)="visualizeDetail(parent, false)"
@@ -16,12 +16,12 @@
         <div *ngFor="let child of parent.childs"></div>
       </tr>
     </table>
-    <table class="leftTable">
+    <table class="centerTable">
       <tr *ngFor="let seconlevelchild of seconlevelchilds">
         <td
           (click)="visualizeDetail(seconlevelchild, true)"
           class="button-skill"
-          id="childdx{{ seconlevelchild.id }}"
+          id="secLevel{{ seconlevelchild.id }}"
         >
           {{ seconlevelchild.title }}
         </td>
@@ -32,7 +32,7 @@
         <td
           (click)="visualizeDetail(thirdlevelchild, true)"
           class="button-skill"
-          id="childdx{{ thirdlevelchild.id }}"
+          id="thirdLevel{{ thirdlevelchild.id }}"
         >
           {{ thirdlevelchild.title }}
         </td>
