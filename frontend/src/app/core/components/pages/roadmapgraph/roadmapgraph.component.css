@@ -1,13 +1,30 @@
-
-.contentRoadmapGraph{
+.contentRoadmapGraph {
   float: right;
   word-break: break-word;
-  padding:20px;
+  padding: 20px;
   background-color: white;
 }
-p.description{
+p.description {
   word-break: break-word;
-  width: 80%;
+  width: 90%;
+  margin: 0 auto;
   background-color: white;
 }
 
+@media screen and (min-width: 1011px) {
+  .centerContent {
+    padding: 0px 5.5%;
+  }
+}
+
+@media screen and (min-width: 651px) and (max-width: 1010px) {
+  .centerContent {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .centerContent {
+    padding: 0 1%;
+  }
+}
