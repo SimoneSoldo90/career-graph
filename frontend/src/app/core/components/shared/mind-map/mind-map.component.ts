@@ -345,11 +345,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   }): number {
     let margin: number = 0;
     if (arg0.childs) {
-      if (arg0.childs.length > 2) {
         margin =
           (arg0.childs.length / 2) *
           (document.getElementById('parent' + arg0.id)!.clientHeight / 1.4);
-      }
     }
     return margin;
   }
