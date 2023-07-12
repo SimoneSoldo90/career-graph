@@ -31,7 +31,7 @@ import {
       }
       td {
         text-align: center;
-        margin:0 25px;
+        margin: 0 25px;
       }
       .button-skill {
         word-break: break-word;
@@ -56,10 +56,10 @@ import {
         box-shadow: 0 0 0 3px #000000 inset;
         font-weight: 500;
       }
-      #tablecontainer{
-        margin:0 auto;
+      #tablecontainer {
+        margin: 0 auto;
       }
-      table{
+      table {
         border-spacing: 0 30px;
       }
       .leftTable {
@@ -119,6 +119,29 @@ import {
         .button-skill {
           width: 50px;
           font-size: 10px;
+        }
+      }
+      .buttonFollowPath:hover {
+        animation: shake 1.00s;
+      }
+
+      @keyframes shake {
+        10%,
+        50% {
+          transform: translate3d(0, 0, 0);
+        }
+        10%,
+        60% {
+          transform: translate3d(3px, 0, 0);
+        }
+        10%,
+        30%,
+        50% {
+          transform: translate3d(-4px, 0, 0);
+        }
+        20%,
+        30% {
+          transform: translate3d(6px, 0, 0);
         }
       }
     `,
@@ -347,9 +370,9 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
   }): number {
     let margin: number = 0;
     if (arg0.childs) {
-        margin =
-          (arg0.childs.length / 2) *
-          (document.getElementById('parent' + arg0.id)!.clientHeight / 1.4);
+      margin =
+        (arg0.childs.length / 2) *
+        (document.getElementById('parent' + arg0.id)!.clientHeight / 1.4);
     }
     return margin;
   }
@@ -367,7 +390,7 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
   }
   private getMoltiplicatoreAltezza(): number {
     // const rapporto: number = window.innerHeight * 0.0125;
-    const rapporto: number = window.innerHeight * 0.0100;
+    const rapporto: number = window.innerHeight * 0.01;
     let moltiplicatoreAltezza = 1.4;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       moltiplicatoreAltezza =
