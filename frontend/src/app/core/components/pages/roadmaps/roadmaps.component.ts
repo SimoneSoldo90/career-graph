@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
 import { Roadmap } from 'src/app/core/models/roadmap';
-import { RoadmapService } from 'src/app/core/services/roadmap/roadmap.service';
+import { RoadmapService } from 'src/app/core/services/roadmap.service';
 @Component({
   selector: 'app-roadmaps',
   templateUrl: './roadmaps.component.html',
@@ -53,7 +53,7 @@ export class RoadmapsComponent implements OnInit {
   }
 
   getRoadmaps(): void {
-    this.roadmapService.getRoadmaps().subscribe( {
+    this.roadmapService.getAllRoadmaps().subscribe( {
       next: (data: Roadmap[]) => {
         this.dataSource = data;
       },

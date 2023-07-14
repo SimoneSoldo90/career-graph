@@ -1,4 +1,4 @@
-import { Resource } from "./resource"
+import { Resource } from "./resource.model"
 
 export interface Resourcedetail {
   "LINK"?: Resource[]

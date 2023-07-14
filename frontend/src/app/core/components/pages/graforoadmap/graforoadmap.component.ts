@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { Skill } from 'src/app/core/models/skill';
-import { SkillService } from 'src/app/core/services/skill/skill.service';
+import { SkillService } from 'src/app/core/services/skill.service';
 
 @Component({
   selector: 'app-graforoadmap',
@@ -230,11 +230,11 @@ export class GraforoadmapComponent implements AfterViewInit{
     this.heightOffset=document.getElementById("description")!.clientHeight;
   }
   visualizeSkills(event: Skill) {
-    this.getSkill(Number(event.id));
+    this.getSkillById(Number(event.id));
   }
 
-  getSkill(skillId: number): void {
-    this.skillService.getSkill(skillId).subscribe({
+  getSkillById(skillId: number): void {
+    this.skillService.getSkillById(skillId).subscribe({
       next: (data: Skill) => {
         this.skillService.changeMessage(data);
       },

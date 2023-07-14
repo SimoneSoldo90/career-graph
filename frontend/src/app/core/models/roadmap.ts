@@ -1,8 +1,8 @@
-import { Skill } from "./skill"
+import { Step } from "./step.model";
 
 export interface Roadmap {
-  "id"?: number,
-  "title": string,
-  "description": string | null,
-  "enabled": boolean
+  id?: number;
+  title: string;
+  description: string;
+  steps?: Step[];
 }

@@ -21,10 +21,5 @@ export class NavmenuComponent {
     this.router.navigate([itempath]);
   }
 
-  skills:string=environment.paths.skills
-  roadmaps:string=environment.paths.roadmaps
-  skillspath:string=environment.paths.skillspath
-  roadmapspath:string=environment.paths.roadmapspath
-  mentees:string=environment.paths.mentees
-  menteespath:string=environment.paths.menteespath
+
 }

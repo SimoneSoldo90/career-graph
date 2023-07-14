@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Skill } from 'src/app/core/models/skill';
-import { Resource } from 'src/app/core/models/resource';
-import { ResourceService } from 'src/app/core/services/resource/resource.service';
-import { SkillService } from 'src/app/core/services/skill/skill.service';
+import { Resource } from 'src/app/core/models/resource.model';
+import { ResourceService } from 'src/app/core/services/resource.service';
+import { SkillService } from 'src/app/core/services/skill.service';
 
 @Component({
   selector: 'app-generic-form',
@@ -119,8 +119,9 @@ export class GenericFormComponent implements OnInit {
   addElement(fieldId: string, element: Resource) {
     if (fieldId === 'resources') {
       const index = this.resourcesList.findIndex(
-        (resource) =>
-          resource.id === element.id
+        (resource) =>{}
+          // resource.id === element.id
+          //TODO DA REIMPLEMENTARE LOGICA
       );
       if (index === -1) {
         this.resourcesList.push(element);
@@ -133,9 +134,10 @@ export class GenericFormComponent implements OnInit {
   removeElement(fieldId: string, element: Resource, indice: number) {
     if (fieldId === 'resources') {
       const index = this.resourcesList.findIndex(
-        (resource) =>
-          resource.id === element.id
-      );
+        (resource) =>{}
+// resource.id === element.id
+          //TODO DA REIMPLEMENTARE LOGICA
+        );
         this.resourcesList.splice(indice, 1);
         this.genericForm.value['resources'] = this.resourcesList;
         this.genericForm.patchValue(this.genericForm.value);
@@ -163,7 +165,7 @@ export class GenericFormComponent implements OnInit {
   }
 
   getSkills(): void {
-    this.skillService.getSkills().subscribe({
+    this.skillService.getAllSkills().subscribe({
       next: (data: Skill[]) => {
         this.skillDataSources.push({ skills: data });
       },
@@ -172,7 +174,8 @@ export class GenericFormComponent implements OnInit {
   }
 
   getResources(): void {
-    this.resourceService.getResources().subscribe({
+    //TODO DA REIMPLEMENTARE LOGICA
+    this.resourceService.getResourcesByStepId(1).subscribe({
       next: (data: Resource[]) => {
         this.resourceDataSources.push({ resources: data });
       },

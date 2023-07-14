@@ -22,10 +22,10 @@ export class NavlargemenuComponent {
     this.router.navigate([itempath]);
   }
 
-  skills:string=environment.paths.skills
-  roadmaps:string=environment.paths.roadmaps
-  skillspath:string=environment.paths.skillspath
-  roadmapspath:string=environment.paths.roadmapspath
-  mentees:string=environment.paths.mentees
-  menteespath:string=environment.paths.menteespath
+  skills:string="Skills"
+  roadmaps:string="Roadmaps"
+  skillspath:string="skills"
+  roadmapspath:string="roadmaps"
+  mentees:string="Mentees"
+  menteespath:string="mentees"
 }

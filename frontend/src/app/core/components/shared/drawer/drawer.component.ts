@@ -1,8 +1,8 @@
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { Resource } from 'src/app/core/models/resource';
+import { Resource } from 'src/app/core/models/resource.model';
 import { Resourcedetail, getKeys } from 'src/app/core/models/resourcedetail';
-import { SkillService } from 'src/app/core/services/skill/skill.service';
+import { SkillService } from 'src/app/core/services/skill.service';
 
 @Component({
   selector: 'app-drawer',

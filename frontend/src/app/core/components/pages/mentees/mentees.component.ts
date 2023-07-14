@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { Mentee } from 'src/app/core/models/mentee';
-import { MenteeService } from 'src/app/core/services/mentee/mentee.service';
+import { MenteeService } from 'src/app/core/services/mentee.service';
 
 @Component({
   selector: 'app-mentees',

@@ -69,7 +69,7 @@ import {
       .centerTable {
         float: left;
         position: relative;
-        margin: 20px 150px 0px 0px;
+        margin: 20px 75px 0px 0px;
       }
       .rightTable {
         float: left;
@@ -77,38 +77,38 @@ import {
       }
       @media screen and (min-width: 801px) and (max-width: 900px) {
         .centerTable {
-          margin: 20px 150px 0px 0px;
+          margin: 20px 75px 0px 0px;
         }
       }
-      @media screen and (min-width: 651px) and (max-width: 800px) {
+      @media screen and (min-width: 691px) and (max-width: 800px) {
         .centerTable {
           margin: 20px 75px 0px 0px;
         }
       }
-      @media screen and (min-width: 501px) and (max-width: 649px) {
-        .centerTable {
-          margin: 20px 25px 0px 0px;
-        }
-        .button-skill {
-          width: 80px;
-          font-size: 16px;
-        }
-      }
-      @media screen and (min-width: 360px) and (max-width: 500px) {
+      @media screen and (min-width: 531px) and (max-width: 690px) {
         .centerTable {
           margin: 20px 25px 0px 0px;
         }
         .button-skill {
           width: 70px;
+          font-size: 16px;
+        }
+      }
+      @media screen and (min-width: 360px) and (max-width: 530px) {
+        .centerTable {
+          margin: 20px 10px 0px 0px;
+        }
+        .button-skill {
+          width: 50px;
           font-size: 14px;
         }
       }
-      @media screen and (min-width: 250px) and (max-width: 360px) {
+      @media screen and (min-width: 251px) and (max-width: 359px) {
         .centerTable {
-          margin: 20px 15px 0px 0px;
+          margin: 20px 10px 0px 0px;
         }
         .button-skill {
-          width: 60px;
+          width: 40px;
           font-size: 10px;
         }
       }
@@ -117,7 +117,7 @@ import {
           margin: 20px 10px 0px 0px;
         }
         .button-skill {
-          width: 50px;
+          width: 40px;
           font-size: 10px;
         }
       }

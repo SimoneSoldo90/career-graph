@@ -1,12 +1,9 @@
-import { Resource } from "./resource";
+import { Resource } from "./resource.model";
 
 export interface Skill {
-
-  "parentSkill"?: Skill;
-  "id"?: number,
-  "title": string,
-  "description": string | null,
-  "resources": Resource[],
-  "enabled": boolean
-  "parentSkillId":number
+  id?: number;
+  step_id: number;
+  title: string;
+  description: string;
+  resources?: Resource[];
 }
