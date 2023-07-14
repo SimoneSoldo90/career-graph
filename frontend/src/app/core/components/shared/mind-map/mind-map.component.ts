@@ -9,6 +9,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Roadmap } from 'src/app/core/models/roadmap';
+import { Skill } from 'src/app/core/models/skill';
+import { Step } from 'src/app/core/models/step.model';
 
 @Component({
   selector: 'app-line-renderer',
@@ -124,36 +127,43 @@ import {
 })
 export class MindMapComponent implements AfterViewInit, OnInit {
   @Output() viewDetails = new EventEmitter<any>();
-  @Input() set nodes(nodes: any[]) {
-    nodes.forEach((node: any) => {
-      if (node.childs) {
+  @Input() set dataset(data: Roadmap) {
+    data.steps!.forEach((node: Step) => {
+      if (node.skills) {
         var firsthalflength =
-          node.childs.length / 2 - 1 === -1 ? 0 : node.childs.length / 2 - 1;
+          node.skills.length / 2 - 1 === -1 ? 0 : node.skills.length / 2 - 1;
         this.parents.push(node);
-        node.childs.forEach((child: any, index: number) => {
-          let childFounded = nodes.filter((element: any) => {
-            if (element.id == child) return element;
-            else return null;
-          });
-          if (childFounded.length > 0) {
+        console.log(node)
+        node.skills.forEach((child: Skill, index: number) => {
+          console.log(child)
+          // let childFounded = data.steps![index].skills!.filter((element: any) => {
+          //   if (element.id == child) return element;
+          //   else return null;
+          // });
+          // if (childFounded.length > 0) {
             if (index <= firsthalflength) {
-              if (!this.firsthalfchilds.includes(childFounded[0])) {
-                this.firsthalfchilds.push(childFounded[0]);
-              }
+              // if (!this.firsthalfchilds.includes(childFounded[0])) {
+                this.firsthalfchilds.push(child);
+              // }
             } else {
-              if (!this.secondhalfchilds.includes(childFounded[0])) {
-                this.secondhalfchilds.push(childFounded[0]);
+              // if (!this.secondhalfchilds.includes(childFounded[0])) {
+                this.secondhalfchilds.push(child);
               }
-            }
-          }
+            // }
+          // }
         });
       }
+      console.log("Parents "+this.parents)
+      console.log("Left "+this.firsthalfchilds)
+      console.log("Rigth "+this.secondhalfchilds)
+
+
     });
     this.drawLine();
   }
-  firsthalfchilds: { id: number; title: string }[] = [];
-  parents: { id: number; title: string; childs: number[] }[] = [];
-  secondhalfchilds: { id: number; title: string }[] = [];
+  firsthalfchilds: Skill[] = [];
+  parents:Step[] = [];
+  secondhalfchilds: Skill[] = [];
 
   constructor(private changeDetector: ChangeDetectorRef) {}
   ngOnInit(): void {}
@@ -198,7 +208,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     });
   }
   private disegnaLinkTraParentEChilds(
-    parents: { id: number; title: string; childs: number[] }[],
+    parents: Step[],
     canvas: HTMLCanvasElement
   ) {
     this.parents.forEach((parent: any, index: number) => {
@@ -282,7 +292,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     });
   }
   private disegnaLinkTraParents(
-    parents: { id: number; title: string; childs: number[] }[],
+    parents: Step[],
     canvas: HTMLCanvasElement
   ) {
     for (let i = 0; i < this.parents.length; i++) {
@@ -329,25 +339,17 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  getParentMarginTopDown(arg0: {
-    id: number;
-    title: string;
-    childs: number[];
-  }): string {
+  getParentMarginTopDown(arg0:Step): string {
     let margin: number = this.getMarginParents(arg0);
     return margin + 'px';
   }
 
-  getMarginParents(arg0: {
-    id: number;
-    title: string;
-    childs: number[];
-  }): number {
+  getMarginParents(arg0:Step): number {
     let margin: number = 0;
-    if (arg0.childs) {
+    if (arg0.skills) {
         margin =
-          (arg0.childs.length / 2) *
-          (document.getElementById('parent' + arg0.id)!.clientHeight / 1.4);
+          (arg0.skills.length / 2) *
+          (document.getElementById('parent' + arg0.id)!.clientHeight / 1.7);
     }
     return margin;
   }
@@ -366,17 +368,17 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   private getMoltiplicatoreAltezza(): number {
     // const rapporto: number = window.innerHeight * 0.0125;
     const rapporto: number = window.innerHeight * 0.0100;
-    let moltiplicatoreAltezza = 1.3;
+    let moltiplicatoreAltezza = 1.5;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       moltiplicatoreAltezza =
         this.firsthalfchilds.length > 10
           ? this.firsthalfchilds.length / rapporto
-          : 1.3;
+          : moltiplicatoreAltezza;
     } else {
       moltiplicatoreAltezza =
         this.secondhalfchilds.length > 10
           ? this.secondhalfchilds.length / rapporto
-          : 1.3;
+          : moltiplicatoreAltezza;
     }
     return moltiplicatoreAltezza;
   }
