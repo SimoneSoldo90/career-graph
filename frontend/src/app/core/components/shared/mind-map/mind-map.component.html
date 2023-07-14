@@ -8,7 +8,7 @@
   <table class="centerTable">
     <tr *ngFor="let parent of parents ">
       <td (click)="visualizeDetail(parent,false)" class="button-skill" id="parent{{parent.id}}">{{parent.title}}</td>
-      <div *ngFor="let child of parent.childs">
+      <div *ngFor="let child of parent.skills">
       </div>
     </tr>
   </table>
