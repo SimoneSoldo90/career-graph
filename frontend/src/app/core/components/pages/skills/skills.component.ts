@@ -3,9 +3,9 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { Router } from '@angular/router';
 
 import { Skill } from 'src/app/core/models/skill';
-import { Resource } from 'src/app/core/models/resource';
-import { SkillService } from 'src/app/core/services/skill/skill.service';
-import { ResourceService } from 'src/app/core/services/resource/resource.service';
+import { Resource } from 'src/app/core/models/resource.model';
+import { SkillService } from 'src/app/core/services/skill.service';
+import { ResourceService } from 'src/app/core/services/resource.service';
 
 
 @Component({
@@ -54,7 +54,7 @@ export class SkillsComponent implements OnInit {
    }
 
   getResources(): void {
-    this.resourceService.getResources().subscribe( {
+    this.resourceService.getResourcesByStepId(1).subscribe( {
       next: (data: Resource[]) => {
         this.resourceDataSource = data;
     }});
@@ -62,7 +62,7 @@ export class SkillsComponent implements OnInit {
   }
 
   getSkills(): void {
-    this.skillService.getSkills().subscribe( {
+    this.skillService.getAllSkills().subscribe( {
       next: (data: Skill[]) => {
         this.dataSource = data;
       },
@@ -83,11 +83,11 @@ export class SkillsComponent implements OnInit {
   }
 
   visualizeSkills(event: Skill){
-    this.getSkill(Number(event.id));
+    this.getSkillById(Number(event.id));
   }
 
-  getSkill(skillId: number): void {
-    this.skillService.getSkill(skillId).subscribe( {
+  getSkillById(skillId: number): void {
+    this.skillService.getSkillById(skillId).subscribe( {
       next: (data: Skill) => {
         this.skillService.changeMessage(data);
       }

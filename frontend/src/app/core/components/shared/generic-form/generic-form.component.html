@@ -26,7 +26,7 @@
           </mat-form-field>
           <mat-list *ngIf="resourcesList.length > 0 && field.hasDetails">
             <mat-list-item *ngFor="let resource of resourcesList, let i = index">
-              <span>{{ resource.type }}: {{ resource.id }}</span>
+              <span>{{ resource.type }}: {{ resource.description }}</span>
               <span>
                 <a mat-raised-button (click)="removeElement(field.id, selected, i)">Rimuovi risorsa</a>
               </span>

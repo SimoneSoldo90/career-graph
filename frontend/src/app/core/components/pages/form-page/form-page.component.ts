@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SkillService } from 'src/app/core/services/skill/skill.service';
+import { SkillService } from 'src/app/core/services/skill.service';
 
 @Component({
   selector: 'app-form-page',

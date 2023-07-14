@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environment/environment';
 import { Observable, of } from 'rxjs';
-import { Mentee } from '../../models/mentee';
+import { Mentee } from '../models/mentee';
 
 @Injectable({
   providedIn: 'root'
