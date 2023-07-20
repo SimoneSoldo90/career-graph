@@ -1,7 +1,7 @@
 package net.bcsoft.careergraph.dto;
 
 public class ResourceDTO {
-    Integer steoId;
+    Integer stepId;
     Integer skillId;
     String type;
     String description;
@@ -11,19 +11,19 @@ public class ResourceDTO {
     }
 
     public ResourceDTO(Integer steoId, Integer skillId, String type, String description, String url) {
-        this.steoId = steoId;
+        this.stepId = steoId;
         this.skillId = skillId;
         this.type = type;
         this.description = description;
         this.url = url;
     }
 
-    public Integer getSteoId() {
-        return steoId;
+    public Integer getStepId() {
+        return stepId;
     }
 
-    public void setSteoId(Integer steoId) {
-        this.steoId = steoId;
+    public void setStepId(Integer stepId) {
+        this.stepId = stepId;
     }
 
     public Integer getSkillId() {
