@@ -1,20 +1,30 @@
 package net.bcsoft.careergraph.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StepDTO {
     Integer id;
     Integer roadmapId;
     Integer ordine;
     String title;
     String description;
+    List <ResourceDTO> resources = new ArrayList<>();
+    List <RoadmapLinkDTO> roadmapLinks = new ArrayList<>();
+    List <SkillDTO> skills = new ArrayList<>();
+
 
     public StepDTO(){}
 
-    public StepDTO(Integer id, Integer roadmapId, Integer ordine, String title, String description) {
+    public StepDTO(Integer id, Integer roadmapId, Integer ordine, String title, String description, List <ResourceDTO> resources, List <RoadmapLinkDTO> roadmapLinks, List <SkillDTO> skills) {
         this.id = id;
         this.roadmapId = roadmapId;
         this.ordine = ordine;
         this.title = title;
         this.description = description;
+        this.resources = resources;
+        this.roadmapLinks = roadmapLinks;
+        this.skills = skills;
     }
 
     public Integer getId() {
