@@ -8,17 +8,17 @@ public class SkillDTO {
     private int stepId;
     private String title;
     private String description;
-    List<ResourceDTO> resource = new ArrayList<>();
+    List<ResourceDTO> resources = new ArrayList<>();
 
 
     public void SkillDTO(){}
 
-    public SkillDTO(int id, int stepId, String title, String description,List<ResourceDTO> resource) {
+    public SkillDTO(int id, int stepId, String title, String description,List<ResourceDTO> resources) {
         this.id = id;
         this.stepId = stepId;
         this.title = title;
         this.description = description;
-        this.resource = resource;
+        this.resources = resources;
     }
 
     public int getId() {
@@ -51,6 +51,14 @@ public class SkillDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<ResourceDTO> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<ResourceDTO> resources) {
+        this.resources = resources;
     }
 }
 

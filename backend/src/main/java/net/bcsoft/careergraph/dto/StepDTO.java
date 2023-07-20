@@ -6,7 +6,7 @@ import java.util.List;
 public class StepDTO {
     Integer id;
     Integer roadmapId;
-    Integer ordine;
+    Integer order;
     String title;
     String description;
     List <ResourceDTO> resources = new ArrayList<>();
@@ -16,10 +16,10 @@ public class StepDTO {
 
     public StepDTO(){}
 
-    public StepDTO(Integer id, Integer roadmapId, Integer ordine, String title, String description, List <ResourceDTO> resources, List <RoadmapLinkDTO> roadmapLinks, List <SkillDTO> skills) {
+    public StepDTO(Integer id, Integer roadmapId, Integer order, String title, String description, List <ResourceDTO> resources, List <RoadmapLinkDTO> roadmapLinks, List <SkillDTO> skills) {
         this.id = id;
         this.roadmapId = roadmapId;
-        this.ordine = ordine;
+        this.order = order;
         this.title = title;
         this.description = description;
         this.resources = resources;
@@ -43,12 +43,12 @@ public class StepDTO {
         this.roadmapId = roadmapId;
     }
 
-    public Integer getOrdine() {
-        return ordine;
+    public Integer getOrder() {
+        return order;
     }
 
-    public void setOrdine(Integer ordine) {
-        this.ordine = ordine;
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public String getTitle() {
