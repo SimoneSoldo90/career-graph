@@ -10,26 +10,26 @@ import java.util.List;
 public class StepController {
     @PostMapping("/steps")
     public StepDTO createStep(StepDTO stepDTO){
-        return new StepDTO(); //TODO Implementare
+        return new StepDTO(); // Implementare
     }
 
     @GetMapping("/steps")
     public List<StepDTO> getStep(List<StepDTO> stepDTOList){
-        return new ArrayList<StepDTO>(); //TODO Implementare
+        return new ArrayList<StepDTO>(); // Implementare
     }
 
     @GetMapping("/steps/{stepId}")
     public StepDTO getStep(@PathVariable Integer stepId){
-        return new StepDTO(); //TODO Implementare
+        return new StepDTO(); // Implementare
     }
 
     @PutMapping("/steps/{stepId}")
     public StepDTO updateStep(@PathVariable Integer stepId, @RequestBody StepDTO stepDTO){
-        return new StepDTO(); //TODO Implementare
+        return new StepDTO(); // Implementare
     }
 
     @DeleteMapping("/steps/{stepId}")
     public void deleteStep(@PathVariable Integer stepId){
-        //TODO Implementare
+        // Implementare
     }
 }
