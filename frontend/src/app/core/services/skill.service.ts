@@ -12,7 +12,7 @@ export class SkillService {
 
   private messageSource = new BehaviorSubject('default message');
   currentMessage = this.messageSource.asObservable();
-  baseUrl = environment.serverHost + "skills/";
+  baseUrl = environment.serverHost + "skills";
 
   constructor(private http: HttpClient) { }
 

@@ -153,11 +153,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
           // }
         });
       }
-      console.log("Parents "+this.parents)
-      console.log("Left "+this.firsthalfchilds)
-      console.log("Rigth "+this.secondhalfchilds)
-
-
     });
     this.drawLine();
   }
@@ -238,23 +233,23 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
-      parent.childs.forEach((childId: number) => {
+      parent.skills.forEach((child: Skill) => {
         let childHtml: HTMLCanvasElement | null = null;
         let childsxFounded = this.firsthalfchilds.filter((element: any) => {
-          if (element.id == childId) return element;
+          if (element.id == child.id) return element;
           else return null;
         });
         let childdxFounded = this.secondhalfchilds.filter((element: any) => {
-          if (element.id == childId) return element;
+          if (element.id == child.id) return element;
           else return null;
         });
         if (childsxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
-            document.getElementById('childsx' + childId)!
+            document.getElementById('childsx' + child.id)!
           );
         } else if (childdxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
-            document.getElementById('childdx' + childId)!
+            document.getElementById('childdx' + child.id)!
           );
         }
 
