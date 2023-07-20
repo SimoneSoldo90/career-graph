@@ -19,7 +19,7 @@ public class RoadmapController {
     }
 
     @GetMapping("/roadmaps/{roadmapId}")
-    public RoadmapDTO getRoadmapId(@PathVariable Integer id){
+    public RoadmapDTO getRoadmapId(@PathVariable Integer roadmapId){
         RoadmapDTO roadmapDTO = new RoadmapDTO();
         return roadmapDTO;
     }
@@ -30,7 +30,7 @@ public class RoadmapController {
     }
 
     @DeleteMapping("/roadmaps/{roadmapId}")
-    public void deleteRoadmap(@PathVariable Integer id){
+    public void deleteRoadmap(@PathVariable Integer roadmapId){
 
     }
 }
