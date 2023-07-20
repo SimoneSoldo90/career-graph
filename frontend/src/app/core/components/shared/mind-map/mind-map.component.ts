@@ -447,7 +447,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     return canvas;
   }
   private getMoltiplicatoreAltezza(): number {
-    const rapporto: number = window.innerHeight * 0.01;
+    const rapporto: number = window.innerHeight * 0.0105;
     let moltiplicatoreAltezza = 1.3;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       moltiplicatoreAltezza = this.firsthalfchilds.length / rapporto;
