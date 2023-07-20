@@ -25,7 +25,7 @@ public class RoadmapController {
     }
 
     @PutMapping("/roadmaps/{roadmapId}")
-    public RoadmapDTO updateRoadmap(@RequestBody RoadmapDTO roadmapDTO){
+    public RoadmapDTO updateRoadmap(@PathVariable Integer roadmapId, @RequestBody RoadmapDTO roadmapDTO){
         return roadmapDTO;
     }
 
