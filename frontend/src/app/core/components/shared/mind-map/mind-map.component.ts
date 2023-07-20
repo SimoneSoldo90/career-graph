@@ -53,9 +53,11 @@ import { Step } from 'src/app/core/models/step.model';
         box-shadow: 0 0 0 2px #000000 inset;
         margin-top: 25px;
       }
-      [id^='childdxroadmap'] , [id^='childsxroadmap'] , [id^='parent']{
+      [id^='childdxroadmap'],
+      [id^='childsxroadmap'],
+      [id^='parent'] {
         background-color: #144d83;
-        color : white;
+        color: white;
         font-weight: 400;
       }
       .button-skill:hover {
@@ -136,20 +138,27 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         this.parents.push(node);
 
         node.skills.forEach((child: Skill, index: number) => {
-          if (index%2 === 0) {
-            this.firsthalfchilds.push(child);
+          let skillsToPush: any = {
+            id: 'skill' + child.id,
+            id_db: child.id,
+            title: child.title,
+            description: child.description,
+          };
+          if (index % 2 === 0) {
+            this.firsthalfchilds.push(skillsToPush);
           } else {
-            this.secondhalfchilds.push(child);
+            this.secondhalfchilds.push(skillsToPush);
           }
         });
 
         node.roadmap_links.forEach((roadmap: any, index: number) => {
           let roadmapToPush: any = {
             id: 'roadmap' + roadmap.roadmap_id,
+            id_db: roadmap.roadmap_id,
             title: roadmap.roadmap_title,
             description: roadmap.roadmap_description,
           };
-          if (index%2 === 0) {
+          if (index % 2 === 0) {
             this.firsthalfchilds.push(roadmapToPush);
           } else {
             this.secondhalfchilds.push(roadmapToPush);
@@ -254,7 +263,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
           );
         }
 
-
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
         if (childElement) {
@@ -287,22 +295,28 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         }
       });
       parent.skills.forEach((child: Skill) => {
+        let roadmapChild: any = {
+          id: 'skill' + child.id,
+          id_db: child.id,
+          title: child.title,
+          description: child.description,
+        };
         let childHtml: HTMLCanvasElement | null = null;
         let childsxFounded = this.firsthalfchilds.filter((element: any) => {
-          if (element.id == child.id) return element;
+          if (element.id == roadmapChild.id) return element;
           else return null;
         });
         let childdxFounded = this.secondhalfchilds.filter((element: any) => {
-          if (element.id == child.id) return element;
+          if (element.id == roadmapChild.id) return element;
           else return null;
         });
         if (childsxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
-            document.getElementById('childsx' + child.id)!
+            document.getElementById('childsx' + roadmapChild.id)!
           );
         } else if (childdxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
-            document.getElementById('childdx' + child.id)!
+            document.getElementById('childdx' + roadmapChild.id)!
           );
         }
 
