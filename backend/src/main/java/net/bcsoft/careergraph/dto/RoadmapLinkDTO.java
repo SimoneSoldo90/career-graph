@@ -1,13 +1,13 @@
 package net.bcsoft.careergraph.dto;
 
-public class RoadMapLInkDTO {
+public class RoadmapLinkDTO {
     private int stepId;
     private int roadmapId;
     private String roadmapTitle;
     private String roadmapDescription;
     public void RoadMapLinkDTO(){}
 
-    public RoadMapLInkDTO(int stepId, int roadmapId, String roadmapTitle, String roadmapDescription) {
+    public RoadmapLinkDTO(int stepId, int roadmapId, String roadmapTitle, String roadmapDescription) {
         this.stepId = stepId;
         this.roadmapId = roadmapId;
         this.roadmapTitle = roadmapTitle;
