@@ -53,15 +53,18 @@ import { Step } from 'src/app/core/models/step.model';
         box-shadow: 0 0 0 2px #000000 inset;
         margin-top: 25px;
       }
-      [id^='parent'] {
+      [id^='childdxroadmap'] , [id^='childsxroadmap'] , [id^='parent']{
+        background-color: #144d83;
+        color : white;
+        font-weight: 400;
       }
       .button-skill:hover {
         transform: translateY(-3px);
         box-shadow: 0 0 0 3px #000000 inset;
-        font-weight: 500;
+        font-weight: 500 !important;
       }
-      #tablecontainer{
-        margin:0 auto;
+      #tablecontainer {
+        margin: 0 auto;
       }
       .leftTable {
         float: left;
@@ -130,35 +133,35 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   @Input() set dataset(data: Roadmap) {
     data.steps!.forEach((node: Step) => {
       if (node.skills) {
-        var firsthalflength =
-          node.skills.length / 2 - 1 === -1 ? 0 : node.skills.length / 2 - 1;
         this.parents.push(node);
-        console.log(node)
+
         node.skills.forEach((child: Skill, index: number) => {
-          console.log(child)
-          // let childFounded = data.steps![index].skills!.filter((element: any) => {
-          //   if (element.id == child) return element;
-          //   else return null;
-          // });
-          // if (childFounded.length > 0) {
-            if (index <= firsthalflength) {
-              // if (!this.firsthalfchilds.includes(childFounded[0])) {
-                this.firsthalfchilds.push(child);
-              // }
-            } else {
-              // if (!this.secondhalfchilds.includes(childFounded[0])) {
-                this.secondhalfchilds.push(child);
-              }
-            // }
-          // }
+          if (index%2 === 0) {
+            this.firsthalfchilds.push(child);
+          } else {
+            this.secondhalfchilds.push(child);
+          }
+        });
+
+        node.roadmap_links.forEach((roadmap: any, index: number) => {
+          let roadmapToPush: any = {
+            id: 'roadmap' + roadmap.roadmap_id,
+            title: roadmap.roadmap_title,
+            description: roadmap.roadmap_description,
+          };
+          if (index%2 === 0) {
+            this.firsthalfchilds.push(roadmapToPush);
+          } else {
+            this.secondhalfchilds.push(roadmapToPush);
+          }
         });
       }
     });
     this.drawLine();
   }
-  firsthalfchilds: Skill[] = [];
-  parents:Step[] = [];
-  secondhalfchilds: Skill[] = [];
+  firsthalfchilds: any[] = [];
+  parents: Step[] = [];
+  secondhalfchilds: any[] = [];
 
   constructor(private changeDetector: ChangeDetectorRef) {}
   ngOnInit(): void {}
@@ -206,19 +209,12 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     parents: Step[],
     canvas: HTMLCanvasElement
   ) {
-    this.parents.forEach((parent: any, index: number) => {
+    this.parents.forEach((parent: Step, index: number) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + parent.id)!
       );
 
-      if (index === 0) {
-        const elementHtml = document.getElementById('parent' + parent.id);
-        if (elementHtml != null) {
-          elementHtml.style.backgroundColor = '#144d83';
-          elementHtml.style.color = 'white';
-          elementHtml.style.fontWeight = '400';
-        }
-      } else {
+      if (index !== 0) {
         const elementHtml = document.getElementById('parent' + parent.id);
         if (elementHtml != null) {
           elementHtml.style.backgroundColor = '#acd0fb';
@@ -233,6 +229,63 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
+      parent.roadmap_links.forEach((link: any, index: number) => {
+        let roadmapChild: any = {
+          id: 'roadmap' + link.roadmap_id,
+          title: link.roadmap_title,
+          description: link.roadmap_description,
+        };
+        let childHtml: HTMLCanvasElement | null = null;
+        let childsxFounded = this.firsthalfchilds.filter((element: any) => {
+          if (element.id == roadmapChild.id) return element;
+          else return null;
+        });
+        let childdxFounded = this.secondhalfchilds.filter((element: any) => {
+          if (element.id == roadmapChild.id) return element;
+          else return null;
+        });
+        if (childsxFounded.length > 0) {
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childsx' + roadmapChild.id)!
+          );
+        } else if (childdxFounded.length > 0) {
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childdx' + roadmapChild.id)!
+          );
+        }
+
+
+        const childRef = new ElementRef(childHtml);
+        const childElement = childRef.nativeElement;
+        if (childElement) {
+          const childRect = childElement.getBoundingClientRect();
+          const childCenterX =
+            childRect.left + childRect.width / 2 - canvas.offsetLeft;
+          const childCenterY =
+            childRect.top + childRect.height / 2 - canvas.offsetTop;
+          const context = canvas.getContext('2d');
+
+          if (context != null) {
+            context.beginPath();
+            context.moveTo(parentCenterX, parentCenterY);
+            // context.lineTo(childCenterX, childCenterY);
+            //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
+            context.bezierCurveTo(
+              parentCenterX + 0,
+              parentCenterY + 0,
+              childCenterX - 0,
+              childCenterY - 0,
+              childCenterX,
+              childCenterY
+            );
+            context.setLineDash([2, 2]);
+            context.setTransform;
+            context.strokeStyle = '#144d83';
+            context.lineWidth = 2;
+            context.stroke();
+          }
+        }
+      });
       parent.skills.forEach((child: Skill) => {
         let childHtml: HTMLCanvasElement | null = null;
         let childsxFounded = this.firsthalfchilds.filter((element: any) => {
@@ -286,10 +339,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       });
     });
   }
-  private disegnaLinkTraParents(
-    parents: Step[],
-    canvas: HTMLCanvasElement
-  ) {
+  private disegnaLinkTraParents(parents: Step[], canvas: HTMLCanvasElement) {
     for (let i = 0; i < this.parents.length; i++) {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + this.parents[i].id)!
@@ -334,17 +384,17 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  getParentMarginTopDown(arg0:Step): string {
+  getParentMarginTopDown(arg0: Step): string {
     let margin: number = this.getMarginParents(arg0);
     return margin + 'px';
   }
 
-  getMarginParents(arg0:Step): number {
+  getMarginParents(arg0: Step): number {
     let margin: number = 0;
     if (arg0.skills) {
-        margin =
-          (arg0.skills.length / 2) *
-          (document.getElementById('parent' + arg0.id)!.clientHeight / 1.7);
+      margin =
+        (arg0.skills.length / 2) *
+        (document.getElementById('parent' + arg0.id)!.clientHeight / 1.7);
     }
     return margin;
   }
@@ -362,18 +412,19 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   }
   private getMoltiplicatoreAltezza(): number {
     // const rapporto: number = window.innerHeight * 0.0125;
-    const rapporto: number = window.innerHeight * 0.0100;
-    let moltiplicatoreAltezza = 1.5;
+    const rapporto: number = window.innerHeight * 0.01;
+    // let moltiplicatoreAltezza = 1.9;
+    let moltiplicatoreAltezza = 1.3;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
-      moltiplicatoreAltezza =
-        this.firsthalfchilds.length > 10
-          ? this.firsthalfchilds.length / rapporto
-          : moltiplicatoreAltezza;
+      moltiplicatoreAltezza = this.firsthalfchilds.length / rapporto;
+      // this.firsthalfchilds.length > 10
+      //   ? this.firsthalfchilds.length / rapporto
+      //   : moltiplicatoreAltezza;
     } else {
-      moltiplicatoreAltezza =
-        this.secondhalfchilds.length > 10
-          ? this.secondhalfchilds.length / rapporto
-          : moltiplicatoreAltezza;
+      moltiplicatoreAltezza = this.secondhalfchilds.length / rapporto;
+      // this.secondhalfchilds.length > 10
+      //   ? this.secondhalfchilds.length / rapporto
+      //   : moltiplicatoreAltezza;
     }
     return moltiplicatoreAltezza;
   }

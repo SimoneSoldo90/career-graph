@@ -12,7 +12,7 @@ import { SkillService } from 'src/app/core/services/skill.service';
 })
 export class RoadmapgraphComponent implements AfterViewInit {
   color: ThemePalette = 'primary';
-  mode: ProgressBarMode = 'buffer';
+  mode: ProgressBarMode = 'determinate';
   progressBarValue = 50;
   progressBarBufferValue = 50;
   title = 'Java';
