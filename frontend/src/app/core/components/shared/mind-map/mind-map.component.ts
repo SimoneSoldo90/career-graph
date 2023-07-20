@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Component,
@@ -173,6 +174,23 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   secondhalfchilds: any[] = [];
 
   constructor(private changeDetector: ChangeDetectorRef) {}
+
+  public clearAndReDraw() {
+    let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
+      document.getElementById('canvasRef')!
+    );
+    const canvasRef = new ElementRef(canvasHtml);
+    const canvas: HTMLCanvasElement | null = canvasRef.nativeElement;
+    if (canvas) {
+      const ctx: CanvasRenderingContext2D | null = canvas!.getContext('2d');
+      ctx!.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    this.parents = [];
+    this.firsthalfchilds = [];
+    this.secondhalfchilds = [];
+    this.drawLine();
+  }
   ngOnInit(): void {}
 
   ngAfterViewInit() {
@@ -192,7 +210,8 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     document.getElementById('canvasRef')?.scrollIntoView();
   }
 
-  drawLine() {
+  public drawLine() {
+    console.log('drawing graph');
     document.getElementById('canvasRef')?.scrollIntoView();
 
     let canvas: HTMLCanvasElement = this.getCanvas();
@@ -410,7 +429,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   getMarginParents(arg0: Step, prev: Step): number {
     let margin: number = 0;
     let previousChilds = 0;
-    console.log("Parent Arg0"+arg0.id)
+    console.log('Parent Arg0' + arg0.id);
     if (prev) {
       if (prev.skills) {
         previousChilds += prev.skills.length / 2;
@@ -420,17 +439,19 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       }
       console.log('Previous ' + prev.id + ' childs :' + previousChilds);
     }
-    if(previousChilds<=2){
-      margin = margin +
-      previousChilds *
-      (document.getElementById('parent' + arg0.id)!.clientHeight+10);
+    if (previousChilds <= 2) {
+      margin =
+        margin +
+        previousChilds *
+          (document.getElementById('parent' + arg0.id)!.clientHeight + 10);
     } else {
-    //25 è il margin top di ogni nodo laterale
-    margin = margin +
-      previousChilds *
-      (document.getElementById('parent' + arg0.id)!.clientHeight+25);
+      //25 è il margin top di ogni nodo laterale
+      margin =
+        margin +
+        previousChilds *
+          (document.getElementById('parent' + arg0.id)!.clientHeight + 25);
     }
-      console.log(margin)
+    console.log(margin);
 
     return margin;
   }
@@ -456,12 +477,13 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     }
     return moltiplicatoreAltezza;
   }
-  public visualizeDetail(element: any, isSideNode: boolean) {
-    if (element.childs && isSideNode) {
-      const targetElement = document.getElementById('parent' + element.id);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
+  public visualizeDetail(element: any, isRoadmap: boolean) {
+    if (isRoadmap) {
+      let roadmapElement = {
+        id: element.id_db,
+        isRoadmap: isRoadmap,
+      };
+      this.viewDetails.emit(roadmapElement);
     } else {
       this.viewDetails.emit(element);
     }
