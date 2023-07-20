@@ -2,16 +2,16 @@ package net.bcsoft.careergraph.dto;
 
 public class StepDTO {
     Integer id;
-    Integer idRoadmap;
+    Integer roadmapId;
     Integer ordine;
     String title;
     String description;
 
     public StepDTO(){}
 
-    public StepDTO(Integer id, Integer idRoadmap, Integer ordine, String title, String description) {
+    public StepDTO(Integer id, Integer roadmapId, Integer ordine, String title, String description) {
         this.id = id;
-        this.idRoadmap = idRoadmap;
+        this.roadmapId = roadmapId;
         this.ordine = ordine;
         this.title = title;
         this.description = description;
@@ -25,12 +25,12 @@ public class StepDTO {
         this.id = id;
     }
 
-    public Integer getIdRoadmap() {
-        return idRoadmap;
+    public Integer getRoadmapId() {
+        return roadmapId;
     }
 
-    public void setIdRoadmap(Integer idRoadmap) {
-        this.idRoadmap = idRoadmap;
+    public void setRoadmapId(Integer roadmapId) {
+        this.roadmapId = roadmapId;
     }
 
     public Integer getOrdine() {
