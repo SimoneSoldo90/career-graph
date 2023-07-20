@@ -205,12 +205,16 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       if (document.getElementById('parent' + this.parents[index].id)) {
         document.getElementById(
           'parent' + this.parents[index].id
-        )!.style.marginTop = this.getParentMarginTopDown(this.parents[index]);
-        document.getElementById(
-          'parent' + this.parents[index].id
-        )!.style.marginBottom = this.getParentMarginTopDown(
-          this.parents[index]
+        )!.style.marginTop = this.getParentMarginTopDown(
+          this.parents[index],
+          this.parents[index - 1]
         );
+        // document.getElementById(
+        //   'parent' + this.parents[index].id
+        // )!.style.marginBottom = this.getParentMarginTopDown(
+        //   this.parents[index],
+        //   this.parents[index + 1]
+        // );
       }
     });
   }
@@ -398,18 +402,36 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  getParentMarginTopDown(arg0: Step): string {
-    let margin: number = this.getMarginParents(arg0);
+  getParentMarginTopDown(arg0: Step, prev: Step): string {
+    let margin: number = this.getMarginParents(arg0, prev);
     return margin + 'px';
   }
 
-  getMarginParents(arg0: Step): number {
+  getMarginParents(arg0: Step, prev: Step): number {
     let margin: number = 0;
-    if (arg0.skills) {
-      margin =
-        (arg0.skills.length / 2) *
-        (document.getElementById('parent' + arg0.id)!.clientHeight / 1.7);
+    let previousChilds = 0;
+    console.log("Parent Arg0"+arg0.id)
+    if (prev) {
+      if (prev.skills) {
+        previousChilds += prev.skills.length / 2;
+      }
+      if (prev.roadmap_links) {
+        previousChilds += prev.roadmap_links.length / 2;
+      }
+      console.log('Previous ' + prev.id + ' childs :' + previousChilds);
     }
+    if(previousChilds<=2){
+      margin = margin +
+      previousChilds *
+      (document.getElementById('parent' + arg0.id)!.clientHeight+10);
+    } else {
+    //25 è il margin top di ogni nodo laterale
+    margin = margin +
+      previousChilds *
+      (document.getElementById('parent' + arg0.id)!.clientHeight+25);
+    }
+      console.log(margin)
+
     return margin;
   }
 
@@ -425,20 +447,12 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     return canvas;
   }
   private getMoltiplicatoreAltezza(): number {
-    // const rapporto: number = window.innerHeight * 0.0125;
     const rapporto: number = window.innerHeight * 0.01;
-    // let moltiplicatoreAltezza = 1.9;
     let moltiplicatoreAltezza = 1.3;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       moltiplicatoreAltezza = this.firsthalfchilds.length / rapporto;
-      // this.firsthalfchilds.length > 10
-      //   ? this.firsthalfchilds.length / rapporto
-      //   : moltiplicatoreAltezza;
     } else {
       moltiplicatoreAltezza = this.secondhalfchilds.length / rapporto;
-      // this.secondhalfchilds.length > 10
-      //   ? this.secondhalfchilds.length / rapporto
-      //   : moltiplicatoreAltezza;
     }
     return moltiplicatoreAltezza;
   }
