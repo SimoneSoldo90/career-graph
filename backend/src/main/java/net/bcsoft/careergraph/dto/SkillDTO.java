@@ -1,18 +1,24 @@
 package net.bcsoft.careergraph.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SkillDTO {
     int id;
     private int stepId;
     private String title;
     private String description;
+    List<ResourceDTO> resource = new ArrayList<>();
+
 
     public void SkillDTO(){}
 
-    public SkillDTO(int id, int stepId, String title, String description) {
+    public SkillDTO(int id, int stepId, String title, String description,List<ResourceDTO> resource) {
         this.id = id;
         this.stepId = stepId;
         this.title = title;
         this.description = description;
+        this.resource = resource;
     }
 
     public int getId() {
