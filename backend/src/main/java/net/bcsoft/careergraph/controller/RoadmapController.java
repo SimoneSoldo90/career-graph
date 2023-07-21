@@ -1,11 +1,13 @@
 package net.bcsoft.careergraph.controller;
 
 import net.bcsoft.careergraph.dto.RoadmapDTO;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class RoadmapController {
     @GetMapping("/roadmaps/")
     public List <RoadmapDTO> getRoadmapList(){
