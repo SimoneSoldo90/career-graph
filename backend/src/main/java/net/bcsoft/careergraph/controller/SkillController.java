@@ -13,7 +13,7 @@ public class SkillController {
     }
     @PostMapping("/skills")
     public SkillDTO createSkill(@RequestBody SkillDTO skillDTO){
-        return new SkillDTO();//TODO
+        return new SkillDTO();
 
     }
 
