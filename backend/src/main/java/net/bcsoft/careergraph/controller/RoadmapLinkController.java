@@ -20,7 +20,7 @@ public class RoadmapLinkController {
     }
 
     @GetMapping("/steps/{stepId}/roadmap-links/")
-    public List<RoadmapLinkDTO> getStepRoadmapLink(@PathVariable Integer stepId){
+    public List<RoadmapLinkDTO> getStepRoadmapLinkList(@PathVariable Integer stepId){
         return new ArrayList<RoadmapLinkDTO>(); // Implementare
     }
 

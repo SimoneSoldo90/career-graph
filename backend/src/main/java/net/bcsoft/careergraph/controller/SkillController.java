@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@RestController // questa parte di codice è incongruente le cose al plurale invece di list, hanno la s
 public class SkillController {
     private final ISkillService skillService;
 
