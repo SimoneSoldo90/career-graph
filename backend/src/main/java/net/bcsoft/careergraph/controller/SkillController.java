@@ -1,30 +1,44 @@
 package net.bcsoft.careergraph.controller;
 
 import net.bcsoft.careergraph.dto.SkillDTO;
+import net.bcsoft.careergraph.service.ISkillService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
 public class SkillController {
-    @GetMapping("/skills/")
+    private final ISkillService skillService;
+
+    public SkillController(ISkillService iSkillService) {
+        this.skillService = iSkillService;
+    }
+
+    @GetMapping("/skills")
     public List<SkillDTO> getSkills() {
-        return new ArrayList<>();
+        return skillService.getAll();
     }
     @PostMapping("/skills")
-    public SkillDTO createSkill(@RequestBody SkillDTO skillDTO){
-        return new SkillDTO();
-
+    public SkillDTO createSkill(@RequestBody SkillDTO skillDTO) {
+        return skillService.create(skillDTO);
     }
 
-    @GetMapping("/skill/{id}")
-    public SkillDTO getSkillId (@PathVariable Integer id) {
-        SkillDTO skillDTO = new SkillDTO();
-        return skillDTO;
+    @GetMapping("/skill/{skillId}")
+    public SkillDTO getSkillId(@PathVariable Integer skillId) {
+        return skillService.getById(skillId);
     }
 
-    @PutMapping("/skill/{id}")
-    public SkillDTO updateSkillId (@PathVariable Integer id, @RequestBody SkillDTO skillDTO){
-        return new SkillDTO();
+    @PutMapping("/skill/{skillId}")
+    public ResponseEntity<SkillDTO> updateSkillId(@PathVariable Integer skillId, @RequestBody SkillDTO skillDTO) {
+        if (skillId.equals(skillDTO.getId())) {
+            SkillDTO result = skillService.update(skillId, skillDTO);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 }

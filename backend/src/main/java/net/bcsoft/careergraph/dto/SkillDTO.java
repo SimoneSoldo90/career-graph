@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkillDTO {
-    int id;
-    private int stepId;
-    private String title;
-    private String description;
+    Integer id;
+    Integer stepId;
+    String title;
+    String description;
     List<ResourceDTO> resources = new ArrayList<>();
 
     public SkillDTO() {}
