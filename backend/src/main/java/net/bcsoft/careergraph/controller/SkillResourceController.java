@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 public class SkillResourceController {
     @PostMapping("/skill/{skillid}/resource")
-    public ResourceDTO createResource(@PathVariable Integer skillId, @RequestBody ResourceDTO resourceDTO){
+    public ResourceDTO createResource(@RequestBody ResourceDTO resourceDTO){
         return resourceDTO;
     }
 
