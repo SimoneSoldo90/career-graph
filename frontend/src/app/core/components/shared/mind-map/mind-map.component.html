@@ -1,23 +1,65 @@
-<div  *ngIf="parents!==null && firsthalfchilds!==null" width="800" height="600">
+<div
+  *ngIf="parents !== null && firsthalfchilds !== null"
+  width="800"
+  height="600"
+  id="nodesContainer"
+>
   <table id="tablecontainer">
-  <table class="leftTable">
-    <tr  *ngFor="let firstcolchild of firsthalfchilds">
-      <td (click)="visualizeDetail(firstcolchild,true)" class="button-skill" id="childsx{{firstcolchild.id}}">{{firstcolchild.title}}</td>
-    </tr>
-  </table>
-  <table class="centerTable">
-    <tr *ngFor="let parent of parents ">
-      <td (click)="visualizeDetail(parent,false)" class="button-skill" id="parent{{parent.id}}">{{parent.title}}</td>
-      <div *ngFor="let child of parent.skills">
-      </div>
-    </tr>
-  </table>
-  <table class="rightTable">
-    <tr  *ngFor="let secondhalfchild of secondhalfchilds">
-      <td (click)="visualizeDetail(secondhalfchild,true)" class="button-skill" id="childdx{{secondhalfchild.id}}">{{secondhalfchild.title}}</td>
-    </tr>
-  </table>
-
+    <table class="leftTable">
+      <tr *ngFor="let firstcolchild of firsthalfchilds">
+        <td
+          *ngIf="firstcolchild.id.includes('roadmap'); else skillsx"
+          class="button-skill"
+          id="childsx{{ firstcolchild.id }}"
+          [routerLink]="['/mindmap']" routerLinkActive="router-link-active"
+          [queryParams]="{id:firstcolchild.id_db}"
+        >
+          {{ firstcolchild.title }}
+        </td>
+        <ng-template #skillsx>
+          <td
+            (click)="visualizeDetail(firstcolchild)"
+            class="button-skill"
+            id="childsx{{ firstcolchild.id }}"
+          >
+            {{ firstcolchild.title }}
+          </td>
+        </ng-template>
+      </tr>
+    </table>
+    <table class="centerTable">
+      <tr *ngFor="let parent of parents">
+        <td
+          (click)="visualizeDetail(parent)"
+          class="button-skill"
+          id="parent{{ parent.id }}"
+        >
+          {{ parent.title }}
+        </td>
+      </tr>
+    </table>
+    <table class="rightTable">
+      <tr *ngFor="let secondhalfchild of secondhalfchilds">
+        <td
+          *ngIf="secondhalfchild.id.includes('roadmap'); else skilldx"
+          class="button-skill"
+          id="childdx{{ secondhalfchild.id }}"
+          [routerLink]="['/mindmap']" routerLinkActive="router-link-active"
+          [queryParams]="{id:secondhalfchild.id_db}"
+        >
+          {{ secondhalfchild.title }}
+        </td>
+        <ng-template #skilldx>
+          <td
+            (click)="visualizeDetail(secondhalfchild)"
+            class="button-skill"
+            id="childdx{{ secondhalfchild.id }}"
+          >
+            {{ secondhalfchild.title }}
+          </td>
+        </ng-template>
+      </tr>
+    </table>
   </table>
 </div>
-<canvas id="canvasRef" ></canvas>
+<canvas id="canvasRef" #canvasRef></canvas>

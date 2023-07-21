@@ -8,7 +8,7 @@
       {{ description }}
     </p>
     <div class="roadmapGraphPbarCard">
-      <p>Percentuale di completamento: {{progressBarValue}}%</p>
+      <p>Percentuale di completamento: {{ progressBarValue }}%</p>
       <p class="roadmapGraphPbar">
         <mat-progress-bar
           [color]="color"
@@ -22,9 +22,12 @@
   </div>
 </div>
 <div class="centerContent">
-  <app-line-renderer
-    #roadmapGraph
-    (viewDetails)="visualizeSkills($event)"
-    [dataset]="dataset"
-  ></app-line-renderer>
+  <mat-spinner *ngIf="showSpinner; else roadmapGraph"></mat-spinner>
+  <ng-template #roadmapGraph>
+    <app-line-renderer
+      [dataset]="dataset"
+      (viewDetails)="visualizeSkills($event)"
+      (progressSpinnerEmitter)="showMatSpinner($event)"
+    ></app-line-renderer>
+  </ng-template>
 </div>

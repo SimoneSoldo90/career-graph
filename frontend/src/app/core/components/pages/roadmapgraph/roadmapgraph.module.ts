@@ -4,6 +4,7 @@ import { RoadmapgraphComponent } from './roadmapgraph.component';
 import { MindMapModule } from '../../shared/mind-map/mind-map.module';
 import { MatIconModule } from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -14,6 +15,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MindMapModule,
     MatIconModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],exports:[RoadmapgraphComponent]
 })
 export class RoadmapgraphModule { }

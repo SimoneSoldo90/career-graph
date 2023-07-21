@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./roadmapgraph.component.css'],
 })
 export class RoadmapgraphComponent implements AfterViewInit {
+
   @ViewChild("roadmapGraph") roadmapGraph!: MindMapComponent;
   color: ThemePalette = 'primary';
   mode: ProgressBarMode = 'determinate';
@@ -32,7 +33,7 @@ export class RoadmapgraphComponent implements AfterViewInit {
         id: 1,
         roadmap_id: 1,
         order: 1,
-        title: 'Step 1',
+        title: 'Roadmap Java',
         description: 'Description of Step 1',
         resources: [
           {
@@ -53,7 +54,7 @@ export class RoadmapgraphComponent implements AfterViewInit {
           {
             step_id: 1,
             roadmap_id: 3,
-            roadmap_title: 'Related Roadmap 2',
+            roadmap_title: 'Roadmap Scassacazz',
             roadmap_description: 'Description of Related Roadmap 2',
           },
           {
@@ -495,7 +496,7 @@ private dataSet2 :Roadmap = {
       "id": 1,
       "roadmap_id": 1,
       "order": 1,
-      "title": "Step 1",
+      "title": "Roadmap Scassacazz",
       "description": "Description of Step 1",
       "resources": [
         {
@@ -739,7 +740,7 @@ private dataSet2 :Roadmap = {
         {
           "step_id": 4,
           "roadmap_id": 1,
-          "roadmap_title": "Related Roadmap 1",
+          "roadmap_title": "Roadmap Java",
           "roadmap_description": "Description of Related Roadmap 1"
         },
         {
@@ -885,6 +886,7 @@ private dataSet2 :Roadmap = {
     }
   ]
 };
+  showSpinner: boolean = false;
   constructor(private skillService: SkillService,private route: ActivatedRoute,private router :Router) {
     this.route.queryParams
       .subscribe((params:any) => {
@@ -916,5 +918,9 @@ private dataSet2 :Roadmap = {
         this.skillService.changeMessage(data);
       },
     });
+  }
+  showMatSpinner(event: any) {
+      this.showSpinner = event
+      console.log("Show spinner"+event)
   }
 }

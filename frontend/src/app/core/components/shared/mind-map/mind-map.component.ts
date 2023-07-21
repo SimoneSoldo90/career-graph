@@ -10,6 +10,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Roadmap } from 'src/app/core/models/roadmap';
 import { Skill } from 'src/app/core/models/skill';
 import { Step } from 'src/app/core/models/step.model';
@@ -133,6 +134,7 @@ import { Step } from 'src/app/core/models/step.model';
 })
 export class MindMapComponent implements AfterViewInit, OnInit {
   @Output() viewDetails = new EventEmitter<any>();
+  @Output() progressSpinnerEmitter = new EventEmitter<any>();
   @Input() set dataset(data: Roadmap) {
     data.steps!.forEach((node: Step) => {
       if (node.skills) {
@@ -173,7 +175,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   parents: Step[] = [];
   secondhalfchilds: any[] = [];
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private changeDetector: ChangeDetectorRef,private router: Router) {}
 
   public clearAndReDraw() {
     let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
@@ -191,7 +193,18 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     this.secondhalfchilds = [];
     this.drawLine();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        let element = document.getElementById("canvasRef");
+        element!.remove();
+        element = document.getElementById("nodesContainer");
+        element!.remove();
+        this.progressSpinnerEmitter.emit(true)
+        window.location.reload();
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.drawLine();
@@ -202,7 +215,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     //RIDISEGNA IL TUTTO AL RESIZE DELLA PAGINA
     this.drawLine();
   }
-
   @HostListener('window:beforeunload')
   onBeforeUnload() {
     //VIENE EFFETTUATO LO SCROLL ALL'ELEMENTO canvasRef CHE È POSIZIONATO ALLO 0,0 DELLA PAGINA
@@ -477,15 +489,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     }
     return moltiplicatoreAltezza;
   }
-  public visualizeDetail(element: any, isRoadmap: boolean) {
-    if (isRoadmap) {
-      let roadmapElement = {
-        id: element.id_db,
-        isRoadmap: isRoadmap,
-      };
-      this.viewDetails.emit(roadmapElement);
-    } else {
+  public visualizeDetail(element: any) {
       this.viewDetails.emit(element);
-    }
   }
 }
