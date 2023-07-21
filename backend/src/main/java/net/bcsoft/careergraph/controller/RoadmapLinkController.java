@@ -13,29 +13,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class StepRoadmapLinkController {
-    @PostMapping("/steps/{stepId}/roadmap-links/\n")
-    RoadmapLinkDTO createStepRoadmapLink(@PathVariable Integer stepId, @RequestBody RoadmapLinkDTO roadmapLinkDTO){
+public class RoadmapLinkController {
+    @PostMapping("/steps/{stepId}/roadmap-links/")
+    public RoadmapLinkDTO createStepRoadmapLink(@PathVariable Integer stepId, @RequestBody RoadmapLinkDTO roadmapLinkDTO){
         return new RoadmapLinkDTO(); // Implementare
     }
 
-    @GetMapping("/steps/{stepId}/roadmap-links/\n")
-    List<RoadmapLinkDTO> getStepRoadmapLink(@PathVariable Integer stepId){
+    @GetMapping("/steps/{stepId}/roadmap-links/")
+    public List<RoadmapLinkDTO> getStepRoadmapLink(@PathVariable Integer stepId){
         return new ArrayList<RoadmapLinkDTO>(); // Implementare
     }
 
     @GetMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
-    RoadmapLinkDTO getStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
+    public RoadmapLinkDTO getStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
         return new RoadmapLinkDTO(); // Implementare
     }
 
     @PutMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
-    void updateStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
+    public void updateStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
         new RoadmapLinkDTO(); // Implementare
     }
 
     @DeleteMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
-    void deleteStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
+    public void deleteStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
         new RoadmapLinkDTO(); // Implements
     }
 }
