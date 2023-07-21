@@ -11,7 +11,7 @@ public class SkillDTO {
     List<ResourceDTO> resources = new ArrayList<>();
 
 
-    public void SkillDTO(){}
+    public SkillDTO(){}
 
     public SkillDTO(int id, int stepId, String title, String description,List<ResourceDTO> resources) {
         this.id = id;
