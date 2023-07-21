@@ -5,7 +5,7 @@ public class RoadmapLinkDTO {
     private int roadmapId;
     private String roadmapTitle;
     private String roadmapDescription;
-    public void RoadMapLinkDTO(){}
+    public RoadmapLinkDTO(){}
 
     public RoadmapLinkDTO(int stepId, int roadmapId, String roadmapTitle, String roadmapDescription) {
         this.stepId = stepId;
