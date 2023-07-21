@@ -12,7 +12,7 @@ public class SkillDTO {
 
     public SkillDTO() {}
 
-    public SkillDTO(int id, int stepId, String title, String description,List<ResourceDTO> resources) {
+    public SkillDTO(int id, int stepId, String title, String description, List<ResourceDTO> resources) {
         this.id = id;
         this.stepId = stepId;
         this.title = title;
