@@ -9,7 +9,7 @@ import java.util.List;
 @RestController
 public class UserSkillController {
     @PostMapping("/users/{userId}/user-skills")
-    public UserSkillDTO createUserSkill(@PathVariable Integer userId, @RequestBody UserSkillDTO userSkillDTO){
+    public UserSkillDTO createUserSkill(@RequestBody UserSkillDTO userSkillDTO){
         return userSkillDTO;
     }
 
