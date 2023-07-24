@@ -1,23 +1,27 @@
 package net.bcsoft.careergraph.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SkillDTO {
     Integer id;
+    @JsonProperty("step_id")
     Integer stepId;
     String title;
     String description;
-    List<ResourceDTO> resources = new ArrayList<>();
+    @JsonProperty("resources")
+    List<ResourceDTO> resourceList = new ArrayList<>();
 
     public SkillDTO() {}
 
-    public SkillDTO(int id, int stepId, String title, String description, List<ResourceDTO> resources) {
+    public SkillDTO(int id, int stepId, String title, String description, List<ResourceDTO> resourceList) {
         this.id = id;
         this.stepId = stepId;
         this.title = title;
         this.description = description;
-        this.resources = resources;
+        this.resourceList = resourceList;
     }
 
     public int getId() {
@@ -52,12 +56,12 @@ public class SkillDTO {
         this.description = description;
     }
 
-    public List<ResourceDTO> getResources() {
-        return resources;
+    public List<ResourceDTO> getResourceList() {
+        return resourceList;
     }
 
-    public void setResources(List<ResourceDTO> resources) {
-        this.resources = resources;
+    public void setResourceList(List<ResourceDTO> resourceList) {
+        this.resourceList = resourceList;
     }
 }
 

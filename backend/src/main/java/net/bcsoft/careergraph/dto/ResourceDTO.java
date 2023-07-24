@@ -1,7 +1,11 @@
 package net.bcsoft.careergraph.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ResourceDTO {
-    Integer stepId;
+    @JsonProperty("step_id")
+    Integer id;
+    @JsonProperty("skill_id")
     Integer skillId;
     String type;
     String description;
@@ -10,20 +14,20 @@ public class ResourceDTO {
     public ResourceDTO() {
     }
 
-    public ResourceDTO(Integer steoId, Integer skillId, String type, String description, String url) {
-        this.stepId = steoId;
+    public ResourceDTO(Integer id, Integer skillId, String type, String description, String url) {
+        this.id = id;
         this.skillId = skillId;
         this.type = type;
         this.description = description;
         this.url = url;
     }
 
-    public Integer getStepId() {
-        return stepId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setStepId(Integer stepId) {
-        this.stepId = stepId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getSkillId() {
