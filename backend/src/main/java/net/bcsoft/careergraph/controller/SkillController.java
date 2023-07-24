@@ -21,6 +21,7 @@ public class SkillController {
     public List<SkillDTO> getSkills() {
         return skillService.getAll();
     }
+
     @PostMapping("/skills")
     public SkillDTO createSkill(@RequestBody SkillDTO skillDTO) {
         return skillService.create(skillDTO);
