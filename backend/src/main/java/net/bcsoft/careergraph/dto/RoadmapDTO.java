@@ -1,5 +1,7 @@
 package net.bcsoft.careergraph.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,17 +9,18 @@ public class RoadmapDTO {
     Integer id;
     String title;
     String description;
-    List <StepDTO> steps = new ArrayList<>();
+    @JsonProperty("steps")
+    List <StepDTO> stepList = new ArrayList<>();
 
     public RoadmapDTO(){
 
     }
 
-    public RoadmapDTO(Integer id, String title, String description, List <StepDTO> steps) {
+    public RoadmapDTO(Integer id, String title, String description, List <StepDTO> stepList) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.steps = steps;
+        this.stepList = stepList;
     }
 
     public Integer getId() {

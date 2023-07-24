@@ -1,30 +1,36 @@
 package net.bcsoft.careergraph.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class StepDTO {
     Integer id;
+    @JsonProperty("roadmap_id")
     Integer roadmapId;
     Integer order;
     String title;
     String description;
-    List <ResourceDTO> resources = new ArrayList<>();
-    List <RoadmapLinkDTO> roadmapLinks = new ArrayList<>();
-    List <SkillDTO> skills = new ArrayList<>();
+    @JsonProperty("resources")
+    List <ResourceDTO> rescourceList = new ArrayList<>();
+    @JsonProperty("roadmap_links")
+    List <RoadmapLinkDTO> roadmapLinkList = new ArrayList<>();
+    @JsonProperty("skills")
+    List <SkillDTO> skillList = new ArrayList<>();
 
 
     public StepDTO(){}
 
-    public StepDTO(Integer id, Integer roadmapId, Integer order, String title, String description, List <ResourceDTO> resources, List <RoadmapLinkDTO> roadmapLinks, List <SkillDTO> skills) {
+    public StepDTO(Integer id, Integer roadmapId, Integer order, String title, String description, List <ResourceDTO> rescourceList, List <RoadmapLinkDTO> roadmapLinkList, List <SkillDTO> skillList) {
         this.id = id;
         this.roadmapId = roadmapId;
         this.order = order;
         this.title = title;
         this.description = description;
-        this.resources = resources;
-        this.roadmapLinks = roadmapLinks;
-        this.skills = skills;
+        this.rescourceList = rescourceList;
+        this.roadmapLinkList = roadmapLinkList;
+        this.skillList = skillList;
     }
 
     public Integer getId() {

@@ -1,9 +1,14 @@
 package net.bcsoft.careergraph.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserDTO {
     Integer id;
+    @JsonProperty("sso_uid")
     String ssoUid;
+    @JsonProperty("first_name")
     String firstName;
+    @JsonProperty("last_name")
     String lastName;
     String email;
 

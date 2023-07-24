@@ -1,8 +1,12 @@
 package net.bcsoft.careergraph.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserSkillDTO {
     Integer id;
+    @JsonProperty("user_id")
     Integer userId;
+    @JsonProperty("skill_id")
     Integer skillId;
     String status;
 
