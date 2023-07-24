@@ -36,12 +36,13 @@ export class RoadmapComponent implements OnInit {
     },
   ]
   tableOptions = {
-    "type": "roadmapSkills",
+    "type": "roadmapSteps",
     "displayedColumns": this.displayedColumns,
     "tableDef": this.tableDef,
     "canDelete": true,
     "canModify": true,
     btnCreate:{
+      "type":"menu",
       "title":"Associa Skill",
       "canCreate":  true,
       "canView": true

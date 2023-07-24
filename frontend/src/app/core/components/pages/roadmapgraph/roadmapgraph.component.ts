@@ -54,7 +54,7 @@ export class RoadmapgraphComponent implements AfterViewInit {
           {
             step_id: 1,
             roadmap_id: 3,
-            roadmap_title: 'Roadmap Scassacazz',
+            roadmap_title: 'Basi di Dati',
             roadmap_description: 'Description of Related Roadmap 2',
           },
           {
@@ -496,7 +496,7 @@ private dataSet2 :Roadmap = {
       "id": 1,
       "roadmap_id": 1,
       "order": 1,
-      "title": "Roadmap Scassacazz",
+      "title": "Basi di Dati",
       "description": "Description of Step 1",
       "resources": [
         {

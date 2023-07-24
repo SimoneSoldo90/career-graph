@@ -22,7 +22,7 @@
   </div>
 </div>
 <div class="centerContent">
-  <mat-spinner *ngIf="showSpinner; else roadmapGraph"></mat-spinner>
+  <mat-spinner id="roadmapGraphCharging" *ngIf="showSpinner; else roadmapGraph"></mat-spinner>
   <ng-template #roadmapGraph>
     <app-line-renderer
       [dataset]="dataset"
