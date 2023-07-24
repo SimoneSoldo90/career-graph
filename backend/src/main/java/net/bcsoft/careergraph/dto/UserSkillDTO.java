@@ -2,6 +2,9 @@ package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+public record UserSkillDTO(Integer id, @JsonProperty("user_id") Integer userId, @JsonProperty("skill_id") Integer skillId, String status) {}
+
+/*
 public class UserSkillDTO {
     Integer id;
     @JsonProperty("user_id")
@@ -51,4 +54,4 @@ public class UserSkillDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-}
+}*/

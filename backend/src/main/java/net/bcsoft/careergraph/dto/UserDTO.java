@@ -2,6 +2,9 @@ package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+public record UserDTO(Integer id, @JsonProperty("sso_uid") String ssoUid, @JsonProperty("first_name") String firstName, @JsonProperty("last_name") String lastName, String email) {}
+
+/*
 public class UserDTO {
     Integer id;
     @JsonProperty("sso_uid")
@@ -63,3 +66,4 @@ public class UserDTO {
         this.email = email;
     }
 }
+*/

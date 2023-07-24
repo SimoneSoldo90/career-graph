@@ -2,7 +2,9 @@ package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ResourceDTO {
+public record ResourceDTO(@JsonProperty("step_id") Integer id, @JsonProperty("skill_id") Integer skillId, String type, String description, String url){}
+
+/*ublic class ResourceDTO {
     @JsonProperty("step_id")
     Integer id;
     @JsonProperty("skill_id")
@@ -61,4 +63,5 @@ public class ResourceDTO {
     public void setUrl(String url) {
         this.url = url;
     }
-}
+}*/
+

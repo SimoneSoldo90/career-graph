@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+public record SkillDTO(Integer id, @JsonProperty("step_id") Integer stepId, String title, String description, @JsonProperty("resources") List<ResourceDTO> resourceList) {}
+
+/*
 public class SkillDTO {
     Integer id;
     @JsonProperty("step_id")
@@ -63,6 +66,6 @@ public class SkillDTO {
     public void setResourceList(List<ResourceDTO> resourceList) {
         this.resourceList = resourceList;
     }
-}
+}*/
 
 

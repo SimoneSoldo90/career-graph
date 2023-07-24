@@ -2,6 +2,9 @@ package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+public record RoadmapLinkDTO(@JsonProperty("step_id") Integer stepId, @JsonProperty("roadmap_id") Integer roadmapId, @JsonProperty("roadmap_title") String roadmapTitle, @JsonProperty("roadmap_description") String roadmapDescription) {}
+
+/*
 public class RoadmapLinkDTO {
     @JsonProperty("step_id")
     private Integer stepId;
@@ -51,6 +54,6 @@ public class RoadmapLinkDTO {
     public void setRoadmapDescription(String roadmapDescription) {
         this.roadmapDescription = roadmapDescription;
     }
-}
+}*/
 
 

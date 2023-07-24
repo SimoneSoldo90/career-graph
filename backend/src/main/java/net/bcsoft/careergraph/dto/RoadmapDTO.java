@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+public record RoadmapDTO( Integer id, String title, String description, @JsonProperty("steps") List <StepDTO> stepList){}
+
+/*
 public class RoadmapDTO {
     Integer id;
     String title;
@@ -47,3 +50,4 @@ public class RoadmapDTO {
         this.description = description;
     }
 }
+*/
