@@ -5,9 +5,8 @@ import { MindMapModule } from '../../shared/mind-map/mind-map.module';
 import { MatIconModule } from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
 import { BackbuttonModule } from '../../shared/backbutton/backbutton.module';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -20,6 +19,7 @@ import { BackbuttonModule } from '../../shared/backbutton/backbutton.module';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     BackbuttonModule,
+    MatChipsModule,
   ],exports:[RoadmapgraphComponent]
 })
 export class RoadmapgraphModule { }

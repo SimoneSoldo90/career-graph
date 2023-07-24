@@ -20,8 +20,24 @@
       </p>
     </div>
   </div>
+  <app-backbutton style="float: left;" id="backButton"></app-backbutton>
+<mat-chip-listbox style="float: right;" aria-label="Dog selection">
+  <mat-chip>
+    <div class="numeroChip" matChipAvatar>3</div>
+    <div class="testoChip">Roadmap collegate</div>
+  </mat-chip>
+  <mat-chip>
+    <div class="numeroChip" matChipAvatar>23
+    </div>
+    <div class="testoChip">Argomenti</div>
+  </mat-chip>
+  <mat-chip>
+    <div class="numeroChip" matChipAvatar>2</div>
+    <div class="testoChip">Livelli di profondità</div>
+  </mat-chip>
+</mat-chip-listbox>
 </div>
-<app-backbutton id="backButton"></app-backbutton>
+
 <div class="centerContent">
   <mat-spinner id="roadmapGraphCharging" *ngIf="showSpinner; else roadmapGraph"></mat-spinner>
   <ng-template #roadmapGraph>
