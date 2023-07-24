@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { Roadmap } from 'src/app/core/models/roadmap';
 import { Skill } from 'src/app/core/models/skill';
 import { SkillService } from 'src/app/core/services/skill.service';
 import { MindMapComponent } from '../../shared/mind-map/mind-map.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-roadmapgraph',
@@ -900,6 +900,7 @@ private dataSet2 :Roadmap = {
     );
 
   }
+
   ngAfterViewInit(): void {
     this.heightOffset = document.getElementById('description')!.clientHeight;
   }
