@@ -11,10 +11,10 @@ public class SkillController {
     public List<SkillDTO> getSkills() {
         return new ArrayList<>();
     }
+
     @PostMapping("/skills")
     public SkillDTO createSkill(@RequestBody SkillDTO skillDTO){
         return new SkillDTO();
-
     }
 
     @GetMapping("/skill/{id}")

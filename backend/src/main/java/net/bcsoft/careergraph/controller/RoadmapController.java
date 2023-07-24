@@ -33,6 +33,5 @@ public class RoadmapController {
 
     @DeleteMapping("/roadmaps/{roadmapId}")
     public void deleteRoadmap(@PathVariable Integer roadmapId){
-
     }
 }
