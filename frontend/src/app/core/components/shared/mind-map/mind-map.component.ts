@@ -487,9 +487,11 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       document.getElementById(lastNodeIndex)
     );
     let boundingRect = lastNodeElement.getBoundingClientRect();
-    let distanceFromTop = boundingRect.top;
+    let distanceFromTop = boundingRect.top + window.scrollY; // Add scrollY to account for vertical scrolling
+    let elementHeight = lastNodeElement.offsetHeight;
+    let totalDistance = distanceFromTop + elementHeight;
     // canvas.height = window.innerHeight * this.getMoltiplicatoreAltezza();
-    canvas.height = distanceFromTop+50;
+    canvas.height = totalDistance;
     return canvas;
   }
   private getMoltiplicatoreAltezza(): number {
