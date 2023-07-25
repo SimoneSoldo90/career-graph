@@ -10,6 +10,6 @@ public interface IRoadmapLinkService {
     public RoadmapLinkDTO create(Integer stepId, RoadmapLinkDTO roadmapLinkDTO);
     public List<RoadmapLinkDTO> getAll(Integer stepId);
     public RoadmapLinkDTO getById(Integer stepId, Integer roadmapId);
-    public void update(Integer stepId, Integer roadmapLinkId);
+    public RoadmapLinkDTO update(Integer stepId, Integer roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO);
     public void delete(Integer stepId, Integer roadmapLinkId);
 }

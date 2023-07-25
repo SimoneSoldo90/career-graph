@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController // questa parte di codice è incongruente le cose al plurale invece di list, hanno la s
+@RestController
 public class SkillController {
     private final ISkillService skillService;
 
@@ -34,7 +34,7 @@ public class SkillController {
 
     @PutMapping("/skill/{skillId}")
     public ResponseEntity<SkillDTO> updateSkillId(@PathVariable Integer skillId, @RequestBody SkillDTO skillDTO) {
-        if (skillId.equals(skillDTO.getId())) {
+        if (skillId.equals(skillDTO.id())) {
             SkillDTO result = skillService.update(skillId, skillDTO);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
