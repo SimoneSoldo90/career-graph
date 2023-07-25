@@ -237,10 +237,6 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
     parentPrefix: string,
     childPrefix: string
   ) {
-    console.log(parents)
-    console.log(parentPrefix)
-    console.log(childPrefix)
-
     parents.forEach((parent: any, index: number) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById(parentPrefix + parent.id)!
@@ -275,8 +271,6 @@ export class RoadmaptreeComponent implements AfterViewInit, OnInit {
         );
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
-        console.log(childPrefix + childId)
-        console.log(childElement)
         if (childElement) {
           const childRect = childElement.getBoundingClientRect();
           const childCenterX =

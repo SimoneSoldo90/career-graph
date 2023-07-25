@@ -185,7 +185,6 @@ export class GenericTableComponent implements OnInit {
     ) {
       this.actionButtonValue = 'mentee';
     }
-    console.log(this.actionButtonValue);
   }
 
   // Funzione al click del tasto modifica
@@ -203,7 +202,7 @@ export class GenericTableComponent implements OnInit {
 
   // Funzione al click del tasto elimina
   deleteRow(elementId: number) {
-    console.log('Elemento: id ' + elementId + ' - eliminato');
+
   }
 
   // Funzione al click del tasto visualizza graficamente
@@ -237,7 +236,6 @@ export class GenericTableComponent implements OnInit {
   }
 
   view(id: any) {
-    console.log(id);
     this.viewGraphIdType.emit({ id: id });
   }
 }

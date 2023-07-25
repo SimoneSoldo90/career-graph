@@ -228,7 +228,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   }
 
   public drawLine() {
-    console.log('drawing graph');
     document.getElementById('canvasRef')?.scrollIntoView();
 
     let canvas: HTMLCanvasElement = this.getCanvas();
@@ -446,7 +445,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   getMarginParents(arg0: Step, prev: Step): number {
     let margin: number = 0;
     let previousChilds = 0;
-    console.log('Parent Arg0' + arg0.id);
     if (prev) {
       if (prev.skills) {
         previousChilds += prev.skills.length / 2;
@@ -454,7 +452,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       if (prev.roadmap_links) {
         previousChilds += prev.roadmap_links.length / 2;
       }
-      console.log('Previous ' + prev.id + ' childs :' + previousChilds);
     }
     if (previousChilds <= 2) {
       margin =
@@ -468,8 +465,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         previousChilds *
           (document.getElementById('parent' + arg0.id)!.clientHeight + 25);
     }
-    console.log(margin);
-
     return margin;
   }
 
@@ -493,7 +488,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     );
     let boundingRect = lastNodeElement.getBoundingClientRect();
     let distanceFromTop = boundingRect.top;
-    console.log("Distance from the top of the window:", distanceFromTop);
     // canvas.height = window.innerHeight * this.getMoltiplicatoreAltezza();
     canvas.height = distanceFromTop+50;
     return canvas;

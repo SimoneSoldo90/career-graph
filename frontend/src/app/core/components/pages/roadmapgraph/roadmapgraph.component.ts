@@ -890,7 +890,7 @@ private dataSet2 :Roadmap = {
   constructor(private skillService: SkillService,private route: ActivatedRoute,private router :Router) {
     this.route.queryParams
       .subscribe((params:any) => {
-        console.log(params);
+
         if(params.id!=="1"){
           this.datasetTemp = this.dataset
       this.dataset = this.dataSet2;
@@ -906,7 +906,7 @@ private dataSet2 :Roadmap = {
   }
   visualizeSkills(event: any) {
     if(event.isRoadmap){
-      console.log("Navigo alla mindmap"+event.id)
+
       this.router.navigate(["/mindmap",{id:event.id}])
     } else {
       this.getSkillById(Number(event.id_db));
@@ -922,6 +922,6 @@ private dataSet2 :Roadmap = {
   }
   showMatSpinner(event: any) {
       this.showSpinner = event
-      console.log("Show spinner"+event)
-  }
+
+    }
 }

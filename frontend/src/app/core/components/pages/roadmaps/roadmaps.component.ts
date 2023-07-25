@@ -65,7 +65,7 @@ export class RoadmapsComponent implements OnInit {
         if(error.status === HttpStatusCode.NotFound){
           this.tableOptions.emptyData = true;
         } else {
-          console.log(error.message)
+
         }
       }
     });
@@ -77,7 +77,7 @@ export class RoadmapsComponent implements OnInit {
     }
   }
   visualizeRoadmaps(event: Roadmap){
-    console.log("Ricevuto evento")
+
     this.router.navigate(["/roadmap",{elementId:event.id}])
   }
   visualizzaGrafo(event: Roadmap){

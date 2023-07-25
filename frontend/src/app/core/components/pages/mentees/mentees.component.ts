@@ -60,7 +60,7 @@ export class MenteesComponent implements OnInit {
         if(error.status === HttpStatusCode.NotFound){
           this.tableOptions.emptyData = true;
         } else {
-          console.log(error.message)
+
         }
       }
     })

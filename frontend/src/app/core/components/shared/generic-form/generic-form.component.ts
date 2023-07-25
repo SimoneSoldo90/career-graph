@@ -25,13 +25,12 @@ export class GenericFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // console.log(this.formOptions);
     if (this.formOptions.type === 'skill') {
       this.setDataSources();
       this.populateDropDownMenu();
     }
     this.createForm();
-    console.log(this.formOptions.isCreation);
+
     if (!this.formOptions.isCreation){
       this.populateForm()
     }
@@ -68,9 +67,7 @@ export class GenericFormComponent implements OnInit {
           this.formOptions.formObject[field.id] = form[field.id];
         }
       });
-      console.log(this.formOptions.formObject);
     } else {
-      console.log(this.genericForm.value);
       const form = this.genericForm.value
        this.formOptions.formObject = {
          id: this.formOptions.formObject.id,
@@ -84,14 +81,13 @@ export class GenericFormComponent implements OnInit {
   populateForm() {
     if (this.formOptions.formObject) {
       var form = this.genericForm.value;
-      console.log(this.formOptions.formObject);
+
       this.formOptions.fields.forEach((field: any) => {
         if (this.formOptions.formObject.hasOwnProperty(field.id)) {
             form[field.id] = this.formOptions.formObject[field.id];
         }
       });
       this.genericForm.patchValue(form);
-      console.log(form);
     }
 
   }
@@ -152,7 +148,6 @@ export class GenericFormComponent implements OnInit {
       this.genericForm.value['parentSkill'] = selected.id;
       this.genericForm.patchValue(this.genericForm.value);
     }
-    console.log(this.genericForm.value);
   }
 
   isAddButtonVisible(type: string, selected: any): boolean {
@@ -170,7 +165,6 @@ export class GenericFormComponent implements OnInit {
         this.skillDataSources.push({ skills: data });
       },
     });
-    console.log(this.skillDataSources);
   }
 
   getResources(): void {
@@ -180,7 +174,6 @@ export class GenericFormComponent implements OnInit {
         this.resourceDataSources.push({ resources: data });
       },
     });
-    console.log(this.resourceDataSources);
   }
 
   setDataSources(): void {
