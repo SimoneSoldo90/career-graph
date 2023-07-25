@@ -65,26 +65,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   secondhalfchilds: any[] = [];
 
   constructor(
-    private changeDetector: ChangeDetectorRef,
     private router: Router
   ) {}
 
-  public clearAndReDraw() {
-    let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-      document.getElementById('canvasRef')!
-    );
-    const canvasRef = new ElementRef(canvasHtml);
-    const canvas: HTMLCanvasElement | null = canvasRef.nativeElement;
-    if (canvas) {
-      const ctx: CanvasRenderingContext2D | null = canvas!.getContext('2d');
-      ctx!.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    this.parents = [];
-    this.firsthalfchilds = [];
-    this.secondhalfchilds = [];
-    this.drawLine();
-  }
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -114,7 +97,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     document.getElementById('canvasRef')?.scrollIntoView();
   }
 
-  public drawLine() {
+  private drawLine() {
     document.getElementById('canvasRef')?.scrollIntoView();
 
     let canvas: HTMLCanvasElement = this.getCanvas();
@@ -129,7 +112,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
           'parent' + this.parents[index].id
         )!.style.marginTop = this.getParentMarginTopDown(
           this.parents[index],
-          this.parents[index - 1]
+          this.parents[index-1]
         );
       }
     });
@@ -138,7 +121,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     parents: Step[],
     canvas: HTMLCanvasElement
   ) {
-    this.parents.forEach((parent: Step, index: number) => {
+    parents.forEach((parent: Step, index: number) => {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
         document.getElementById('parent' + parent.id)!
       );
@@ -274,9 +257,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     });
   }
   private disegnaLinkTraParents(parents: Step[], canvas: HTMLCanvasElement) {
-    for (let i = 0; i < this.parents.length; i++) {
+    for (let i = 0; i < parents.length; i++) {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-        document.getElementById('parent' + this.parents[i].id)!
+        document.getElementById('parent' + parents[i].id)!
       );
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
@@ -286,9 +269,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
 
-      if (i < this.parents.length - 1) {
+      if (i < parents.length - 1) {
         let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('parent' + this.parents[i + 1].id)!
+          document.getElementById('parent' + parents[i + 1].id)!
         );
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
@@ -318,33 +301,33 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  getParentMarginTopDown(arg0: Step, prev: Step): string {
-    let margin: number = this.getMarginParents(arg0, prev);
+  getParentMarginTopDown(element: Step, previusOrNext: Step): string {
+    let margin: number = this.getMarginParents(element, previusOrNext);
     return margin + 'px';
   }
 
-  getMarginParents(arg0: Step, prev: Step): number {
+  getMarginParents(element: Step, previusOrNext: Step): number {
     let margin: number = 0;
     let previousChilds = 0;
-    if (prev) {
-      if (prev.skills) {
-        previousChilds += prev.skills.length / 2;
+    if (previusOrNext) {
+      if (previusOrNext.skills) {
+        previousChilds += previusOrNext.skills.length / 2;
       }
-      if (prev.roadmap_links) {
-        previousChilds += prev.roadmap_links.length / 2;
+      if (previusOrNext.roadmap_links) {
+        previousChilds += previusOrNext.roadmap_links.length / 2;
       }
     }
     if (previousChilds <= 2) {
       margin =
         margin +
         previousChilds *
-          (document.getElementById('parent' + arg0.id)!.clientHeight + 10);
+          (document.getElementById('parent' + element.id)!.clientHeight + 10);
     } else {
       //25 è il margin top di ogni nodo laterale
       margin =
         margin +
         previousChilds *
-          (document.getElementById('parent' + arg0.id)!.clientHeight + 25);
+          (document.getElementById('parent' + element.id)!.clientHeight + 25);
     }
     return margin;
   }
