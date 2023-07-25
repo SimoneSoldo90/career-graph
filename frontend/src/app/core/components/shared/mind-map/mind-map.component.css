@@ -1,0 +1,109 @@
+div {
+  position: relative;
+}
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background-image: radial-gradient(#444cf7 0.5px, #f8f8ff 0.5px);
+  background-size: 10px 10px;
+}
+td {
+  text-align: center;
+}
+.button-skill {
+  word-break: break-word;
+  width: 120px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 10px 12px 10px;
+  font-size: 18px;
+  font-weight: lighter;
+  line-height: 1;
+  background-color: white;
+  transition: transform 200ms, background 200ms;
+  color: #000000;
+  box-shadow: 0 0 0 2px #000000 inset;
+  margin-top: 25px;
+}
+[id^='childdxroadmap'],
+[id^='childsxroadmap'],
+[id^='parent'] {
+  background-color: #144d83;
+  color: white;
+  font-weight: 400;
+}
+.button-skill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 3px #000000 inset;
+  font-weight: 500 !important;
+}
+#tablecontainer {
+  margin: 0 auto;
+}
+.leftTable {
+  float: left;
+  position: relative;
+}
+.centerTable {
+  float: left;
+  position: relative;
+  margin: 20px 200px 0px 200px;
+}
+.rightTable {
+  float: left;
+  position: relative;
+}
+@media screen and (min-width: 801px) and (max-width: 900px) {
+  .centerTable {
+    margin: 20px 150px 0px 150px;
+  }
+}
+@media screen and (min-width: 651px) and (max-width: 800px) {
+  .centerTable {
+    margin: 20px 75px 0px 75px;
+  }
+}
+@media screen and (min-width: 501px) and (max-width: 649px) {
+  .centerTable {
+    margin: 20px 25px 0px 25px;
+  }
+  .button-skill {
+    width: 75px;
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 360px) and (max-width: 500px) {
+  .centerTable {
+    margin: 20px 25px 0px 25px;
+  }
+  .button-skill {
+    width: 60px;
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 250px) and (max-width: 360px) {
+  .centerTable {
+    margin: 20px 15px 0px 15px;
+  }
+  .button-skill {
+    width: 30px;
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 250px) {
+  .centerTable {
+    margin: 20px 10px 0px 10px;
+  }
+  .button-skill {
+    width: 20px;
+    font-size: 10px;
+  }
+}
