@@ -136,37 +136,39 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   @Output() viewDetails = new EventEmitter<any>();
   @Output() progressSpinnerEmitter = new EventEmitter<any>();
   @Input() set dataset(data: Roadmap) {
-    data.steps!.forEach((node: Step) => {
+    data.steps!.forEach((node: Step, index: number) => {
       if (node.skills) {
         this.parents.push(node);
-
-        node.skills.forEach((child: Skill, index: number) => {
-          let skillsToPush: any = {
-            id: 'skill' + child.id,
-            id_db: child.id,
-            title: child.title,
-            description: child.description,
-          };
-          if (index % 2 === 0) {
-            this.firsthalfchilds.push(skillsToPush);
-          } else {
-            this.secondhalfchilds.push(skillsToPush);
-          }
-        });
-
-        node.roadmap_links.forEach((roadmap: any, index: number) => {
-          let roadmapToPush: any = {
-            id: 'roadmap' + roadmap.roadmap_id,
-            id_db: roadmap.roadmap_id,
-            title: roadmap.roadmap_title,
-            description: roadmap.roadmap_description,
-          };
-          if (index % 2 === 0) {
-            this.firsthalfchilds.push(roadmapToPush);
-          } else {
-            this.secondhalfchilds.push(roadmapToPush);
-          }
-        });
+        if (node.skills) {
+          node.skills.forEach((child: Skill, index: number) => {
+            let skillsToPush: any = {
+              id: 'skill' + child.id,
+              id_db: child.id,
+              title: child.title,
+              description: child.description,
+            };
+            if (index % 2 === 0) {
+              this.firsthalfchilds.push(skillsToPush);
+            } else {
+              this.secondhalfchilds.push(skillsToPush);
+            }
+          });
+        }
+        if (node.roadmap_links) {
+          node.roadmap_links.forEach((roadmap: any, index: number) => {
+            let roadmapToPush: any = {
+              id: 'roadmap' + roadmap.roadmap_id,
+              id_db: roadmap.roadmap_id,
+              title: roadmap.roadmap_title,
+              description: roadmap.roadmap_description,
+            };
+            if (index % 2 === 0) {
+              this.firsthalfchilds.push(roadmapToPush);
+            } else {
+              this.secondhalfchilds.push(roadmapToPush);
+            }
+          });
+        }
       }
     });
     this.drawLine();
@@ -175,7 +177,10 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   parents: Step[] = [];
   secondhalfchilds: any[] = [];
 
-  constructor(private changeDetector: ChangeDetectorRef,private router: Router) {}
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private router: Router
+  ) {}
 
   public clearAndReDraw() {
     let canvasHtml: HTMLCanvasElement = <HTMLCanvasElement>(
@@ -196,11 +201,11 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        let element = document.getElementById("canvasRef");
+        let element = document.getElementById('canvasRef');
         element!.remove();
-        element = document.getElementById("nodesContainer");
+        element = document.getElementById('nodesContainer');
         element!.remove();
-        this.progressSpinnerEmitter.emit(true)
+        this.progressSpinnerEmitter.emit(true);
         window.location.reload();
       }
     });
@@ -474,13 +479,27 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     );
     const canvasRef = new ElementRef(canvasHtml);
     let canvas = canvasRef.nativeElement;
-    canvas.width = window.innerWidth;
-
-    canvas.height = window.innerHeight * this.getMoltiplicatoreAltezza();
+    canvas.width = window.innerWidth * 0.99;
+    let lastNodeIndex: string = '';
+    if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
+      lastNodeIndex =
+        'childsx' + this.firsthalfchilds[this.firsthalfchilds.length - 1].id;
+    } else {
+      lastNodeIndex =
+        'childdx' + this.secondhalfchilds[this.secondhalfchilds.length - 1].id;
+    }
+    let lastNodeElement: HTMLElement = <HTMLElement>(
+      document.getElementById(lastNodeIndex)
+    );
+    let boundingRect = lastNodeElement.getBoundingClientRect();
+    let distanceFromTop = boundingRect.top;
+    console.log("Distance from the top of the window:", distanceFromTop);
+    // canvas.height = window.innerHeight * this.getMoltiplicatoreAltezza();
+    canvas.height = distanceFromTop+50;
     return canvas;
   }
   private getMoltiplicatoreAltezza(): number {
-    const rapporto: number = window.innerHeight * 0.0105;
+    const rapporto: number = window.innerHeight * 0.0085;
     let moltiplicatoreAltezza = 1.3;
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       moltiplicatoreAltezza = this.firsthalfchilds.length / rapporto;
@@ -490,6 +509,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     return moltiplicatoreAltezza;
   }
   public visualizeDetail(element: any) {
-      this.viewDetails.emit(element);
+    this.viewDetails.emit(element);
   }
 }

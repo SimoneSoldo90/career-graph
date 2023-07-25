@@ -42,8 +42,9 @@ p.description {
 }
 .testoChip {
   border-left: white 2px solid;
-    padding: 7px;
+  padding: 7px;
 }
 .numeroChip {
   padding: 0 0 0 7px;
+  font-weight: 500;
 }
