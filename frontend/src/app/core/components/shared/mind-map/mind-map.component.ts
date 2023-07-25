@@ -244,12 +244,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
           this.parents[index],
           this.parents[index - 1]
         );
-        // document.getElementById(
-        //   'parent' + this.parents[index].id
-        // )!.style.marginBottom = this.getParentMarginTopDown(
-        //   this.parents[index],
-        //   this.parents[index + 1]
-        // );
       }
     });
   }
@@ -474,7 +468,12 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     );
     const canvasRef = new ElementRef(canvasHtml);
     let canvas = canvasRef.nativeElement;
-    canvas.width = window.innerWidth * 0.99;
+    canvas.width = window.innerWidth;
+
+    canvas.height = this.getCanvasHeight();
+    return canvas;
+  }
+  private getCanvasHeight():number{
     let lastNodeIndex: string = '';
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
       lastNodeIndex =
@@ -490,20 +489,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     let distanceFromTop = boundingRect.top + window.scrollY; // Add scrollY to account for vertical scrolling
     let elementHeight = lastNodeElement.offsetHeight;
     let totalDistance = distanceFromTop + elementHeight;
-    // canvas.height = window.innerHeight * this.getMoltiplicatoreAltezza();
-    canvas.height = totalDistance;
-    return canvas;
+    return totalDistance;
   }
-  private getMoltiplicatoreAltezza(): number {
-    const rapporto: number = window.innerHeight * 0.0085;
-    let moltiplicatoreAltezza = 1.3;
-    if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
-      moltiplicatoreAltezza = this.firsthalfchilds.length / rapporto;
-    } else {
-      moltiplicatoreAltezza = this.secondhalfchilds.length / rapporto;
-    }
-    return moltiplicatoreAltezza;
-  }
+
   public visualizeDetail(element: any) {
     this.viewDetails.emit(element);
   }
