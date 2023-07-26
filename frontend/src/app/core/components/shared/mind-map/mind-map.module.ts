@@ -4,6 +4,8 @@ import { MindMapComponent } from './mind-map.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { RouterModule } from '@angular/router';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -15,7 +17,9 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     MatGridListModule,
     MatSlideToggleModule,
-    RouterModule
+    RouterModule,
+    MatBadgeModule,
+    MatTooltipModule,
   ],
   exports: [
     MindMapComponent,

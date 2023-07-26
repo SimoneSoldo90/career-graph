@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -10,9 +9,11 @@ import {
   Output,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Color, getColorFromString } from 'src/app/core/enum/color.enum';
 import { Roadmap } from 'src/app/core/models/roadmap';
 import { Skill } from 'src/app/core/models/skill';
 import { Step } from 'src/app/core/models/step.model';
+
 
 @Component({
   selector: 'app-line-renderer',
@@ -25,6 +26,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   @Input() set dataset(data: Roadmap) {
     data.steps!.forEach((node: Step, index: number) => {
       if (node.skills) {
+        console.log(node)
         this.parents.push(node);
         if (node.skills) {
           node.skills.forEach((child: Skill, index: number) => {
@@ -33,6 +35,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
               id_db: child.id,
               title: child.title,
               description: child.description,
+              status: child.status,
             };
             if (index % 2 === 0) {
               this.firsthalfchilds.push(skillsToPush);
@@ -48,6 +51,8 @@ export class MindMapComponent implements AfterViewInit, OnInit {
               id_db: roadmap.roadmap_id,
               title: roadmap.roadmap_title,
               description: roadmap.roadmap_description,
+              status: roadmap.status,
+
             };
             if (index % 2 === 0) {
               this.firsthalfchilds.push(roadmapToPush);
@@ -65,8 +70,8 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   secondhalfchilds: any[] = [];
 
   constructor(
-    private router: Router
-  ) {}
+    private router: Router,
+  ) {  }
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -122,18 +127,19 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     canvas: HTMLCanvasElement
   ) {
     parents.forEach((parent: Step, index: number) => {
+      const elementHtml = document.getElementById('parent' + parent.id);
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-        document.getElementById('parent' + parent.id)!
+        elementHtml
       );
 
       if (index !== 0) {
-        const elementHtml = document.getElementById('parent' + parent.id);
         if (elementHtml != null) {
           elementHtml.style.backgroundColor = '#acd0fb';
           elementHtml.style.color = 'black';
           elementHtml.style.fontWeight = '400';
         }
       }
+      this.setBadgeColor(elementHtml,parent);
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
       const parentRect = parentElement.getBoundingClientRect();
@@ -169,6 +175,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
         if (childElement) {
+
+          this.setBadgeColor(childElement,link);
+
           const childRect = childElement.getBoundingClientRect();
           const childCenterX =
             childRect.left + childRect.width / 2 - canvas.offsetLeft;
@@ -225,6 +234,8 @@ export class MindMapComponent implements AfterViewInit, OnInit {
 
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
+        this.setBadgeColor(childElement,child);
+
         if (childElement) {
           const childRect = childElement.getBoundingClientRect();
           const childCenterX =
@@ -255,6 +266,15 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         }
       });
     });
+  }
+  setBadgeColor(elementHtml:any,elementNode:any) {
+    let specificChild=elementHtml!.querySelector("[id^='mat-badge-content']") as HTMLElement;
+    const badgeColor = getColorFromString(elementNode.status);
+    if(badgeColor === "white"){
+    }
+    specificChild.style.border = "2px solid black";
+
+    specificChild!.style.backgroundColor = badgeColor;
   }
   private disegnaLinkTraParents(parents: Step[], canvas: HTMLCanvasElement) {
     for (let i = 0; i < parents.length; i++) {

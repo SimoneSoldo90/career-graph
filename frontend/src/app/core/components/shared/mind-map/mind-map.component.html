@@ -8,6 +8,8 @@
     <table class="leftTable">
       <tr *ngFor="let firstcolchild of firsthalfchilds">
         <td
+          matBadgePosition="before"
+          matBadge="&#8288;"
           *ngIf="firstcolchild.id.includes('roadmap'); else skillsx"
           class="button-skill"
           id="childsx{{ firstcolchild.id }}"
@@ -18,6 +20,8 @@
         </td>
         <ng-template #skillsx>
           <td
+            matBadgePosition="before"
+            matBadge="&#8288;"
             (click)="visualizeDetail(firstcolchild)"
             class="button-skill"
             id="childsx{{ firstcolchild.id }}"
@@ -30,6 +34,7 @@
     <table class="centerTable">
       <tr *ngFor="let parent of parents">
         <td
+          matBadge="&#8288;"
           (click)="visualizeDetail(parent)"
           class="button-skill"
           id="parent{{ parent.id }}"
@@ -40,7 +45,9 @@
     </table>
     <table class="rightTable">
       <tr *ngFor="let secondhalfchild of secondhalfchilds">
+
         <td
+          matBadge="&#8288;"
           *ngIf="secondhalfchild.id.includes('roadmap'); else skilldx"
           class="button-skill"
           id="childdx{{ secondhalfchild.id }}"
@@ -51,6 +58,7 @@
         </td>
         <ng-template #skilldx>
           <td
+            matBadge="&#8288;"
             (click)="visualizeDetail(secondhalfchild)"
             class="button-skill"
             id="childdx{{ secondhalfchild.id }}"
