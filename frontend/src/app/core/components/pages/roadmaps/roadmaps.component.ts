@@ -1,8 +1,9 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Roadmap } from 'src/app/core/models/roadmap';
+import { TableOptions } from 'src/app/core/models/tableoption.model';
 import { RoadmapService } from 'src/app/core/services/roadmap.service';
 @Component({
   selector: 'app-roadmaps',
@@ -24,13 +25,14 @@ export class RoadmapsComponent implements OnInit {
       header: 'Titolo',
     },
   ]
-  tableOptions = {
+  tableOptions:TableOptions = {
     "type": "roadmap",
     "displayedColumns": this.displayedColumns,
     "tableDef": this.tableDef,
     "canDelete": true,
     "canModify": true,
     btnCreate:{
+      "type":"roadmap",
       "title":"Aggiungi Roadmap",
       "canCreate":  true,
       "canView": true

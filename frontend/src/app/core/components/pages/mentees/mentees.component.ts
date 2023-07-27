@@ -39,10 +39,15 @@ export class MenteesComponent implements OnInit {
     btnCreate:{
       "canCreate":  false,
       "canView": true
+    }, btnVisualize:{
+      canView:false
     },
     "title": this.title,
     "detailTitle": this.detailTitle,
     "emptyData": false,
+    btnNavigate:{
+      canNavigate:true
+    }
   };
 
   constructor(private menteeService: MenteeService) { }
