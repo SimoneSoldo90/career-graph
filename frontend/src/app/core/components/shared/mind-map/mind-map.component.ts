@@ -270,10 +270,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
   setBadgeColor(elementHtml:any,elementNode:any) {
     let specificChild=elementHtml!.querySelector("[id^='mat-badge-content']") as HTMLElement;
     const badgeColor = getColorFromString(elementNode.status);
-    if(badgeColor === "white"){
-    }
-    specificChild.style.border = "2px solid black";
-
     specificChild!.style.backgroundColor = badgeColor;
   }
   private disegnaLinkTraParents(parents: Step[], canvas: HTMLCanvasElement) {

@@ -12,6 +12,7 @@ canvas {
   background-image: radial-gradient(#444cf7 0.5px, #f8f8ff 0.5px);
   background-size: 10px 10px;
 }
+
 td {
   text-align: center;
 }
@@ -24,7 +25,7 @@ td {
   cursor: pointer;
   border-radius: 3px;
   padding: 10px 12px 10px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: lighter;
   line-height: 1;
   background-color: white;
@@ -33,9 +34,9 @@ td {
   box-shadow: 0 0 0 2px #000000 inset;
   margin-top: 25px;
 }
-[id^='childdxroadmap'],
-[id^='childsxroadmap'],
-[id^='parent'] {
+[id^="childdxroadmap"],
+[id^="childsxroadmap"],
+[id^="parent"] {
   background-color: #144d83;
   color: white;
   font-weight: 400;
@@ -106,4 +107,34 @@ td {
     width: 20px;
     font-size: 10px;
   }
+}
+@media screen and (max-width: 651px) {
+  .badgeStatus {
+    visibility: hidden;
+  }
+  .nodeTitle {
+    padding: 0;
+  }
+}
+@media screen and (min-width: 652px) {
+  .badgeStatus {
+    position: absolute;
+    left: 15px;
+  }
+
+  .leftTable .nodoRoadmap,
+  .centerTable .nodoRoadmap,
+  .rightTable .nodoRoadmap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  .nodeTitle {
+    padding-left: 10px;
+  }
+}
+[id^="mat-badge-content"] {
+  border: 1.5px solid rgb(100, 100, 100);
 }

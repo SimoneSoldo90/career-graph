@@ -8,25 +8,40 @@
     <table class="leftTable">
       <tr *ngFor="let firstcolchild of firsthalfchilds">
         <td
-          matBadgePosition="before"
-          matBadge="&#8288;"
           *ngIf="firstcolchild.id.includes('roadmap'); else skillsx"
           class="button-skill"
           id="childsx{{ firstcolchild.id }}"
-          [routerLink]="['/mindmap']" routerLinkActive="router-link-active"
-          [queryParams]="{id:firstcolchild.id_db}"
+          [routerLink]="['/mindmap']"
+          routerLinkActive="router-link-active"
+          [queryParams]="{ id: firstcolchild.id_db }"
         >
-          {{ firstcolchild.title }}
+          <tr class="nodoRoadmap">
+            <td
+              class="badgeStatus"
+              matBadge="&#8288;"
+              matBadgeSize="small"
+            ></td>
+            <td class="nodeTitle">
+              {{ firstcolchild.title }}
+            </td>
+          </tr>
         </td>
         <ng-template #skillsx>
           <td
-            matBadgePosition="before"
-            matBadge="&#8288;"
             (click)="visualizeDetail(firstcolchild)"
             class="button-skill"
             id="childsx{{ firstcolchild.id }}"
           >
-            {{ firstcolchild.title }}
+            <tr class="nodoRoadmap">
+              <td
+                class="badgeStatus"
+                matBadge="&#8288;"
+                matBadgeSize="small"
+              ></td>
+              <td class="nodeTitle">
+                {{ firstcolchild.title }}
+              </td>
+            </tr>
           </td>
         </ng-template>
       </tr>
@@ -34,36 +49,60 @@
     <table class="centerTable">
       <tr *ngFor="let parent of parents">
         <td
-          matBadge="&#8288;"
           (click)="visualizeDetail(parent)"
           class="button-skill"
           id="parent{{ parent.id }}"
         >
-          {{ parent.title }}
+          <tr class="nodoRoadmap">
+            <td
+              class="badgeStatus"
+              matBadge="&#8288;"
+              matBadgeSize="small"
+            ></td>
+            <td class="nodeTitle">
+              {{ parent.title }}
+            </td>
+          </tr>
         </td>
       </tr>
     </table>
     <table class="rightTable">
       <tr *ngFor="let secondhalfchild of secondhalfchilds">
-
         <td
-          matBadge="&#8288;"
           *ngIf="secondhalfchild.id.includes('roadmap'); else skilldx"
           class="button-skill"
           id="childdx{{ secondhalfchild.id }}"
-          [routerLink]="['/mindmap']" routerLinkActive="router-link-active"
-          [queryParams]="{id:secondhalfchild.id_db}"
+          [routerLink]="['/mindmap']"
+          routerLinkActive="router-link-active"
+          [queryParams]="{ id: secondhalfchild.id_db }"
         >
-          {{ secondhalfchild.title }}
+          <tr class="nodoRoadmap">
+            <td
+              class="badgeStatus"
+              matBadge="&#8288;"
+              matBadgeSize="small"
+            ></td>
+            <td class="nodeTitle">
+              {{ secondhalfchild.title }}
+            </td>
+          </tr>
         </td>
         <ng-template #skilldx>
           <td
-            matBadge="&#8288;"
             (click)="visualizeDetail(secondhalfchild)"
             class="button-skill"
             id="childdx{{ secondhalfchild.id }}"
           >
-            {{ secondhalfchild.title }}
+            <tr class="nodoRoadmap">
+              <td
+                class="badgeStatus"
+                matBadge="&#8288;"
+                matBadgeSize="small"
+              ></td>
+              <td class="nodeTitle">
+                {{ secondhalfchild.title }}
+              </td>
+            </tr>
           </td>
         </ng-template>
       </tr>
