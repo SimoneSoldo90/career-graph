@@ -1,8 +1,8 @@
 export enum Color {
   bc_primary = '#144d83',
-  done = '#00b894',
+  done = '#05c46b',
   todo = '#ededed',
-  doing = '#ffeaa7',
+  doing = '#ffdd59',
 }
 export function getColorFromString(colorString: string | undefined): string {
   if (!colorString) {
