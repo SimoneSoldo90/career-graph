@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SkillServiceImplement implements ISkillService {
+public class SkillServiceImpl implements ISkillService {
     @Override
     public List<SkillDTO> getAll() {
         System.out.println("Funziona!");
