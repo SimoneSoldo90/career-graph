@@ -2,9 +2,11 @@ package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.service.IStepResourceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StepResourceImpl implements IStepResourceService {
     @Override
     public ResourceDTO create(Integer stepId, ResourceDTO resourceDTO) {

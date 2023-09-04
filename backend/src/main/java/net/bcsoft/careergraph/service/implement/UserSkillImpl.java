@@ -2,9 +2,11 @@ package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.UserSkillDTO;
 import net.bcsoft.careergraph.service.IUserSkillService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserSkillImpl implements IUserSkillService {
     @Override
     public List<UserSkillDTO> getAll(Integer userId) {
