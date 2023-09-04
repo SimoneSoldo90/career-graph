@@ -1,6 +1,29 @@
-server.port=8080
+   server:
+    port: 8080
 
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.url=jdbc:postgresql://localhost:5432/carrer_graph
-spring.datasource.username=postgres
-spring.datasource.password=Gabry0308
+  spring:
+    application:
+      name: career-graph
+    transaction:
+      rollback-on-commit-failure: true
+    datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        auto-commit: false
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://79.62.47.28:5491/career_graph
+      username: career_graph
+      password: career_graph
+
+  logging:
+    #  file:
+    #    name: /var/log/java/career-graph.log
+    #    max-history: 30
+    #    max-file-size: 50MB
+    #    file-name-pattern: "career-graph.%d{yyyy-MM-dd-HHmmss}.log.gz"
+    level:
+      "net.bcsoft.careergraph": "DEBUG"
+      "org.springframework.transaction": "ERROR"
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{70}:%line - %msg%n"
+      file: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{70}:%line - %msg%n"
