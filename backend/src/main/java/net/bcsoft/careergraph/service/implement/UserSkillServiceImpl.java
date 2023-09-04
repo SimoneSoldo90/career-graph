@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserSkillImpl implements IUserSkillService {
+public class UserSkillServiceImpl implements IUserSkillService {
     @Override
     public List<UserSkillDTO> getAll(Integer userId) {
         System.out.println("Funziona!");
