@@ -16,11 +16,11 @@ spring:
     password: career_graph
 
 logging:
-  #  file:
-  #    name: /var/log/java/career-graph.log
-  #    max-history: 30
-  #    max-file-size: 50MB
-  #    file-name-pattern: "career-graph.%d{yyyy-MM-dd-HHmmss}.log.gz"
+#  file:
+#    name: /var/log/java/career-graph.log
+#    max-history: 30
+#    max-file-size: 50MB
+#    file-name-pattern: "career-graph.%d{yyyy-MM-dd-HHmmss}.log.gz"
   level:
     "net.bcsoft.careergraph": "DEBUG"
     "org.springframework.transaction": "ERROR"
