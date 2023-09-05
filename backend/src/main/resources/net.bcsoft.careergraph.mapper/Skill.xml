@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.bcsoft.careergraph">
+<mapper namespace="net.bcsoft.careergraph.dao.SkillDAO">
+    <select id="selectAll" resultMap="skillResultMap">
+        SELECT * FROM skill
+    </select>
 
-
+    <resultMap id="roadmapResultMap" type="net.bcsoft.careergraph.entity.Skill">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+    </resultMap>
 </mapper>
