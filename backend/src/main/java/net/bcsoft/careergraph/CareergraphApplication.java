@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = { "net.bcsoft.careergraph.mapper" })
+@MapperScan(basePackages = { "net.bcsoft.careergraph.dao" })
 public class CareergraphApplication {
 
 	public static void main(String[] args) {
