@@ -5,8 +5,11 @@
 
     <resultMap id="roadmapResultMap" type="net.bcsoft.careergraph.entity.Roadmap">
         <id property="id" column="id"/>
-        <result property="title" column="title"/>
+        <result property="idStep" column="title"/>
+        <result property="idSkill" column="description"/>
+        <result property="idResourceType" column="description"/>
         <result property="description" column="description"/>
+        <result property="url" column="description"/>
     </resultMap>
 
     <select id="selectAll" resultMap="roadmapResultMap">
