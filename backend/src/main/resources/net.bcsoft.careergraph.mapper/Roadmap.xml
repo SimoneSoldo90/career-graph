@@ -18,12 +18,12 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO roadmap (title, description)
-        VALUES (#{title}, #{description})
+        VALUES (#{roadmap.title}, #{roadmap.description})
     </insert>
     
     <update id="update" parameterType="net.bcsoft.careergraph.entity.Roadmap">
         UPDATE roadmap
-        SET title = #{title}, description = #{description}
+        SET title = #{roadmap.title}, description = #{roadmap.description}
         WHERE id = #{id}
     </update>
 
