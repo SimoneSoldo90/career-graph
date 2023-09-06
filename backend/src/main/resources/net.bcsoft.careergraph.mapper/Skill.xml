@@ -6,9 +6,21 @@
         SELECT * FROM skill
     </select>
 
-    <resultMap id="roadmapResultMap" type="net.bcsoft.careergraph.entity.Skill">
+    <resultMap id="stepResultMap" type="net.bcsoft.careergraph.entity.Skill">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="description" column="description"/>
     </resultMap>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO skill (title, description)
+        VALUES (#{skill.title}, #{skill.description})
+    </insert>
+
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.Skill">
+        UPDATE skill
+        SET title = #{skill.title}, description = #{skill.description}
+        WHERE id = #{id}
+    </update>
 </mapper>

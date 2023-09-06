@@ -11,8 +11,20 @@
         <result property="idStep" column="step_id"/>
         <result property="idSkill" column="skill_id"/>
         <result property="idResourceType" column="resource_type_id"/>
-        <result property="description" column="description"/>
+        <result property="descritpion" column="descritpion"/>
         <result property="url" column="url"/>
     </resultMap>
+
+
+<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+INSERT INTO resource (step_id, skill_id, resource_type_id, description, url)
+VALUES (#{resource.idStep}, #{resource.idSkill}, #{resource.idResourceType}, #{resource.description}, #{resource.url})
+</insert>
+
+<update id="update" parameterType="net.bcsoft.careergraph.entity.Resource">
+UPDATE resource
+SET step_id = #{resource.idStep}, skill_id = #{resource.idSkill}, resource_type_id = #{resource.idResourceType}, description = #{resource.description}, url = #{resource.url}
+WHERE id = #{id}
+</update>
 
 </mapper>

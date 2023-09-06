@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.bcsoft.careergraph.mapper.StepDAO">
+<mapper namespace="net.bcsoft.careergraph.mapper.StepMapper">
     <select id="selectAll" resultMap="stepResultMap">
         SELECT * FROM step
     </select>
 
+    <select id="selectById" resultMap="roadmapLinkResultMap" parameterType="net.bcsoft.careergraph.entity.RoadmapLink">
+        SELECT * FROM roadmap_link
+        WHERE id = #{id}
+    </select>
+
     <resultMap id="stepResultMap" type="net.bcsoft.careergraph.entity.Step">
         <id property="id" column="id"/>
-        <result property="roadmapId" column="roadmap_id"/>
+        <result property="idRoadmap" column="roadmap_id"/>
+        <result property="idStep" column="step_id"/>
         <result property="ord" column="ord"/>
         <result property="title" column="title"/>
         <result property="description" column="description"/>
     </resultMap>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO step (roadmap_id, ord, title, description)
+        VALUES (#{step.idRoadmap}, #{step.idStep})
+    </insert>
+
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.Step">
+        UPDATE step
+        SET roadmap_id = #{step.idRoadmap}, ord = #{step.ord}, title = #{step.title}, description = #{step.description}
+        WHERE id = #{id}
+    </update>
 </mapper>
