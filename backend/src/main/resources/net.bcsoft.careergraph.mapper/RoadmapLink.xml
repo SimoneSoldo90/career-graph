@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.bcsoft.careergraph.mapper.RoadmapLinkMapper">
+    <select id="selectAll" resultMap="roadmapLinkResultMap">
+        SELECT * FROM roadmap_link
+    </select>
 
-    <select id="selectById" resultMap="roadmapLinkResultMap">
+    <select id="selectById" resultMap="roadmapLinkResultMap" parameterType="net.bcsoft.careergraph.entity.RoadmapLink">
         SELECT * FROM roadmap_link
         WHERE id = #{id}
     </select>

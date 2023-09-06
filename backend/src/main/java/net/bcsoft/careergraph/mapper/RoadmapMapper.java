@@ -7,6 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface RoadmapMapper {
+    List<Roadmap> selectAll();
     Roadmap selectById(Long id);
     Roadmap insert(Roadmap roadmap);
     Roadmap update(Roadmap roadmap);
