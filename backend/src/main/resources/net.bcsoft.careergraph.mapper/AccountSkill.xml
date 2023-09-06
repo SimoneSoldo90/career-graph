@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.bcsoft.careergraph.mapper.AccountSkillMapper">
+
+    <select id="selectById" resultMap="accountSkillResultMap">
+        SELECT * FROM account_skill
+        WHERE id = #{id}
+    </select>
+    <resultMap id="accountSkillResultMap" type="net.bcsoft.careergraph.entity.AccountSkill">
+        <id property="id" column="id"/>
+        <result property="idAccount" column="account_id"/>
+        <result property="idSkill" column="skill_id"/>
+        <result property="idSkillStatus" column="skill_status_id"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account_skill (account_id, skill_id, skill_status_id)
+        VALUES (#{idAccount}, #{idSkill}, #{idSkillStatus})
+    </insert>
+
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.AccountSkill">
+        UPDATE account_skill
+        SET account_id = #{idAccount}, skill_id = #{idSkill}, skill_status_id = #{idSkillStatus}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

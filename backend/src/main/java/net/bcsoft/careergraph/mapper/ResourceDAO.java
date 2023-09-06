@@ -1,7 +1,6 @@
-package net.bcsoft.careergraph.dao;
+package net.bcsoft.careergraph.mapper;
 
 import net.bcsoft.careergraph.entity.Resource;
-import net.bcsoft.careergraph.entity.Skill;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

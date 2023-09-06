@@ -1,6 +1,5 @@
-package net.bcsoft.careergraph.dao;
+package net.bcsoft.careergraph.mapper;
 
-import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.ResourceType;
 
 import java.util.List;

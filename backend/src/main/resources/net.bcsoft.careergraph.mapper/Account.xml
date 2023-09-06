@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.bcsoft.careergraph.mapper.AccountMapper">
+
+    <select id="selectById" resultMap="accountResultMap">
+        SELECT * FROM account
+        WHERE id = #{id}
+    </select>
+    <resultMap id="accountResultMap" type="net.bcsoft.careergraph.entity.Account">
+        <id property="id" column="id"/>
+        <result property="idSsoU" column="sso_uid"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account (sso_uid, first_name, last_name, email)
+        VALUES (#{idSsoU}, #{firstName}, #{lastName}, #{email})
+    </insert>
+
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.Account">
+        UPDATE account
+        SET sso_uid = #{idSsoU}, first_name = #{firstName}, last_name = #{lastName}, email = #{email}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
