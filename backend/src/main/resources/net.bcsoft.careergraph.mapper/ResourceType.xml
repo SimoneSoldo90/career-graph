@@ -3,7 +3,7 @@
 
 <mapper namespace="net.bcsoft.careergraph">
 
-    <resultMap id="resourceTypeResultMap" type="net.bcsoft.careergraph.entity.Roadmap">
+    <resultMap id="resourceTypeResultMap" type="net.bcsoft.careergraph.entity.ResourceType">
         <id property="id" column="id"/>
     </resultMap>
 
@@ -11,20 +11,10 @@
         SELECT * FROM resource_type
     </select>
 
-    <select id="select" resultMap="resourceTypeResultMap">
+    <select id="selectById" resultMap="resourceTypeResultMap">
         SELECT *
         FROM resource_type
         WHERE id = #{id}
     </select>
-
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="net.bcsoft.careergraph.entity.ResourceType">
-        INSERT INTO resource_type (id)
-        VALUES (#{id})
-    </insert>
-    <update id="update" parameterType="net.bcsoft.careergraph.entity.ResourceType">
-        UPDATE resource_type
-        SET id = #{id}
-        WHERE
-    </update>
 
 </mapper>

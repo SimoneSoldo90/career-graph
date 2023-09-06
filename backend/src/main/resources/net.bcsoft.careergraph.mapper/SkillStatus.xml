@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.bcsoft.careergraph">
+
+    <resultMap id="skillStatusResultMap" type="net.bcsoft.careergraph.entity.SkillStatus">
+        <id property="id" column="id"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="skillStatusResultMap">
+        SELECT * FROM skill_status
+    </select>
+
+    <select id="selectById" resultMap="skillStatusResultMap">
+        SELECT *
+        FROM skill_status
+        WHERE id = #{id}
+    </select>
+
+</mapper>
