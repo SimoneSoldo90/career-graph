@@ -11,7 +11,7 @@
         SELECT * FROM resource_type
     </select>
 
-    <select id="selectById" resultMap="resourceTypeResultMap">
+    <select id="selectById" resultMap="resourceTypeResultMap" parameterType="net.bcsoft.careergraph.entity.ResourceType">
         SELECT *
         FROM resource_type
         WHERE id = #{id}

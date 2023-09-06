@@ -14,7 +14,7 @@
         FROM step_skill
     </select>
 
-    <select id="selectById" resultMap="stepSkillResultMap" parameterType="java.lang.Long">
+    <select id="selectById" resultMap="stepSkillResultMap" parameterType="net.bcsoft.careergraph.entity.StepSkill">
         SELECT *
         FROM step_skill
         WHERE id = #{id}

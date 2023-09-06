@@ -7,11 +7,11 @@
         <id property="id" column="id"/>
     </resultMap>
 
-    <select id="selectAll" resultMap="skillStatusResultMap">
+    <select id="selectAll" resultMap="skillStatusResultMap" parameterType="net.bcsoft.careergraph.entity.SkillStatus">
         SELECT * FROM skill_status
     </select>
 
-    <select id="selectById" resultMap="skillStatusResultMap">
+    <select id="selectById" resultMap="skillStatusResultMap" parameterType="net.bcsoft.careergraph.entity.SkillStatus">
         SELECT *
         FROM skill_status
         WHERE id = #{id}
