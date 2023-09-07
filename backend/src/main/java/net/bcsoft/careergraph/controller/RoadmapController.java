@@ -26,17 +26,17 @@ public class RoadmapController {
     }
 
     @GetMapping("/roadmaps/{roadmapId}")
-    public RoadmapDTO getRoadmapId(@PathVariable Integer roadmapId){
+    public RoadmapDTO getRoadmapId(@PathVariable Long roadmapId){
         return roadmapService.getById(roadmapId);
     }
 
     @PutMapping("/roadmaps/{roadmapId}")
-    public RoadmapDTO updateRoadmap(@PathVariable Integer roadmapId, @RequestBody RoadmapDTO roadmapDTO){
-        return roadmapService.update(roadmapId, roadmapDTO);
+    public RoadmapDTO updateRoadmap(@RequestBody RoadmapDTO roadmapDTO){
+        return roadmapService.update(roadmapDTO);
     }
 
     @DeleteMapping("/roadmaps/{roadmapId}")
-    public void deleteRoadmap(@PathVariable Integer roadmapId){
+    public void deleteRoadmap(@PathVariable Long roadmapId){
         roadmapService.delete(roadmapId);
     }
 }

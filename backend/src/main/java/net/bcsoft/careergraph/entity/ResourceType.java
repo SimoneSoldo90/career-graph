@@ -1,7 +1,7 @@
 package net.bcsoft.careergraph.entity;
 
 public class ResourceType {
-    Long id;
+    private Long id;
 
     public Long getId() {
         return id;

@@ -7,8 +7,8 @@ import java.util.List;
 public interface IRoadmapService {
     public List<RoadmapDTO> getAll();
     public RoadmapDTO create(RoadmapDTO roadmapDTO);
-    public RoadmapDTO getById(Integer roadmapId);
-    public RoadmapDTO update(Integer roadmapId, RoadmapDTO roadmapDTO);
-    public void delete(Integer roadmapId);
+    public RoadmapDTO getById(Long roadmapId);
+    public RoadmapDTO update(RoadmapDTO roadmapDTO);
+    public void delete(Long roadmapId);
 
 }
