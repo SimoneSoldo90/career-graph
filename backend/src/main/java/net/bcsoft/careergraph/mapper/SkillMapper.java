@@ -10,6 +10,6 @@ import java.util.List;
 public interface SkillMapper {
     List<Skill> selectAll();
     Skill selectById(Long id);
-    Skill insert(Skill skill);
-    Skill update(Skill skill);
+    int insert(Skill skill);
+    int update(Skill skill);
 }

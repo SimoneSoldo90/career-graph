@@ -8,7 +8,8 @@ public interface ISkillService {
 
     public List<SkillDTO> getAll();
     public SkillDTO create(SkillDTO skillDTO);
-    public SkillDTO update(Integer skillId, SkillDTO skillDTO);
-    public SkillDTO getById(Integer skillId);
+    public SkillDTO update(SkillDTO skillDTO);
+    public SkillDTO getById(Long skillId);
+    public void delete(Long skillId);
 
 }

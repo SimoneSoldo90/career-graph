@@ -6,6 +6,11 @@
         SELECT * FROM skill
     </select>
 
+    <select id="selectById" resultMap="skillResultMap" parameterType="net.bcsoft.careergraph.entity.Skill">
+        SELECT * FROM skill
+        WHERE id = #{id}
+    </select>
+
     <resultMap id="skillResultMap" type="net.bcsoft.careergraph.entity.Skill">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
@@ -13,7 +18,7 @@
     </resultMap>
 
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO skill (title, description)
         VALUES (#{title}, #{description})
     </insert>

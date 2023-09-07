@@ -1,11 +1,20 @@
 package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import net.bcsoft.careergraph.entity.Skill;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record SkillDTO(Integer id, @JsonProperty("step_id") Integer stepId, String title, String description, @JsonProperty("resources") List<ResourceDTO> resourceList) {}
+public record SkillDTO(Long id, @JsonProperty("step_id") Integer stepId, String title, String description, @JsonProperty("resources") List<ResourceDTO> resourceList) {
+    public Skill toEntity() {
+        Skill skill = new Skill();
+        skill.setId(this.id);
+        skill.setTitle(this.title);
+        skill.setDescription(this.description);
+        return skill;
+    }
+}
 
 /*
 public class SkillDTO {
