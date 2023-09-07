@@ -1,11 +1,21 @@
 package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import net.bcsoft.careergraph.entity.Roadmap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record RoadmapDTO( Integer id, String title, String description, @JsonProperty("steps") List <StepDTO> stepList){}
+public record RoadmapDTO( Long id, String title, String description, @JsonProperty("steps") List <StepDTO> stepList){
+    public Roadmap toEntity(){
+        Roadmap roadmap = new Roadmap();
+        roadmap.setId(this.id);
+        roadmap.setTitle(this.title);
+        roadmap.setDescription(this.description);
+        return roadmap;
+    }
+
+}
 
 /*
 public class RoadmapDTO {

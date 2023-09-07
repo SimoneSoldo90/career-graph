@@ -6,7 +6,7 @@
         SELECT * FROM step
     </select>
 
-    <select id="selectById" resultMap="roadmapLinkResultMap" parameterType="net.bcsoft.careergraph.entity.RoadmapLink">
+    <select id="selectById" resultMap="stepResultMap" parameterType="net.bcsoft.careergraph.entity.Step">
         SELECT * FROM roadmap_link
         WHERE id = #{id}
     </select>
@@ -23,12 +23,12 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO step (roadmap_id, ord, title, description)
-        VALUES (#{step.idRoadmap}, #{step.idStep})
+        VALUES (#{idRoadmap}, #{idStep})
     </insert>
 
     <update id="update" parameterType="net.bcsoft.careergraph.entity.Step">
         UPDATE step
-        SET roadmap_id = #{step.idRoadmap}, ord = #{step.ord}, title = #{step.title}, description = #{step.description}
+        SET roadmap_id = #{idRoadmap}, ord = #{ord}, title = #{title}, description = #{description}
         WHERE id = #{id}
     </update>
 </mapper>

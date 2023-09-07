@@ -19,13 +19,13 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO account_skill (account_id, skill_id, skill_status_id)
-        VALUES (#{accountSkill.idAccount}, #{accountSkill.idSkill}, #{accountSkill.idSkillStatus})
+        VALUES (#{idAccount}, #{idSkill}, #{idSkillStatus})
     </insert>
 
     <update id="update" parameterType="net.bcsoft.careergraph.entity.AccountSkill">
         UPDATE account_skill
-        SET account_id = #{accountSkill.idAccount}, skill_id = #{accountSkill.idSkill}, skill_status_id = #{accountSkill.idSkillStatus}
-        WHERE id = #{accountSkill.id}
+        SET account_id = #{idAccount}, skill_id = #{idSkill}, skill_status_id = #{idSkillStatus}
+        WHERE id = #{id}
     </update>
 
 </mapper>

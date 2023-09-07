@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.bcsoft.careergraph.mapper.ResourceDAO">
+<mapper namespace="net.bcsoft.careergraph.mapper.ResourceMapper">
     <select id="selectAll" resultMap="resourceResultMap">
         SELECT * FROM resource
     </select>
@@ -18,12 +18,12 @@
 
 <insert id="insert" useGeneratedKeys="true" keyProperty="id">
 INSERT INTO resource (step_id, skill_id, resource_type_id, description, url)
-VALUES (#{resource.idStep}, #{resource.idSkill}, #{resource.idResourceType}, #{resource.description}, #{resource.url})
+VALUES (#{idStep}, #{idSkill}, #{idResourceType}, #{description}, #{url})
 </insert>
 
 <update id="update" parameterType="net.bcsoft.careergraph.entity.Resource">
 UPDATE resource
-SET step_id = #{resource.idStep}, skill_id = #{resource.idSkill}, resource_type_id = #{resource.idResourceType}, description = #{resource.description}, url = #{resource.url}
+SET step_id = #{idStep}, skill_id = #{idSkill}, resource_type_id = #{idResourceType}, description = #{description}, url = #{url}
 WHERE id = #{id}
 </update>
 

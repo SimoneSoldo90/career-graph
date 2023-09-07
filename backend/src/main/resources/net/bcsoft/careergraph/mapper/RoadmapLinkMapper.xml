@@ -20,12 +20,12 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO roadmap_link (step_id, roadmap_id)
-        VALUES (#{roadmapLink.idStep}, #{roadmapLink.idRoadmap})
+        VALUES (#{idStep}, #{idRoadmap})
     </insert>
 
-    <update id="update" parameterType="net.bcsoft.careergraph.entity.Roadmap">
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.RoadmapLink">
         UPDATE roadmap_link
-        SET step_id = #{roadmapLink.idStep}, roadmap_id = #{roadmapLink.idRoadmap}
+        SET step_id = #{idStep}, roadmap_id = #{idRoadmap}
         WHERE id = #{id}
     </update>
 </mapper>

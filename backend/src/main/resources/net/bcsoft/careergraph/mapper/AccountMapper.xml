@@ -20,13 +20,13 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO account (sso_uid, first_name, last_name, email)
-        VALUES (#{account.idSsoU}, #{account.firstName}, #{account.lastName}, #{account.email})
+        VALUES (#{idSsoU}, #{firstName}, #{lastName}, #{email})
     </insert>
 
     <update id="update" parameterType="net.bcsoft.careergraph.entity.Account">
         UPDATE account
-        SET sso_uid = #{account.idSsoU}, first_name = #{account.firstName}, last_name = #{account.lastName}, email = #{account.email}
-        WHERE id = #{account.id}
+        SET sso_uid = #{idSsoU}, first_name = #{firstName}, last_name = #{lastName}, email = #{email}
+        WHERE id = #{id}
     </update>
 
 </mapper>

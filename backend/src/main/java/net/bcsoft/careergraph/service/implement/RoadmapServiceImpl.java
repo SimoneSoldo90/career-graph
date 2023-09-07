@@ -1,6 +1,7 @@
 package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.RoadmapDTO;
+import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,10 @@ public class RoadmapServiceImpl implements IRoadmapService {
 
     @Override
     public RoadmapDTO create(RoadmapDTO roadmapDTO) {
-        System.out.println("Funziona");
-        return null;
+        Roadmap roadmap = roadmapDTO.toEntity();
+        roadmapMapper.insert(roadmap);
+        Roadmap result = roadmapMapper.selectById(roadmap.getId());
+        return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null );
     }
 
     @Override
