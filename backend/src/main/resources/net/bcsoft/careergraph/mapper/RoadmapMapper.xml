@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.bcsoft.careergraph.mapper.RoadmapMapper">
+    <resultMap id="roadmapResultMap" type="net.bcsoft.careergraph.entity.Roadmap">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+    </resultMap>
+    
+    <resultMap id="stepResult" type=""
+        
     <select id="selectAll" resultMap="roadmapResultMap">
         SELECT * FROM roadmap
     </select>
@@ -10,12 +18,7 @@
         SELECT * FROM roadmap
         WHERE id = #{id}
     </select>
-    <resultMap id="roadmapResultMap" type="net.bcsoft.careergraph.entity.Roadmap">
-        <id property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="description" column="description"/>
-    </resultMap>
-
+    
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
         INSERT INTO roadmap (title, description)
         VALUES (#{title}, #{description})

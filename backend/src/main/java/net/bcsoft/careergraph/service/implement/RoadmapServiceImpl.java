@@ -18,7 +18,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
-    public List<RoadmapDTO> getAll() {
+    public List<RoadmapDTO> findAll() {
         List <Roadmap> roadmapList = roadmapMapper.selectAll();
         List <RoadmapDTO> roadmapDTOList = new ArrayList<>();
         for(Roadmap roadmap : roadmapList){
@@ -37,7 +37,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
-    public RoadmapDTO getById(Long roadmapId) {
+    public RoadmapDTO findById(Long roadmapId) {
         Roadmap result = roadmapMapper.selectById(roadmapId);
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
