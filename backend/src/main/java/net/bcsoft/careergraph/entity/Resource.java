@@ -2,9 +2,9 @@ package net.bcsoft.careergraph.entity;
 
 public class Resource {
     private Long id;
-    private Long idStep;
-    private Long idSkill;
-    private Long idResourceType;
+    private Long stepId;
+    private Long skillId;
+    private String resourceTypeId;
     private String description;
     private String url;
 
@@ -16,28 +16,28 @@ public class Resource {
         this.id = id;
     }
 
-    public Long getIdStep() {
-        return idStep;
+    public Long getStepId() {
+        return stepId;
     }
 
-    public void setIdStep(Long idStep) {
-        this.idStep = idStep;
+    public void setStepId(Long stepId) {
+        this.stepId = stepId;
     }
 
-    public Long getIdSkill() {
-        return idSkill;
+    public Long getSkillId() {
+        return skillId;
     }
 
-    public void setIdSkill(Long idSkill) {
-        this.idSkill = idSkill;
+    public void setSkillId(Long skillId) {
+        this.skillId = skillId;
     }
 
-    public Long getIdResourceType() {
-        return idResourceType;
+    public String getResourceTypeId() {
+        return resourceTypeId;
     }
 
-    public void setIdResourceType(Long idResourceType) {
-        this.idResourceType = idResourceType;
+    public void setResourceTypeId(String resourceTypeId) {
+        this.resourceTypeId = resourceTypeId;
     }
 
     public String getDescription() {

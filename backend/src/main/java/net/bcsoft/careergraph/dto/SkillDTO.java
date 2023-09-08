@@ -1,11 +1,7 @@
 package net.bcsoft.careergraph.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public record SkillDTO(Integer id, @JsonProperty("step_id") Integer stepId, String title, String description, @JsonProperty("resources") List<ResourceDTO> resourceList) {}
+public record SkillDTO(Long id, /*@JsonProperty("step_id") Integer stepId,*/ String title, String description/*, @JsonProperty("resources") List<ResourceDTO> resourceList*/) {}
 
 /*
 public class SkillDTO {

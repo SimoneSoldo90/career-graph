@@ -6,9 +6,10 @@ import java.util.List;
 
 public interface ISkillService {
 
-    public List<SkillDTO> getAll();
-    public SkillDTO create(SkillDTO skillDTO);
-    public SkillDTO update(Integer skillId, SkillDTO skillDTO);
-    public SkillDTO getById(Integer skillId);
+    List<SkillDTO> getAll();
+    SkillDTO create(SkillDTO skillDTO);
+    SkillDTO update(Integer skillId, SkillDTO skillDTO);
+    SkillDTO getById(Integer skillId);
+    List<SkillDTO> findByStepId(Long stepId);
 
 }

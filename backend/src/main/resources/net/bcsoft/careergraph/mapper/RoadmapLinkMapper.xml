@@ -13,19 +13,19 @@
 
     <resultMap id="roadmapLinkResultMap" type="net.bcsoft.careergraph.entity.RoadmapLink">
         <id property="id" column="id"/>
-        <result property="idRoadmap" column="roadmap_id"/>
-        <result property="idStep" column="step_id"/>
+        <result property="roadmapId" column="roadmap_id"/>
+        <result property="stepId" column="step_id"/>
     </resultMap>
 
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO roadmap_link (step_id, roadmap_id)
-        VALUES (#{idStep}, #{idRoadmap})
+        VALUES (#{stepId}, #{roadmapId})
     </insert>
 
     <update id="update" parameterType="net.bcsoft.careergraph.entity.RoadmapLink">
         UPDATE roadmap_link
-        SET step_id = #{idStep}, roadmap_id = #{idRoadmap}
+        SET step_id = #{stepId}, roadmap_id = #{roadmapId}
         WHERE id = #{id}
     </update>
 </mapper>

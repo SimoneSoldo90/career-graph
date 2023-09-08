@@ -5,9 +5,9 @@ import net.bcsoft.careergraph.dto.StepDTO;
 import java.util.List;
 
 public interface IStepService {
-    public StepDTO create(StepDTO stepDTO);
-    public List<StepDTO> getAll();
-    public StepDTO getById(Integer stepId);
-    public StepDTO update(Integer stepId, StepDTO stepDTO);
-    public StepDTO delete(Integer stepId);
+    StepDTO create(StepDTO stepDTO);
+    List<StepDTO> findAll();
+    StepDTO findById(Long stepId);
+    StepDTO update(StepDTO stepDTO);
+    //StepDTO delete(Long stepId);
 }

@@ -2,8 +2,8 @@ package net.bcsoft.careergraph.entity;
 
 public class Step {
     private Long id;
-    private Long idRoadmap;
-    private int ord;
+    private Long roadmapId;
+    private Integer ord;
     private String title;
     private String description;
 
@@ -15,19 +15,19 @@ public class Step {
         this.id = id;
     }
 
-    public Long getIdRoadmap() {
-        return idRoadmap;
+    public Long getRoadmapId() {
+        return roadmapId;
     }
 
-    public void setIdRoadmap(Long idRoadmap) {
-        this.idRoadmap = idRoadmap;
+    public void setRoadmapId(Long roadmapId) {
+        this.roadmapId = roadmapId;
     }
 
-    public int getOrd() {
+    public Integer getOrd() {
         return ord;
     }
 
-    public void setOrd(int ord) {
+    public void setOrd(Integer ord) {
         this.ord = ord;
     }
 

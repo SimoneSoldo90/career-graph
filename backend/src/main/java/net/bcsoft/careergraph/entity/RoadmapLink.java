@@ -2,8 +2,10 @@ package net.bcsoft.careergraph.entity;
 
 public class RoadmapLink {
     Long id;
-    Long idStep;
-    Long idRoadmap;
+    Long stepId;
+    Long roadmapId;
+
+
 
     public Long getId() {
         return id;
@@ -13,19 +15,19 @@ public class RoadmapLink {
         this.id = id;
     }
 
-    public Long getIdStep() {
-        return idStep;
+    public Long getStepId() {
+        return stepId;
     }
 
-    public void setIdStep(Long idStep) {
-        this.idStep = idStep;
+    public void setStepId(Long stepId) {
+        this.stepId = stepId;
     }
 
-    public Long getIdRoadmap() {
-        return idRoadmap;
+    public Long getRoadmapId() {
+        return roadmapId;
     }
 
-    public void setIdRoadmap(Long idRoadmap) {
-        this.idRoadmap = idRoadmap;
+    public void setRoadmapId(Long roadmapId) {
+        this.roadmapId = roadmapId;
     }
 }

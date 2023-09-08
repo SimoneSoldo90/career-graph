@@ -2,29 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.bcsoft.careergraph.mapper.ResourceMapper">
-    <select id="selectAll" resultMap="resourceResultMap">
-        SELECT * FROM resource
-    </select>
 
     <resultMap id="resourceResultMap" type="net.bcsoft.careergraph.entity.Resource">
         <id property="id" column="id"/>
-        <result property="idStep" column="step_id"/>
-        <result property="idSkill" column="skill_id"/>
-        <result property="idResourceType" column="resource_type_id"/>
+        <result property="stepId" column="step_id"/>
+        <result property="skillId" column="skill_id"/>
+        <result property="resourceTypeId" column="resource_type_id"/>
         <result property="descritpion" column="descritpion"/>
         <result property="url" column="url"/>
     </resultMap>
 
+    <select id="selectAll" resultMap="resourceResultMap">
+        SELECT * FROM resource
+    </select>
 
-<insert id="insert" useGeneratedKeys="true" keyProperty="id">
-INSERT INTO resource (step_id, skill_id, resource_type_id, description, url)
-VALUES (#{idStep}, #{idSkill}, #{idResourceType}, #{description}, #{url})
-</insert>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO resource (step_id, skill_id, resource_type_id, description, url)
+        VALUES (#{stepId}, #{skillId}, #{resourceTypeId}, #{description}, #{url})
+    </insert>
 
-<update id="update" parameterType="net.bcsoft.careergraph.entity.Resource">
-UPDATE resource
-SET step_id = #{idStep}, skill_id = #{idSkill}, resource_type_id = #{idResourceType}, description = #{description}, url = #{url}
-WHERE id = #{id}
-</update>
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.Resource">
+        UPDATE resource
+        SET step_id = #{stepId}, skill_id = #{skillId}, resource_type_id = #{resourceTypeId}, description = #{description}, url = #{url}
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectById" resultMap="resourceResultMap" parameterType="java.lang.Long">
+        SELECT *
+        FROM resource
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectByStepId" resultMap="resourceResultMap" parameterType="java.lang.Long">
+        SELECT *
+        FROM resource
+        WHERE step_id = #{stepId}
+    </select>
 
 </mapper>

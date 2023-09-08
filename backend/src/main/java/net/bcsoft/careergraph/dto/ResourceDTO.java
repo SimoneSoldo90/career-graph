@@ -2,7 +2,8 @@ package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record ResourceDTO(@JsonProperty("step_id") Integer id, @JsonProperty("skill_id") Integer skillId, String type, String description, String url){}
+public record ResourceDTO(@JsonProperty("step_id") Long id, @JsonProperty("skill_id") Long skillId, String type, String description, String url){
+}
 
 /*ublic class ResourceDTO {
     @JsonProperty("step_id")

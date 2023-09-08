@@ -2,7 +2,7 @@ package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record RoadmapLinkDTO(@JsonProperty("step_id") Integer stepId, @JsonProperty("roadmap_id") Integer roadmapId, @JsonProperty("roadmap_title") String roadmapTitle, @JsonProperty("roadmap_description") String roadmapDescription) {}
+public record RoadmapLinkDTO(@JsonProperty("step_id") Long stepId, @JsonProperty("roadmap_id") Long roadmapId/*, @JsonProperty("roadmap_title") String roadmapTitle, @JsonProperty("roadmap_description") String roadmapDescription*/) {}
 
 /*
 public class RoadmapLinkDTO {

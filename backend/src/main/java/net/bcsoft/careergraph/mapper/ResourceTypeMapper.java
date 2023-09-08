@@ -8,5 +8,5 @@ import java.util.List;
 @Mapper
 public interface ResourceTypeMapper {
     List<ResourceType> selectAll();
-    ResourceType selectById(Long id);
+    ResourceType selectById(String id);
 }

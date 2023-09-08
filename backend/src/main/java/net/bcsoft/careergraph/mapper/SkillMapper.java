@@ -1,6 +1,5 @@
 package net.bcsoft.careergraph.mapper;
 
-import net.bcsoft.careergraph.entity.Account;
 import net.bcsoft.careergraph.entity.Skill;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,4 +11,6 @@ public interface SkillMapper {
     Skill selectById(Long id);
     Skill insert(Skill skill);
     Skill update(Skill skill);
+
+    List<Skill> selectByStepId(Long stepId);
 }
