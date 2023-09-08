@@ -28,14 +28,14 @@ public class SkillController {
     }
 
     @GetMapping("/skill/{skillId}")
-    public SkillDTO getSkillId(@PathVariable Integer skillId) {
+    public SkillDTO getSkillId(@PathVariable Long skillId) {
         return skillService.getById(skillId);
     }
 
     @PutMapping("/skill/{skillId}")
-    public ResponseEntity<SkillDTO> updateSkillId(@PathVariable Integer skillId, @RequestBody SkillDTO skillDTO) {
+    public ResponseEntity<SkillDTO> updateSkillId(@PathVariable Long skillId, @RequestBody SkillDTO skillDTO) {
         if (skillId.equals(skillDTO.id())) {
-            SkillDTO result = skillService.update(skillId, skillDTO);
+            SkillDTO result = skillService.update(skillDTO);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {

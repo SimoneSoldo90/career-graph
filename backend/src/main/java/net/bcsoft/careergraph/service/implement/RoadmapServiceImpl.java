@@ -6,6 +6,7 @@ import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,9 +18,14 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
-    public List<RoadmapDTO> getAll() {
-        System.out.println("Funziona");
-        return null;
+    public List<RoadmapDTO> findAll() {
+        List <Roadmap> roadmapList = roadmapMapper.selectAll();
+        List <RoadmapDTO> roadmapDTOList = new ArrayList<>();
+        for(Roadmap roadmap : roadmapList){
+            RoadmapDTO roadmapDTO = new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
+            roadmapDTOList.add(roadmapDTO);
+        }
+        return roadmapDTOList;
     }
 
     @Override
@@ -31,19 +37,20 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
-    public RoadmapDTO getById(Integer roadmapId) {
-        System.out.println("Funziona");
-        return null;
+    public RoadmapDTO findById(Long roadmapId) {
+        Roadmap result = roadmapMapper.selectById(roadmapId);
+        return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
 
     @Override
-    public RoadmapDTO update(Integer roadmapId, RoadmapDTO roadmapDTO) {
-        System.out.println("Funziona");
-        return null;
+    public RoadmapDTO update( RoadmapDTO roadmapDTO) {
+        Roadmap roadmap = roadmapDTO.toEntity();
+        roadmapMapper.update(roadmap);
+        return new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
     }
 
     @Override
-    public void delete(Integer roadmapId) {
+    public void delete(Long roadmapId) {
         System.out.println("Funziona");
     }
 }

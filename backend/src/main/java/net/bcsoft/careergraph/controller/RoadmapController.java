@@ -4,7 +4,6 @@ import net.bcsoft.careergraph.dto.RoadmapDTO;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,7 +16,7 @@ public class RoadmapController {
 
     @GetMapping("/roadmaps/")
     public List <RoadmapDTO> getRoadmapList(){
-        return roadmapService.getAll();
+        return roadmapService.findAll();
     }
 
     @PostMapping("/roadmaps/")
@@ -26,17 +25,17 @@ public class RoadmapController {
     }
 
     @GetMapping("/roadmaps/{roadmapId}")
-    public RoadmapDTO getRoadmapId(@PathVariable Integer roadmapId){
-        return roadmapService.getById(roadmapId);
+    public RoadmapDTO getRoadmapId(@PathVariable Long roadmapId){
+        return roadmapService.findById(roadmapId);
     }
 
     @PutMapping("/roadmaps/{roadmapId}")
-    public RoadmapDTO updateRoadmap(@PathVariable Integer roadmapId, @RequestBody RoadmapDTO roadmapDTO){
-        return roadmapService.update(roadmapId, roadmapDTO);
+    public RoadmapDTO updateRoadmap(@RequestBody RoadmapDTO roadmapDTO){
+        return roadmapService.update(roadmapDTO);
     }
 
     @DeleteMapping("/roadmaps/{roadmapId}")
-    public void deleteRoadmap(@PathVariable Integer roadmapId){
+    public void deleteRoadmap(@PathVariable Long roadmapId){
         roadmapService.delete(roadmapId);
     }
 }
