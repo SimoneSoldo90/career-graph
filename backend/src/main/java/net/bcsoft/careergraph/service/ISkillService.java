@@ -8,8 +8,8 @@ public interface ISkillService {
 
     List<SkillDTO> getAll();
     SkillDTO create(SkillDTO skillDTO);
-    SkillDTO update(Integer skillId, SkillDTO skillDTO);
-    SkillDTO getById(Integer skillId);
+    SkillDTO update(Long skillId, SkillDTO skillDTO);
+    SkillDTO getById(Long skillId);
     List<SkillDTO> findByStepId(Long stepId);
 
 }

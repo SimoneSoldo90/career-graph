@@ -33,22 +33,23 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public SkillDTO update(Integer skillId, SkillDTO skillDTO) {
+    public SkillDTO update(Long skillId, SkillDTO skillDTO) {
         System.out.println("Funziona!");
         return null;
     }
 
     @Override
-    public SkillDTO getById(Integer skillId) {
+    public SkillDTO getById(Long skillId) {
         System.out.println("Funziona!");
         return null;
     }
 
+    @Override
     public List<SkillDTO> findByStepId(Long stepId) {
         List<Skill> skillList = skillMapper.selectByStepId(stepId);
         List<SkillDTO> result = new ArrayList<>();
         for (Skill skill : skillList) {
-            result.add(new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription()));
+            result.add(new SkillDTO(skill.getId(), stepId, skill.getTitle(), skill.getDescription(), null));
         }
 
         return result;

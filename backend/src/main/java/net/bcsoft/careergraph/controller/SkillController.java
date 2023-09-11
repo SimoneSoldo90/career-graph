@@ -35,7 +35,7 @@ public class SkillController {
     @PutMapping("/skill/{skillId}")
     public ResponseEntity<SkillDTO> updateSkillId(@PathVariable Long skillId, @RequestBody SkillDTO skillDTO) {
         if (skillId.equals(skillDTO.id())) {
-            SkillDTO result = skillService.update(skillDTO);
+            SkillDTO result = skillService.update(skillId, skillDTO);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {

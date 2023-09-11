@@ -12,6 +12,7 @@ import net.bcsoft.careergraph.service.ISkillService;
 import net.bcsoft.careergraph.service.IStepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,8 @@ public class StepServiceImpl implements IStepService {
      */
 
 
-
+    @Override
+    @Transactional
     public StepDTO create(StepDTO stepDTO) {
         Step step = stepDTO.toEntity();
         stepMapper.insert(step);
@@ -54,6 +56,7 @@ public class StepServiceImpl implements IStepService {
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
+    @Override
     public List<StepDTO> findAll() {
         List<Step> stepList = stepMapper.selectAll();
         List<StepDTO> stepDTOList = new ArrayList<>();
@@ -67,11 +70,28 @@ public class StepServiceImpl implements IStepService {
         return stepDTOList;
     }
 
+    @Override
+    public List<StepDTO> findByRoadmapId(Long roadmapId) {
+        List<Step> stepList = stepMapper.findByRoadmapId(roadmapId);
+        List<StepDTO> stepDTOList = new ArrayList<>();
+        for(Step step : stepList){
+            List<ResourceDTO> resourceDTOList = resourceService.findByStepId(step.getId());
+            List<RoadmapLinkDTO> roadmapLinkDTOList = roadmapLinkService.findByStepId(step.getId());
+            List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
+            stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
+                    resourceDTOList, roadmapLinkDTOList, skillDTOList));
+        }
+        return stepDTOList;
+    }
+
+    @Override
     public StepDTO findById(Long stepId) {
         Step result = stepMapper.selectById(stepId);
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
+    @Override
+    @Transactional
     public StepDTO update(StepDTO stepDTO) {
         Step step = stepDTO.toEntity();
         stepMapper.update(step);

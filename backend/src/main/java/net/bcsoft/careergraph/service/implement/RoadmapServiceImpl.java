@@ -1,9 +1,12 @@
 package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.RoadmapDTO;
+import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Roadmap;
+import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
+import net.bcsoft.careergraph.service.IStepService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,9 +15,27 @@ import java.util.List;
 @Service
 public class RoadmapServiceImpl implements IRoadmapService {
     RoadmapMapper roadmapMapper;
+    IStepService stepService;
 
-    public RoadmapServiceImpl(RoadmapMapper roadmapMapper) {
+    /*
+    {
+    id: int, // non presente se POST request
+    title: string,
+    description: string,
+	steps: [] // presente solo se GET response di /roadmaps/{roadmapId}
+}
+     */
+
+    public RoadmapServiceImpl(RoadmapMapper roadmapMapper, IStepService stepService) {
         this.roadmapMapper = roadmapMapper;
+        this.stepService = stepService;
+    }
+
+    @Override
+    public RoadmapDTO findById(Long roadmapId) {
+        Roadmap result = roadmapMapper.selectById(roadmapId);
+        List<StepDTO> stepDTOList = stepService.findByRoadmapId(roadmapId);
+        return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), stepDTOList);
     }
 
     @Override
@@ -36,11 +57,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null );
     }
 
-    @Override
-    public RoadmapDTO findById(Long roadmapId) {
-        Roadmap result = roadmapMapper.selectById(roadmapId);
-        return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
-    }
+
 
     @Override
     public RoadmapDTO update( RoadmapDTO roadmapDTO) {

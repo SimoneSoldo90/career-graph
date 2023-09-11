@@ -7,9 +7,7 @@
         <result property="title" column="title"/>
         <result property="description" column="description"/>
     </resultMap>
-    
-    <resultMap id="stepResult" type=""
-        
+
     <select id="selectAll" resultMap="roadmapResultMap">
         SELECT * FROM roadmap
     </select>

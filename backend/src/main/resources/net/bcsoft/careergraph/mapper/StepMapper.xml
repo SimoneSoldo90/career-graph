@@ -23,6 +23,12 @@
         WHERE id = #{id}
     </select>
 
+    <select id="findByRoadmapId" resultMap="stepResultMap" parameterType="net.bcsoft.careergraph.entity.Step">
+        SELECT *
+        FROM step
+        WHERE roadmap_id = #{roadmapId}
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO step (roadmap_id, ord, title, description)
         VALUES (#{roadmapId}, #{ord}, #{title}, #{description})
