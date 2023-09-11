@@ -20,7 +20,7 @@ public interface IStepService {
     //StepDTO delete(Long stepId);
     ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO);
 
-    List<ResourceDTO> findAllResource();
+    List<ResourceDTO> findAllResource(Long stepId);
 
     ResourceDTO findByIdResource(Long stepId, Long resourceId);
 

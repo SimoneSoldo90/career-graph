@@ -22,15 +22,13 @@ import java.util.List;
 public class StepServiceImpl implements IStepService {
 
     StepMapper stepMapper;
-    IResourceService resourceService;
     RoadmapLinkMapper roadmapLinkMapper;
     ISkillService skillService;
     ResourceMapper resourceMapper;
 
     @Autowired
-    public StepServiceImpl(StepMapper stepMapper, IResourceService resourceService, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper) {
+    public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper) {
         this.stepMapper = stepMapper;
-        this.resourceService = resourceService;
         this.roadmapLinkMapper = roadmapLinkMapper;
         this.skillService = skillService;
         this.resourceMapper = resourceMapper;
@@ -64,7 +62,7 @@ public class StepServiceImpl implements IStepService {
         List<Step> stepList = stepMapper.selectAll();
         List<StepDTO> stepDTOList = new ArrayList<>();
         for (Step step : stepList) {
-            List<ResourceDTO> resourceDTOList = resourceService.findByStepId(step.getId());
+            List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
             List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
             List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
@@ -78,7 +76,7 @@ public class StepServiceImpl implements IStepService {
         List<Step> stepList = stepMapper.findByRoadmapId(roadmapId);
         List<StepDTO> stepDTOList = new ArrayList<>();
         for(Step step : stepList){
-            List<ResourceDTO> resourceDTOList = resourceService.findByStepId(step.getId());
+            List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
             List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
             List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
@@ -112,12 +110,14 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<ResourceDTO> findAllResource() {
+    public List<ResourceDTO> findAllResource(Long stepId) {
         List<Resource> resourceList = resourceMapper.selectAll();
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for (Resource resource : resourceList) {
-            ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getUrl(), resource.getDescription());
-            resourceDTOList.add(resourceDTO);
+            if(resource.getStepId().equals(stepId)){
+                ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getUrl(), resource.getDescription());
+                resourceDTOList.add(resourceDTO);
+            }
         }
 
         return resourceDTOList;
