@@ -1,5 +1,6 @@
 package net.bcsoft.careergraph.service;
 
+import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
 
@@ -12,9 +13,9 @@ public interface ISkillService {
     SkillDTO update(SkillDTO skillDTO);
     SkillDTO findById(Long skillId);
     List<SkillDTO> findByStepId(Long stepId);
-    List<Resource> findAllResource(Long skillId);
-    Resource createResource(Long skillId, Resource resource);
-    Resource findResourceById(Long skillId, Long resourceId);
-    Resource updateResource(Long skillId, Long resourceId, Resource resource);
+    List<ResourceDTO> findAllResource(Long skillId);
+    ResourceDTO createResource(Long skillId, Resource resource);
+    ResourceDTO findResourceById(Long skillId, Long resourceId);
+    ResourceDTO updateResource(Long skillId, Long resourceId, Resource resource);
 
 }

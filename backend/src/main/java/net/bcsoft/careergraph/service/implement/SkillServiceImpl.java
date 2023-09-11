@@ -1,5 +1,6 @@
 package net.bcsoft.careergraph.service.implement;
 
+import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Skill;
@@ -72,22 +73,22 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public List<Resource> findAllResource(Long skillId) {
+    public List<ResourceDTO> findAllResource(Long skillId) {
         return null;
     }
 
     @Override
-    public Resource createResource(Long skillId, Resource resource) {
+    public ResourceDTO createResource(Long skillId, Resource resource) {
         return null;
     }
 
     @Override
-    public Resource findResourceById(Long skillId, Long resourceId) {
+    public ResourceDTO findResourceById(Long skillId, Long resourceId) {
         return null;
     }
 
     @Override
-    public Resource updateResource(Long skillId, Long resourceId, Resource resource) {
+    public ResourceDTO updateResource(Long skillId, Long resourceId, Resource resource) {
         return null;
     }
 }
