@@ -20,6 +20,12 @@
         WHERE id = #{id}
     </select>
 
+    <select id="findBySkillId" resultMap="stepSkillResultMap" parameterType="net.bcsoft.careergraph.entity.StepSkill">
+        SELECT *
+        FROM step_skill
+        WHERE skill_id = #{skillId}
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="net.bcsoft.careergraph.entity.StepSkill">
         INSERT INTO step_skill (step_id, skill_id)
         VALUES (#{stepId}, #{skillId})

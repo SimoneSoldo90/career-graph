@@ -1,6 +1,7 @@
 package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.SkillDTO;
+import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.service.ISkillService;
@@ -13,6 +14,17 @@ import java.util.List;
 @Service
 public class SkillServiceImpl implements ISkillService {
 
+    /*
+    ### JSON skill
+{
+    id: int, // non presente se POST request
+	step_id: int,
+    title: string,
+    description: string,
+	resources: [] // presente solo se GET response
+}
+     */
+
     SkillMapper skillMapper;
 
     @Autowired
@@ -21,8 +33,11 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public List<SkillDTO> getAll() {
-        System.out.println("Funziona!");
+    public List<SkillDTO> findAll() {
+        List<Skill> skillList = skillMapper.selectAll();
+        List<SkillDTO> skillDTOList = new ArrayList<>();
+
+
         return null;
     }
 
@@ -32,14 +47,15 @@ public class SkillServiceImpl implements ISkillService {
         return null;
     }
 
+
     @Override
-    public SkillDTO update(Long skillId, SkillDTO skillDTO) {
+    public SkillDTO update(SkillDTO skillDTO) {
         System.out.println("Funziona!");
         return null;
     }
 
     @Override
-    public SkillDTO getById(Long skillId) {
+    public SkillDTO findById(Long skillId) {
         System.out.println("Funziona!");
         return null;
     }
@@ -53,5 +69,25 @@ public class SkillServiceImpl implements ISkillService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<Resource> findAllResource(Long skillId) {
+        return null;
+    }
+
+    @Override
+    public Resource createResource(Long skillId, Resource resource) {
+        return null;
+    }
+
+    @Override
+    public Resource findResourceById(Long skillId, Long resourceId) {
+        return null;
+    }
+
+    @Override
+    public Resource updateResource(Long skillId, Long resourceId, Resource resource) {
+        return null;
     }
 }

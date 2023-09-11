@@ -3,7 +3,7 @@
 
 <mapper namespace="net.bcsoft.careergraph.mapper.SkillMapper">
 
-    <select id="selectById" resultMap="skillResultMap" parameterType="net.bcsoft.careergraph.entity.Skill">
+    <select id="findById" resultMap="skillResultMap" parameterType="net.bcsoft.careergraph.entity.Skill">
         SELECT * FROM skill
         WHERE id = #{id}
     </select>
@@ -15,11 +15,11 @@
         <result property="description" column="description"/>
     </resultMap>
 
-    <select id="selectAll" resultMap="skillResultMap">
+    <select id="findAll" resultMap="skillResultMap">
         SELECT * FROM skill
     </select>
 
-    <select id="selectByStepId" resultMap="skillResultMap" parameterType="java.lang.Long">
+    <select id="findByStepId" resultMap="skillResultMap" parameterType="java.lang.Long">
         SELECT DISTINCT s.* FROM skill s INNER JOIN STEP_SKILL ss ON s.id = ss.skill_id
         WHERE ss.step_id = #{stepId}
     </select>
