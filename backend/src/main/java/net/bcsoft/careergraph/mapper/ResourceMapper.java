@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface ResourceMapper {
     List<Resource> selectAll();
-    List<Resource> selectById(Long id);
+    Resource selectById(Long id);
     List<Resource> selectByStepId(Long stepId);
     int insert(Resource resource);
     int update(Resource resource);

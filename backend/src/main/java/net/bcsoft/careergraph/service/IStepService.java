@@ -1,5 +1,6 @@
 package net.bcsoft.careergraph.service;
 
+import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 
 import java.util.List;
@@ -11,4 +12,8 @@ public interface IStepService {
     StepDTO findById(Long stepId);
     StepDTO update(StepDTO stepDTO);
     //StepDTO delete(Long stepId);
+    ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO);
+    List<ResourceDTO> findAllResource();
+    ResourceDTO findByIdResource(Long stepId, Long resourceId);
+    ResourceDTO updateResource(Integer stepId, Integer resourceId, ResourceDTO resourceDTO);
 }

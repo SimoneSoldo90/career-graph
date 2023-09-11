@@ -4,12 +4,11 @@ import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
+import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Step;
+import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
-import net.bcsoft.careergraph.service.IResourceService;
-import net.bcsoft.careergraph.service.IRoadmapLinkService;
-import net.bcsoft.careergraph.service.ISkillService;
-import net.bcsoft.careergraph.service.IStepService;
+import net.bcsoft.careergraph.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,13 +23,15 @@ public class StepServiceImpl implements IStepService {
     IResourceService resourceService;
     IRoadmapLinkService roadmapLinkService;
     ISkillService skillService;
+    ResourceMapper resourceMapper;
 
     @Autowired
-    public StepServiceImpl(StepMapper stepMapper, IResourceService resourceService, IRoadmapLinkService roadmapLinkService, ISkillService skillService) {
+    public StepServiceImpl(StepMapper stepMapper, IResourceService resourceService, IRoadmapLinkService roadmapLinkService, ISkillService skillService, ResourceMapper resourceMapper) {
         this.stepMapper = stepMapper;
         this.resourceService = resourceService;
         this.roadmapLinkService = roadmapLinkService;
         this.skillService = skillService;
+        this.resourceMapper = resourceMapper;
     }
 
     /** JSON step
@@ -97,6 +98,41 @@ public class StepServiceImpl implements IStepService {
         stepMapper.update(step);
         Step result = stepMapper.selectById(step.getId());
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
+    }
+
+    //Resource
+    @Override
+    public ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO) {
+        Resource resource = resourceDTO.toEntity();
+        resourceMapper.insert(resource);
+        Resource result = resourceMapper.selectById(resource.getId());
+        return new ResourceDTO(result.getId(), result.getSkillId(), result.getResourceTypeId(), result.getUrl(), result.getDescription());
+    }
+
+    @Override
+    public List<ResourceDTO> findAllResource() {
+        List<Resource> resourceList = resourceMapper.selectAll();
+        List<ResourceDTO> resourceDTOList = new ArrayList<>();
+        for (Resource resource : resourceList) {
+            ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getUrl(), resource.getDescription());
+            resourceDTOList.add(resourceDTO);
+        }
+
+        return resourceDTOList;
+    }
+
+    @Override
+    public ResourceDTO findByIdResource(Long stepId, Long resourceId) {
+        Resource result = resourceMapper.selectById(resourceId);
+        return new ResourceDTO(result.getId(), result.getSkillId(), result.getResourceTypeId(), result.getUrl(), result.getDescription());
+    }
+
+
+    @Override
+    public ResourceDTO updateResource(Integer stepId, Integer resourceId, ResourceDTO resourceDTO) {
+        Resource resource = resourceDTO.toEntity();
+        resourceMapper.update(resource);
+        return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
     }
 
     /*public StepDTO delete(Integer stepId) {
