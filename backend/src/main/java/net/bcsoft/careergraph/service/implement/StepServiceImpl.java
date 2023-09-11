@@ -5,8 +5,10 @@ import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
+import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
 import net.bcsoft.careergraph.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +23,15 @@ public class StepServiceImpl implements IStepService {
 
     StepMapper stepMapper;
     IResourceService resourceService;
-    IRoadmapLinkService roadmapLinkService;
+    RoadmapLinkMapper roadmapLinkMapper;
     ISkillService skillService;
     ResourceMapper resourceMapper;
 
     @Autowired
-    public StepServiceImpl(StepMapper stepMapper, IResourceService resourceService, IRoadmapLinkService roadmapLinkService, ISkillService skillService, ResourceMapper resourceMapper) {
+    public StepServiceImpl(StepMapper stepMapper, IResourceService resourceService, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper) {
         this.stepMapper = stepMapper;
         this.resourceService = resourceService;
-        this.roadmapLinkService = roadmapLinkService;
+        this.roadmapLinkMapper = roadmapLinkMapper;
         this.skillService = skillService;
         this.resourceMapper = resourceMapper;
     }
@@ -63,7 +65,7 @@ public class StepServiceImpl implements IStepService {
         List<StepDTO> stepDTOList = new ArrayList<>();
         for (Step step : stepList) {
             List<ResourceDTO> resourceDTOList = resourceService.findByStepId(step.getId());
-            List<RoadmapLinkDTO> roadmapLinkDTOList = roadmapLinkService.findByStepId(step.getId());
+            List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
             List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
                     resourceDTOList, roadmapLinkDTOList, skillDTOList));
@@ -77,7 +79,7 @@ public class StepServiceImpl implements IStepService {
         List<StepDTO> stepDTOList = new ArrayList<>();
         for(Step step : stepList){
             List<ResourceDTO> resourceDTOList = resourceService.findByStepId(step.getId());
-            List<RoadmapLinkDTO> roadmapLinkDTOList = roadmapLinkService.findByStepId(step.getId());
+            List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
             List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
                     resourceDTOList, roadmapLinkDTOList, skillDTOList));
@@ -135,8 +137,31 @@ public class StepServiceImpl implements IStepService {
         return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
     }
 
-    /*public StepDTO delete(Integer stepId) {
+    @Override
+    public RoadmapLinkDTO createRoadmapLink(Long stepId, RoadmapLinkDTO roadmapLinkDTO) {
+        System.out.println("Funziona");
+        return null;
+    }
+
+    @Override
+    public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) {
+        return null;
+    }
+
+    @Override
+    public RoadmapLinkDTO findByIdRoadmapLink(Long stepId, Long roadmapId) {
+        System.out.println("Funziona");
+        return null;
+    }
+
+    @Override
+    public RoadmapLinkDTO updateRoadmapLink(Long stepId, Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) {
+        System.out.println("Funziona");
+        return null;
+    }
+
+    public StepDTO delete(Integer stepId) {
         System.out.println("Funziona!");
         return null;
-    }*/
+    }
 }
