@@ -138,25 +138,34 @@ public class StepServiceImpl implements IStepService {
 
     @Override
     public RoadmapLinkDTO createRoadmapLink(Long stepId, RoadmapLinkDTO roadmapLinkDTO) {
-        System.out.println("Funziona");
-        return null;
+        RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
+        roadmapLinkMapper.insert(roadmapLink);
+        RoadmapLink result = roadmapLinkMapper.selectById(roadmapLink.getId());
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
     }
 
     @Override
     public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) {
+        List<RoadmapLink> roadmapLinkList = roadmapLinkMapper.selectAll();
+        List<RoadmapLinkDTO> roadmapLinkDTOList = new ArrayList<>();
+        for (RoadmapLink roadmapLink : roadmapLinkList){
+        RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
+        roadmapLinkDTOList.add(roadmapLinkDTO);
+        }
         return null;
     }
 
     @Override
     public RoadmapLinkDTO findByIdRoadmapLink(Long stepId, Long roadmapId) {
-        System.out.println("Funziona");
-        return null;
+        RoadmapLink result = roadmapLinkMapper.selectById(roadmapId);
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
     }
 
     @Override
     public RoadmapLinkDTO updateRoadmapLink(Long stepId, Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) {
-        System.out.println("Funziona");
-        return null;
+        RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
+        roadmapLinkMapper.update(roadmapLink);
+        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
     }
 
     public StepDTO delete(Integer stepId) {

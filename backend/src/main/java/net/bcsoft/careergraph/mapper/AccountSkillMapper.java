@@ -8,7 +8,8 @@ import java.util.List;
 @Mapper
 public interface AccountSkillMapper {
     List <AccountSkill> selectAll();
-    AccountSkill selectById(Long id);
+    AccountSkill selectById(Long id); //?
+    List<AccountSkill> selectByUserId(Long userId);
     AccountSkill insert(AccountSkill accountSkill);
     AccountSkill update(AccountSkill accountSkill);
 }

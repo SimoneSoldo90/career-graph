@@ -2,7 +2,7 @@ package net.bcsoft.careergraph.entity;
 
 public class Account {
     private Long id;
-    private Long idSsoU;
+    private String idSsoU;
     private String firstName;
     private String lastName;
     private String email;
@@ -15,11 +15,11 @@ public class Account {
         this.id = id;
     }
 
-    public Long getIdSsoU() {
+    public String getIdSsoU() {
         return idSsoU;
     }
 
-    public void setIdSsoU(Long idSsoU) {
+    public void setIdSsoU(String idSsoU) {
         this.idSsoU = idSsoU;
     }
 

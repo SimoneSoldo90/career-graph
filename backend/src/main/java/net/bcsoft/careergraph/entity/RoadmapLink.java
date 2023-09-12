@@ -24,7 +24,7 @@ public class RoadmapLink {
     }
 
     public Long getRoadmapId() {
-        return roadmapId;
+        return this.roadmapId;
     }
 
     public void setRoadmapId(Long roadmapId) {
