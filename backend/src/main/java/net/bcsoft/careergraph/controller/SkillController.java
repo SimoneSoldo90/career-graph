@@ -3,8 +3,6 @@ package net.bcsoft.careergraph.controller;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.service.ISkillService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,32 +25,31 @@ public class SkillController {
         return skillService.create(skillDTO);
     }
 
-    @GetMapping("/skill/{skillId}")
+    @GetMapping("/skills/{skillId}")
     public SkillDTO getSkillId(@PathVariable Long skillId) {
         return skillService.findById(skillId);
     }
 
-    @PutMapping("/skill/{skillId}")
-    public ResponseEntity<SkillDTO> updateSkillId(@RequestBody SkillDTO skillDTO) {
-        return null;
+    @PutMapping("/skills/{skillId}")
+    public SkillDTO updateSkillId(@RequestBody SkillDTO skillDTO) {
+        return skillService.update(skillDTO);
     }
-    @PostMapping("/skill/{skillId}/resource")
-    public ResourceDTO createResource(@RequestBody ResourceDTO resourceDTO){
-        return null;
+    @PostMapping("/skills/{skillId}/resources")
+    public ResourceDTO createResource(@PathVariable Long skillId, @RequestBody ResourceDTO resourceDTO){
+        return skillService.createResource(skillId, resourceDTO);
     }
-    @GetMapping("/skill/{skillId}/resource")
-
+    @GetMapping("/skills/{skillId}/resources")
     public List<ResourceDTO> getResourceList(@PathVariable Long skillId){
-        return null;
+        return skillService.findAllResource(skillId);
     }
 
-    @GetMapping("/skill/{skillId}/resource/{resourceId}")
+    @GetMapping("/skills/{skillId}/resources/{resourceId}")
     public ResourceDTO getResourceById(@PathVariable Long skillId, @PathVariable Long resourceId){
-        return null;
+        return skillService.findResourceById(skillId, resourceId);
     }
-    @PutMapping("/skill/{skillId}/resource/{resourceId}")
+    @PutMapping("/skills/{skillId}/resources/{resourceId}")
     public ResourceDTO updateResource (@PathVariable Long skillId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO ){
-        return null;
+        return skillService.updateResource(skillId, resourceId, resourceDTO);
     }
 
 }

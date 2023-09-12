@@ -7,9 +7,10 @@ import java.util.List;
 
 @Mapper
 public interface ResourceMapper {
-    List<Resource> selectAll();
-    Resource selectById(Long id);
-    List<Resource> selectByStepId(Long stepId);
+    List<Resource> findAll();
+    Resource findById(Long id);
+    List<Resource> findByStepId(Long stepId);
+    List<Resource> findBySkillId(Long skillId);
     int insert(Resource resource);
     int update(Resource resource);
 

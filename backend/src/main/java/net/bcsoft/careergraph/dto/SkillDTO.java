@@ -6,7 +6,7 @@ import net.bcsoft.careergraph.entity.Skill;
 import java.util.ArrayList;
 import java.util.List;
 
-public record SkillDTO(Long id, @JsonProperty("step_id") Long stepId, String title, String description, @JsonProperty("resources") List<ResourceDTO> resourceList) {
+public record SkillDTO(Long id, String title, String description, @JsonProperty("resources") List<ResourceDTO> resourceList) {
     public Skill toEntity() {
         Skill skill = new Skill();
         skill.setId(this.id);

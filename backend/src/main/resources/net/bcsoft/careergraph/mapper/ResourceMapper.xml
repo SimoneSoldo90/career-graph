@@ -12,11 +12,11 @@
         <result property="url" column="url"/>
     </resultMap>
 
-    <select id="selectAll" resultMap="resourceResultMap">
+    <select id="findAll" resultMap="resourceResultMap">
         SELECT * FROM resource
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO resource (step_id, skill_id, resource_type_id, description, url)
         VALUES (#{stepId}, #{skillId}, #{resourceTypeId}, #{description}, #{url})
     </insert>
@@ -27,16 +27,21 @@
         WHERE id = #{id}
     </update>
 
-    <select id="selectById" resultMap="resourceResultMap" parameterType="java.lang.Long">
+    <select id="findById" resultMap="resourceResultMap" >
         SELECT *
         FROM resource
         WHERE id = #{id}
     </select>
 
-    <select id="selectByStepId" resultMap="resourceResultMap" parameterType="java.lang.Long">
+    <select id="findByStepId" resultMap="resourceResultMap" >
         SELECT *
         FROM resource
         WHERE step_id = #{stepId}
+    </select>
+
+    <select id="findBySkillId" resultMap="resourceResultMap">
+        SELECT * FROM resource
+        WHERE skill_id = #{skillId}
     </select>
 
 </mapper>
