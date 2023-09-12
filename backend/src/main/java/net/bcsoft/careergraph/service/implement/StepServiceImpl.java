@@ -5,6 +5,7 @@ import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
