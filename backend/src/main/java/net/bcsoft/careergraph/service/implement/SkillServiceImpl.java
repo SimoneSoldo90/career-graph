@@ -50,7 +50,7 @@ public class SkillServiceImpl implements ISkillService {
         for(Skill skill : skillList){
             List<Resource> resourceList = resourceMapper.findBySkillId(skill.getId());
             for (Resource resource : resourceList){
-                ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
+                ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
                 resourceDTOList.add(resourceDTO);
             }
             SkillDTO skillDTO = new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription(), resourceDTOList);
@@ -65,7 +65,7 @@ public class SkillServiceImpl implements ISkillService {
         List<Resource> resourceList= resourceMapper.findBySkillId(skillId);
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for(Resource resource : resourceList){
-            ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
+            ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
             resourceDTOList.add(resourceDTO);
         }
         return new SkillDTO(result.getId(), result.getTitle(), result.getDescription(), resourceDTOList);

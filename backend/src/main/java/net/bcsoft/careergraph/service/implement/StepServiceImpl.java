@@ -114,7 +114,7 @@ public class StepServiceImpl implements IStepService {
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for (Resource resource : resourceList) {
             if(resource.getStepId().equals(stepId)){
-                ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getUrl(), resource.getDescription());
+                ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getUrl(), resource.getDescription());
                 resourceDTOList.add(resourceDTO);
             }
         }
