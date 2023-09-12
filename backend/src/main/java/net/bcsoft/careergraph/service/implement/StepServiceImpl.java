@@ -131,7 +131,7 @@ public class StepServiceImpl implements IStepService {
 
 
     @Override
-    public ResourceDTO updateResource(Integer stepId, Integer resourceId, ResourceDTO resourceDTO) {
+    public ResourceDTO updateResource(Long stepId, Long resourceId, ResourceDTO resourceDTO) {
         Resource resource = resourceDTO.toEntity();
         resourceMapper.update(resource);
         return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
