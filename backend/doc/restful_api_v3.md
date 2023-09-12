@@ -5,44 +5,44 @@ https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
 ### GET: Lettura di un oggetto
 * La request non ha contenuti nel body
 * La response contiene:
-  * OK:
-    * status HTTP-200 OK
-    * nel body la rappresentazione json
-  * ERRORE se non corrisponde alcun oggetto:
-    * status HTTP-204 No content - in caso di array
-    * status HTTP-404 Not found - per ricerca per id
-    * inviare l'eventuale messaggio di errore nel body
+	* OK:
+		* status HTTP-200 OK
+		* nel body la rappresentazione json
+	* ERRORE se non corrisponde alcun oggetto:
+		* status HTTP-204 No content - in caso di array
+		* status HTTP-404 Not found - per ricerca per id
+		* inviare l'eventuale messaggio di errore nel body
 
 ### POST: Creazione di un oggetto
 * La request contiene la rappresentazione json dell'oggetto
 * La response contiene:
-  * OK:
-    * status HTTP-201 Created
-    * nell'header location lo url dell'oggetto creato
-    * nel body la rappresentazione json
-  * ERRORE se dati non validi:
-    * status HTTP-400 Bad request
-    * inviare il messaggio di errore nel body
+	* OK:
+		* status HTTP-201 Created
+		* nell'header location lo url dell'oggetto creato
+		* nel body la rappresentazione json
+	* ERRORE se dati non validi:
+		* status HTTP-400 Bad request
+		* inviare il messaggio di errore nel body
 
 ### PUT: Aggiornamento di un oggetto
 * La request contiene la rappresentazione json dell'oggetto
 * La response contiene:
-  * OK:
-    * status HTTP-200 OK
-	* nel body la rappresentazione json
-  * ERROR non è possibile aggiornare:
-	* status HTTP-409 Conflict
-	* inviare il messaggio di errore nel body
+	* OK:
+		* status HTTP-200 OK
+		* nel body la rappresentazione json
+	* ERROR non è possibile aggiornare:
+		* status HTTP-409 Conflict
+		* inviare il messaggio di errore nel body
 
 ### DELETE: Eliminazione di un oggetto
 * La request non ha contenuti nel body
 * La response contiene:
-  * OK:
-	* status HTTP-204 No content
-  * ERRORE non è possibile eliminare:
-	* status HTTP-404 Not found - se l'oggetto non esiste
-	* status HTTP-409 Conflict - se l'oggetto non è eliminabile
-	* inviare il messaggio di errore nel body
+	* OK:
+		* status HTTP-204 No content
+	* ERRORE non è possibile eliminare:
+		* status HTTP-404 Not found - se l'oggetto non esiste
+		* status HTTP-409 Conflict - se l'oggetto non è eliminabile
+		* inviare il messaggio di errore nel body
 
 ## Elenco URL
 
@@ -161,9 +161,9 @@ https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
 ### JSON roadmap
 ```
 {
-    id: int, // non presente se POST request
-    title: string,
-    description: string,
+	id: int, // non presente se POST request
+	title: string,
+	description: string,
 	steps: [] // presente solo se GET response di /roadmaps/{roadmapId}
 }
 ```
@@ -171,11 +171,11 @@ https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
 ### JSON step
 ```
 {
-    id: int, // non presente se POST request
+	id: int, // non presente se POST request
 	roadmap_id: int,
 	order: int,
-    title: string,
-    description: string,
+	title: string,
+	description: string,
 	resources: [], // presente solo se GET response
 	roadmap_links: [], // presente solo se GET response
 	skills: [] // presente solo se GET response
@@ -187,17 +187,17 @@ https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
 {
 	step_id: int,
 	roadmap_id: int,
-    roadmap_title: string, // presente solo se GET response
-    roadmap_description: string // presente solo se GET response
+	roadmap_title: string, // presente solo se GET response
+	roadmap_description: string // presente solo se GET response
 }
 ```
 
 ### JSON skill
 ```
 {
-    id: int, // non presente se POST request
-    title: string,
-    description: string,
+	id: int, // non presente se POST request
+	title: string,
+	description: string,
 	resources: [] // presente solo se GET response
 }
 ```
@@ -216,20 +216,20 @@ https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
 ### JSON user
 ```
 {
-    id: int, // non presente se POST request
-    sso_uid: string,
-    first_name: string,
+	id: int, // non presente se POST request
+	sso_uid: string,
+	first_name: string,
 	last_name: string,
-    email: string
+	email: string
 }
 ```
 
 ### JSON user_skill
 ```
 {
-    id: int, // non presente se POST request
-    user_id: int,
-    skill_id: int,
+	id: int, // non presente se POST request
+	user_id: int,
+	skill_id: int,
 	status: string
 }
 ```
