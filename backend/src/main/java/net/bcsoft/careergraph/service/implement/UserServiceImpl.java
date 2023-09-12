@@ -22,42 +22,63 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDTO findById(Long id) {
-        Account account = accountMapper.selectById(id);
-        return new UserDTO(account.getId(), account.getIdSsoU(), account.getFirstName(), account.getLastName(), account.getEmail());
+        try {
+            Account account = accountMapper.selectById(id);
+            return new UserDTO(account.getId(), account.getIdSsoU(), account.getFirstName(), account.getLastName(), account.getEmail());
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
     @Override
     public List<UserSkillDTO> findUserSkillByUserId(Long userId) {
-        List<AccountSkill> accountSkillList = accountSkillMapper.selectByUserId(userId);
-        List<UserSkillDTO> result = new ArrayList<>();
-        for (AccountSkill accountSkill : accountSkillList) {
-            result.add(new UserSkillDTO(accountSkill.getIdAccount(), accountSkill.getId(), accountSkill.getIdSkill(), accountSkill.getIdSkillStatus()));
+        try{
+            List<AccountSkill> accountSkillList = accountSkillMapper.selectByUserId(userId);
+            List<UserSkillDTO> result = new ArrayList<>();
+            for (AccountSkill accountSkill : accountSkillList) {
+                result.add(new UserSkillDTO(accountSkill.getIdAccount(), accountSkill.getId(), accountSkill.getIdSkill(), accountSkill.getIdSkillStatus()));
+            }
+            return result;
+        } catch (Exception e) {
+            throw e;
         }
-        return result;
     }
 
     @Override
     @Transactional
     public UserSkillDTO createUserSkill(Long userId, UserSkillDTO userSkillDTO) {
-        AccountSkill accountSkill = userSkillDTO.toEntity();
-        accountSkillMapper.insert(accountSkill);
-        AccountSkill result = accountSkillMapper.selectById(accountSkill.getId());
-        return new UserSkillDTO(result.getId(), result.getIdAccount(), result.getIdSkill(), result.getIdSkillStatus());
+        try {
+            AccountSkill accountSkill = userSkillDTO.toEntity();
+            accountSkillMapper.insert(accountSkill);
+            AccountSkill result = accountSkillMapper.selectById(accountSkill.getId());
+            return new UserSkillDTO(result.getId(), result.getIdAccount(), result.getIdSkill(), result.getIdSkillStatus());
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     @Transactional
     public UserSkillDTO updateUserSkill(Long userId, Long UserSkillId, UserSkillDTO userSkillDTO) {
-        AccountSkill accountSkill = userSkillDTO.toEntity();
-        accountSkillMapper.update(accountSkill);
-        AccountSkill result = accountSkillMapper.selectById(accountSkill.getId());
-        return new UserSkillDTO(result.getId(), result.getIdAccount(), result.getIdSkill(), result.getIdSkillStatus());
+        try {
+            AccountSkill accountSkill = userSkillDTO.toEntity();
+            accountSkillMapper.update(accountSkill);
+            AccountSkill result = accountSkillMapper.selectById(accountSkill.getId());
+            return new UserSkillDTO(result.getId(), result.getIdAccount(), result.getIdSkill(), result.getIdSkillStatus());
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public UserSkillDTO findUserSkillById(Long userSkillId) {
-        AccountSkill result = accountSkillMapper.selectById(userSkillId);
-        return new UserSkillDTO(result.getId(), result.getIdAccount(), result.getIdSkill(), result.getIdSkillStatus());
+        try {
+            AccountSkill result = accountSkillMapper.selectById(userSkillId);
+            return new UserSkillDTO(result.getId(), result.getIdAccount(), result.getIdSkill(), result.getIdSkillStatus());
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     /*@Override
