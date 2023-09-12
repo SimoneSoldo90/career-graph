@@ -8,6 +8,7 @@ import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import net.bcsoft.careergraph.service.IStepService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
+    @Transactional
     public RoadmapDTO create(RoadmapDTO roadmapDTO) {
         Roadmap roadmap = roadmapDTO.toEntity();
         roadmapMapper.insert(roadmap);
@@ -60,6 +62,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
 
 
     @Override
+    @Transactional
     public RoadmapDTO update( RoadmapDTO roadmapDTO) {
         Roadmap roadmap = roadmapDTO.toEntity();
         roadmapMapper.update(roadmap);

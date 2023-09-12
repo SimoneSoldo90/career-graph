@@ -24,7 +24,7 @@ public interface IStepService {
 
     ResourceDTO findByIdResource(Long stepId, Long resourceId);
 
-    ResourceDTO updateResource(Integer stepId, Integer resourceId, ResourceDTO resourceDTO);
+    ResourceDTO updateResource(Long stepId, Long resourceId, ResourceDTO resourceDTO);
     RoadmapLinkDTO createRoadmapLink(Long stepId, RoadmapLinkDTO roadmapLinkDTO);
     List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId);
     RoadmapLinkDTO findByIdRoadmapLink(Long stepId, Long roadmapId);

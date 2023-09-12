@@ -105,17 +105,17 @@ public class StepServiceImpl implements IStepService {
     public ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO) {
         Resource resource = resourceDTO.toEntity();
         resourceMapper.insert(resource);
-        Resource result = resourceMapper.selectById(resource.getId());
-        return new ResourceDTO(result.getId(), result.getSkillId(), result.getResourceTypeId(), result.getUrl(), result.getDescription());
+        Resource result = resourceMapper.findById(resource.getId());
+        return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getUrl(), result.getDescription());
     }
 
     @Override
     public List<ResourceDTO> findAllResource(Long stepId) {
-        List<Resource> resourceList = resourceMapper.selectAll();
+        List<Resource> resourceList = resourceMapper.findAll();
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for (Resource resource : resourceList) {
             if(resource.getStepId().equals(stepId)){
-                ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getUrl(), resource.getDescription());
+                ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getUrl(), resource.getDescription());
                 resourceDTOList.add(resourceDTO);
             }
         }
@@ -125,16 +125,16 @@ public class StepServiceImpl implements IStepService {
 
     @Override
     public ResourceDTO findByIdResource(Long stepId, Long resourceId) {
-        Resource result = resourceMapper.selectById(resourceId);
-        return new ResourceDTO(result.getId(), result.getSkillId(), result.getResourceTypeId(), result.getUrl(), result.getDescription());
+        Resource result = resourceMapper.findById(resourceId);
+        return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getUrl(), result.getDescription());
     }
 
 
     @Override
-    public ResourceDTO updateResource(Integer stepId, Integer resourceId, ResourceDTO resourceDTO) {
+    public ResourceDTO updateResource(Long stepId, Long resourceId, ResourceDTO resourceDTO) {
         Resource resource = resourceDTO.toEntity();
         resourceMapper.update(resource);
-        return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
+        return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
     }
 
     @Override

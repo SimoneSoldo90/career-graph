@@ -7,9 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface StepSkillMapper {
-    List<StepSkill> selectAll();
-    StepSkill selectById(Long id);
-    List<StepSkill> findBySKillId(Long stepId);
+    List<StepSkill> findById();
+    StepSkill findById(Long id);
+    List<StepSkill> findBySkillId(Long stepId);
     StepSkill insert(StepSkill stepSkill);
     StepSkill update(StepSkill stepSkill);
 }
