@@ -3,15 +3,16 @@ package net.bcsoft.careergraph.service;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
+import net.bcsoft.careergraph.exception.NotFoundException;
 
 import java.util.List;
 
 public interface IStepService {
     StepDTO create(StepDTO stepDTO);
 
-    List<StepDTO> findAll();
+    List<StepDTO> findAll() throws NotFoundException;
 
-    List<StepDTO> findByRoadmapId(Long roadmapId);
+    List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException;
 
     StepDTO findById(Long stepId);
 

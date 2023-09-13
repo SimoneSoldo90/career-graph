@@ -7,6 +7,7 @@ import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
+import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
@@ -58,7 +59,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findAll() {
+    public List<StepDTO> findAll() throws NotFoundException {
         List<Step> stepList = stepMapper.selectAll();
         List<StepDTO> stepDTOList = new ArrayList<>();
         for (Step step : stepList) {
@@ -72,7 +73,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findByRoadmapId(Long roadmapId) {
+    public List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException {
         List<Step> stepList = stepMapper.findByRoadmapId(roadmapId);
         List<StepDTO> stepDTOList = new ArrayList<>();
         for(Step step : stepList){
