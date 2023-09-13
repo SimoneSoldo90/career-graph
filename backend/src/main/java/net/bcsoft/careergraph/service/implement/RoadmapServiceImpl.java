@@ -37,7 +37,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
-    public RoadmapDTO findById(Long roadmapId) throws NotFoundException {
+    public RoadmapDTO findById(Long roadmapId) throws NotFoundException, NoContentException {
         Roadmap result = roadmapMapper.selectById(roadmapId);
         List<StepDTO> stepDTOList = stepService.findByRoadmapId(roadmapId);
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), stepDTOList);
