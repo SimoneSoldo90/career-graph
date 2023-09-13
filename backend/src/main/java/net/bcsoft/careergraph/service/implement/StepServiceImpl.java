@@ -7,6 +7,9 @@ import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
+import net.bcsoft.careergraph.exception.BadRequestException;
+import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
@@ -51,7 +54,7 @@ public class StepServiceImpl implements IStepService {
 
     @Override
     @Transactional
-    public StepDTO create(StepDTO stepDTO) {
+    public StepDTO create(StepDTO stepDTO) throws BadRequestException {
         Step step = stepDTO.toEntity();
         stepMapper.insert(step);
         Step result = stepMapper.selectById(step.getId());
@@ -59,7 +62,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findAll() throws NotFoundException {
+    public List<StepDTO> findAll() throws NotFoundException, NoContentException {
         List<Step> stepList = stepMapper.selectAll();
         List<StepDTO> stepDTOList = new ArrayList<>();
         for (Step step : stepList) {
@@ -73,7 +76,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException {
+    public List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException, NoContentException {
         List<Step> stepList = stepMapper.findByRoadmapId(roadmapId);
         List<StepDTO> stepDTOList = new ArrayList<>();
         for(Step step : stepList){
@@ -87,14 +90,14 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public StepDTO findById(Long stepId) {
+    public StepDTO findById(Long stepId) throws NotFoundException{
         Step result = stepMapper.selectById(stepId);
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
     @Override
     @Transactional
-    public StepDTO update(StepDTO stepDTO) {
+    public StepDTO update(StepDTO stepDTO) throws ConflictException {
         Step step = stepDTO.toEntity();
         stepMapper.update(step);
         Step result = stepMapper.selectById(step.getId());
@@ -103,7 +106,7 @@ public class StepServiceImpl implements IStepService {
 
     //Resource
     @Override
-    public ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO) {
+    public ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO) throws BadRequestException {
         Resource resource = resourceDTO.toEntity();
         resourceMapper.insert(resource);
         Resource result = resourceMapper.findById(resource.getId());
@@ -111,7 +114,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<ResourceDTO> findAllResource(Long stepId) {
+    public List<ResourceDTO> findAllResource(Long stepId) throws NoContentException {
         List<Resource> resourceList = resourceMapper.findAll();
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for (Resource resource : resourceList) {
@@ -125,21 +128,21 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public ResourceDTO findByIdResource(Long stepId, Long resourceId) {
+    public ResourceDTO findByIdResource(Long stepId, Long resourceId) throws NotFoundException {
         Resource result = resourceMapper.findById(resourceId);
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getUrl(), result.getDescription());
     }
 
 
     @Override
-    public ResourceDTO updateResource(Long stepId, Long resourceId, ResourceDTO resourceDTO) {
+    public ResourceDTO updateResource(Long stepId, Long resourceId, ResourceDTO resourceDTO) throws ConflictException {
         Resource resource = resourceDTO.toEntity();
         resourceMapper.update(resource);
         return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
     }
 
     @Override
-    public RoadmapLinkDTO createRoadmapLink(Long stepId, RoadmapLinkDTO roadmapLinkDTO) {
+    public RoadmapLinkDTO createRoadmapLink(Long stepId, RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException {
         RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
         roadmapLinkMapper.insert(roadmapLink);
         RoadmapLink result = roadmapLinkMapper.selectById(roadmapLink.getId());
@@ -147,7 +150,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) {
+    public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException {
         List<RoadmapLink> roadmapLinkList = roadmapLinkMapper.selectAll();
         List<RoadmapLinkDTO> roadmapLinkDTOList = new ArrayList<>();
         for (RoadmapLink roadmapLink : roadmapLinkList){
@@ -158,19 +161,19 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public RoadmapLinkDTO findByIdRoadmapLink(Long stepId, Long roadmapId) {
+    public RoadmapLinkDTO findByIdRoadmapLink(Long stepId, Long roadmapId) throws NotFoundException {
         RoadmapLink result = roadmapLinkMapper.selectById(roadmapId);
         return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
     }
 
     @Override
-    public RoadmapLinkDTO updateRoadmapLink(Long stepId, Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) {
+    public RoadmapLinkDTO updateRoadmapLink(Long stepId, Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) throws ConflictException {
         RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
         roadmapLinkMapper.update(roadmapLink);
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
     }
 
-    public StepDTO delete(Integer stepId) {
+    public StepDTO delete(Integer fstepId) {
         System.out.println("Funziona!");
         return null;
     }
