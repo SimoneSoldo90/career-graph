@@ -4,6 +4,10 @@ import net.bcsoft.careergraph.dto.RoadmapDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.Step;
+import net.bcsoft.careergraph.exception.BadRequestException;
+import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.NoContentException;
+import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import net.bcsoft.careergraph.service.IStepService;
@@ -33,14 +37,14 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
-    public RoadmapDTO findById(Long roadmapId) {
+    public RoadmapDTO findById(Long roadmapId) throws NotFoundException {
         Roadmap result = roadmapMapper.selectById(roadmapId);
         List<StepDTO> stepDTOList = stepService.findByRoadmapId(roadmapId);
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), stepDTOList);
     }
 
     @Override
-    public List<RoadmapDTO> findAll() {
+    public List<RoadmapDTO> findAll() throws NoContentException {
         List <Roadmap> roadmapList = roadmapMapper.selectAll();
         List <RoadmapDTO> roadmapDTOList = new ArrayList<>();
         for(Roadmap roadmap : roadmapList){
@@ -52,7 +56,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
 
     @Override
     @Transactional
-    public RoadmapDTO create(RoadmapDTO roadmapDTO) {
+    public RoadmapDTO create(RoadmapDTO roadmapDTO) throws BadRequestException {
         Roadmap roadmap = roadmapDTO.toEntity();
         roadmapMapper.insert(roadmap);
         Roadmap result = roadmapMapper.selectById(roadmap.getId());
@@ -63,7 +67,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
 
     @Override
     @Transactional
-    public RoadmapDTO update( RoadmapDTO roadmapDTO) {
+    public RoadmapDTO update( RoadmapDTO roadmapDTO) throws ConflictException {
         Roadmap roadmap = roadmapDTO.toEntity();
         roadmapMapper.update(roadmap);
         return new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
