@@ -62,7 +62,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findAll() throws NotFoundException, NoContentException {
+    public List<StepDTO> findAll() throws NoContentException {
         List<Step> stepList = stepMapper.selectAll();
         List<StepDTO> stepDTOList = new ArrayList<>();
         for (Step step : stepList) {
@@ -102,6 +102,11 @@ public class StepServiceImpl implements IStepService {
         stepMapper.update(step);
         Step result = stepMapper.selectById(step.getId());
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
+    }
+
+    @Override
+    public StepDTO delete(Long stepId) {
+        return null;
     }
 
     //Resource
