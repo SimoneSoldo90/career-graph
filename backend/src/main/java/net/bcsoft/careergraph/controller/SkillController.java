@@ -66,16 +66,11 @@ public class SkillController {
     @GetMapping("/skills/{skillId}")
     public ResponseEntity<SkillDTO> findSkillById(@PathVariable Long skillId) {
         SkillDTO skillDTO = null;
-        String sErrorMsh = "";
+        ResponseEntity responseEntity = null;
         try{
             skillDTO = skillService.findSkillById(skillId);
-        }catch(NotFoundException e){
-            sErrorMsh = "Error getting skill: " + e.getMessage();
-        }
-        ResponseEntity responseEntity = null;
-        if(skillDTO != null) {
             responseEntity = ResponseEntity.ok(skillDTO);
-        }else {
+        }catch(NotFoundException e){
             responseEntity = ResponseEntity.notFound().build();
         }
         return responseEntity;

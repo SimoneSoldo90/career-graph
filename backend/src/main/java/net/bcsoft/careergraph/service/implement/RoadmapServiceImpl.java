@@ -3,6 +3,7 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.RoadmapDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Roadmap;
+import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.exception.BadRequestException;
 import net.bcsoft.careergraph.exception.ConflictException;
@@ -39,6 +40,9 @@ public class RoadmapServiceImpl implements IRoadmapService {
     @Override
     public RoadmapDTO findById(Long roadmapId) throws NotFoundException {
         Roadmap result = roadmapMapper.selectById(roadmapId);
+        if(result == null){
+            throw new NotFoundException("roadmap non trovata");
+        }
         List<StepDTO> stepDTOList;
         try {
             stepDTOList = stepService.findByRoadmapId(roadmapId);
@@ -52,6 +56,9 @@ public class RoadmapServiceImpl implements IRoadmapService {
     public List<RoadmapDTO> findAll() throws NoContentException {
         List <Roadmap> roadmapList = roadmapMapper.selectAll();
         List <RoadmapDTO> roadmapDTOList = new ArrayList<>();
+        if(roadmapList == null){
+            throw new NoContentException("no roadmap disponibili");
+        }
         for(Roadmap roadmap : roadmapList){
             RoadmapDTO roadmapDTO = new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
             roadmapDTOList.add(roadmapDTO);
@@ -65,6 +72,9 @@ public class RoadmapServiceImpl implements IRoadmapService {
         Roadmap roadmap = roadmapDTO.toEntity();
         roadmapMapper.insert(roadmap);
         Roadmap result = roadmapMapper.selectById(roadmap.getId());
+        if(result == null){
+            throw new BadRequestException("roadmap non creata");
+        }
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null );
     }
 
@@ -74,6 +84,10 @@ public class RoadmapServiceImpl implements IRoadmapService {
     @Transactional
     public RoadmapDTO update( RoadmapDTO roadmapDTO) throws ConflictException {
         Roadmap roadmap = roadmapDTO.toEntity();
+        Roadmap oldRoadmap = roadmapMapper.selectById(roadmapDTO.id());
+        if(oldRoadmap == null){
+            throw  new ConflictException("non e' stato possibile effettuare la modifica");
+        }
         roadmapMapper.update(roadmap);
         return new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
     }
