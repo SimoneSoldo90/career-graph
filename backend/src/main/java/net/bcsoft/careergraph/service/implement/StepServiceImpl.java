@@ -109,11 +109,6 @@ public class StepServiceImpl implements IStepService {
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
-    @Override
-    public StepDTO delete(Long stepId) {
-        return null;
-    }
-
     //Resource
     @Override
     public ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO) throws BadRequestException {
