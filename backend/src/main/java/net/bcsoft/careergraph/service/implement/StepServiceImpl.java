@@ -70,7 +70,7 @@ public class StepServiceImpl implements IStepService {
             List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
             List<SkillDTO> skillDTOList;
             try{
-                skillDTOList = skillService.findByStepId(step.getId());
+                skillDTOList = skillService.findSkillByStepId(step.getId());
             }catch (NotFoundException e){
              skillDTOList = new ArrayList<>();
             }
@@ -87,7 +87,7 @@ public class StepServiceImpl implements IStepService {
         for(Step step : stepList){
             List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
             List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
-            List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
+            List<SkillDTO> skillDTOList = skillService.findSkillByStepId(step.getId());
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
                     resourceDTOList, roadmapLinkDTOList, skillDTOList));
         }
@@ -178,7 +178,7 @@ public class StepServiceImpl implements IStepService {
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
     }
 
-    public StepDTO delete(Integer fstepId) {
+    public StepDTO delete(Long stepId) {
         System.out.println("Funziona!");
         return null;
     }
