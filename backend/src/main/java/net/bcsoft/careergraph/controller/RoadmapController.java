@@ -1,7 +1,16 @@
 package net.bcsoft.careergraph.controller;
 
 import net.bcsoft.careergraph.dto.RoadmapDTO;
+import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.Roadmap;
+import net.bcsoft.careergraph.exception.BadRequestException;
+import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.NoContentException;
+import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.IRoadmapService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,13 +24,31 @@ public class RoadmapController {
     }
 
     @GetMapping("/roadmaps/")
-    public List <RoadmapDTO> getRoadmapList(){
-        return roadmapService.findAll();
+    public ResponseEntity<List <RoadmapDTO>> getRoadmapList(){
+        List <RoadmapDTO> roadmapDTOList = null;
+        String sErrorMsg = "";
+        try{
+            roadmapDTOList =  roadmapService.findAll();
+        }catch (NoContentException e){
+            sErrorMsg = "Error getting list: " + e.getMessage();
+        }
+        ResponseEntity responseEntity = null;
+        if(roadmapDTOList != null){
+            responseEntity = ResponseEntity.ok(roadmapDTOList);
+        }else{
+            responseEntity =  ResponseEntity.noContent().build();
+        }
+        return responseEntity;
     }
 
     @PostMapping("/roadmaps/")
-    public RoadmapDTO createRoadmap(@RequestBody RoadmapDTO roadmapDTO){
-        return roadmapService.create(roadmapDTO);
+    public ResponseEntity <RoadmapDTO> createRoadmap(@RequestBody RoadmapDTO roadmapDTO){
+        try{
+            roadmapService.create(roadmapDTO);
+        }catch(BadRequestException e){
+
+        }
+        return roadmapDTO
     }
 
     @GetMapping("/roadmaps/{roadmapId}")
@@ -31,7 +58,12 @@ public class RoadmapController {
 
     @PutMapping("/roadmaps/{roadmapId}")
     public RoadmapDTO updateRoadmap(@RequestBody RoadmapDTO roadmapDTO){
-        return roadmapService.update(roadmapDTO);
+        try{
+            roadmapService.update(roadmapDTO);
+        }catch (ConflictException e){
+
+        }
+        return roadmapDTO;
     }
 
     @DeleteMapping("/roadmaps/{roadmapId}")

@@ -24,6 +24,9 @@ public class UserController {
 
     @PostMapping("/users/{userId}/user-skills")
     public UserSkillDTO createUserSkill(@PathVariable Long userId, @RequestBody UserSkillDTO userSkillDTO){
+        try {
+
+        }catch ()
         return userService.createUserSkill(userId, userSkillDTO);
     }
 

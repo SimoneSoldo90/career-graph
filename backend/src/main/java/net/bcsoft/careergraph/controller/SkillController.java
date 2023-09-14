@@ -2,6 +2,10 @@ package net.bcsoft.careergraph.controller;
 
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
+import net.bcsoft.careergraph.exception.BadRequestException;
+import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.NoContentException;
+import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.ISkillService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,39 +21,78 @@ public class SkillController {
 
     @GetMapping("/skills/")
     public List<SkillDTO> getSkills() {
-        return skillService.findAll();
+        try{
+            return skillService.findAll();
+        }catch(NoContentException e){
+
+        }
     }
 
     @PostMapping("/skills/")
     public SkillDTO createSkill(@RequestBody SkillDTO skillDTO) {
-        return skillService.create(skillDTO);
+        try{
+             skillService.create(skillDTO);
+        }catch (BadRequestException e){
+
+        }
+        return skillDTO;
     }
 
     @GetMapping("/skills/{skillId}")
     public SkillDTO getSkillId(@PathVariable Long skillId) {
-        return skillService.findById(skillId);
+        try{
+            skillService.findById(skillId);
+        }catch(NotFoundException e){
+
+        }
+        return ;
     }
 
     @PutMapping("/skills/{skillId}")
     public SkillDTO updateSkillId(@RequestBody SkillDTO skillDTO) {
-        return skillService.update(skillDTO);
+        try{
+            skillService.update(skillDTO);
+        }catch (ConflictException e){
+
+        }
+        return skillDTO;
     }
     @PostMapping("/skills/{skillId}/resources")
     public ResourceDTO createResource(@PathVariable Long skillId, @RequestBody ResourceDTO resourceDTO){
-        return skillService.createResource(skillId, resourceDTO);
+        try{
+            skillService.createResource(skillId, resourceDTO);
+        }catch (BadRequestException e) {
+
+        }
+        return ;
     }
     @GetMapping("/skills/{skillId}/resources")
     public List<ResourceDTO> getResourceList(@PathVariable Long skillId){
-        return skillService.findAllResource(skillId);
+        try{
+            skillService.findAllResource(skillId);
+        }catch (NoContentException e){
+
+        }
+        return
     }
 
     @GetMapping("/skills/{skillId}/resources/{resourceId}")
     public ResourceDTO getResourceById(@PathVariable Long skillId, @PathVariable Long resourceId){
-        return skillService.findResourceById(skillId, resourceId);
+        try{
+            skillService.findResourceById(skillId, resourceId);
+        }catch (NotFoundException e){
+
+        }
+        return
     }
     @PutMapping("/skills/{skillId}/resources/{resourceId}")
     public ResourceDTO updateResource (@PathVariable Long skillId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO ){
-        return skillService.updateResource(skillId, resourceId, resourceDTO);
+        try{
+            skillService.updateResource(skillId, resourceId, resourceDTO);
+        }catch (ConflictException e){
+
+        }
+        return resourceDTO;
     }
 
 }
