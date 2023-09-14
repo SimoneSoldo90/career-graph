@@ -88,7 +88,7 @@ public class SkillController {
         try{
             skillDTO1 = skillService.updateSkill(skillDTO);
         }catch (ConflictException e){
-            sErrorMsg = "error updating roadmap" + e.getMessage();
+            sErrorMsg = "error updating skill" + e.getMessage();
         }
         ResponseEntity responseEntity = null;
         if(skillDTO1 != null){
@@ -106,12 +106,12 @@ public class SkillController {
         try{
             resourceDTO1 = skillService.createResource(skillId, resourceDTO);
         }catch (BadRequestException e){
-            sErrorMsg = "Error creating roadmap: " + e.getMessage();
+            sErrorMsg = "Error creating resource: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
         if(resourceDTO1 != null) {
             try{
-                responseEntity = ResponseEntity.created(new URI("/skills/" + resourceDTO1.id())).body(resourceDTO1);
+                responseEntity = ResponseEntity.created(new URI("/skills/" + skillId + "/resources" + resourceDTO1.id())).body(resourceDTO1);
             }catch (URISyntaxException e){
                 responseEntity = ResponseEntity.internalServerError().body(e.getMessage());
             }
@@ -145,7 +145,7 @@ public class SkillController {
         try{
             resourceDTO = skillService.findResourceById(skillId, resourceId);;
         }catch(NotFoundException e){
-            sErrorMsh = "Error getting skill: " + e.getMessage();
+            sErrorMsh = "Error getting resource: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
         if(resourceDTO != null) {
@@ -162,7 +162,7 @@ public class SkillController {
         try{
             resourceDTO1 = skillService.updateResource(resourceDTO);
         }catch (ConflictException e){
-            sErrorMsg = "error updating roadmap" + e.getMessage();
+            sErrorMsg = "error updating resource" + e.getMessage();
         }
         ResponseEntity responseEntity = null;
         if(resourceDTO1 != null){
