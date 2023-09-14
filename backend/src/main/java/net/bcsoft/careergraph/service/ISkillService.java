@@ -11,14 +11,14 @@ import java.util.List;
 
 public interface ISkillService {
 
-    List<SkillDTO> findAll() throws NoContentException;
-    SkillDTO create(SkillDTO skillDTO) throws BadRequestException;
-    SkillDTO update(SkillDTO skillDTO) throws ConflictException;
-    SkillDTO findById(Long skillId) throws NotFoundException;
-    List<SkillDTO> findByStepId(Long stepId) throws NotFoundException;
+    List<SkillDTO> findAllSkills() throws NoContentException;
+    SkillDTO createSkill(SkillDTO skillDTO) throws BadRequestException;
+    SkillDTO updateSkill(SkillDTO skillDTO) throws ConflictException;
+    SkillDTO findSkillById(Long skillId) throws NotFoundException;
+    List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException;
     List<ResourceDTO> findAllResource(Long skillId) throws NoContentException;
     ResourceDTO createResource(Long skillId, ResourceDTO resourceDTO)throws BadRequestException;
     ResourceDTO findResourceById(Long skillId, Long resourceId) throws NotFoundException;
-    ResourceDTO updateResource(Long skillId, Long resourceId, ResourceDTO resourceDTO) throws ConflictException;
+    ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException;
 
 }

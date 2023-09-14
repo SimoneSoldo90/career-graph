@@ -45,7 +45,7 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public List<SkillDTO> findAll() throws NoContentException {
+    public List<SkillDTO> findAllSkills() throws NoContentException {
         List<Skill> skillList = skillMapper.findAll();
         List<SkillDTO> skillDTOList = new ArrayList<>();
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public SkillDTO findById(Long skillId) throws NotFoundException {
+    public SkillDTO findSkillById(Long skillId) throws NotFoundException {
         Skill result = skillMapper.findById(skillId);
         if(result == null){
             throw new NotFoundException("skill con id = " + skillId + " non trovata");
@@ -79,7 +79,7 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     @Transactional
-    public SkillDTO create(SkillDTO skillDTO) throws BadRequestException{
+    public SkillDTO createSkill(SkillDTO skillDTO) throws BadRequestException{
         Skill skill = skillDTO.toEntity();
         skillMapper.insert(skill);
         Skill result = skillMapper.findById(skill.getId());
@@ -89,7 +89,7 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     @Transactional
-    public SkillDTO update(SkillDTO skillDTO) throws ConflictException {
+    public SkillDTO updateSkill(SkillDTO skillDTO) throws ConflictException {
         try{
             Skill skill = skillDTO.toEntity();
             skillMapper.update(skill);
@@ -102,7 +102,7 @@ public class SkillServiceImpl implements ISkillService {
 
 
     @Override
-    public List<SkillDTO> findByStepId(Long stepId) throws NotFoundException{
+    public List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException{
         List<Skill> skillList = skillMapper.findByStepId(stepId);
         List<SkillDTO> result = new ArrayList<>();
         for (Skill skill : skillList) {
@@ -141,7 +141,7 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     @Transactional
-    public ResourceDTO updateResource(Long skillId, Long resourceId, ResourceDTO resourceDTO) throws ConflictException{
+    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException{
             Resource resource = resourceDTO.toEntity();
             resourceMapper.update(resource);
             return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getStepId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
