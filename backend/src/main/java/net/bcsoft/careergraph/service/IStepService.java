@@ -14,7 +14,7 @@ import java.util.List;
 public interface IStepService {
     StepDTO create(StepDTO stepDTO) throws BadRequestException;
 
-    List<StepDTO> findAll() throws NotFoundException, NoContentException;
+    List<StepDTO> findAll() throws NoContentException;
 
     List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException, NoContentException;
 
@@ -22,7 +22,7 @@ public interface IStepService {
 
     StepDTO update(StepDTO stepDTO) throws ConflictException;
 
-    //StepDTO delete(Long stepId);
+    StepDTO delete(Long stepId);
     ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO) throws BadRequestException;
 
     List<ResourceDTO> findAllResource(Long stepId) throws NoContentException ;

@@ -62,13 +62,18 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findAll() throws NotFoundException, NoContentException {
+    public List<StepDTO> findAll() throws NoContentException {
         List<Step> stepList = stepMapper.selectAll();
         List<StepDTO> stepDTOList = new ArrayList<>();
         for (Step step : stepList) {
             List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
             List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
-            List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
+            List<SkillDTO> skillDTOList;
+            try{
+                skillDTOList = skillService.findByStepId(step.getId());
+            }catch (NotFoundException e){
+             skillDTOList = new ArrayList<>();
+            }
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
                     resourceDTOList, roadmapLinkDTOList, skillDTOList));
         }

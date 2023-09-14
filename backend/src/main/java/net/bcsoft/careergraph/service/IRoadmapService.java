@@ -11,7 +11,7 @@ import java.util.List;
 public interface IRoadmapService {
     public List<RoadmapDTO> findAll() throws NoContentException;
     public RoadmapDTO create(RoadmapDTO roadmapDTO) throws BadRequestException;
-    public RoadmapDTO findById(Long roadmapId) throws NotFoundException, NoContentException;
+    public RoadmapDTO findById(Long roadmapId) throws NotFoundException;
     public RoadmapDTO update(RoadmapDTO roadmapDTO) throws ConflictException;
     public void delete(Long roadmapId);
 
