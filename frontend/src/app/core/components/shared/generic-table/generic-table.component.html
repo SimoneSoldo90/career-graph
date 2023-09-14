@@ -15,17 +15,17 @@
 
 
     <!-- ------------------------------------------------- -->
-    <!-- BUTTON di aggiunta Skills/Roadmaps/Skillresources -->
+    <!-- BUTTON di aggiunta -->
     <!-- ------------------------------------------------- -->
     <ng-container [ngSwitch]="actionButtonValue">
       <ng-container *ngSwitchCase="'admin'">
-        <ng-container *ngIf="tableOptions.type !== 'roadmapSkills'">
+        <ng-container *ngIf="tableOptions.btnCreate.type !== 'menu'">
           <button class="actionButton" mat-raised-button (click)="addObject()">
             <mat-icon>add</mat-icon>{{tableOptions.btnCreate.title}}
           </button>
         </ng-container>
       <!-- Il tasto carica una lista di item da aggiungere, sia mentor che admin -->
-      <ng-container *ngIf="tableOptions.type === 'roadmapSkills'">
+      <ng-container *ngIf="tableOptions.btnCreate.type === 'menu'">
         <button mat-raised-button [cdkMenuTriggerFor]="menu" class="actionButton">
           <mat-icon>add</mat-icon>{{buttonTitle}}
           {{tableOptions.btnCreate.title}}
@@ -89,14 +89,14 @@
 
             <ng-container *ngSwitchCase="'visualizza'">
 
-              <div *ngIf="tableOptions.type === 'roadmap'; then roadmapView else skillView"></div>
-              <ng-template #roadmapView>
-                <button class="viewButton" (click)="roadmapViewer(element.id, element.title)">
+              <div *ngIf="tableOptions.btnNavigate.canNavigate; then navigate else simpleView"></div>
+              <ng-template #navigate>
+                <button class="viewButton" (click)="viewer(element.id, element.title)">
                   <mat-icon>visibility</mat-icon>
                 </button>
               </ng-template>
 
-              <ng-template #skillView>
+              <ng-template #simpleView>
                 <button class="viewButton" (click)="visualizeRow(element)">
                   <mat-icon>visibility</mat-icon>
                 </button>

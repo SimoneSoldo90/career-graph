@@ -6,4 +6,5 @@ export interface Skill {
   title: string;
   description: string;
   resources?: Resource[];
+  status?: string;
 }

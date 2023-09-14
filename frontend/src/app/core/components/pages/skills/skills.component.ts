@@ -58,7 +58,7 @@ export class SkillsComponent implements OnInit {
       next: (data: Resource[]) => {
         this.resourceDataSource = data;
     }});
-    console.log(this.resourceDataSource);
+
   }
 
   getSkills(): void {
@@ -70,7 +70,7 @@ export class SkillsComponent implements OnInit {
         if(error.status === HttpStatusCode.NotFound){
           this.tableOptions.emptyData = true;
         } else {
-          //console.log(error.message)
+
         }
       }
     });

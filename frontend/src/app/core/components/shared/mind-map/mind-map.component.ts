@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -9,164 +8,83 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Color, getColorFromString } from 'src/app/core/enum/color.enum';
 import { Roadmap } from 'src/app/core/models/roadmap';
 import { Skill } from 'src/app/core/models/skill';
 import { Step } from 'src/app/core/models/step.model';
 
+
 @Component({
   selector: 'app-line-renderer',
   templateUrl: './mind-map.component.html',
-  styles: [
-    `
-      div {
-        position: relative;
-      }
-      canvas {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        background-color: #e5e5f7;
-        opacity: 0.8;
-        background-image: radial-gradient(#444cf7 0.5px, #f8f8ff 0.5px);
-        background-size: 10px 10px;
-      }
-      td {
-        text-align: center;
-      }
-      .button-skill {
-        word-break: break-word;
-        width: 120px;
-        display: inline-block;
-        outline: 0;
-        border: 0;
-        cursor: pointer;
-        border-radius: 3px;
-        padding: 10px 12px 10px;
-        font-size: 18px;
-        font-weight: lighter;
-        line-height: 1;
-        background-color: white;
-        transition: transform 200ms, background 200ms;
-        color: #000000;
-        box-shadow: 0 0 0 2px #000000 inset;
-        margin-top: 25px;
-      }
-      [id^='parent'] {
-      }
-      .button-skill:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 0 0 3px #000000 inset;
-        font-weight: 500;
-      }
-      #tablecontainer{
-        margin:0 auto;
-      }
-      .leftTable {
-        float: left;
-        position: relative;
-      }
-      .centerTable {
-        float: left;
-        position: relative;
-        margin: 20px 200px 0px 200px;
-      }
-      .rightTable {
-        float: left;
-        position: relative;
-      }
-      @media screen and (min-width: 801px) and (max-width: 900px) {
-        .centerTable {
-          margin: 20px 150px 0px 150px;
-        }
-      }
-      @media screen and (min-width: 651px) and (max-width: 800px) {
-        .centerTable {
-          margin: 20px 75px 0px 75px;
-        }
-      }
-      @media screen and (min-width: 501px) and (max-width: 649px) {
-        .centerTable {
-          margin: 20px 25px 0px 25px;
-        }
-        .button-skill {
-          width: 75px;
-          font-size: 16px;
-        }
-      }
-      @media screen and (min-width: 360px) and (max-width: 500px) {
-        .centerTable {
-          margin: 20px 25px 0px 25px;
-        }
-        .button-skill {
-          width: 60px;
-          font-size: 14px;
-        }
-      }
-      @media screen and (min-width: 250px) and (max-width: 360px) {
-        .centerTable {
-          margin: 20px 15px 0px 15px;
-        }
-        .button-skill {
-          width: 30px;
-          font-size: 10px;
-        }
-      }
-      @media screen and (max-width: 250px) {
-        .centerTable {
-          margin: 20px 10px 0px 10px;
-        }
-        .button-skill {
-          width: 20px;
-          font-size: 10px;
-        }
-      }
-    `,
-  ],
+  styleUrls:['./mind-map.component.css'],
 })
 export class MindMapComponent implements AfterViewInit, OnInit {
   @Output() viewDetails = new EventEmitter<any>();
+  @Output() progressSpinnerEmitter = new EventEmitter<any>();
   @Input() set dataset(data: Roadmap) {
-    data.steps!.forEach((node: Step) => {
+    data.steps!.forEach((node: Step, index: number) => {
       if (node.skills) {
-        var firsthalflength =
-          node.skills.length / 2 - 1 === -1 ? 0 : node.skills.length / 2 - 1;
-        this.parents.push(node);
         console.log(node)
-        node.skills.forEach((child: Skill, index: number) => {
-          console.log(child)
-          // let childFounded = data.steps![index].skills!.filter((element: any) => {
-          //   if (element.id == child) return element;
-          //   else return null;
-          // });
-          // if (childFounded.length > 0) {
-            if (index <= firsthalflength) {
-              // if (!this.firsthalfchilds.includes(childFounded[0])) {
-                this.firsthalfchilds.push(child);
-              // }
+        this.parents.push(node);
+        if (node.skills) {
+          node.skills.forEach((child: Skill, index: number) => {
+            let skillsToPush: any = {
+              id: 'skill' + child.id,
+              id_db: child.id,
+              title: child.title,
+              description: child.description,
+              status: child.status,
+            };
+            if (index % 2 === 0) {
+              this.firsthalfchilds.push(skillsToPush);
             } else {
-              // if (!this.secondhalfchilds.includes(childFounded[0])) {
-                this.secondhalfchilds.push(child);
-              }
-            // }
-          // }
-        });
+              this.secondhalfchilds.push(skillsToPush);
+            }
+          });
+        }
+        if (node.roadmap_links) {
+          node.roadmap_links.forEach((roadmap: any, index: number) => {
+            let roadmapToPush: any = {
+              id: 'roadmap' + roadmap.roadmap_id,
+              id_db: roadmap.roadmap_id,
+              title: roadmap.roadmap_title,
+              description: roadmap.roadmap_description,
+              status: roadmap.status,
+
+            };
+            if (index % 2 === 0) {
+              this.firsthalfchilds.push(roadmapToPush);
+            } else {
+              this.secondhalfchilds.push(roadmapToPush);
+            }
+          });
+        }
       }
-      console.log("Parents "+this.parents)
-      console.log("Left "+this.firsthalfchilds)
-      console.log("Rigth "+this.secondhalfchilds)
-
-
     });
     this.drawLine();
   }
-  firsthalfchilds: Skill[] = [];
-  parents:Step[] = [];
-  secondhalfchilds: Skill[] = [];
+  firsthalfchilds: any[] = [];
+  parents: Step[] = [];
+  secondhalfchilds: any[] = [];
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
-  ngOnInit(): void {}
+  constructor(
+    private router: Router,
+  ) {  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        let element = document.getElementById('canvasRef');
+        element!.remove();
+        element = document.getElementById('nodesContainer');
+        element!.remove();
+        this.progressSpinnerEmitter.emit(true);
+        window.location.reload();
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.drawLine();
@@ -177,7 +95,6 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     //RIDISEGNA IL TUTTO AL RESIZE DELLA PAGINA
     this.drawLine();
   }
-
   @HostListener('window:beforeunload')
   onBeforeUnload() {
     //VIENE EFFETTUATO LO SCROLL ALL'ELEMENTO canvasRef CHE È POSIZIONATO ALLO 0,0 DELLA PAGINA
@@ -185,7 +102,7 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     document.getElementById('canvasRef')?.scrollIntoView();
   }
 
-  drawLine() {
+  private drawLine() {
     document.getElementById('canvasRef')?.scrollIntoView();
 
     let canvas: HTMLCanvasElement = this.getCanvas();
@@ -198,11 +115,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       if (document.getElementById('parent' + this.parents[index].id)) {
         document.getElementById(
           'parent' + this.parents[index].id
-        )!.style.marginTop = this.getParentMarginTopDown(this.parents[index]);
-        document.getElementById(
-          'parent' + this.parents[index].id
-        )!.style.marginBottom = this.getParentMarginTopDown(
-          this.parents[index]
+        )!.style.marginTop = this.getParentMarginTopDown(
+          this.parents[index],
+          this.parents[index-1]
         );
       }
     });
@@ -211,26 +126,20 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     parents: Step[],
     canvas: HTMLCanvasElement
   ) {
-    this.parents.forEach((parent: any, index: number) => {
+    parents.forEach((parent: Step, index: number) => {
+      const elementHtml = document.getElementById('parent' + parent.id);
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-        document.getElementById('parent' + parent.id)!
+        elementHtml
       );
 
-      if (index === 0) {
-        const elementHtml = document.getElementById('parent' + parent.id);
-        if (elementHtml != null) {
-          elementHtml.style.backgroundColor = '#144d83';
-          elementHtml.style.color = 'white';
-          elementHtml.style.fontWeight = '400';
-        }
-      } else {
-        const elementHtml = document.getElementById('parent' + parent.id);
+      if (index !== 0) {
         if (elementHtml != null) {
           elementHtml.style.backgroundColor = '#acd0fb';
           elementHtml.style.color = 'black';
           elementHtml.style.fontWeight = '400';
         }
       }
+      this.setBadgeColor(elementHtml,parent);
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
       const parentRect = parentElement.getBoundingClientRect();
@@ -238,28 +147,95 @@ export class MindMapComponent implements AfterViewInit, OnInit {
         parentRect.left + parentRect.width / 2 - canvas.offsetLeft;
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
-      parent.childs.forEach((childId: number) => {
+      parent.roadmap_links.forEach((link: any, index: number) => {
+        let roadmapChild: any = {
+          id: 'roadmap' + link.roadmap_id,
+          title: link.roadmap_title,
+          description: link.roadmap_description,
+        };
         let childHtml: HTMLCanvasElement | null = null;
         let childsxFounded = this.firsthalfchilds.filter((element: any) => {
-          if (element.id == childId) return element;
+          if (element.id == roadmapChild.id) return element;
           else return null;
         });
         let childdxFounded = this.secondhalfchilds.filter((element: any) => {
-          if (element.id == childId) return element;
+          if (element.id == roadmapChild.id) return element;
           else return null;
         });
         if (childsxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
-            document.getElementById('childsx' + childId)!
+            document.getElementById('childsx' + roadmapChild.id)!
           );
         } else if (childdxFounded.length > 0) {
           childHtml = <HTMLCanvasElement>(
-            document.getElementById('childdx' + childId)!
+            document.getElementById('childdx' + roadmapChild.id)!
           );
         }
 
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
+        if (childElement) {
+
+          this.setBadgeColor(childElement,link);
+
+          const childRect = childElement.getBoundingClientRect();
+          const childCenterX =
+            childRect.left + childRect.width / 2 - canvas.offsetLeft;
+          const childCenterY =
+            childRect.top + childRect.height / 2 - canvas.offsetTop;
+          const context = canvas.getContext('2d');
+
+          if (context != null) {
+            context.beginPath();
+            context.moveTo(parentCenterX, parentCenterY);
+            // context.lineTo(childCenterX, childCenterY);
+            //MODIFICARE GLI OFFSET PER CURVARE LE LINEE
+            context.bezierCurveTo(
+              parentCenterX + 0,
+              parentCenterY + 0,
+              childCenterX - 0,
+              childCenterY - 0,
+              childCenterX,
+              childCenterY
+            );
+            context.setLineDash([2, 2]);
+            context.setTransform;
+            context.strokeStyle = '#144d83';
+            context.lineWidth = 2;
+            context.stroke();
+          }
+        }
+      });
+      parent.skills.forEach((child: Skill) => {
+        let roadmapChild: any = {
+          id: 'skill' + child.id,
+          id_db: child.id,
+          title: child.title,
+          description: child.description,
+        };
+        let childHtml: HTMLCanvasElement | null = null;
+        let childsxFounded = this.firsthalfchilds.filter((element: any) => {
+          if (element.id == roadmapChild.id) return element;
+          else return null;
+        });
+        let childdxFounded = this.secondhalfchilds.filter((element: any) => {
+          if (element.id == roadmapChild.id) return element;
+          else return null;
+        });
+        if (childsxFounded.length > 0) {
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childsx' + roadmapChild.id)!
+          );
+        } else if (childdxFounded.length > 0) {
+          childHtml = <HTMLCanvasElement>(
+            document.getElementById('childdx' + roadmapChild.id)!
+          );
+        }
+
+        const childRef = new ElementRef(childHtml);
+        const childElement = childRef.nativeElement;
+        this.setBadgeColor(childElement,child);
+
         if (childElement) {
           const childRect = childElement.getBoundingClientRect();
           const childCenterX =
@@ -291,13 +267,15 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       });
     });
   }
-  private disegnaLinkTraParents(
-    parents: Step[],
-    canvas: HTMLCanvasElement
-  ) {
-    for (let i = 0; i < this.parents.length; i++) {
+  setBadgeColor(elementHtml:any,elementNode:any) {
+    let specificChild=elementHtml!.querySelector("[id^='mat-badge-content']") as HTMLElement;
+    const badgeColor = getColorFromString(elementNode.status);
+    specificChild!.style.backgroundColor = badgeColor;
+  }
+  private disegnaLinkTraParents(parents: Step[], canvas: HTMLCanvasElement) {
+    for (let i = 0; i < parents.length; i++) {
       let parentHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-        document.getElementById('parent' + this.parents[i].id)!
+        document.getElementById('parent' + parents[i].id)!
       );
       const parentRef = new ElementRef(parentHtml);
       const parentElement = parentRef.nativeElement;
@@ -307,9 +285,9 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       const parentCenterY =
         parentRect.top + parentRect.height / 2 - canvas.offsetTop;
 
-      if (i < this.parents.length - 1) {
+      if (i < parents.length - 1) {
         let childHtml: HTMLCanvasElement = <HTMLCanvasElement>(
-          document.getElementById('parent' + this.parents[i + 1].id)!
+          document.getElementById('parent' + parents[i + 1].id)!
         );
         const childRef = new ElementRef(childHtml);
         const childElement = childRef.nativeElement;
@@ -339,17 +317,33 @@ export class MindMapComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  getParentMarginTopDown(arg0:Step): string {
-    let margin: number = this.getMarginParents(arg0);
+  getParentMarginTopDown(element: Step, previusOrNext: Step): string {
+    let margin: number = this.getMarginParents(element, previusOrNext);
     return margin + 'px';
   }
 
-  getMarginParents(arg0:Step): number {
+  getMarginParents(element: Step, previusOrNext: Step): number {
     let margin: number = 0;
-    if (arg0.skills) {
-        margin =
-          (arg0.skills.length / 2) *
-          (document.getElementById('parent' + arg0.id)!.clientHeight / 1.7);
+    let previousChilds = 0;
+    if (previusOrNext) {
+      if (previusOrNext.skills) {
+        previousChilds += previusOrNext.skills.length / 2;
+      }
+      if (previusOrNext.roadmap_links) {
+        previousChilds += previusOrNext.roadmap_links.length / 2;
+      }
+    }
+    if (previousChilds <= 2) {
+      margin =
+        margin +
+        previousChilds *
+          (document.getElementById('parent' + element.id)!.clientHeight + 10);
+    } else {
+      //25 è il margin top di ogni nodo laterale
+      margin =
+        margin +
+        previousChilds *
+          (document.getElementById('parent' + element.id)!.clientHeight + 25);
     }
     return margin;
   }
@@ -362,34 +356,29 @@ export class MindMapComponent implements AfterViewInit, OnInit {
     let canvas = canvasRef.nativeElement;
     canvas.width = window.innerWidth;
 
-    canvas.height = window.innerHeight * this.getMoltiplicatoreAltezza();
+    canvas.height = this.getCanvasHeight();
     return canvas;
   }
-  private getMoltiplicatoreAltezza(): number {
-    // const rapporto: number = window.innerHeight * 0.0125;
-    const rapporto: number = window.innerHeight * 0.0100;
-    let moltiplicatoreAltezza = 1.5;
+  private getCanvasHeight():number{
+    let lastNodeIndex: string = '';
     if (this.firsthalfchilds.length > this.secondhalfchilds.length) {
-      moltiplicatoreAltezza =
-        this.firsthalfchilds.length > 10
-          ? this.firsthalfchilds.length / rapporto
-          : moltiplicatoreAltezza;
+      lastNodeIndex =
+        'childsx' + this.firsthalfchilds[this.firsthalfchilds.length - 1].id;
     } else {
-      moltiplicatoreAltezza =
-        this.secondhalfchilds.length > 10
-          ? this.secondhalfchilds.length / rapporto
-          : moltiplicatoreAltezza;
+      lastNodeIndex =
+        'childdx' + this.secondhalfchilds[this.secondhalfchilds.length - 1].id;
     }
-    return moltiplicatoreAltezza;
+    let lastNodeElement: HTMLElement = <HTMLElement>(
+      document.getElementById(lastNodeIndex)
+    );
+    let boundingRect = lastNodeElement.getBoundingClientRect();
+    let distanceFromTop = boundingRect.top + window.scrollY; // Add scrollY to account for vertical scrolling
+    let elementHeight = lastNodeElement.offsetHeight;
+    let totalDistance = distanceFromTop + elementHeight;
+    return totalDistance;
   }
-  public visualizeDetail(element: any, isSideNode: boolean) {
-    if (element.childs && isSideNode) {
-      const targetElement = document.getElementById('parent' + element.id);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      this.viewDetails.emit(element);
-    }
+
+  public visualizeDetail(element: any) {
+    this.viewDetails.emit(element);
   }
 }

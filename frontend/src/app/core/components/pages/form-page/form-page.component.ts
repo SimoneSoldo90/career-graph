@@ -140,7 +140,6 @@ export class FormPageComponent implements OnInit {
     }
   } else if (this.inputData.get("type") === "skill"){
      if (JSON.parse(this.inputData.get("createMode"))){
-      console.log(this.inputData)
        this.formOptions = {
         "type": "skill",
         "pageTitle": "Skill",
@@ -184,7 +183,6 @@ export class FormPageComponent implements OnInit {
          ]
        }
      } else {
-      console.log(this.item);
       this.formOptions = {
         "formObject": this.item,
         "type": "skill",
