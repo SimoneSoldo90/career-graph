@@ -59,7 +59,6 @@ public class SkillServiceImpl implements ISkillService {
             skillDTOList.add(skillDTO);
         }
         return skillDTOList;
-
     }
 
     @Override

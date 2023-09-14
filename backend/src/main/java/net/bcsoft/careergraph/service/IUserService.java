@@ -12,8 +12,8 @@ import java.util.List;
 public interface IUserService {
     public UserDTO findById(Long id) throws NotFoundException;
     public List<UserSkillDTO> findUserSkillByUserId(Long userId) throws NoContentException;
-    public UserSkillDTO createUserSkill(Long userId, UserSkillDTO userSkillDTO) throws BadRequestException;
-    public UserSkillDTO updateUserSkill(Long userId, Long UserSkillId, UserSkillDTO userSkillDTO) throws ConflictException;
+    public UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException;
+    public UserSkillDTO updateUserSkill(UserSkillDTO userSkillDTO) throws ConflictException;
     public UserSkillDTO findUserSkillById(Long userSkillId) throws NotFoundException;
 
     //public void delete(Integer userId, Integer userSkillId);
