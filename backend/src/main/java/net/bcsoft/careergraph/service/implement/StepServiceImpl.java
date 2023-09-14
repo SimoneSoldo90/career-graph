@@ -68,7 +68,12 @@ public class StepServiceImpl implements IStepService {
         for (Step step : stepList) {
             List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
             List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
-            List<SkillDTO> skillDTOList = skillService.findByStepId(step.getId());
+            List<SkillDTO> skillDTOList;
+            try{
+                skillDTOList = skillService.findByStepId(step.getId());
+            }catch (NotFoundException e){
+             skillDTOList = new ArrayList<>();
+            }
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
                     resourceDTOList, roadmapLinkDTOList, skillDTOList));
         }
