@@ -20,7 +20,7 @@ public class SkillController {
     }
 
     @GetMapping("/skills/")
-    public List<SkillDTO> getSkills() {
+    public List<SkillDTO> findSkills() {
         try{
             return skillService.findAll();
         }catch(NoContentException e){
@@ -39,7 +39,7 @@ public class SkillController {
     }
 
     @GetMapping("/skills/{skillId}")
-    public SkillDTO getSkillId(@PathVariable Long skillId) {
+    public SkillDTO findSkillById(@PathVariable Long skillId) {
         try{
             skillService.findById(skillId);
         }catch(NotFoundException e){
@@ -67,7 +67,7 @@ public class SkillController {
         return ;
     }
     @GetMapping("/skills/{skillId}/resources")
-    public List<ResourceDTO> getResourceList(@PathVariable Long skillId){
+    public List<ResourceDTO> findResources(@PathVariable Long skillId){
         try{
             skillService.findAllResource(skillId);
         }catch (NoContentException e){
@@ -77,7 +77,7 @@ public class SkillController {
     }
 
     @GetMapping("/skills/{skillId}/resources/{resourceId}")
-    public ResourceDTO getResourceById(@PathVariable Long skillId, @PathVariable Long resourceId){
+    public ResourceDTO findResourceById(@PathVariable Long skillId, @PathVariable Long resourceId){
         try{
             skillService.findResourceById(skillId, resourceId);
         }catch (NotFoundException e){

@@ -10,7 +10,7 @@ La response contiene:
 	In caso in cui non corrisponda alcun oggetto:
 	- status HTTP-204 No content - in caso di array
 	- status HTTP-404 Not found - per ricerca per id
-	- inviare l'eventuale messaggio di errore nel body
+	- inviare l'eventuale messaggio di errore nel body1
 
 ### POST: Creazione di un oggetto
 La request contiene la rappresentazione json dell'oggetto
