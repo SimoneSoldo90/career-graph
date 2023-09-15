@@ -2,7 +2,6 @@ package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
-import net.bcsoft.careergraph.entity.AccountSkill;
 import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.exception.ConflictException;
@@ -67,6 +66,7 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     public SkillDTO findSkillById(Long skillId) throws NotFoundException {
+
         Skill result = skillMapper.findById(skillId);
         if(result == null){
             throw new NotFoundException("skill con id = " + skillId + " non trovata");
