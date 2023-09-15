@@ -54,7 +54,7 @@ public class SkillServiceImpl implements ISkillService {
         List<SkillDTO> skillDTOList = new ArrayList<>();
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for(Skill skill : skillList){
-            List<Resource> resourceList = resourceMapper.findBySkillId(skill.getId());
+            List<Resource> resourceList = resourceMapper.selectBySkillId(skill.getId());
             for (Resource resource : resourceList){
                 ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
                 resourceDTOList.add(resourceDTO);
@@ -71,7 +71,7 @@ public class SkillServiceImpl implements ISkillService {
         if(result == null){
             throw new NotFoundException("skill con id = " + skillId + " non trovata");
         }
-        List<Resource> resourceList= resourceMapper.findBySkillId(skillId);
+        List<Resource> resourceList= resourceMapper.selectBySkillId(skillId);
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for(Resource resource : resourceList){
             ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
@@ -120,7 +120,7 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     public List<ResourceDTO> findAllResource(Long skillId) throws NoContentException{
-        List<Resource> resourceList = resourceMapper.findBySkillId(skillId);
+        List<Resource> resourceList = resourceMapper.selectBySkillId(skillId);
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         if(resourceList == null){
             throw new NoContentException("resource not find");
@@ -137,7 +137,7 @@ public class SkillServiceImpl implements ISkillService {
     public ResourceDTO createResource(Long skillId, ResourceDTO resourceDTO) throws BadRequestException{
         Resource resource = resourceDTO.toEntity();
         resourceMapper.insert(resource);
-        Resource result = resourceMapper.findById(resource.getId());
+        Resource result = resourceMapper.selectById(resource.getId());
         if(result == null){
             throw new BadRequestException("resource not created");
         }
@@ -147,7 +147,7 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     public ResourceDTO findResourceById(Long skillId, Long resourceId) throws NotFoundException{
-        Resource result = resourceMapper.findById(resourceId);
+        Resource result = resourceMapper.selectById(resourceId);
         if(result == null){
             throw new NotFoundException("resource not found");
         }
@@ -158,7 +158,7 @@ public class SkillServiceImpl implements ISkillService {
     @Override
     @Transactional
     public ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException{
-        Resource oldResource = resourceMapper.findById(resourceDTO.id());
+        Resource oldResource = resourceMapper.selectById(resourceDTO.id());
         if(oldResource == null){
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }

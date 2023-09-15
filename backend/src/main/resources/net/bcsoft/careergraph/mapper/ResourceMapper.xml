@@ -12,7 +12,7 @@
         <result property="url" column="url"/>
     </resultMap>
 
-    <select id="findAll" resultMap="resourceResultMap">
+    <select id="selectAll" resultMap="resourceResultMap">
         SELECT * FROM resource
     </select>
 
@@ -27,19 +27,19 @@
         WHERE id = #{id}
     </update>
 
-    <select id="findById" resultMap="resourceResultMap" >
+    <select id="selectById" resultMap="resourceResultMap" parameterType="net.bcsoft.careergraph.entity.Resource" >
         SELECT *
         FROM resource
         WHERE id = #{id}
     </select>
 
-    <select id="findByStepId" resultMap="resourceResultMap" >
+    <select id="selectByStepId" resultMap="resourceResultMap" >
         SELECT *
         FROM resource
         WHERE step_id = #{stepId}
     </select>
 
-    <select id="findBySkillId" resultMap="resourceResultMap">
+    <select id="selectBySkillId" resultMap="resourceResultMap">
         SELECT * FROM resource
         WHERE skill_id = #{skillId}
     </select>

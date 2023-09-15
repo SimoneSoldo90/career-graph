@@ -27,12 +27,12 @@ public interface IStepService {
 
     List<ResourceDTO> findAllResource(Long stepId) throws NoContentException ;
 
-    ResourceDTO findByIdResource(Long stepId, Long resourceId) throws NotFoundException;
+    ResourceDTO findByResourceId(Long resourceId) throws NotFoundException;
 
-    ResourceDTO updateResource(Long stepId, Long resourceId, ResourceDTO resourceDTO) throws ConflictException;
-    RoadmapLinkDTO createRoadmapLink(Long stepId, RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException;
+    ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException;
+    RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException;
     List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException;
-    RoadmapLinkDTO findByIdRoadmapLink(Long stepId, Long roadmapId) throws NotFoundException;
-    RoadmapLinkDTO updateRoadmapLink(Long stepId, Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) throws ConflictException;
+    RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException;
+    RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException;
 
 }

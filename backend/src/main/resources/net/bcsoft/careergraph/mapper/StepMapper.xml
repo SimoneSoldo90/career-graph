@@ -29,7 +29,7 @@
         WHERE roadmap_id = #{roadmapId}
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO step (roadmap_id, ord, title, description)
         VALUES (#{roadmapId}, #{ord}, #{title}, #{description})
     </insert>
