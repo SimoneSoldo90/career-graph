@@ -72,8 +72,8 @@ public class StepServiceImpl implements IStepService {
             throw new NoContentException ("no step disponibili");
         }
         for (Step step : stepList) {
-            List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
-            List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
+            List<ResourceDTO> resourceDTOList = findResourcesByStepId(step.getId());
+            List<RoadmapLinkDTO> roadmapLinkDTOList = findRoadmapLinksByStepId(step.getId());
             List<SkillDTO> skillDTOList;
             try{
                 skillDTOList = skillService.findSkillByStepId(step.getId());
@@ -94,8 +94,8 @@ public class StepServiceImpl implements IStepService {
         }
         List<StepDTO> stepDTOList = new ArrayList<>();
         for(Step step : stepList){
-            List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
-            List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
+            List<ResourceDTO> resourceDTOList = findResourcesByStepId(step.getId());
+            List<RoadmapLinkDTO> roadmapLinkDTOList = findRoadmapLinksByStepId(step.getId());
             List<SkillDTO> skillDTOList = skillService.findSkillByStepId(step.getId());
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
                     resourceDTOList, roadmapLinkDTOList, skillDTOList));
@@ -138,8 +138,8 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<ResourceDTO> findAllResource(Long stepId) throws NoContentException {
-        List<Resource> resourceList = resourceMapper.findAll();
+    public List<ResourceDTO> findResourcesByStepId(Long stepId) throws NoContentException {
+        List<Resource> resourceList = resourceMapper.selectByStepId(stepId);
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         if(resourceList == null){
             throw new NoContentException("no resource disponibili");
@@ -184,17 +184,17 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException {
-        List<RoadmapLink> roadmapLinkList = roadmapLinkMapper.selectAll();
+    public List<RoadmapLinkDTO> findRoadmapLinksByStepId(Long stepId) throws NoContentException {
+        List<RoadmapLink> roadmapLinkList = roadmapLinkMapper.selectByStepId(stepId);
         List<RoadmapLinkDTO> roadmapLinkDTOList = new ArrayList<>();
         if(roadmapLinkList == null){
             throw new NoContentException("no roadmaplink disponibili");
         }
         for (RoadmapLink roadmapLink : roadmapLinkList){
-        RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
-        roadmapLinkDTOList.add(roadmapLinkDTO);
+            RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
+            roadmapLinkDTOList.add(roadmapLinkDTO);
         }
-        return null;
+        return roadmapLinkDTOList;
     }
 
     @Override

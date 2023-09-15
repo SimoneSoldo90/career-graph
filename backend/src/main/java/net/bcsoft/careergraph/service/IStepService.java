@@ -25,13 +25,13 @@ public interface IStepService {
     StepDTO delete(Long stepId);
     ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO) throws BadRequestException;
 
-    List<ResourceDTO> findAllResource(Long stepId) throws NoContentException ;
+    List<ResourceDTO> findResourcesByStepId(Long stepId) throws NoContentException ;
 
     ResourceDTO findByResourceId(Long resourceId) throws NotFoundException;
 
     ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException;
     RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException;
-    List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException;
+    List<RoadmapLinkDTO> findRoadmapLinksByStepId(Long stepId) throws NoContentException;
     RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException;
     RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException;
 

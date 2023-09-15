@@ -6,6 +6,11 @@
         SELECT * FROM roadmap_link
     </select>
 
+    <select id="selectByStepId" resultMap="roadmapLinkResultMap" parameterType="net.bcsoft.careergraph.entity.RoadmapLink">
+        SELECT * FROM roadmap_link
+        WHERE step_id = #{stepId}
+    </select>
+
     <select id="selectById" resultMap="roadmapLinkResultMap" parameterType="net.bcsoft.careergraph.entity.RoadmapLink">
         SELECT * FROM roadmap_link
         WHERE id = #{id}

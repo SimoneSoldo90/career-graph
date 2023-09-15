@@ -12,6 +12,11 @@
         SELECT * FROM roadmap
     </select>
 
+    <select id="selectByStepId" resultMap="roadmapResultMap" parameterType="net.bcsoft.careergraph.entity.Roadmap">
+        SELECT * FROM roadmap
+        WHERE step_id = #{stepId}
+    </select>
+
     <select id="selectById" resultMap="roadmapResultMap" parameterType="net.bcsoft.careergraph.entity.Roadmap">
         SELECT * FROM roadmap
         WHERE id = #{id}

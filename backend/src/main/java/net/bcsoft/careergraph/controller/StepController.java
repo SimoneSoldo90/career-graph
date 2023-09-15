@@ -143,7 +143,7 @@ public class StepController {
         List<ResourceDTO> resourceDTOList = null;
         String sErrorMsq = "";
         try{
-             resourceDTOList = stepService.findAllResource(stepId);
+             resourceDTOList = stepService.findResourcesByStepId(stepId);
         }catch (NoContentException e){
             sErrorMsq = "Error getting list:" + e.getMessage();
         }
@@ -229,7 +229,7 @@ public class StepController {
         List<RoadmapLinkDTO> roadmapLinkDTOList = null;
         String sErrorMsq = "";
         try{
-            roadmapLinkDTOList = stepService.findAllRoadmapLink(stepId);
+            roadmapLinkDTOList = stepService.findRoadmapLinksByStepId(stepId);
         }catch (NoContentException e){
             sErrorMsq = "Error getting list:" + e.getMessage();
         }
