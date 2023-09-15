@@ -56,7 +56,7 @@ public class RoadmapController {
                 responseEntity = ResponseEntity.created(new URI("/roadmaps/" + roadmapDTO1.id())).body(roadmapDTO1);
             } catch (URISyntaxException e) {
                 responseEntity = ResponseEntity.internalServerError().body(e.getMessage());
-                //TODO LOG
+                //qui si potrebbe mettere il log
             }
         }else{
             responseEntity = ResponseEntity.badRequest().body(sErrorMsg);

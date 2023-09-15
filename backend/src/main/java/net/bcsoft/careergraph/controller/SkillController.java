@@ -138,7 +138,7 @@ public class SkillController {
         ResourceDTO resourceDTO = null;
         String sErrorMsh = "";
         try{
-            resourceDTO = skillService.findResourceById(skillId, resourceId);;
+            resourceDTO = skillService.findResourceById(skillId, resourceId);
         }catch(NotFoundException e){
             sErrorMsh = "Error getting resource: " + e.getMessage();
         }

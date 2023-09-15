@@ -3,7 +3,7 @@ package net.bcsoft.careergraph.entity;
 public class Roadmap {
     Long id;
     String title;
-    String description;;
+    String description;
 
 
     public Long getId() {
