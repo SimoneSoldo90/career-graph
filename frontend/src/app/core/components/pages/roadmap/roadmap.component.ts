@@ -55,7 +55,7 @@ export class RoadmapComponent implements OnInit {
       canView:true,
       tooltip:"Visualizza grafo",
       routerLink:"/mindmap",
-      queryParams:{id:1}
+      queryParams:{id:this.id}
     }
   };
 

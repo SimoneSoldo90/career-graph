@@ -20,7 +20,7 @@ const routes: Routes = [
   getRoute("roadmap","Roadmap",RoadmapComponent,null),
   getRoute("mentees","Mentees",MenteesComponent,null),
   getRoute("form","Form",FormPageComponent,null),
-  getRoute("mindmap","Roadmap",RoadmapgraphComponent,null),
+  getRoute("mindmap/:id","Roadmap",RoadmapgraphComponent,null),
 ];
 
 @NgModule({

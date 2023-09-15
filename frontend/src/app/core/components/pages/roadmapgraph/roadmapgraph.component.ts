@@ -14,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './roadmapgraph.component.html',
   styleUrls: ['./roadmapgraph.component.css'],
 })
-export class RoadmapgraphComponent implements AfterViewInit {
+export class RoadmapgraphComponent implements AfterViewInit, OnInit {
   @ViewChild('roadmapGraph') roadmapGraph!: MindMapComponent;
   color: ThemePalette = 'primary';
   mode: ProgressBarMode = 'determinate';
@@ -22,8 +22,7 @@ export class RoadmapgraphComponent implements AfterViewInit {
   progressBarBufferValue = 50;
   title = '';
   icon = 'java';
-  description =
-    "";
+  description = '';
   heightOffset = 0;
   dataset: Roadmap = { title: '', description: '' };
   showSpinner: boolean = false;
@@ -44,17 +43,22 @@ export class RoadmapgraphComponent implements AfterViewInit {
       }
     );
 */
-    this.route.queryParams.subscribe((params: any) => {
-      if (params.id) {
+  }
+  ngOnInit(): void {
+    this.route.params.subscribe((params: any) => {
+
         this.roadmapService.getRoadmapById(params.id).subscribe({
           next: (response: Roadmap) => {
+            console.log(response)
             this.dataset = response;
             this.title = response.title;
             this.description = response.description;
           },
-          error: (error: HttpErrorResponse) => {},
+          error: (error: HttpErrorResponse) => {
+            console.log(error)
+          },
         });
-      }
+
     });
   }
 
@@ -63,7 +67,7 @@ export class RoadmapgraphComponent implements AfterViewInit {
   }
   visualizeSkills(event: any) {
     if (event.isRoadmap) {
-      this.router.navigate(['/mindmap', { id: event.id }]);
+      this.router.navigate(['/mindmap/' + event.id]);
     } else {
       this.getSkillById(Number(event.id_db));
     }

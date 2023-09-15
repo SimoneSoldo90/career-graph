@@ -11,9 +11,8 @@
           *ngIf="firstcolchild.id.includes('roadmap'); else skillsx"
           class="button-skill"
           id="childsx{{ firstcolchild.id }}"
-          [routerLink]="['/mindmap']"
+          [routerLink]="['/mindmap/{{firstcolchild.id_db}}']"
           routerLinkActive="router-link-active"
-          [queryParams]="{ id: firstcolchild.id_db }"
         >
           <tr class="nodoRoadmap">
             <td
@@ -72,9 +71,8 @@
           *ngIf="secondhalfchild.id.includes('roadmap'); else skilldx"
           class="button-skill"
           id="childdx{{ secondhalfchild.id }}"
-          [routerLink]="['/mindmap']"
+          [routerLink]="['/mindmap/{{secondhalfchild.id_db}}']"
           routerLinkActive="router-link-active"
-          [queryParams]="{ id: secondhalfchild.id_db }"
         >
           <tr class="nodoRoadmap">
             <td

@@ -83,7 +83,7 @@ export class RoadmapsComponent implements OnInit {
     this.router.navigate(["/roadmap",{elementId:event.id}])
   }
   visualizzaGrafo(event: Roadmap){
-    this.router.navigate(['/mindmap', { id: event.id }])
+    this.router.navigate(['/mindmap/'+event.id])
   }
   visualizzaRoadmap(event:any){
     this.router.navigate(['roadmap'], {

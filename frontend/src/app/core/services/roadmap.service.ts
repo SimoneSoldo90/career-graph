@@ -26,7 +26,7 @@ export class RoadmapService {
   }
 
   getRoadmapById(roadmapId: number): Observable<Roadmap> {
-    const url = `${this.baseUrl}/${roadmapId}`;
+    const url = this.baseUrl+roadmapId;
     return this.http.get<Roadmap>(url);
   }
 
@@ -36,7 +36,7 @@ export class RoadmapService {
   }
 
   deleteRoadmap(roadmapId: number): Observable<void> {
-    const url = `${this.baseUrl}/${roadmapId}`;
+    const url = `${this.baseUrl}${roadmapId}`;
     return this.http.delete<void>(url);
   }
 
