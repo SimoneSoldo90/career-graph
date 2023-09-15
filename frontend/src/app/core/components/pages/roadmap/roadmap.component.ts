@@ -36,12 +36,13 @@ export class RoadmapComponent implements OnInit {
     },
   ]
   tableOptions = {
-    "type": "roadmapSkills",
+    "type": "roadmapSteps",
     "displayedColumns": this.displayedColumns,
     "tableDef": this.tableDef,
     "canDelete": true,
     "canModify": true,
     btnCreate:{
+      "type":"menu",
       "title":"Associa Skill",
       "canCreate":  true,
       "canView": true
@@ -59,8 +60,8 @@ export class RoadmapComponent implements OnInit {
   };
 
   constructor(private roadmapService: RoadmapService, private stepService: StepService,private skillService:SkillService,private router: Router) {
-    console.log(this.id)
-    }
+
+  }
 
   ngOnInit() {
     this.id = window.history.state.options.elementId;
@@ -77,7 +78,7 @@ export class RoadmapComponent implements OnInit {
         if(error.status === HttpStatusCode.NotFound){
           this.tableOptions.emptyData = true;
         } else {
-          //console.log(error.message)
+
         }
       }
     });
@@ -93,7 +94,7 @@ export class RoadmapComponent implements OnInit {
 
   updateRoadmapStep(data: Step): void {
     if(!this.dataSource.filter(element=>element.id === data.id)){
-      console.log(this.dataSource)
+
       this.dataSource.push(data);
       this.genericTable.setUpDataInput(this.dataSource);
       this.genericTable.setUpDataMenuButton(this.totalStep);

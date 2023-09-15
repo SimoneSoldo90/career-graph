@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from '@angular/platform-browser';
+import { Color } from './core/enum/color.enum';
 
 @Component({
   selector: 'app-root',
@@ -14,21 +15,21 @@ export class AppComponent implements OnInit {
     allStates: [
       {
           title: 'To Do',
-          statusColor: 'white',
+          statusColor: Color.todo,
           color:'black',
-          fontWeight: '500',
+          fontWeight: '400',
       },
       {
           title: 'Doing',
-          statusColor: '#74b9ff',
-          color:'white',
-          fontWeight: '500' ,
+          statusColor: Color.doing,
+          color:'black',
+          fontWeight: '400' ,
       },
       {
           title: 'Done',
-          statusColor: '#00b894',
-          color:'white',
-          fontWeight: '500',
+          statusColor: Color.done,
+          color:'black',
+          fontWeight: '400',
 
       },
     ],

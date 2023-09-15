@@ -1,8 +1,9 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Roadmap } from 'src/app/core/models/roadmap';
+import { TableOptions } from 'src/app/core/models/tableoption.model';
 import { RoadmapService } from 'src/app/core/services/roadmap.service';
 @Component({
   selector: 'app-roadmaps',
@@ -24,13 +25,14 @@ export class RoadmapsComponent implements OnInit {
       header: 'Titolo',
     },
   ]
-  tableOptions = {
+  tableOptions:TableOptions = {
     "type": "roadmap",
     "displayedColumns": this.displayedColumns,
     "tableDef": this.tableDef,
     "canDelete": true,
     "canModify": true,
     btnCreate:{
+      "type":"roadmap",
       "title":"Aggiungi Roadmap",
       "canCreate":  true,
       "canView": true
@@ -39,10 +41,14 @@ export class RoadmapsComponent implements OnInit {
     "detailTitle": this.detailTitle,
     "emptyData": false,
     btnVisualize:{
+      canViewGraph:true,
       canView:false,
       tooltip:"Visualizza roadmap",
       routerLink:"/mindmap",
       queryParams:{id:1}
+    },
+    btnNavigate:{
+      canNavigate:true
     }
   };
   constructor(private roadmapService: RoadmapService, private router: Router) {}
@@ -61,7 +67,7 @@ export class RoadmapsComponent implements OnInit {
         if(error.status === HttpStatusCode.NotFound){
           this.tableOptions.emptyData = true;
         } else {
-          console.log(error.message)
+
         }
       }
     });
@@ -73,10 +79,15 @@ export class RoadmapsComponent implements OnInit {
     }
   }
   visualizeRoadmaps(event: Roadmap){
-    console.log("Ricevuto evento")
+
     this.router.navigate(["/roadmap",{elementId:event.id}])
   }
   visualizzaGrafo(event: Roadmap){
     this.router.navigate(['/mindmap', { id: event.id }])
+  }
+  visualizzaRoadmap(event:any){
+    this.router.navigate(['roadmap'], {
+      state: { options: { elementId:event.element.id,  elementTitle:event.element.title } }
+    });
   }
 }

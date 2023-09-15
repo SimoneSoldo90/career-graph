@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 import { $localize } from '@angular/localize/init';
 
 @Injectable()
@@ -50,15 +50,14 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
   selector: 'app-generic-table',
   templateUrl: './generic-table.component.html',
   styleUrls: ['./generic-table.component.css'],
-  providers: [{provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}],
+  providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
 })
-export class GenericTableComponent implements OnInit  {
-  btnVisualizeQP!: { id: any; };
-
+export class GenericTableComponent implements OnInit {
+  btnVisualizeQP!: { id: any };
 
   @Input() set preDataSource(data: any[]) {
     this.setUpDataInput(data);
-  };
+  }
   @Input() set totalListDataMenu(data: any[]) {
     this.setUpDataMenuButton(data);
   }
@@ -68,21 +67,19 @@ export class GenericTableComponent implements OnInit  {
   @Output() updateData = new EventEmitter<any>();
   @Output() viewGraph = new EventEmitter<any>();
   @Output() viewGraphIdType = new EventEmitter<any>();
-
+  @Output() navigateToOtherView = new EventEmitter<any>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private router: Router) {}
 
-
-  totalList: any[] = [];      // totale lista SKILLS esistenti
-  dataSource: any;      // Dati che riempiranno la tabella
-  actionButtonValue: string = '';     // Stringa che viene usata come switchCase per il comportamento del BUTTON di aggiunta
-  buttonTitle!: string;       //  Titolo del BUTTON
-  buttonMenu: any[] = [];   //  Array che riempie la lista che fuoriesce dal BUTTON
-  tmpData: any[] = [];    //  Array di appoggio per dati temporanei
-  dataSourceMenuButton: any[] = [];   // Qui vengono mantenuti i dati dell'array che riempie il BUTTON per poi compararli con quelli presenti in tabella
-
+  totalList: any[] = []; // totale lista esistenti
+  dataSource: any; // Dati che riempiranno la tabella
+  actionButtonValue: string = ''; // Stringa che viene usata come switchCase per il comportamento del BUTTON di aggiunta
+  buttonTitle!: string; //  Titolo del BUTTON
+  buttonMenu: any[] = []; //  Array che riempie la lista che fuoriesce dal BUTTON
+  tmpData: any[] = []; //  Array di appoggio per dati temporanei
+  dataSourceMenuButton: any[] = []; // Qui vengono mantenuti i dati dell'array che riempie il BUTTON per poi compararli con quelli presenti in tabella
 
   ngOnInit(): void {
     this.setColumns();
@@ -90,9 +87,8 @@ export class GenericTableComponent implements OnInit  {
     this.createNew.emit(false);
   }
 
-
   public setUpDataInput(data: any[]): void {
-    if(data.length > 0){
+    if (data.length > 0) {
       this.tmpData = data;
       this.dataSource = new MatTableDataSource(data);
       this.dataSourceMenuButton = this.tmpData;
@@ -113,11 +109,11 @@ export class GenericTableComponent implements OnInit  {
     const data = this.totalList.filter((obj1: any) => {
       return !this.dataSourceMenuButton.some((obj2: any) => {
         return obj1.id === obj2.id;
-      })
-    })
+      });
+    });
     this.buttonMenu = data;
-    if(this.buttonMenu.length === 0){
-      this.buttonMenu.push({title: 'Nessun elemento da aggiungere'})
+    if (this.buttonMenu.length === 0) {
+      this.buttonMenu.push({ title: 'Nessun elemento da aggiungere' });
     }
   }
 
@@ -133,7 +129,7 @@ export class GenericTableComponent implements OnInit  {
 
   // Fa un check se aggiungere le colonne elimina modifica e visualizza graficamente nella tabella
   displayDynamicColumns(): void {
-    if (this.tableOptions.type === 'roadmap') {
+    if (this.tableOptions.btnVisualize.canViewGraph) {
       this.tableOptions.tableDef.push({
         key: 'visualizzazione_grafica',
         header: 'Visualizzazione Grafica',
@@ -182,7 +178,6 @@ export class GenericTableComponent implements OnInit  {
       this.tableOptions.btnCreate.canView
     ) {
       this.actionButtonValue = 'mentor';
-      this.buttonMenu = ['Radmap 1', 'Radmap 2', 'Radmap 3', 'Radmap 4'];
     }
     if (
       !this.tableOptions.btnCreate.canCreate &&
@@ -190,26 +185,24 @@ export class GenericTableComponent implements OnInit  {
     ) {
       this.actionButtonValue = 'mentee';
     }
-    console.log(this.actionButtonValue);
   }
 
   // Funzione al click del tasto modifica
-  modifyRow(element: object){
+  modifyRow(element: object) {
     const queryParams = {
       item: JSON.stringify(element),
       type: this.tableOptions.type,
-      createMode: false
-    }
+      createMode: false,
+    };
     this.router.navigate(['/form'], {
-        queryParams: queryParams,
-        queryParamsHandling: "merge"
-    }
-  );
+      queryParams: queryParams,
+      queryParamsHandling: 'merge',
+    });
   }
 
   // Funzione al click del tasto elimina
-  deleteRow(elementId: number){
-    console.log('Elemento: id ' + elementId + ' - eliminato');
+  deleteRow(elementId: number) {
+
   }
 
   // Funzione al click del tasto visualizza graficamente
@@ -217,11 +210,15 @@ export class GenericTableComponent implements OnInit  {
     this.viewGraph.emit(element);
   }
 
-  // Per la tabella Roadmap, reindirizza alla pagina di visualizzazione della roadmap
-  roadmapViewer(elementId: number, elementTitle: string): void {
-    this.router.navigate(['roadmap'], { state: { options: {elementId, elementTitle} } })
+  // Reindirizza alla pagina di visualizzazione configurata
+  viewer(elementId: number, elementTitle: string): void {
+    this.navigateToOtherView.emit({
+      element: {
+        id: elementId,
+        title: elementTitle,
+      },
+    });
   }
-
 
   addObject() {
     const queryParams = {
@@ -238,9 +235,7 @@ export class GenericTableComponent implements OnInit  {
     this.updateData.emit(item);
   }
 
-
   view(id: any) {
-    console.log(id)
-    this.viewGraphIdType.emit({"id":id})
+    this.viewGraphIdType.emit({ id: id });
   }
 }

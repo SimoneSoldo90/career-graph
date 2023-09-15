@@ -36,3 +36,15 @@ p.description {
     padding: 0 1%;
   }
 }
+.mat-mdc-chip-avatar.mdc-evolution-chip__icon.mdc-evolution-chip__icon--primary {
+  width: auto;
+  font-size: initial;
+}
+.testoChip {
+  border-left: white 2px solid;
+  padding: 7px;
+}
+.numeroChip {
+  padding: 0 0 0 7px;
+  font-weight: 500;
+}

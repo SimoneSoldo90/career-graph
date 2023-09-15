@@ -15,7 +15,7 @@ export class StatusManagerComponent implements AfterViewInit{
   onStateChanged(newState: string) {
     if (newState === 'menu') {
     } else {
-      //console.log('Nuovo stato selezionato:', newState);
+
     }
   }
 

@@ -10,4 +10,5 @@ export interface Step {
   resources: Resource[]; // Puoi specificare il tipo appropriato per gli oggetti delle risorse
   roadmap_links: any[]; // Puoi specificare il tipo appropriato per gli oggetti dei collegamenti alla roadmap
   skills: Skill[]; // Puoi specificare il tipo appropriato per gli oggetti delle competenze
+  status?: string;
 }
