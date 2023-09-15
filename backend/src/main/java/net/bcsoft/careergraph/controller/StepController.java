@@ -27,6 +27,7 @@ public class StepController {
     }
 
     @PostMapping("/steps/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<StepDTO> createStep(@RequestBody StepDTO stepDTO) {
             StepDTO stepDTO1 =null;
             String sErrorMsq = "";
@@ -49,44 +50,47 @@ public class StepController {
         return responseEntity;
     }
 
-        @GetMapping("/steps/")
-        public ResponseEntity<List <StepDTO>> findSteps(){
-                List <StepDTO> stepDTOList = null;
-                String sErrorMsq = "";
-            try {
-                 stepDTOList = stepService.findAll();
-            } catch (NoContentException e){
-                sErrorMsq = "Error getting list:" + e.getMessage();
-            }
-            ResponseEntity responseEntity = null;
-            if(stepDTOList != null){
-                responseEntity = ResponseEntity.ok(stepDTOList);
-            }else{
-                responseEntity = ResponseEntity.noContent().build();
-            }
-            return responseEntity;
-        }
-
-        @GetMapping("/steps/{stepId}")
-        public ResponseEntity <StepDTO> findStepById (@PathVariable Long stepId){
-            StepDTO stepDTO =null;
+    @GetMapping("/steps/")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<List <StepDTO>> findSteps(){
+            List <StepDTO> stepDTOList = null;
             String sErrorMsq = "";
-            try {
-                stepDTO = stepService.findById(stepId);
-            } catch (NotFoundException e) {
-                sErrorMsq = "Error getting step:" + e.getMessage();
-            }
-            ResponseEntity responseEntity = null;
-            if(stepDTO != null){
-                responseEntity = ResponseEntity.ok(stepDTO);
-            }else{
-                responseEntity = ResponseEntity.notFound().build();
-            }
-            return responseEntity;
+        try {
+             stepDTOList = stepService.findAll();
+        } catch (NoContentException e){
+            sErrorMsq = "Error getting list:" + e.getMessage();
         }
+        ResponseEntity responseEntity = null;
+        if(stepDTOList != null){
+            responseEntity = ResponseEntity.ok(stepDTOList);
+        }else{
+            responseEntity = ResponseEntity.noContent().build();
+        }
+        return responseEntity;
+    }
+
+    @GetMapping("/steps/{stepId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity <StepDTO> findStepById (@PathVariable Long stepId){
+        StepDTO stepDTO =null;
+        String sErrorMsq = "";
+        try {
+            stepDTO = stepService.findById(stepId);
+        } catch (NotFoundException e) {
+            sErrorMsq = "Error getting step:" + e.getMessage();
+        }
+        ResponseEntity responseEntity = null;
+        if(stepDTO != null){
+            responseEntity = ResponseEntity.ok(stepDTO);
+        }else{
+            responseEntity = ResponseEntity.notFound().build();
+        }
+        return responseEntity;
+    }
 
 
     @PutMapping("/steps/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<StepDTO> updateStep(@RequestBody StepDTO stepDTO){
         StepDTO stepDTO1 = null;
         String sErrorMsq = "";
@@ -110,6 +114,7 @@ public class StepController {
     }*/
 
     @PostMapping("/step/{stepId}/resources")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResourceDTO> createResource(@PathVariable Long stepId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = resourceDTO;
         String sErrorMsg = "";
@@ -133,6 +138,7 @@ public class StepController {
     }
 
     @GetMapping("/step/{stepId}/resources")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List <ResourceDTO>> findResources(@PathVariable Long stepId){
         List<ResourceDTO> resourceDTOList = null;
         String sErrorMsq = "";
@@ -151,6 +157,7 @@ public class StepController {
     }
 
     @GetMapping("/steps/{stepId}/resources/{resourceId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResourceDTO> findByIdResource(@PathVariable Long stepId, @PathVariable Long resourceId){
         ResourceDTO resourceDTO = null;
         String sErrorMsq = "";
@@ -169,6 +176,7 @@ public class StepController {
     }
 
     @PutMapping("/steps/{stepId}/resources/{resourceId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResourceDTO> updateResource(@PathVariable Long stepId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsq = "";
@@ -192,6 +200,7 @@ public class StepController {
     }*/
 
     @PostMapping("/steps/{stepId}/roadmap-links/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RoadmapLinkDTO> createStepRoadmapLink(@PathVariable Long stepId, @RequestBody RoadmapLinkDTO roadmapLinkDTO){
         RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsq = "";
@@ -215,6 +224,7 @@ public class StepController {
     }
 
     @GetMapping("/steps/{stepId}/roadmap-links/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<RoadmapLinkDTO>> findStepRoadmapLinkList(@PathVariable Long stepId){
         List<RoadmapLinkDTO> roadmapLinkDTOList = null;
         String sErrorMsq = "";
@@ -233,6 +243,7 @@ public class StepController {
     }
 
     @GetMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RoadmapLinkDTO> findByRoadmapLinkId(@PathVariable Long stepId, @PathVariable Long roadmapLinkId){
         RoadmapLinkDTO roadmapLinkDTO = null;
         String sErrorMsg = "";
@@ -251,6 +262,7 @@ public class StepController {
     }
 
     @PutMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RoadmapLinkDTO> updateStepRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) {
         RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsg = "";
@@ -269,6 +281,7 @@ public class StepController {
     }
 
     @DeleteMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public void deleteStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
 
     }

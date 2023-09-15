@@ -23,6 +23,7 @@ public class RoadmapController {
     }
 
     @GetMapping("/roadmaps/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List <RoadmapDTO>> findRoadmaps(){
         List <RoadmapDTO> roadmapDTOList = null;
         String sErrorMsg = "";
@@ -41,6 +42,7 @@ public class RoadmapController {
     }
 
     @PostMapping("/roadmaps/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <RoadmapDTO> createRoadmap(@RequestBody RoadmapDTO roadmapDTO){
         RoadmapDTO roadmapDTO1 = null;
         String sErrorMsg = "";
@@ -65,6 +67,7 @@ public class RoadmapController {
     }
 
     @GetMapping("/roadmaps/{roadmapId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <RoadmapDTO> findRoadmapById(@PathVariable Long roadmapId){
         RoadmapDTO roadmapDTO = null;
         String sErrorMsg = "";
@@ -83,6 +86,7 @@ public class RoadmapController {
     }
 
     @PutMapping("/roadmaps/{roadmapId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <RoadmapDTO> updateRoadmap(@RequestBody RoadmapDTO roadmapDTO){
         RoadmapDTO roadmapDTO1 = null;
         String sErrorMsg = "";
@@ -103,6 +107,7 @@ public class RoadmapController {
     }
 
     @DeleteMapping("/roadmaps/{roadmapId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public void deleteRoadmap(@PathVariable Long roadmapId){
         roadmapService.delete(roadmapId);
     }

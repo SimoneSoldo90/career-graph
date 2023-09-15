@@ -24,6 +24,7 @@ public class SkillController {
     }
 
     @GetMapping("/skills/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <List<SkillDTO>> findSkills() {
         List <SkillDTO> skillDTOList = null;
         String sErrorMsg = "";
@@ -42,6 +43,7 @@ public class SkillController {
     }
 
     @PostMapping("/skills/")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <SkillDTO> createSkill(@RequestBody SkillDTO skillDTO) {
         SkillDTO skillDTO1 = null;
         String sErrorMsg = "";
@@ -64,6 +66,7 @@ public class SkillController {
     }
 
     @GetMapping("/skills/{skillId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<SkillDTO> findSkillById(@PathVariable Long skillId) {
         SkillDTO skillDTO = null;
         ResponseEntity responseEntity = null;
@@ -77,6 +80,7 @@ public class SkillController {
     }
 
     @PutMapping("/skills/{skillId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <SkillDTO> updateSkillId(@RequestBody SkillDTO skillDTO) {
         SkillDTO skillDTO1 = null;
         String sErrorMsg = "";
@@ -95,6 +99,7 @@ public class SkillController {
         return responseEntity;
     }
     @PostMapping("/skills/{skillId}/resources")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <ResourceDTO> createResource(@PathVariable Long skillId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
@@ -116,6 +121,7 @@ public class SkillController {
         return responseEntity;
     }
     @GetMapping("/skills/{skillId}/resources")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <List<ResourceDTO>> findResources(@PathVariable Long skillId){
         List <ResourceDTO> resourceDTOList = null;
         String sErrorMsg = "";
@@ -134,6 +140,7 @@ public class SkillController {
     }
 
     @GetMapping("/skills/{skillId}/resources/{resourceId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <ResourceDTO> findResourceById(@PathVariable Long skillId, @PathVariable Long resourceId){
         ResourceDTO resourceDTO = null;
         String sErrorMsh = "";
@@ -151,6 +158,7 @@ public class SkillController {
         return responseEntity;
     }
     @PutMapping("/skills/{skillId}/resources/{resourceId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <ResourceDTO> updateResource (@PathVariable Long skillId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO ){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";

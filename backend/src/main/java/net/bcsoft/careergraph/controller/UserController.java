@@ -28,6 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <UserDTO> findUser(@PathVariable Long userId){
         UserDTO userDTO = null;
         ResponseEntity responseEntity = null;
@@ -41,6 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/users/{userId}/user-skills")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <UserSkillDTO> createUserSkill(@PathVariable Long userId, @RequestBody UserSkillDTO userSkillDTO){
         UserSkillDTO userSkillDTO1 = null;
         String sErrorMsg = "";
@@ -63,6 +65,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}/user-skills")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <List<UserSkillDTO>> findUserSkillByUserId(@PathVariable Long userId){
         List<UserSkillDTO> userSkillDTOList = null;
         ResponseEntity responseEntity = null;
@@ -76,6 +79,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{userId}/user-skills/{userSkillId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <UserSkillDTO> updateUserSkill(@PathVariable Long userId, @PathVariable Long userSkillId, @RequestBody UserSkillDTO userSkillDTO){
         UserSkillDTO userSkillDTO1 = null;
         String sErrorMsg = "";
@@ -95,6 +99,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}/user-skills/{userSkillId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <UserSkillDTO> findUserSkillById(@PathVariable Long userId, @PathVariable Long userSkillId){
         UserSkillDTO userSkillDTO = null;
         ResponseEntity responseEntity = null;
