@@ -1,8 +1,8 @@
 package net.bcsoft.careergraph.entity;
 
-public class Account {
+public class User {
     private Long id;
-    private String idSsoU;
+    private String ssoUid;
     private String firstName;
     private String lastName;
     private String email;
@@ -15,12 +15,12 @@ public class Account {
         this.id = id;
     }
 
-    public String getIdSsoU() {
-        return idSsoU;
+    public String getSsoUid() {
+        return ssoUid;
     }
 
-    public void setIdSsoU(String idSsoU) {
-        this.idSsoU = idSsoU;
+    public void setSsoUid(String ssoUid) {
+        this.ssoUid = ssoUid;
     }
 
     public String getFirstName() {

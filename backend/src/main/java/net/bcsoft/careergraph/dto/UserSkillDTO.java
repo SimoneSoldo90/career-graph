@@ -1,16 +1,16 @@
 package net.bcsoft.careergraph.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import net.bcsoft.careergraph.entity.AccountSkill;
+import net.bcsoft.careergraph.entity.UserSkill;
 
-public record UserSkillDTO(Long id, @JsonProperty("user_id") Long userId, @JsonProperty("skill_id") Long skillId, Long status) {
-    public AccountSkill toEntity(){
-        AccountSkill accountSkill = new AccountSkill();
-        accountSkill.setId(id);
-        accountSkill.setIdAccount(userId);
-        accountSkill.setIdSkill(skillId);
-        accountSkill.setIdSkillStatus(status);
-        return accountSkill;
+public record UserSkillDTO(Long id, @JsonProperty("user_id") Long userId, @JsonProperty("skill_id") Long skillId, @JsonProperty("status") String status) {
+    public UserSkill toEntity(){
+        UserSkill userSkill = new UserSkill();
+        userSkill.setId(id);
+        userSkill.setUserId(userId);
+        userSkill.setSkillId(skillId);
+        userSkill.setSkillStatusId(status);
+        return userSkill;
     }
 }
 

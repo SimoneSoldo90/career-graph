@@ -30,16 +30,11 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public ResponseEntity <UserDTO> findUser(@PathVariable Long userId){
         UserDTO userDTO = null;
-        String sErrorMsg = "";
+        ResponseEntity responseEntity = null;
         try {
             userDTO = userService.findById(userId);
-        } catch (NotFoundException e) {
-            sErrorMsg = "Error getting message list: " + e.getMessage();
-        }
-        ResponseEntity responseEntity = null;
-        if(userDTO != null){
             responseEntity = ResponseEntity.ok(userDTO);
-        } else {
+        } catch (NotFoundException e) {
             responseEntity = ResponseEntity.noContent().build();
         }
         return responseEntity;
@@ -51,7 +46,7 @@ public class UserController {
         String sErrorMsg = "";
         try {
             userSkillDTO1 = userService.createUserSkill(userSkillDTO);
-        } catch (BadRequestException e) {
+        } catch (BadRequestException | RuntimeException e) {
             sErrorMsg = "Error creating user skill: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
