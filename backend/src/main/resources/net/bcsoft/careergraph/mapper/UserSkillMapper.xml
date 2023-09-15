@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.bcsoft.careergraph.mapper.UserSkillMapper">
+
+    <resultMap id="accountSkillResultMap" type="net.bcsoft.careergraph.entity.UserSkill">
+        <id property="id" column="id"/>
+        <result property="userId" column="account_id"/>
+        <result property="skillId" column="skill_id"/>
+        <result property="skillStatusId" column="skill_status_id"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="accountSkillResultMap">
+        SELECT *
+        FROM account_skill
+    </select>
+
+    <select id="selectById" resultMap="accountSkillResultMap" parameterType="net.bcsoft.careergraph.entity.UserSkill">
+        SELECT *
+        FROM account_skill
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectByUserId" resultMap="accountSkillResultMap" parameterType="net.bcsoft.careergraph.entity.UserSkill">
+        SELECT *
+        FROM account_skill
+        WHERE account_id = #{userId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="net.bcsoft.careergraph.entity.UserSkill">
+        INSERT INTO account_skill (account_id, skill_id, skill_status_id)
+        VALUES (#{userId}, #{skillId}, #{skillStatusId})
+    </insert>
+
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.UserSkill">
+        UPDATE account_skill
+        SET account_id = #{userId}, skill_id = #{skillId}, skill_status_id = #{skillStatusId}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
