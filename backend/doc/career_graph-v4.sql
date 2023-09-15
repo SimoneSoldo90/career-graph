@@ -21,6 +21,7 @@ CREATE TABLE STEP (
 );
 CREATE TABLE SKILL (
    id SERIAL,
+   step_id INT NOT NULL,
    title VARCHAR(128),
    description VARCHAR(2048),
    PRIMARY KEY (id)

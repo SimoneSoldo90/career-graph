@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.bcsoft.careergraph.mapper.SkillMapper">
+
+    <select id="findById" resultMap="skillResultMap" parameterType="net.bcsoft.careergraph.entity.Skill">
+        SELECT * FROM skill
+        WHERE id = #{id}
+    </select>
+
+    <resultMap id="skillResultMap" type="net.bcsoft.careergraph.entity.Skill">
+        <id property="id" column="id"/>
+        <result property="stepId" column="step_id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="skillResultMap">
+        SELECT * FROM skill
+    </select>
+
+    <select id="findByStepId" resultMap="skillResultMap" parameterType="java.lang.Long">
+        SELECT DISTINCT s.* FROM skill s INNER JOIN STEP_SKILL ss ON s.id = ss.skill_id
+        WHERE ss.step_id = #{stepId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO skill (title, description)
+        VALUES (#{title}, #{description})
+    </insert>
+
+    <update id="update" parameterType="net.bcsoft.careergraph.entity.Skill">
+        UPDATE skill
+        SET title = #{title}, description = #{description}
+        WHERE id = #{id}
+    </update>
+</mapper>
