@@ -68,11 +68,13 @@ public class RoadmapController {
     public ResponseEntity <RoadmapDTO> findRoadmapById(@PathVariable Long roadmapId){
         RoadmapDTO roadmapDTO = null;
         String sErrorMsg = "";
-        try{
-            roadmapDTO =  roadmapService.findById(roadmapId);
-        }catch (NotFoundException e){
-            sErrorMsg = "Error getting roadmap: " + e.getMessage();
-        }
+            try{
+                roadmapDTO =  roadmapService.findById(roadmapId);
+            }catch (NotFoundException e){
+                sErrorMsg = "Error getting roadmap: " + e.getMessage();
+            }
+
+
         ResponseEntity responseEntity = null;
         if(roadmapDTO != null){
             responseEntity = ResponseEntity.ok(roadmapDTO);
@@ -83,14 +85,19 @@ public class RoadmapController {
     }
 
     @PutMapping("/roadmaps/{roadmapId}")
-    public ResponseEntity <RoadmapDTO> updateRoadmap(@RequestBody RoadmapDTO roadmapDTO){
+    public ResponseEntity <RoadmapDTO> updateRoadmap(@PathVariable Long roadmapId ,@RequestBody RoadmapDTO roadmapDTO){
         RoadmapDTO roadmapDTO1 = null;
         String sErrorMsg = "";
-        try{
-            roadmapDTO1 = roadmapService.update(roadmapDTO);
-        }catch (ConflictException e){
-            sErrorMsg = "error updating roadmap" + e.getMessage();
+        if(roadmapId != roadmapDTO.id()){
+            sErrorMsg= "ids in the roadmap mismatch the ones in the request body";
+        }else{
+            try{
+                roadmapDTO1 = roadmapService.update(roadmapDTO);
+            }catch (ConflictException e){
+                sErrorMsg = "error updating roadmap" + e.getMessage();
+            }
         }
+
         ResponseEntity responseEntity = null;
 
         if(roadmapDTO1 != null){
