@@ -84,7 +84,7 @@ public class UserController {
     public ResponseEntity <UserSkillDTO> updateUserSkill(@PathVariable Long userId, @PathVariable Long userSkillId, @RequestBody UserSkillDTO userSkillDTO){
         UserSkillDTO userSkillDTO1 = null;
         String sErrorMsg = "";
-        if(userId != userSkillDTO.userId() | userSkillId != userSkillDTO.id()){
+        if(userId != userSkillDTO.userId() || userSkillId != userSkillDTO.id()){
             sErrorMsg = "ids in the url mismatch the ones in the request body";
         }else{
             try{

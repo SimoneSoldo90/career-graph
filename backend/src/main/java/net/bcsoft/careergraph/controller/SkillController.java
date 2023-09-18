@@ -164,7 +164,7 @@ public class SkillController {
     public ResponseEntity <ResourceDTO> updateResource (@PathVariable Long skillId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO ){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = null;
-        if(skillId != resourceDTO.skillId() | resourceId != resourceDTO.id()){
+        if(skillId != resourceDTO.skillId() || resourceId != resourceDTO.id()){
             sErrorMsg= "ids in the resource mismatch the ones in the request body";
         } else {
             try {

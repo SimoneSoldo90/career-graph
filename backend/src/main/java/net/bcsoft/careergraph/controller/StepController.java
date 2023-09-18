@@ -177,7 +177,7 @@ public class StepController {
     public ResponseEntity<ResourceDTO> updateResource(@PathVariable Long stepId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
-        if(stepId != resourceDTO.stepId() | resourceId != resourceDTO.id()){
+        if(stepId != resourceDTO.stepId() || resourceId != resourceDTO.id()){
             sErrorMsg= "ids in the resource mismatch the ones in the request body";
         }else{
             try{
@@ -268,7 +268,7 @@ public class StepController {
     public ResponseEntity<RoadmapLinkDTO> updateRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) {
         RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsg = null;
-        if(stepId != roadmapLinkDTO.stepId() | roadmapLinkId != roadmapLinkDTO.id()){
+        if(stepId != roadmapLinkDTO.stepId() || roadmapLinkId != roadmapLinkDTO.id()){
             sErrorMsg= "ids in the roadmapLink mismatch the ones in the request body";
         }else{
             try {
