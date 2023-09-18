@@ -11,8 +11,8 @@ public interface UserMapper {
 
     User selectById(Long id);
 
-    User insert(User user);
+    int insert(User user);
 
-    User update(User user);
+    int update(User user);
     void delete(Long id);
 }
