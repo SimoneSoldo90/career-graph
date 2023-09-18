@@ -13,6 +13,6 @@ public interface IRoadmapService {
     public RoadmapDTO create(RoadmapDTO roadmapDTO) throws BadRequestException;
     public RoadmapDTO findById(Long roadmapId) throws NotFoundException;
     public RoadmapDTO update(RoadmapDTO roadmapDTO) throws ConflictException;
-    public void delete(Long roadmapId);
+    public void deleteRoadmap(Long roadmapId) throws NotFoundException, ConflictException;
 
 }

@@ -8,7 +8,6 @@ import net.bcsoft.careergraph.exception.ConflictException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 
-import javax.naming.NotContextException;
 import java.util.List;
 
 public interface IStepService {
@@ -22,7 +21,7 @@ public interface IStepService {
 
     StepDTO update(StepDTO stepDTO) throws ConflictException;
 
-    StepDTO delete(Long stepId);
+
     ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO) throws BadRequestException;
 
     List<ResourceDTO> findAllResource(Long stepId) throws NoContentException ;
@@ -34,5 +33,7 @@ public interface IStepService {
     List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException;
     RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException;
     RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException;
-
+    void deleteStep(Long stepId) throws ConflictException, NotFoundException;
+    void deleteRoadmapLink(Long roadMapLinkId) throws ConflictException, NotFoundException;
+    void deleteResource(Long resourceId) throws ConflictException, NotFoundException;
 }

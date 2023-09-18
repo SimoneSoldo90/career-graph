@@ -108,8 +108,17 @@ public class UserController {
         return responseEntity;
     }
 
-    /*@DeleteMapping("/users/{userId}/user-skills/{userSkillId}")
-    public void deleteUserSkill(@PathVariable Integer userId, @PathVariable Integer userSkillId){
-        userService.delete(userId, userSkillId);
-    }*/
+    @DeleteMapping("/users/{userId}/user-skills/{userSkillId}")
+    public ResponseEntity<String> deleteUserSkill(@PathVariable Long userId, @PathVariable Long userSkillId){
+        ResponseEntity responseEntity = null;
+        try{
+            userService.deleteUserSkill(userSkillId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
+    }
 }

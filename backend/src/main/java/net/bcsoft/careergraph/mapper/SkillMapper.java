@@ -12,4 +12,5 @@ public interface SkillMapper {
     List<Skill> findByStepId(Long stepId);
     int insert(Skill skill);
     int update(Skill skill);
+    void delete(Long id);
 }

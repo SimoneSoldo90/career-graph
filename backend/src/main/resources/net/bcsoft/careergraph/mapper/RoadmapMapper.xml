@@ -28,4 +28,9 @@
         WHERE id = #{id}
     </update>
 
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.Roadmap">
+        DELETE * FROM roadmap
+        WHERE id = #{id}
+    </delete>
+
 </mapper>

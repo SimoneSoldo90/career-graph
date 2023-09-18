@@ -20,5 +20,7 @@ public interface ISkillService {
     ResourceDTO createResource(Long skillId, ResourceDTO resourceDTO)throws BadRequestException;
     ResourceDTO findResourceById(Long skillId, Long resourceId) throws NotFoundException;
     ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException;
+    void deleteSkill(Long id ) throws ConflictException, NotFoundException;
+    void deleteResource(Long resourceId) throws ConflictException, NotFoundException;
 
 }

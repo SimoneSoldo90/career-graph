@@ -10,6 +10,7 @@ public interface StepSkillMapper {
     List<StepSkill> findById();
     StepSkill findById(Long id);
     List<StepSkill> findBySkillId(Long stepId);
-    StepSkill insert(StepSkill stepSkill);
-    StepSkill update(StepSkill stepSkill);
+    int insert(StepSkill stepSkill);
+    int update(StepSkill stepSkill);
+    void delete(Long id);
 }

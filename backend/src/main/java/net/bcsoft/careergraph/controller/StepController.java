@@ -104,11 +104,6 @@ public class StepController {
         return responseEntity;
     }
 
-    /*@DeleteMapping("/steps/{stepId}")
-    public void deleteStep(@PathVariable Long stepId){
-        iStepService.delete(stepId);
-    }*/
-
     @PostMapping("/step/{stepId}/resources")
     public ResponseEntity<ResourceDTO> createResource(@PathVariable Long stepId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = resourceDTO;
@@ -185,11 +180,6 @@ public class StepController {
         }
         return responseEntity;
     }
-
-    /*@DeleteMapping("/steps/{stepId}/resources/{resourceId}")
-    public void deleteResource(@PathVariable Long stepId, @PathVariable Long resourceId){
-    return iStepService.delete(resourceId);
-    }*/
 
     @PostMapping("/steps/{stepId}/roadmap-links/")
     public ResponseEntity<RoadmapLinkDTO> createStepRoadmapLink(@PathVariable Long stepId, @RequestBody RoadmapLinkDTO roadmapLinkDTO){
@@ -268,8 +258,45 @@ public class StepController {
         return responseEntity;
     }
 
-    @DeleteMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
-    public void deleteStepRoadmapLink(@PathVariable Integer stepId, @PathVariable Integer roadmapLinkId){
+    @DeleteMapping("/steps/{stepId}")
+    public ResponseEntity<String> deleteStep(@PathVariable Long stepId){
+        ResponseEntity responseEntity = null;
+        try{
+            stepService.deleteStep(stepId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
+    }
 
+    @DeleteMapping("/steps/{stepId}/resources/{resourceId}")
+    public ResponseEntity<String> deleteResource(@PathVariable Long stepId, @PathVariable Long resourceId){
+        ResponseEntity responseEntity = null;
+        try{
+            stepService.deleteResource(resourceId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
+    public ResponseEntity<String> deleteStepRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId){
+        ResponseEntity responseEntity = null;
+        try{
+            stepService.deleteRoadmapLink(roadmapLinkId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
     }
 }
