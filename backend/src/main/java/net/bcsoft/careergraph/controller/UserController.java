@@ -112,7 +112,7 @@ public class UserController {
     public ResponseEntity<String> deleteUserSkill(@PathVariable Long userId, @PathVariable Long userSkillId){
         ResponseEntity responseEntity = null;
         try{
-            userService.deleteUserSkill(userId, userSkillId);
+            userService.deleteUserSkill(userSkillId);
             responseEntity = ResponseEntity.noContent().build();
         }catch (NotFoundException e){
             responseEntity = ResponseEntity.notFound().build();

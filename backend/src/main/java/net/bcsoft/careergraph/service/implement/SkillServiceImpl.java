@@ -185,7 +185,7 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public void deleteResources(Long skillId, Long resourceId) throws ConflictException, NotFoundException {
+    public void deleteResource(Long resourceId) throws ConflictException, NotFoundException {
         Resource result = resourceMapper.selectById(resourceId);
         if(result != null) {
             try {

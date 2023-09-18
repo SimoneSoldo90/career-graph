@@ -187,7 +187,7 @@ public class SkillController {
     public ResponseEntity<String> deleteResource(@PathVariable Long skillId, @PathVariable Long resourceId){
         ResponseEntity responseEntity = null;
         try{
-            skillService.deleteResources(skillId, resourceId);
+            skillService.deleteResource(resourceId);
             responseEntity = ResponseEntity.noContent().build();
         }catch (NotFoundException e){
             responseEntity = ResponseEntity.notFound().build();

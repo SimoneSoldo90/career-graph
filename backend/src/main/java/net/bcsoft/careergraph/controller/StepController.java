@@ -276,7 +276,7 @@ public class StepController {
     public ResponseEntity<String> deleteResource(@PathVariable Long stepId, @PathVariable Long resourceId){
         ResponseEntity responseEntity = null;
         try{
-            stepService.deleteStepResource(stepId, resourceId);
+            stepService.deleteResource(resourceId);
             responseEntity = ResponseEntity.noContent().build();
         }catch (NotFoundException e){
             responseEntity = ResponseEntity.notFound().build();
@@ -290,7 +290,7 @@ public class StepController {
     public ResponseEntity<String> deleteStepRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId){
         ResponseEntity responseEntity = null;
         try{
-            stepService.deleteStepRoadmapLink(stepId, roadmapLinkId);
+            stepService.deleteRoadmapLink(roadmapLinkId);
             responseEntity = ResponseEntity.noContent().build();
         }catch (NotFoundException e){
             responseEntity = ResponseEntity.notFound().build();

@@ -77,7 +77,6 @@ public class RoadmapServiceImpl implements IRoadmapService {
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
 
-
     @Override
     @Transactional
     public RoadmapDTO update(RoadmapDTO roadmapDTO) throws ConflictException {

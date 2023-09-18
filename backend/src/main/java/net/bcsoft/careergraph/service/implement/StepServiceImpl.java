@@ -234,7 +234,7 @@ public class StepServiceImpl implements IStepService {
 
 
     @Override
-    public void deleteStepRoadmapLink(Long stepId, Long roadMapLinkId) throws ConflictException, NotFoundException {
+    public void deleteRoadmapLink(Long roadMapLinkId) throws ConflictException, NotFoundException {
         RoadmapLink result = roadmapLinkMapper.selectById(roadMapLinkId);
         if(result != null) {
             try {
@@ -249,7 +249,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public void deleteStepResource(Long stepId, Long resourceId) throws ConflictException, NotFoundException {
+    public void deleteResource(Long resourceId) throws ConflictException, NotFoundException {
         Resource result = resourceMapper.selectById(resourceId);
         if(result != null) {
             try {

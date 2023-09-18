@@ -93,7 +93,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void deleteUserSkill(Long userId, Long userSkillId) throws ConflictException, NotFoundException {
+    public void deleteUserSkill(Long userSkillId) throws ConflictException, NotFoundException {
         UserSkill result = userSkillMapper.selectById(userSkillId);
         if(result != null) {
             try {
