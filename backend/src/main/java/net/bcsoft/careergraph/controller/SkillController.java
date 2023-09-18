@@ -169,4 +169,32 @@ public class SkillController {
         return responseEntity;
     }
 
+    @DeleteMapping("/skills/{skillId}")
+    public ResponseEntity<String> deleteSkill(@PathVariable Long skillId){
+        ResponseEntity responseEntity = null;
+        try{
+            skillService.deleteSkill(skillId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping("/skills/{skillId}/resources/{resourceId}")
+    public ResponseEntity<String> deleteResource(@PathVariable Long skillId, @PathVariable Long resourceId){
+        ResponseEntity responseEntity = null;
+        try{
+            skillService.deleteResources(skillId, resourceId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
+    }
+
 }

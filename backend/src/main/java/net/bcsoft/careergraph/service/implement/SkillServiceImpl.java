@@ -3,6 +3,7 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.exception.ConflictException;
 import net.bcsoft.careergraph.exception.NoContentException;
@@ -165,6 +166,37 @@ public class SkillServiceImpl implements ISkillService {
             Resource resource = resourceDTO.toEntity();
             resourceMapper.update(resource);
             return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getStepId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
+    }
+
+    @Override
+    public void deleteSkill(Long id) throws ConflictException, NotFoundException {
+        Skill result = skillMapper.findById(id);
+        if(result != null) {
+            try {
+                skillMapper.delete(id);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
+
+    }
+
+    @Override
+    public void deleteResources(Long skillId, Long resourceId) throws ConflictException, NotFoundException {
+        Resource result = resourceMapper.selectById(resourceId);
+        if(result != null) {
+            try {
+                resourceMapper.delete(resourceId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
     }
 
 }

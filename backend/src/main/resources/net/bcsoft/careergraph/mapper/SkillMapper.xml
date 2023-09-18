@@ -34,4 +34,9 @@
         SET title = #{title}, description = #{description}
         WHERE id = #{id}
     </update>
+
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.Skill">
+        DELETE * FROM skill
+        WHERE id = #{id}
+    </delete>
 </mapper>

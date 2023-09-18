@@ -12,5 +12,6 @@ public interface StepMapper {
     int insert(Step step);
     int update(Step step);
     List <Step> findByRoadmapId(long roadmapId);
+    void delete(Long id);
 
 }

@@ -15,6 +15,6 @@ public interface IUserService {
     public UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException;
     public UserSkillDTO updateUserSkill(UserSkillDTO userSkillDTO) throws ConflictException;
     public UserSkillDTO findUserSkillById(Long userSkillId) throws NotFoundException;
+    public void deleteUserSkill(Long userId, Long userSkillId) throws ConflictException, NotFoundException;
 
-    //public void delete(Integer userId, Integer userSkillId);
 }

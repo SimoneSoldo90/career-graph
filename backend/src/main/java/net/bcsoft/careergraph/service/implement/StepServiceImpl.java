@@ -217,8 +217,50 @@ public class StepServiceImpl implements IStepService {
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
     }
 
-    public StepDTO delete(Long stepId) {
-        System.out.println("Funziona!");
-        return null;
+    @Override
+    public void deleteStep(Long stepId) throws ConflictException, NotFoundException {
+        Step result = stepMapper.selectById(stepId);
+        if(result != null) {
+            try {
+                stepMapper.delete(stepId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
+    }
+
+
+    @Override
+    public void deleteStepRoadmapLink(Long stepId, Long roadMapLinkId) throws ConflictException, NotFoundException {
+        RoadmapLink result = roadmapLinkMapper.selectById(roadMapLinkId);
+        if(result != null) {
+            try {
+                roadmapLinkMapper.delete(roadMapLinkId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
+    }
+
+    @Override
+    public void deleteStepResource(Long stepId, Long resourceId) throws ConflictException, NotFoundException {
+        Resource result = resourceMapper.selectById(resourceId);
+        if(result != null) {
+            try {
+                resourceMapper.delete(resourceId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
     }
 }
+

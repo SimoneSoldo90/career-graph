@@ -12,4 +12,5 @@ public interface UserSkillMapper {
     List<UserSkill> selectByUserId(Long userId);
     int insert(UserSkill userSkill);
     int update(UserSkill userSkill);
+    void delete(Long id);
 }

@@ -11,4 +11,5 @@ public interface RoadmapLinkMapper {
     RoadmapLink selectById(Long id);
     RoadmapLink insert(RoadmapLink roadmapLink);
     int update(RoadmapLink roadmapLink);
+    void delete(Long id);
 }

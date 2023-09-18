@@ -22,7 +22,7 @@ public interface IStepService {
 
     StepDTO update(StepDTO stepDTO) throws ConflictException;
 
-    StepDTO delete(Long stepId);
+
     ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO) throws BadRequestException;
 
     List<ResourceDTO> findAllResource(Long stepId) throws NoContentException ;
@@ -34,5 +34,7 @@ public interface IStepService {
     List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException;
     RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException;
     RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException;
-
+    void deleteStep(Long stepId) throws ConflictException, NotFoundException;
+    void deleteStepRoadmapLink(Long stepId, Long roadMapLinkId) throws ConflictException, NotFoundException;
+    void deleteStepResource(Long stepId, Long resourceId) throws ConflictException, NotFoundException;
 }

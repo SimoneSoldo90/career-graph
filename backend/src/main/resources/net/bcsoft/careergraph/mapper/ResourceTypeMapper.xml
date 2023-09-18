@@ -18,4 +18,9 @@
         WHERE id = #{id}
     </select>
 
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.ResourceType">
+        DELETE * FROM resource_type
+        WHERE id = #{id}
+    </delete>
+
 </mapper>

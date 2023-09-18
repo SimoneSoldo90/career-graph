@@ -103,7 +103,16 @@ public class RoadmapController {
     }
 
     @DeleteMapping("/roadmaps/{roadmapId}")
-    public void deleteRoadmap(@PathVariable Long roadmapId){
-        roadmapService.delete(roadmapId);
+    public ResponseEntity<String> deleteRoadmap(@PathVariable Long roadmapId){
+        ResponseEntity responseEntity = null;
+        try{
+            roadmapService.deleteRoadmap(roadmapId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
     }
 }

@@ -44,4 +44,9 @@
         WHERE skill_id = #{skillId}
     </select>
 
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.Resource">
+        DELETE * FROM resource
+        WHERE id = #{id}
+    </delete>
+
 </mapper>

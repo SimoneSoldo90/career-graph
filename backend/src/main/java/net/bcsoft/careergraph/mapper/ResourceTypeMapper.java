@@ -9,4 +9,5 @@ import java.util.List;
 public interface ResourceTypeMapper {
     List<ResourceType> selectAll();
     ResourceType selectById(String id);
+    void delete(Long id);
 }
