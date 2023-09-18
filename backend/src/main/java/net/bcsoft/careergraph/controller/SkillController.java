@@ -77,14 +77,19 @@ public class SkillController {
     }
 
     @PutMapping("/skills/{skillId}")
-    public ResponseEntity <SkillDTO> updateSkillId(@RequestBody SkillDTO skillDTO) {
+    public ResponseEntity <SkillDTO> updateSkillId(@PathVariable Long skillId, @RequestBody SkillDTO skillDTO) {
         SkillDTO skillDTO1 = null;
         String sErrorMsg = "";
-        try{
-            skillDTO1 = skillService.updateSkill(skillDTO);
-        }catch (ConflictException e){
-            sErrorMsg = "error updating skill" + e.getMessage();
+        if(skillId != skillDTO.id()){
+
+        }else{
+            try{
+                skillDTO1 = skillService.updateSkill(skillDTO);
+            }catch (ConflictException e){
+                sErrorMsg = "error updating skill" + e.getMessage();
+            }
         }
+
         ResponseEntity responseEntity = null;
         if(skillDTO1 != null){
             responseEntity = ResponseEntity.ok(skillDTO);
@@ -98,6 +103,11 @@ public class SkillController {
     public ResponseEntity <ResourceDTO> createResource(@PathVariable Long skillId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
+        if(skillId != resourceDTO.skillId()){
+            sErrorMsg= "Error updating roadmap:";
+        }else{
+
+        }
         try{
             resourceDTO1 = skillService.createResource(skillId, resourceDTO);
         }catch (BadRequestException e){
@@ -153,14 +163,18 @@ public class SkillController {
     @PutMapping("/skills/{skillId}/resources/{resourceId}")
     public ResponseEntity <ResourceDTO> updateResource (@PathVariable Long skillId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO ){
         ResourceDTO resourceDTO1 = null;
-        String sErrorMsg = "";
-        try{
-            resourceDTO1 = skillService.updateResource(resourceDTO);
-        }catch (ConflictException e){
-            sErrorMsg = "error updating resource" + e.getMessage();
+        String sErrorMsg = null;
+        if(skillId != resourceDTO.skillId() | resourceId != resourceDTO.id()){
+            sErrorMsg= "ids in the url mismatch the ones in the request body";
+        } else {
+            try {
+                resourceDTO1 = skillService.updateResource(resourceDTO);
+            } catch (ConflictException e) {
+                sErrorMsg = "error updating resource" + e.getMessage();
+            }
         }
         ResponseEntity responseEntity = null;
-        if(resourceDTO1 != null){
+        if(sErrorMsg == null){
             responseEntity = ResponseEntity.ok(resourceDTO);
         }
         else{

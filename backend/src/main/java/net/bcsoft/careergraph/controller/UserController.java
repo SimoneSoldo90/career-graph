@@ -44,11 +44,16 @@ public class UserController {
     public ResponseEntity <UserSkillDTO> createUserSkill(@PathVariable Long userId, @RequestBody UserSkillDTO userSkillDTO){
         UserSkillDTO userSkillDTO1 = null;
         String sErrorMsg = "";
-        try {
-            userSkillDTO1 = userService.createUserSkill(userSkillDTO);
-        } catch (BadRequestException | RuntimeException e) {
-            sErrorMsg = "Error creating user skill: " + e.getMessage();
+        if(userId != userSkillDTO.userId()){
+            sErrorMsg= "Error updating roadmap:";
+        }else{
+            try {
+                userSkillDTO1 = userService.createUserSkill(userSkillDTO);
+            } catch (BadRequestException | RuntimeException e) {
+                sErrorMsg = "Error creating user skill: " + e.getMessage();
+            }
         }
+
         ResponseEntity responseEntity = null;
         if(userSkillDTO1 != null){
             try{
@@ -79,11 +84,16 @@ public class UserController {
     public ResponseEntity <UserSkillDTO> updateUserSkill(@PathVariable Long userId, @PathVariable Long userSkillId, @RequestBody UserSkillDTO userSkillDTO){
         UserSkillDTO userSkillDTO1 = null;
         String sErrorMsg = "";
-        try{
+        if(userId != userSkillDTO.userId() | userSkillId != userSkillDTO.id()){
+            sErrorMsg = "ids in the url mismatch the ones in the request body";
+        }else{
+            try{
             userSkillDTO1 = userService.updateUserSkill(userSkillDTO);
         }catch (ConflictException e){
             sErrorMsg = "error updating skill : " + e.getMessage();
         }
+    }
+
         ResponseEntity responseEntity = null;
         if(userSkillDTO1 != null){
             responseEntity = ResponseEntity.ok(userSkillDTO);
