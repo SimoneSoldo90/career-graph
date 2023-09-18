@@ -71,16 +71,11 @@ public class StepController {
         public ResponseEntity <StepDTO> findStepById (@PathVariable Long stepId){
             StepDTO stepDTO =null;
             String sErrorMsg = "";
-            if(stepId != stepDTO.id()){
-                sErrorMsg= "Error updating roadmap:";
-            }else{
                 try {
                     stepDTO = stepService.findById(stepId);
                 } catch (NotFoundException e) {
                     sErrorMsg = "Error getting step:" + e.getMessage();
                 }
-            }
-
             ResponseEntity responseEntity = null;
             if(stepDTO != null){
                 responseEntity = ResponseEntity.ok(stepDTO);
@@ -119,7 +114,7 @@ public class StepController {
         ResourceDTO resourceDTO1 = resourceDTO;
         String sErrorMsg = "";
         if(stepId != resourceDTO.stepId()){
-            sErrorMsg= "Error updating roadmap:";
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
         }else{
             try{
                 resourceDTO = stepService.createResource(stepId, resourceDTO);
@@ -183,7 +178,7 @@ public class StepController {
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
         if(stepId != resourceDTO.stepId() | resourceId != resourceDTO.id()){
-            sErrorMsg= "Error updating roadmaplink:";
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
         }else{
             try{
                 resourceDTO1 = stepService.updateResource(resourceDTO);
@@ -210,7 +205,7 @@ public class StepController {
         RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsg = "";
         if(stepId != roadmapLinkDTO.stepId()){
-            sErrorMsg= "Error updating roadmap:";
+            sErrorMsg= "ids in the roadmapLink mismatch the ones in the request body";
         }else{
             try{
                 roadmapLinkDTO1 = stepService.createRoadmapLink(roadmapLinkDTO);
@@ -274,7 +269,7 @@ public class StepController {
         RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsg = null;
         if(stepId != roadmapLinkDTO.stepId() | roadmapLinkId != roadmapLinkDTO.id()){
-            sErrorMsg = "Error updating roadmaplink:";
+            sErrorMsg= "ids in the roadmapLink mismatch the ones in the request body";
         }else{
             try {
                 roadmapLinkDTO1 = stepService.updateRoadmapLink(roadmapLinkDTO);

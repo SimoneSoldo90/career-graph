@@ -68,15 +68,12 @@ public class RoadmapController {
     public ResponseEntity <RoadmapDTO> findRoadmapById(@PathVariable Long roadmapId){
         RoadmapDTO roadmapDTO = null;
         String sErrorMsg = "";
-        if(roadmapId != roadmapDTO.id()){
-            sErrorMsg= "Error updating roadmap:";
-        }else{
             try{
                 roadmapDTO =  roadmapService.findById(roadmapId);
             }catch (NotFoundException e){
                 sErrorMsg = "Error getting roadmap: " + e.getMessage();
             }
-        }
+
 
         ResponseEntity responseEntity = null;
         if(roadmapDTO != null){
@@ -92,7 +89,7 @@ public class RoadmapController {
         RoadmapDTO roadmapDTO1 = null;
         String sErrorMsg = "";
         if(roadmapId != roadmapDTO.id()){
-            sErrorMsg= "Error updating roadmap:";
+            sErrorMsg= "ids in the roadmap mismatch the ones in the request body";
         }else{
             try{
                 roadmapDTO1 = roadmapService.update(roadmapDTO);

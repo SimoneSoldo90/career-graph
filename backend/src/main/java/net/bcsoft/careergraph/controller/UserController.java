@@ -45,7 +45,7 @@ public class UserController {
         UserSkillDTO userSkillDTO1 = null;
         String sErrorMsg = "";
         if(userId != userSkillDTO.userId()){
-            sErrorMsg= "Error updating roadmap:";
+            sErrorMsg= "ids in the userskill mismatch the ones in the request body";
         }else{
             try {
                 userSkillDTO1 = userService.createUserSkill(userSkillDTO);

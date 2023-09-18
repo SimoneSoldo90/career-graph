@@ -81,7 +81,7 @@ public class SkillController {
         SkillDTO skillDTO1 = null;
         String sErrorMsg = "";
         if(skillId != skillDTO.id()){
-
+            sErrorMsg= "ids in the skill mismatch the ones in the request body";
         }else{
             try{
                 skillDTO1 = skillService.updateSkill(skillDTO);
@@ -104,15 +104,15 @@ public class SkillController {
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
         if(skillId != resourceDTO.skillId()){
-            sErrorMsg= "Error updating roadmap:";
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
         }else{
+            try{
+                resourceDTO1 = skillService.createResource(skillId, resourceDTO);
+            }catch (BadRequestException e){
+                sErrorMsg = "Error creating resource: " + e.getMessage();
+            }
+        }
 
-        }
-        try{
-            resourceDTO1 = skillService.createResource(skillId, resourceDTO);
-        }catch (BadRequestException e){
-            sErrorMsg = "Error creating resource: " + e.getMessage();
-        }
         ResponseEntity responseEntity = null;
         if(resourceDTO1 != null) {
             try{
@@ -165,7 +165,7 @@ public class SkillController {
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = null;
         if(skillId != resourceDTO.skillId() | resourceId != resourceDTO.id()){
-            sErrorMsg= "ids in the url mismatch the ones in the request body";
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
         } else {
             try {
                 resourceDTO1 = skillService.updateResource(resourceDTO);
