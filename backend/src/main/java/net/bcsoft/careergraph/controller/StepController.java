@@ -138,17 +138,17 @@ public class StepController {
 
     @GetMapping("/step/{stepId}/resources")
     public ResponseEntity<List <ResourceDTO>> findAllResource(@PathVariable Long stepId){
-        List<ResourceDTO> resourceDTO = null;
+        List<ResourceDTO> resourceDTOList = null;
         String sErrorMsg = "";
             sErrorMsg= "Error updating roadmap:";
         try{
-             resourceDTO = stepService.findAllResource(stepId);
+             resourceDTOList = stepService.findAllResource(stepId);
         }catch (NoContentException e){
             sErrorMsg = "Error getting list:" + e.getMessage();
         }
         ResponseEntity responseEntity = null;
-        if(resourceDTO != null){
-            responseEntity = ResponseEntity.ok(resourceDTO);
+        if(resourceDTOList != null){
+            responseEntity = ResponseEntity.ok(resourceDTOList);
         }else{
             responseEntity = ResponseEntity.noContent().build();
         }
