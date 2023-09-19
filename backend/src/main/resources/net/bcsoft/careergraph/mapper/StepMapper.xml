@@ -40,4 +40,9 @@
         WHERE id = #{id}
     </update>
 
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.Step">
+        DELETE * FROM step
+        WHERE id = #{id}
+    </delete>
+
 </mapper>

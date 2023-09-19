@@ -31,4 +31,9 @@
         WHERE id = #{id}
     </update>
 
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.User">
+        DELETE * FROM user
+        WHERE id = #{id}
+    </delete>
+
 </mapper>

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ISkillService {
 
+
     List<SkillDTO> findAllSkills() throws NoContentException, InternalException;
     SkillDTO createSkill(SkillDTO skillDTO) throws BadRequestException, InternalException;
     SkillDTO updateSkill(SkillDTO skillDTO) throws ConflictException, InternalException;
@@ -17,5 +18,8 @@ public interface ISkillService {
     ResourceDTO createResource(Long skillId, ResourceDTO resourceDTO)throws BadRequestException, InternalException;
     ResourceDTO findResourceById(Long skillId, Long resourceId) throws NotFoundException, InternalException;
     ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException, InternalException;
+    void deleteSkill(Long id ) throws ConflictException, NotFoundException;
+    void deleteResource(Long resourceId) throws ConflictException, NotFoundException;
+
 
 }

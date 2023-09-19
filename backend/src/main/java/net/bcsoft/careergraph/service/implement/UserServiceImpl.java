@@ -2,6 +2,7 @@ package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.UserDTO;
 import net.bcsoft.careergraph.dto.UserSkillDTO;
+import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.User;
 import net.bcsoft.careergraph.entity.UserSkill;
 import net.bcsoft.careergraph.entity.Skill;
@@ -140,9 +141,19 @@ public class UserServiceImpl implements IUserService {
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
     }
 
-    /*@Override
-    public void delete(Integer userId, Integer userSkillId) {
-        System.out.println("Funziona!");
+    @Override
+    public void deleteUserSkill(Long userSkillId) throws ConflictException, NotFoundException {
+        UserSkill result = userSkillMapper.selectById(userSkillId);
+        if(result != null) {
+            try {
+                userSkillMapper.delete(userSkillId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
+    }
 
-    }*/
 }

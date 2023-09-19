@@ -12,6 +12,7 @@ import net.bcsoft.careergraph.service.IStepService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         if(roadmapList == null){
             throw new NoContentException("no roadmap disponibili");
         }
-        for(Roadmap roadmap : roadmapList){
+        for (Roadmap roadmap : roadmapList) {
             RoadmapDTO roadmapDTO = new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
             roadmapDTOList.add(roadmapDTO);
         }
@@ -93,12 +94,11 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+
             throw new BadRequestException("roadmap non creata");
         }
-        return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null );
+        return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
-
-
 
     @Override
     @Transactional
@@ -122,7 +122,17 @@ public class RoadmapServiceImpl implements IRoadmapService {
     }
 
     @Override
-    public void delete(Long roadmapId) {
-        System.out.println("Funziona");
+    public void deleteRoadmap(Long roadmapId) throws NotFoundException, ConflictException{
+        Roadmap result = roadmapMapper.selectById(roadmapId);
+        if(result != null) {
+            try {
+                roadmapMapper.delete(roadmapId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
     }
 }

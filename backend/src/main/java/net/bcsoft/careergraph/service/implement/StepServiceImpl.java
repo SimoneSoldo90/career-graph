@@ -1,15 +1,14 @@
 package net.bcsoft.careergraph.service.implement;
 
-import net.bcsoft.careergraph.dto.ResourceDTO;
-import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
-import net.bcsoft.careergraph.dto.SkillDTO;
-import net.bcsoft.careergraph.dto.StepDTO;
+import net.bcsoft.careergraph.dto.*;
 import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
+import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
 import net.bcsoft.careergraph.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,15 @@ public class StepServiceImpl implements IStepService {
     RoadmapLinkMapper roadmapLinkMapper;
     ISkillService skillService;
     ResourceMapper resourceMapper;
+    RoadmapMapper roadmapMapper;
 
     @Autowired
-    public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper) {
+    public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper, RoadmapMapper roadmapMapper) {
         this.stepMapper = stepMapper;
         this.roadmapLinkMapper = roadmapLinkMapper;
         this.skillService = skillService;
         this.resourceMapper = resourceMapper;
+        this.roadmapMapper = roadmapMapper;
     }
 
     /** JSON step
@@ -275,7 +276,7 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new BadRequestException("roadmaplink non creata");
         }
-        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
 
     @Override
@@ -291,8 +292,9 @@ public class StepServiceImpl implements IStepService {
             throw new NoContentException("no roadmaplink disponibili");
         }
         for (RoadmapLink roadmapLink : roadmapLinkList){
-        RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
-        roadmapLinkDTOList.add(roadmapLinkDTO);
+            Roadmap roadmap = roadmapMapper.selectById(roadmapLink.getRoadmapId());
+            RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), roadmap.getTitle(), roadmap.getDescription());
+            roadmapLinkDTOList.add(roadmapLinkDTO);
         }
         return roadmapLinkDTOList;
     }
@@ -308,7 +310,8 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new NotFoundException("roadmap_link non trovato");
         }
-        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
+        Roadmap roadmap = roadmapMapper.selectById(result.getRoadmapId());
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), roadmap.getTitle(), roadmap.getDescription());
     }
 
     @Override
@@ -336,8 +339,50 @@ public class StepServiceImpl implements IStepService {
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
     }
 
-    public StepDTO delete(Long stepId) {
-        System.out.println("Funziona!");
-        return null;
+    @Override
+    public void deleteStep(Long stepId) throws ConflictException, NotFoundException {
+        Step result = stepMapper.selectById(stepId);
+        if(result != null) {
+            try {
+                stepMapper.delete(stepId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
+    }
+
+
+    @Override
+    public void deleteRoadmapLink(Long roadMapLinkId) throws ConflictException, NotFoundException {
+        RoadmapLink result = roadmapLinkMapper.selectById(roadMapLinkId);
+        if(result != null) {
+            try {
+                roadmapLinkMapper.delete(roadMapLinkId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
+    }
+
+    @Override
+    public void deleteResource(Long resourceId) throws ConflictException, NotFoundException {
+        Resource result = resourceMapper.selectById(resourceId);
+        if(result != null) {
+            try {
+                resourceMapper.delete(resourceId);
+            }catch (RuntimeException e) {
+                throw new ConflictException("elemento non eliminabile");
+            }
+        }
+        else {
+            throw new NotFoundException("elemento non esistente");
+        }
     }
 }
+

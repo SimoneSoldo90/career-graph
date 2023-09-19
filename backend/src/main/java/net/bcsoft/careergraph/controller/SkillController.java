@@ -78,14 +78,21 @@ public class SkillController {
     }
 
     @PutMapping("/skills/{skillId}")
-    public ResponseEntity <SkillDTO> updateSkillId(@RequestBody SkillDTO skillDTO) {
+    public ResponseEntity <SkillDTO> updateSkillId(@PathVariable Long skillId, @RequestBody SkillDTO skillDTO) {
         SkillDTO skillDTO1 = null;
         String sErrorMsg = "";
-        try{
-            skillDTO1 = skillService.updateSkill(skillDTO);
-        }catch (ConflictException | InternalException e){
-            sErrorMsg = "error updating skill" + e.getMessage();
+
+        if(skillId != skillDTO.id()){
+            sErrorMsg= "ids in the skill mismatch the ones in the request body";
+        }else{
+            try{
+                skillDTO1 = skillService.updateSkill(skillDTO);
+            }catch (ConflictException | InternalException e){
+                sErrorMsg = "error updating skill" + e.getMessage();
+            }
+
         }
+
         ResponseEntity responseEntity = null;
         if(skillDTO1 != null){
             responseEntity = ResponseEntity.ok(skillDTO);
@@ -99,11 +106,17 @@ public class SkillController {
     public ResponseEntity <ResourceDTO> createResource(@PathVariable Long skillId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
-        try{
-            resourceDTO1 = skillService.createResource(skillId, resourceDTO);
-        }catch (BadRequestException | InternalException e){
-            sErrorMsg = "Error creating resource: " + e.getMessage();
+
+        if(skillId != resourceDTO.skillId()){
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
+        }else{
+            try{
+                resourceDTO1 = skillService.createResource(skillId, resourceDTO);
+            }catch (BadRequestException | InternalException e){
+                sErrorMsg = "Error creating resource: " + e.getMessage();
+            }
         }
+
         ResponseEntity responseEntity = null;
         if(resourceDTO1 != null) {
             try{
@@ -154,18 +167,51 @@ public class SkillController {
     @PutMapping("/skills/{skillId}/resources/{resourceId}")
     public ResponseEntity <ResourceDTO> updateResource (@PathVariable Long skillId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO ){
         ResourceDTO resourceDTO1 = null;
-        String sErrorMsg = "";
-        try{
-            resourceDTO1 = skillService.updateResource(resourceDTO);
-        }catch (ConflictException | InternalException e){
-            sErrorMsg = "error updating resource" + e.getMessage();
+
+        String sErrorMsg = null;
+        if(skillId != resourceDTO.skillId() || resourceId != resourceDTO.id()){
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
+        } else {
+            try {
+                resourceDTO1 = skillService.updateResource(resourceDTO);
+            } catch (ConflictException | InternalException e) {
+                sErrorMsg = "error updating resource" + e.getMessage();
+            }
         }
         ResponseEntity responseEntity = null;
-        if(resourceDTO1 != null){
+        if(sErrorMsg == null){
             responseEntity = ResponseEntity.ok(resourceDTO);
         }
         else{
             responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body(sErrorMsg);
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping("/skills/{skillId}")
+    public ResponseEntity<String> deleteSkill(@PathVariable Long skillId){
+        ResponseEntity responseEntity = null;
+        try{
+            skillService.deleteSkill(skillId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping("/skills/{skillId}/resources/{resourceId}")
+    public ResponseEntity<String> deleteResource(@PathVariable Long skillId, @PathVariable Long resourceId){
+        ResponseEntity responseEntity = null;
+        try{
+            skillService.deleteResource(resourceId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
         }
         return responseEntity;
     }
