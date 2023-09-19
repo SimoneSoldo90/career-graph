@@ -10,7 +10,7 @@ public interface IRoadmapService {
     public RoadmapDTO create(RoadmapDTO roadmapDTO) throws BadRequestException, InternalException;
     public RoadmapDTO findById(Long roadmapId) throws NotFoundException, InternalException;
     public RoadmapDTO update(RoadmapDTO roadmapDTO) throws ConflictException, InternalException;
-    public void delete(Long roadmapId);
+    public void deleteRoadmap(Long roadmapId) throws NotFoundException, ConflictException;
 
 
 }

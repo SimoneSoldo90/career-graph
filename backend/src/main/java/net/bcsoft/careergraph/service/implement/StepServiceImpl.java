@@ -336,7 +336,7 @@ public class StepServiceImpl implements IStepService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
-        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
+        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
     }
 
     @Override

@@ -22,8 +22,6 @@ public interface IStepService {
 
     StepDTO update(StepDTO stepDTO) throws ConflictException, InternalException;
   
-    StepDTO delete(Long stepId);
-  
     ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO) throws BadRequestException, InternalException;
 
 

@@ -142,7 +142,7 @@ public class StepController {
         try{
              resourceDTOList = stepService.findResourcesByStepId(stepId);
         }catch (NoContentException | InternalException e){
-            sErrorMsq = "Error getting list:" + e.getMessage();
+            sErrorMsg = "Error getting list:" + e.getMessage();
 
         }
         ResponseEntity responseEntity = null;
@@ -199,9 +199,7 @@ public class StepController {
     @PostMapping("/steps/{stepId}/roadmap-links/")
     public ResponseEntity<RoadmapLinkDTO> createStepRoadmapLink(@PathVariable Long stepId, @RequestBody RoadmapLinkDTO roadmapLinkDTO){
         RoadmapLinkDTO roadmapLinkDTO1 = null;
-        sErrorMsq = "Error creating roadmaplink:" + e.getMessage();
-
-        String sErrorMsg = "";
+        String sErrorMsg = " ";
         if(stepId != roadmapLinkDTO.stepId()){
             sErrorMsg= "ids in the roadmapLink mismatch the ones in the request body";
         }else{
