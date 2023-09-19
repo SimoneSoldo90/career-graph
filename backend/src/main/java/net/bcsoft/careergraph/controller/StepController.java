@@ -141,7 +141,7 @@ public class StepController {
 
     @GetMapping("/step/{stepId}/resources")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<List <ResourceDTO>> findAllResource(@PathVariable Long stepId){
+    public ResponseEntity<List <ResourceDTO>> findResourcesBySkillId(@PathVariable Long stepId){
         List<ResourceDTO> resourceDTOList = null;
         String sErrorMsg = "Error updating roadmap:";
         try{
@@ -235,11 +235,11 @@ public class StepController {
 
     @GetMapping("/steps/{stepId}/roadmap-links/")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<List<RoadmapLinkDTO>> findStepRoadmapLinkList(@PathVariable Long stepId){
+    public ResponseEntity<List<RoadmapLinkDTO>> findRoadmapLinksByStepId(@PathVariable Long stepId){
         List<RoadmapLinkDTO> roadmapLinkDTOList = null;
         String sErrorMsq = null;
         try{
-            roadmapLinkDTOList = stepService.findAllRoadmapLink(stepId);
+            roadmapLinkDTOList = stepService.findRoadmapLinksByStepId(stepId);
         }catch (NoContentException | InternalException e){
             sErrorMsq = "Error getting list:" + e.getMessage();
         }

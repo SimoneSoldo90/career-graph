@@ -3,16 +3,15 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
-import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.mapper.StepSkillMapper;
-import net.bcsoft.careergraph.service.ISkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import net.bcsoft.careergraph.service.ISkillService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +154,7 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public List<ResourceDTO> findAllResource(Long skillId) throws NoContentException, InternalException{
+    public List<ResourceDTO> findResourcesBySkillId(Long skillId) throws NoContentException, InternalException{
         List<Resource> resourceList;
         try {
             resourceList = resourceMapper.selectBySkillId(skillId);

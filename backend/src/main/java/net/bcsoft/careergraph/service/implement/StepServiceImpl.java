@@ -92,7 +92,7 @@ public class StepServiceImpl implements IStepService {
             }
             List<RoadmapLinkDTO> roadmapLinkDTOList;
             try {
-                roadmapLinkDTOList = findAllRoadmapLink(step.getId());
+                roadmapLinkDTOList = findRoadmapLinksByStepId(step.getId());
             } catch(RuntimeException e) {
                 throw new InternalException(e.getMessage());
             }
@@ -133,7 +133,7 @@ public class StepServiceImpl implements IStepService {
             }
             List<RoadmapLinkDTO> roadmapLinkDTOList;
             try {
-                roadmapLinkDTOList = findAllRoadmapLink(step.getId());
+                roadmapLinkDTOList = findRoadmapLinksByStepId(step.getId());
             } catch(RuntimeException e) {
                 throw new InternalException(e.getMessage());
             }
@@ -280,7 +280,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException, InternalException {
+    public List<RoadmapLinkDTO> findRoadmapLinksByStepId(Long stepId) throws NoContentException, InternalException {
         List<RoadmapLink> roadmapLinkList;
         try {
             roadmapLinkList = roadmapLinkMapper.selectAll();

@@ -14,7 +14,7 @@ public interface ISkillService {
     SkillDTO updateSkill(SkillDTO skillDTO) throws ConflictException, InternalException;
     SkillDTO findSkillById(Long skillId) throws NotFoundException, InternalException;
     List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException, InternalException;
-    List<ResourceDTO> findAllResource(Long skillId) throws NoContentException, InternalException;
+    List<ResourceDTO> findResourcesBySkillId(Long skillId) throws NoContentException, InternalException;
     ResourceDTO createResource(Long skillId, ResourceDTO resourceDTO)throws BadRequestException, InternalException;
     ResourceDTO findResourceById(Long skillId, Long resourceId) throws NotFoundException, InternalException;
     ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException, InternalException;

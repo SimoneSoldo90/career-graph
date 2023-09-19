@@ -27,7 +27,7 @@ public interface IStepService {
 
     ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException, InternalException;
     RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException, InternalException;
-    List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException, InternalException;
+    List<RoadmapLinkDTO> findRoadmapLinksByStepId(Long stepId) throws NoContentException, InternalException;
     RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException, InternalException;
     RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException, InternalException;
     void deleteStep(Long stepId) throws ConflictException, NotFoundException;

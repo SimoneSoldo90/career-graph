@@ -7,7 +7,6 @@ import net.bcsoft.careergraph.exception.ConflictException;
 import net.bcsoft.careergraph.exception.InternalException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
-import net.bcsoft.careergraph.service.ISkillService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import net.bcsoft.careergraph.service.ISkillService;
 
 @RestController
 public class SkillController {
@@ -141,7 +141,7 @@ public class SkillController {
         List <ResourceDTO> resourceDTOList = null;
         String sErrorMsg = "";
         try{
-            resourceDTOList = skillService.findAllResource(skillId);
+            resourceDTOList = skillService.findResourcesBySkillId(skillId);
         }catch(NoContentException | InternalException e){
             sErrorMsg = "Error getting list: " + e.getMessage();
         }
