@@ -1,10 +1,8 @@
 package net.bcsoft.careergraph.service.implement;
 
-import net.bcsoft.careergraph.dto.ResourceDTO;
-import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
-import net.bcsoft.careergraph.dto.SkillDTO;
-import net.bcsoft.careergraph.dto.StepDTO;
+import net.bcsoft.careergraph.dto.*;
 import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.exception.BadRequestException;
@@ -29,6 +27,7 @@ public class StepServiceImpl implements IStepService {
     RoadmapLinkMapper roadmapLinkMapper;
     ISkillService skillService;
     ResourceMapper resourceMapper;
+    IRoadmapService roadmapService;
 
     @Autowired
     public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper) {
@@ -180,7 +179,7 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new BadRequestException("roadmaplink non creata");
         }
-        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
 
     @Override
@@ -191,8 +190,15 @@ public class StepServiceImpl implements IStepService {
             throw new NoContentException("no roadmaplink disponibili");
         }
         for (RoadmapLink roadmapLink : roadmapLinkList){
-        RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
-        roadmapLinkDTOList.add(roadmapLinkDTO);
+            RoadmapDTO roadmapDTO = null;
+            try{
+                roadmapDTO = roadmapService.findById(roadmapLink.getRoadmapId());
+            }catch (NotFoundException e){
+                e.getMessage();
+            }
+
+            RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), roadmapDTO.title(), roadmapDTO.description());
+            roadmapLinkDTOList.add(roadmapLinkDTO);
         }
         return null;
     }
@@ -203,7 +209,13 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new NotFoundException("roadmap_link non trovato");
         }
-        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
+            RoadmapDTO roadmapDTO = null;
+        try{
+             roadmapDTO = roadmapService.findById(result.getRoadmapId());
+        }catch (NotFoundException e){
+            e.getMessage();
+        }
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), roadmapDTO.title(), roadmapDTO.description());
     }
 
     @Override
@@ -214,7 +226,7 @@ public class StepServiceImpl implements IStepService {
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         roadmapLinkMapper.update(roadmapLink);
-        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
+        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
     }
 
     @Override
