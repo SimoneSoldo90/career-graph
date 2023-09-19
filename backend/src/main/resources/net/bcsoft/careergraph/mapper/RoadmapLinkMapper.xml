@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.bcsoft.careergraph.mapper.RoadmapLinkMapper">
+
+    <resultMap id="roadmapLinkResultMap" type="net.bcsoft.careergraph.entity.RoadmapLink">
+        <id property="id" column="id"/>
+        <result property="roadmapId" column="roadmap_id"/>
+        <result property="stepId" column="step_id"/>
+    </resultMap>
+
     <select id="selectAll" resultMap="roadmapLinkResultMap">
         SELECT * FROM roadmap_link
     </select>
@@ -11,14 +18,7 @@
         WHERE id = #{id}
     </select>
 
-    <resultMap id="roadmapLinkResultMap" type="net.bcsoft.careergraph.entity.RoadmapLink">
-        <id property="id" column="id"/>
-        <result property="roadmapId" column="roadmap_id"/>
-        <result property="stepId" column="step_id"/>
-    </resultMap>
-
-
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO roadmap_link (step_id, roadmap_id)
         VALUES (#{stepId}, #{roadmapId})
     </insert>
@@ -33,4 +33,5 @@
         DELETE * FROM roadmap_link
         WHERE id = #{id}
     </delete>
+
 </mapper>

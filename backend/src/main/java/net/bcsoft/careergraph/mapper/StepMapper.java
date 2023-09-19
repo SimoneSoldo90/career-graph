@@ -1,5 +1,6 @@
 package net.bcsoft.careergraph.mapper;
 
+import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Step;
 import org.apache.ibatis.annotations.Mapper;
 

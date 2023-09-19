@@ -5,6 +5,7 @@ import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.exception.BadRequestException;
 import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.InternalException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.IStepService;
@@ -33,7 +34,7 @@ public class StepController {
             ResponseEntity responseEntity = null;
         try {
             stepDTO1 = stepService.create(stepDTO);
-        } catch (BadRequestException e) {
+        } catch (BadRequestException | InternalException e) {
             sErrorMsq = "Error creating list:" + e.getMessage();
         }
 
@@ -55,7 +56,7 @@ public class StepController {
                 String sErrorMsq = "";
             try {
                  stepDTOList = stepService.findAll();
-            } catch (NoContentException e){
+            } catch (NoContentException | InternalException e){
                 sErrorMsq = "Error getting list:" + e.getMessage();
             }
             ResponseEntity responseEntity = null;
@@ -70,12 +71,13 @@ public class StepController {
         @GetMapping("/steps/{stepId}")
         public ResponseEntity <StepDTO> findStepById (@PathVariable Long stepId){
             StepDTO stepDTO =null;
-            String sErrorMsg = "";
-                try {
-                    stepDTO = stepService.findById(stepId);
-                } catch (NotFoundException e) {
-                    sErrorMsg = "Error getting step:" + e.getMessage();
-                }
+            String sErrorMsq = "";
+            try {
+                stepDTO = stepService.findById(stepId);
+            } catch (NotFoundException | InternalException e) {
+                sErrorMsq = "Error getting step:" + e.getMessage();
+            }
+
             ResponseEntity responseEntity = null;
             if(stepDTO != null){
                 responseEntity = ResponseEntity.ok(stepDTO);
@@ -91,8 +93,8 @@ public class StepController {
         StepDTO stepDTO1 = null;
         String sErrorMsq = "";
         try{
-             stepDTO1 = stepService.update(stepDTO1);
-        }catch (ConflictException e){
+             stepDTO1 = stepService.update(stepDTO);
+        }catch (ConflictException | InternalException e){
             sErrorMsq = "Error updating step:" + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -108,12 +110,13 @@ public class StepController {
     public ResponseEntity<ResourceDTO> createResource(@PathVariable Long stepId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = resourceDTO;
         String sErrorMsg = "";
+
         if(stepId != resourceDTO.stepId()){
             sErrorMsg= "ids in the resource mismatch the ones in the request body";
         }else{
             try{
                 resourceDTO = stepService.createResource(stepId, resourceDTO);
-            }catch (BadRequestException e){
+            }catch (BadRequestException | InternalException e){
                 sErrorMsg = "Error creating resource:" + e.getMessage();
             }
         }
@@ -137,9 +140,10 @@ public class StepController {
         String sErrorMsg = "";
             sErrorMsg= "Error updating roadmap:";
         try{
-             resourceDTOList = stepService.findAllResource(stepId);
-        }catch (NoContentException e){
+             resourceDTOList = stepService.findResourcesByStepId(stepId);
+        }catch (NoContentException | InternalException e){
             sErrorMsg = "Error getting list:" + e.getMessage();
+
         }
         ResponseEntity responseEntity = null;
         if(resourceDTOList != null){
@@ -156,7 +160,7 @@ public class StepController {
         String sErrorMsq = "";
         try{
              resourceDTO = stepService.findByResourceId(resourceId);
-        }catch (NotFoundException e){
+        }catch (NotFoundException | InternalException e){
             sErrorMsq = "Error getting resource:" + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -171,15 +175,17 @@ public class StepController {
     @PutMapping("/steps/{stepId}/resources/{resourceId}")
     public ResponseEntity<ResourceDTO> updateResource(@PathVariable Long stepId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = null;
+
         String sErrorMsg = "";
         if(stepId != resourceDTO.stepId() || resourceId != resourceDTO.id()){
             sErrorMsg= "ids in the resource mismatch the ones in the request body";
         }else{
             try{
                 resourceDTO1 = stepService.updateResource(resourceDTO);
-            }catch (ConflictException e){
+            }catch (ConflictException | InternalException e){
                 sErrorMsg = "Error updating resource:" + e.getMessage();
             }
+
         }
         ResponseEntity responseEntity = null;
         if(resourceDTO1 != null){
@@ -193,15 +199,16 @@ public class StepController {
     @PostMapping("/steps/{stepId}/roadmap-links/")
     public ResponseEntity<RoadmapLinkDTO> createStepRoadmapLink(@PathVariable Long stepId, @RequestBody RoadmapLinkDTO roadmapLinkDTO){
         RoadmapLinkDTO roadmapLinkDTO1 = null;
-        String sErrorMsg = "";
+        String sErrorMsg = " ";
         if(stepId != roadmapLinkDTO.stepId()){
             sErrorMsg= "ids in the roadmapLink mismatch the ones in the request body";
         }else{
             try{
                 roadmapLinkDTO1 = stepService.createRoadmapLink(roadmapLinkDTO);
-            }catch (BadRequestException e){
+            }catch (BadRequestException | InternalException e){
                 sErrorMsg = "Error creating roadmaplink:" + e.getMessage();
             }
+
         }
         ResponseEntity responseEntity = null;
 
@@ -224,8 +231,9 @@ public class StepController {
         String sErrorMsq = null;
         try{
             roadmapLinkDTOList = stepService.findAllRoadmapLink(stepId);
-        }catch (NoContentException e){
-            sErrorMsq = "Error getting list:";
+        }catch (NoContentException | InternalException e){
+            sErrorMsq = "Error getting list:" + e.getMessage();
+
         }
         ResponseEntity responseEntity = null;
         if(roadmapLinkDTOList != null){
@@ -242,7 +250,7 @@ public class StepController {
         String sErrorMsg = "";
         try{
              roadmapLinkDTO = stepService.findByRoadmapLinkId(roadmapLinkId);
-        }catch (NotFoundException e){
+        }catch (NotFoundException | InternalException e){
             sErrorMsg = "Error getting roadmaplink:" + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -255,7 +263,8 @@ public class StepController {
     }
 
     @PutMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
-    public ResponseEntity<RoadmapLinkDTO> updateRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) {
+
+    public ResponseEntity<RoadmapLinkDTO> updateRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId, @RequestBody RoadmapLinkDTO roadmapLinkDTO) {
         RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsg = null;
         if(stepId != roadmapLinkDTO.stepId() || roadmapLinkId != roadmapLinkDTO.id()){
@@ -263,7 +272,7 @@ public class StepController {
         }else{
             try {
                 roadmapLinkDTO1 = stepService.updateRoadmapLink(roadmapLinkDTO);
-            } catch (ConflictException e) {
+            } catch (ConflictException | InternalException e) {
                 sErrorMsg = "Error updating roadmaplink:" + e.getMessage();
             }
         }

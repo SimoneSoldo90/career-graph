@@ -13,6 +13,8 @@ public interface ResourceMapper {
     List<Resource> selectBySkillId(Long skillId);
     int insert(Resource resource);
     int update(Resource resource);
+    List<Resource> selectResourcesByStepId(Long stepId);
     void delete(Long id);
+
 
 }

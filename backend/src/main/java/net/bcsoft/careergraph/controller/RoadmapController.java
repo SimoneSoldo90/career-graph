@@ -9,6 +9,7 @@ import net.bcsoft.careergraph.service.IRoadmapService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import net.bcsoft.careergraph.exception.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,7 +29,7 @@ public class RoadmapController {
         String sErrorMsg = "";
         try{
             roadmapDTOList =  roadmapService.findAll();
-        }catch (NoContentException e){
+        }catch (NoContentException | InternalException e){
             sErrorMsg = "Error getting list: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -47,7 +48,7 @@ public class RoadmapController {
         ResponseEntity responseEntity = null;
         try{
             roadmapDTO1 = roadmapService.create(roadmapDTO);
-        }catch(BadRequestException e){
+        }catch(BadRequestException | InternalException e){
             sErrorMsg = "Error creating roadmap: " + e.getMessage();
         }
 
@@ -68,12 +69,11 @@ public class RoadmapController {
     public ResponseEntity <RoadmapDTO> findRoadmapById(@PathVariable Long roadmapId){
         RoadmapDTO roadmapDTO = null;
         String sErrorMsg = "";
-            try{
-                roadmapDTO =  roadmapService.findById(roadmapId);
-            }catch (NotFoundException e){
-                sErrorMsg = "Error getting roadmap: " + e.getMessage();
-            }
-
+        try{
+            roadmapDTO =  roadmapService.findById(roadmapId);
+        }catch (NotFoundException | InternalException e){
+            sErrorMsg = "Error getting roadmap: " + e.getMessage();
+        }
 
         ResponseEntity responseEntity = null;
         if(roadmapDTO != null){
@@ -88,14 +88,16 @@ public class RoadmapController {
     public ResponseEntity <RoadmapDTO> updateRoadmap(@PathVariable Long roadmapId ,@RequestBody RoadmapDTO roadmapDTO){
         RoadmapDTO roadmapDTO1 = null;
         String sErrorMsg = "";
+
         if(roadmapId != roadmapDTO.id()){
             sErrorMsg= "ids in the roadmap mismatch the ones in the request body";
         }else{
             try{
                 roadmapDTO1 = roadmapService.update(roadmapDTO);
-            }catch (ConflictException e){
+            }catch (ConflictException | InternalException e){
                 sErrorMsg = "error updating roadmap" + e.getMessage();
             }
+
         }
 
         ResponseEntity responseEntity = null;

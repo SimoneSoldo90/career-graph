@@ -5,10 +5,7 @@ import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
-import net.bcsoft.careergraph.exception.BadRequestException;
-import net.bcsoft.careergraph.exception.ConflictException;
-import net.bcsoft.careergraph.exception.NoContentException;
-import net.bcsoft.careergraph.exception.NotFoundException;
+import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
@@ -55,10 +52,19 @@ public class StepServiceImpl implements IStepService {
 
     @Override
     @Transactional
-    public StepDTO create(StepDTO stepDTO) throws BadRequestException {
+    public StepDTO create(StepDTO stepDTO) throws BadRequestException, InternalException {
         Step step = stepDTO.toEntity();
-        stepMapper.insert(step);
-        Step result = stepMapper.selectById(step.getId());
+        try {
+            stepMapper.insert(step);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        Step result;
+        try {
+            result = stepMapper.selectById(step.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new BadRequestException("step non creata");
         }
@@ -66,18 +72,37 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findAll() throws NoContentException {
-        List<Step> stepList = stepMapper.selectAll();
+    public List<StepDTO> findAll() throws NoContentException, InternalException{
+        List<Step> stepList;
+        try {
+            stepList = stepMapper.selectAll();
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         List<StepDTO> stepDTOList = new ArrayList<>();
         if(stepDTOList == null){
             throw new NoContentException ("no step disponibili");
         }
         for (Step step : stepList) {
-            List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
-            List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
+            List<ResourceDTO> resourceDTOList;
+            try {
+                resourceDTOList = findResourcesByStepId(step.getId());
+            } catch(RuntimeException e) {
+                throw new InternalException(e.getMessage());
+            }
+            List<RoadmapLinkDTO> roadmapLinkDTOList;
+            try {
+                roadmapLinkDTOList = findAllRoadmapLink(step.getId());
+            } catch(RuntimeException e) {
+                throw new InternalException(e.getMessage());
+            }
             List<SkillDTO> skillDTOList;
             try{
-                skillDTOList = skillService.findSkillByStepId(step.getId());
+                try {
+                    skillDTOList = skillService.findSkillByStepId(step.getId());
+                } catch(RuntimeException e) {
+                    throw new InternalException(e.getMessage());
+                }
             }catch (NotFoundException e){
              skillDTOList = new ArrayList<>();
             }
@@ -88,16 +113,36 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException, NoContentException {
-        List<Step> stepList = stepMapper.findByRoadmapId(roadmapId);
+    public List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException, NoContentException, InternalException {
+        List<Step> stepList;
+        try {
+            stepList = stepMapper.findByRoadmapId(roadmapId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(stepList == null){
             throw new NotFoundException ("step non trovata");
         }
         List<StepDTO> stepDTOList = new ArrayList<>();
         for(Step step : stepList){
-            List<ResourceDTO> resourceDTOList = findAllResource(step.getId());
-            List<RoadmapLinkDTO> roadmapLinkDTOList = findAllRoadmapLink(step.getId());
-            List<SkillDTO> skillDTOList = skillService.findSkillByStepId(step.getId());
+            List<ResourceDTO> resourceDTOList;
+            try {
+                resourceDTOList = findResourcesByStepId(step.getId());
+            } catch(RuntimeException e) {
+                throw new InternalException(e.getMessage());
+            }
+            List<RoadmapLinkDTO> roadmapLinkDTOList;
+            try {
+                roadmapLinkDTOList = findAllRoadmapLink(step.getId());
+            } catch(RuntimeException e) {
+                throw new InternalException(e.getMessage());
+            }
+            List<SkillDTO> skillDTOList;
+            try {
+                skillDTOList = skillService.findSkillByStepId(step.getId());
+            } catch(RuntimeException e) {
+                throw new InternalException(e.getMessage());
+            }
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
                     resourceDTOList, roadmapLinkDTOList, skillDTOList));
         }
@@ -105,8 +150,13 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public StepDTO findById(Long stepId) throws NotFoundException{
-        Step result = stepMapper.selectById(stepId);
+    public StepDTO findById(Long stepId) throws NotFoundException, InternalException{
+        Step result;
+        try {
+            result = stepMapper.selectById(stepId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new NotFoundException("account con id = " + stepId + " non trovata");
         }
@@ -115,23 +165,41 @@ public class StepServiceImpl implements IStepService {
 
     @Override
     @Transactional
-    public StepDTO update(StepDTO stepDTO) throws ConflictException {
+    public StepDTO update(StepDTO stepDTO) throws ConflictException, InternalException {
         Step step = stepDTO.toEntity();
-        Step result = stepMapper.selectById(step.getId());
+        Step result;
+        try {
+            result = stepMapper.selectById(step.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
-        stepMapper.update(step);
+        try {
+            stepMapper.update(step);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
     //Resource
     @Override
     @Transactional
-    public ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO) throws BadRequestException {
+    public ResourceDTO createResource(Long stepId,ResourceDTO resourceDTO) throws BadRequestException, InternalException {
         Resource resource = resourceDTO.toEntity();
-        resourceMapper.insert(resource);
-        Resource result = resourceMapper.selectById(resource.getId());
+        try {
+            resourceMapper.insert(resource);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        Resource result;
+        try {
+            result = resourceMapper.selectById(resource.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new BadRequestException("resource non creata");
         }
@@ -139,8 +207,13 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<ResourceDTO> findAllResource(Long stepId) throws NoContentException {
-        List<Resource> resourceList = resourceMapper.selectAll();
+    public List<ResourceDTO> findResourcesByStepId(Long stepId) throws NoContentException, InternalException {
+        List<Resource> resourceList;
+        try {
+            resourceList = resourceMapper.selectResourcesByStepId(stepId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         if(resourceList == null){
             throw new NoContentException("no resource disponibili");
@@ -151,13 +224,17 @@ public class StepServiceImpl implements IStepService {
                 resourceDTOList.add(resourceDTO);
             }
         }
-
         return resourceDTOList;
     }
 
     @Override
-    public ResourceDTO findByResourceId( Long resourceId) throws NotFoundException {
-        Resource result = resourceMapper.selectById(resourceId);
+    public ResourceDTO findByResourceId( Long resourceId) throws NotFoundException, InternalException {
+        Resource result;
+        try {
+            result = resourceMapper.selectById(resourceId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new NotFoundException("resource non trovata");
         }
@@ -166,18 +243,36 @@ public class StepServiceImpl implements IStepService {
 
 
     @Override
-    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException {
+    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException, InternalException {
         Resource resource = resourceDTO.toEntity();
-        Resource result = resourceMapper.selectById(resourceDTO.id());
-        resourceMapper.update(resource);
+        Resource result;
+        try {
+            result = resourceMapper.selectById(resourceDTO.id());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        try {
+            resourceMapper.update(resource);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
     }
 
     @Override
-    public RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException {
+    public RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException, InternalException {
         RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
-        roadmapLinkMapper.insert(roadmapLink);
-        RoadmapLink result = roadmapLinkMapper.selectById(roadmapLink.getId());
+        try {
+            roadmapLinkMapper.insert(roadmapLink);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        RoadmapLink result;
+        try {
+            result = roadmapLinkMapper.selectById(roadmapLink.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new BadRequestException("roadmaplink non creata");
         }
@@ -185,8 +280,13 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException {
-        List<RoadmapLink> roadmapLinkList = roadmapLinkMapper.selectAll();
+    public List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException, InternalException {
+        List<RoadmapLink> roadmapLinkList;
+        try {
+            roadmapLinkList = roadmapLinkMapper.selectAll();
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         List<RoadmapLinkDTO> roadmapLinkDTOList = new ArrayList<>();
         if(roadmapLinkList == null){
             throw new NoContentException("no roadmaplink disponibili");
@@ -196,12 +296,17 @@ public class StepServiceImpl implements IStepService {
             RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), roadmap.getTitle(), roadmap.getDescription());
             roadmapLinkDTOList.add(roadmapLinkDTO);
         }
-        return null;
+        return roadmapLinkDTOList;
     }
 
     @Override
-    public RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException {
-        RoadmapLink result = roadmapLinkMapper.selectById(roadmapLinkId);
+    public RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException, InternalException {
+        RoadmapLink result;
+        try {
+            result = roadmapLinkMapper.selectById(roadmapLinkId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new NotFoundException("roadmap_link non trovato");
         }
@@ -210,13 +315,27 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
-    public RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException {
-        RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
-        RoadmapLink roadmapLink1 = roadmapLinkMapper.selectById(roadmapLinkDTO.id());
+    public RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException, InternalException {
+        RoadmapLink roadmapLink;
+        try {
+            roadmapLink = roadmapLinkDTO.toEntity();
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        RoadmapLink roadmapLink1;
+        try {
+            roadmapLinkMapper.selectById(roadmapLinkDTO.id());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(roadmapLink == null){
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
-        roadmapLinkMapper.update(roadmapLink);
+        try {
+            roadmapLinkMapper.update(roadmapLink);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
     }
 

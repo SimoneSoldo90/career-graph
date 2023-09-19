@@ -8,6 +8,7 @@ import net.bcsoft.careergraph.entity.UserSkill;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.exception.BadRequestException;
 import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.InternalException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.mapper.UserMapper;
@@ -35,8 +36,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserDTO findById(Long userId) throws NotFoundException {
-        User result = userMapper.selectById(userId);
+    public UserDTO findById(Long userId) throws NotFoundException, InternalException {
+        User result;
+        try {
+            result = userMapper.selectById(userId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new NotFoundException("account con id = " + userId + " non trovata");
         }
@@ -44,8 +50,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<UserSkillDTO> findUserSkillByUserId(Long userId) throws NoContentException {
-        List<UserSkill> userSkillList = userSkillMapper.selectByUserId(userId);
+    public List<UserSkillDTO> findUserSkillByUserId(Long userId) throws NoContentException, InternalException {
+        List<UserSkill> userSkillList;
+        try {
+            userSkillList = userSkillMapper.selectByUserId(userId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(userSkillList == null){
             throw new NoContentException("nessuna skill trovata per l'user con id = " + userId);
         }
@@ -58,34 +69,72 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException {
+    public UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException, InternalException {
         UserSkill userSkill = userSkillDTO.toEntity();
-        userSkillMapper.insert(userSkill);
-        User user = userMapper.selectById(userSkillDTO.userId());
-        Skill skill = skillMapper.findById(userSkillDTO.skillId());
+        try {
+            userSkillMapper.insert(userSkill);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        User user;
+        try {
+            user = userMapper.selectById(userSkillDTO.userId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        Skill skill;
+        try {
+            skill = skillMapper.findById(userSkillDTO.skillId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(user == null || skill == null) {
             throw new BadRequestException("errore di creazione, inseriti dati non corretti");
         }
-        UserSkill result = userSkillMapper.selectById(userSkill.getId());
+        UserSkill result;
+        try {
+            result = userSkillMapper.selectById(userSkill.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
     }
 
     @Override
     @Transactional
-    public UserSkillDTO updateUserSkill(UserSkillDTO userSkillDTO) throws ConflictException {
-        UserSkill oldUserSkill = userSkillMapper.selectById(userSkillDTO.id());
+    public UserSkillDTO updateUserSkill(UserSkillDTO userSkillDTO) throws ConflictException, InternalException {
+        UserSkill oldUserSkill;
+        try {
+            oldUserSkill = userSkillMapper.selectById(userSkillDTO.id());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(oldUserSkill == null){
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         UserSkill userSkill = userSkillDTO.toEntity();
-        userSkillMapper.update(userSkill);
-        UserSkill result = userSkillMapper.selectById(userSkill.getId());
+        try {
+            userSkillMapper.update(userSkill);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        UserSkill result;
+        try {
+            result = userSkillMapper.selectById(userSkill.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
     }
 
     @Override
-    public UserSkillDTO findUserSkillById(Long userSkillId) throws NotFoundException{
-        UserSkill result = userSkillMapper.selectById(userSkillId);
+    public UserSkillDTO findUserSkillById(Long userSkillId) throws NotFoundException, InternalException{
+        UserSkill result;
+        try {
+            result = userSkillMapper.selectById(userSkillId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new NotFoundException("skill dell'account con id = " + userSkillId + " non trovata");
         }
