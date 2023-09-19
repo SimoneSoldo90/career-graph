@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ResourceMapper {
-    List<Resource> findAll();
+    List<Resource> selectAll();
     Resource selectById(Long id);
     List<Resource> selectByStepId(Long stepId);
     List<Resource> selectBySkillId(Long skillId);

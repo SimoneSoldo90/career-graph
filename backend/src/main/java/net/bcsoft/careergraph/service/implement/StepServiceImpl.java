@@ -1,10 +1,8 @@
 package net.bcsoft.careergraph.service.implement;
 
-import net.bcsoft.careergraph.dto.ResourceDTO;
-import net.bcsoft.careergraph.dto.RoadmapLinkDTO;
-import net.bcsoft.careergraph.dto.SkillDTO;
-import net.bcsoft.careergraph.dto.StepDTO;
+import net.bcsoft.careergraph.dto.*;
 import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.RoadmapLink;
 import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.exception.BadRequestException;
@@ -13,6 +11,7 @@ import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
+import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
 import net.bcsoft.careergraph.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +28,15 @@ public class StepServiceImpl implements IStepService {
     RoadmapLinkMapper roadmapLinkMapper;
     ISkillService skillService;
     ResourceMapper resourceMapper;
+    RoadmapMapper roadmapMapper;
 
     @Autowired
-    public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper) {
+    public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper, RoadmapMapper roadmapMapper) {
         this.stepMapper = stepMapper;
         this.roadmapLinkMapper = roadmapLinkMapper;
         this.skillService = skillService;
         this.resourceMapper = resourceMapper;
+        this.roadmapMapper = roadmapMapper;
     }
 
     /** JSON step
@@ -139,7 +140,7 @@ public class StepServiceImpl implements IStepService {
 
     @Override
     public List<ResourceDTO> findAllResource(Long stepId) throws NoContentException {
-        List<Resource> resourceList = resourceMapper.findAll();
+        List<Resource> resourceList = resourceMapper.selectAll();
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         if(resourceList == null){
             throw new NoContentException("no resource disponibili");
@@ -180,7 +181,7 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new BadRequestException("roadmaplink non creata");
         }
-        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
 
     @Override
@@ -191,8 +192,9 @@ public class StepServiceImpl implements IStepService {
             throw new NoContentException("no roadmaplink disponibili");
         }
         for (RoadmapLink roadmapLink : roadmapLinkList){
-        RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
-        roadmapLinkDTOList.add(roadmapLinkDTO);
+            Roadmap roadmap = roadmapMapper.selectById(roadmapLink.getRoadmapId());
+            RoadmapLinkDTO roadmapLinkDTO = new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), roadmap.getTitle(), roadmap.getDescription());
+            roadmapLinkDTOList.add(roadmapLinkDTO);
         }
         return null;
     }
@@ -203,7 +205,8 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new NotFoundException("roadmap_link non trovato");
         }
-        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId());
+        Roadmap roadmap = roadmapMapper.selectById(result.getRoadmapId());
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), roadmap.getTitle(), roadmap.getDescription());
     }
 
     @Override
@@ -214,7 +217,7 @@ public class StepServiceImpl implements IStepService {
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         roadmapLinkMapper.update(roadmapLink);
-        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId());
+        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
     }
 
     @Override
