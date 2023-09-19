@@ -4,10 +4,7 @@ import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Skill;
-import net.bcsoft.careergraph.exception.ConflictException;
-import net.bcsoft.careergraph.exception.NoContentException;
-import net.bcsoft.careergraph.exception.NotFoundException;
-import net.bcsoft.careergraph.exception.BadRequestException;
+import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.mapper.StepSkillMapper;
@@ -45,8 +42,13 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public List<SkillDTO> findAllSkills() throws NoContentException {
-        List<Skill> skillList = skillMapper.findAll();
+    public List<SkillDTO> findAllSkills() throws NoContentException, InternalException {
+        List<Skill> skillList;
+        try {
+            skillList = skillMapper.findAll();
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(skillList == null){
             throw new NoContentException("skill non trovate");
         }
@@ -65,13 +67,23 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public SkillDTO findSkillById(Long skillId) throws NotFoundException {
+    public SkillDTO findSkillById(Long skillId) throws NotFoundException, InternalException{
 
-        Skill result = skillMapper.findById(skillId);
+        Skill result;
+        try {
+            result = skillMapper.findById(skillId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new NotFoundException("skill con id = " + skillId + " non trovata");
         }
-        List<Resource> resourceList= resourceMapper.selectBySkillId(skillId);
+        List<Resource> resourceList;
+        try {
+            resourceList = resourceMapper.selectBySkillId(skillId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         for(Resource resource : resourceList){
             ResourceDTO resourceDTO = new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
@@ -82,10 +94,19 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     @Transactional
-    public SkillDTO createSkill(SkillDTO skillDTO) throws BadRequestException{
+    public SkillDTO createSkill(SkillDTO skillDTO) throws BadRequestException, InternalException{
         Skill skill = skillDTO.toEntity();
-        skillMapper.insert(skill);
-        Skill result = skillMapper.findById(skill.getId());
+        try {
+            skillMapper.insert(skill);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        Skill result;
+        try {
+            result = skillMapper.findById(skill.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new BadRequestException("Skill non creata");
         }
@@ -95,13 +116,22 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     @Transactional
-    public SkillDTO updateSkill(SkillDTO skillDTO) throws ConflictException {
+    public SkillDTO updateSkill(SkillDTO skillDTO) throws ConflictException, InternalException{
         Skill skill = skillDTO.toEntity();
-        Skill oldSkill = skillMapper.findById(skillDTO.id());
+        Skill oldSkill;
+        try {
+            oldSkill = skillMapper.findById(skillDTO.id());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(oldSkill == null){
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
-        skillMapper.update(skill);
+        try {
+            skillMapper.update(skill);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         return new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription(), null);
 
     }
@@ -109,8 +139,13 @@ public class SkillServiceImpl implements ISkillService {
 
 
     @Override
-    public List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException{
-        List<Skill> skillList = skillMapper.findByStepId(stepId);
+    public List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException, InternalException{
+        List<Skill> skillList;
+        try {
+            skillList = skillMapper.findByStepId(stepId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         List<SkillDTO> result = new ArrayList<>();
         for (Skill skill : skillList) {
             result.add(new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription(), null));
@@ -119,8 +154,13 @@ public class SkillServiceImpl implements ISkillService {
     }
 
     @Override
-    public List<ResourceDTO> findAllResource(Long skillId) throws NoContentException{
-        List<Resource> resourceList = resourceMapper.selectBySkillId(skillId);
+    public List<ResourceDTO> findAllResource(Long skillId) throws NoContentException, InternalException{
+        List<Resource> resourceList;
+        try {
+            resourceList = resourceMapper.selectBySkillId(skillId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
         if(resourceList == null){
             throw new NoContentException("resource not find");
@@ -134,10 +174,19 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     @Transactional
-    public ResourceDTO createResource(Long skillId, ResourceDTO resourceDTO) throws BadRequestException{
+    public ResourceDTO createResource(Long skillId, ResourceDTO resourceDTO) throws BadRequestException, InternalException{
         Resource resource = resourceDTO.toEntity();
-        resourceMapper.insert(resource);
-        Resource result = resourceMapper.selectById(resource.getId());
+        try {
+            resourceMapper.insert(resource);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
+        Resource result;
+        try {
+            result = resourceMapper.selectById(resource.getId());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new BadRequestException("resource not created");
         }
@@ -146,8 +195,13 @@ public class SkillServiceImpl implements ISkillService {
 
 
     @Override
-    public ResourceDTO findResourceById(Long skillId, Long resourceId) throws NotFoundException{
-        Resource result = resourceMapper.selectById(resourceId);
+    public ResourceDTO findResourceById(Long skillId, Long resourceId) throws NotFoundException, InternalException{
+        Resource result;
+        try {
+            result = resourceMapper.selectById(resourceId);
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(result == null){
             throw new NotFoundException("resource not found");
         }
@@ -157,13 +211,22 @@ public class SkillServiceImpl implements ISkillService {
 
     @Override
     @Transactional
-    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException{
-        Resource oldResource = resourceMapper.selectById(resourceDTO.id());
+    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException, InternalException{
+        Resource oldResource;
+        try {
+            oldResource = resourceMapper.selectById(resourceDTO.id());
+        } catch(RuntimeException e) {
+            throw new InternalException(e.getMessage());
+        }
         if(oldResource == null){
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
             Resource resource = resourceDTO.toEntity();
-            resourceMapper.update(resource);
+            try {
+                resourceMapper.update(resource);
+            } catch(RuntimeException e) {
+                throw new InternalException(e.getMessage());
+            }
             return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getStepId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
     }
 

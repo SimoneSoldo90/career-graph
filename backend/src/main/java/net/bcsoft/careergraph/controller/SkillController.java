@@ -4,6 +4,7 @@ import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.exception.BadRequestException;
 import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.InternalException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.ISkillService;
@@ -29,7 +30,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
            skillDTOList = skillService.findAllSkills();
-        }catch(NoContentException e){
+        }catch(NoContentException | InternalException e){
             sErrorMsg = "Error getting list: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -47,7 +48,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
              skillDTO1 = skillService.createSkill(skillDTO);
-        }catch (BadRequestException e){
+        }catch (BadRequestException | InternalException e){
             sErrorMsg = "Error creating roadmap: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -70,7 +71,7 @@ public class SkillController {
         try{
             skillDTO = skillService.findSkillById(skillId);
             responseEntity = ResponseEntity.ok(skillDTO);
-        }catch(NotFoundException e){
+        }catch(NotFoundException | InternalException e){
             responseEntity = ResponseEntity.notFound().build();
         }
         return responseEntity;
@@ -82,7 +83,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
             skillDTO1 = skillService.updateSkill(skillDTO);
-        }catch (ConflictException e){
+        }catch (ConflictException | InternalException e){
             sErrorMsg = "error updating skill" + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -100,7 +101,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
             resourceDTO1 = skillService.createResource(skillId, resourceDTO);
-        }catch (BadRequestException e){
+        }catch (BadRequestException | InternalException e){
             sErrorMsg = "Error creating resource: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -121,7 +122,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
             resourceDTOList = skillService.findAllResource(skillId);
-        }catch(NoContentException e){
+        }catch(NoContentException | InternalException e){
             sErrorMsg = "Error getting list: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -139,7 +140,7 @@ public class SkillController {
         String sErrorMsh = "";
         try{
             resourceDTO = skillService.findResourceById(skillId, resourceId);
-        }catch(NotFoundException e){
+        }catch(NotFoundException | InternalException e){
             sErrorMsh = "Error getting resource: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -156,7 +157,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
             resourceDTO1 = skillService.updateResource(resourceDTO);
-        }catch (ConflictException e){
+        }catch (ConflictException | InternalException e){
             sErrorMsg = "error updating resource" + e.getMessage();
         }
         ResponseEntity responseEntity = null;

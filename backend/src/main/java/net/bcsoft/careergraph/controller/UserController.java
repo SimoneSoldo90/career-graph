@@ -6,6 +6,7 @@ import net.bcsoft.careergraph.dto.UserDTO;
 import net.bcsoft.careergraph.dto.UserSkillDTO;
 import net.bcsoft.careergraph.exception.BadRequestException;
 import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.InternalException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.IUserService;
@@ -34,7 +35,7 @@ public class UserController {
         try {
             userDTO = userService.findById(userId);
             responseEntity = ResponseEntity.ok(userDTO);
-        } catch (NotFoundException e) {
+        } catch (NotFoundException | InternalException e) {
             responseEntity = ResponseEntity.noContent().build();
         }
         return responseEntity;
@@ -46,13 +47,14 @@ public class UserController {
         String sErrorMsg = "";
         try {
             userSkillDTO1 = userService.createUserSkill(userSkillDTO);
-        } catch (BadRequestException | RuntimeException e) {
+        } catch (BadRequestException | RuntimeException | InternalException e) {
             sErrorMsg = "Error creating user skill: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
         if(userSkillDTO1 != null){
             try{
-                responseEntity = ResponseEntity.created(new URI("/users/" + userId + "/user-skills/" + userSkillDTO1.id())).build();
+                //responseEntity = ResponseEntity.created(new URI("/roadmap-links/" + roadmapLinkDTO1.id())).body(roadmapLinkDTO1);
+                responseEntity = ResponseEntity.created(new URI("/users/" + userId + "/user-skills/" + userSkillDTO1.id())).body(userSkillDTO1);
             }catch (URISyntaxException e){
                 responseEntity = ResponseEntity.internalServerError().body(e.getMessage());
             }
@@ -69,7 +71,7 @@ public class UserController {
         try{
             userSkillDTOList = userService.findUserSkillByUserId(userId);
             responseEntity = ResponseEntity.ok(userSkillDTOList);
-        }catch(NoContentException e){
+        }catch(NoContentException | InternalException e){
             responseEntity = ResponseEntity.notFound().build();
         }
         return responseEntity;
@@ -81,7 +83,7 @@ public class UserController {
         String sErrorMsg = "";
         try{
             userSkillDTO1 = userService.updateUserSkill(userSkillDTO);
-        }catch (ConflictException e){
+        }catch (ConflictException | InternalException e){
             sErrorMsg = "error updating skill : " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -101,7 +103,7 @@ public class UserController {
         try{
             userSkillDTO = userService.findUserSkillById(userSkillId);
             responseEntity = ResponseEntity.ok(userSkillDTO);
-        }catch(NotFoundException e){
+        }catch(NotFoundException | InternalException e){
             responseEntity = ResponseEntity.notFound().build();
         }
 

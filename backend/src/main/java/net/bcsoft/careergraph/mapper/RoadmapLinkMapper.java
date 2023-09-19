@@ -9,6 +9,6 @@ import java.util.List;
 public interface RoadmapLinkMapper {
     List <RoadmapLink> selectAll();
     RoadmapLink selectById(Long id);
-    RoadmapLink insert(RoadmapLink roadmapLink);
+    int insert(RoadmapLink roadmapLink);
     int update(RoadmapLink roadmapLink);
 }

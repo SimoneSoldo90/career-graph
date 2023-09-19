@@ -44,4 +44,10 @@
         WHERE skill_id = #{skillId}
     </select>
 
+    <select id="selectResourcesByStepId" resultMap="resourceResultMap">
+        SELECT *
+        FROM  resource
+        WHERE step_id = #{stepId}
+    </select>
+
 </mapper>
