@@ -30,11 +30,12 @@ public class StepServiceImpl implements IStepService {
     IRoadmapService roadmapService;
 
     @Autowired
-    public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper) {
+    public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper, IRoadmapService roadmapService) {
         this.stepMapper = stepMapper;
         this.roadmapLinkMapper = roadmapLinkMapper;
         this.skillService = skillService;
         this.resourceMapper = resourceMapper;
+        this.roadmapService = roadmapService;
     }
 
     /** JSON step
