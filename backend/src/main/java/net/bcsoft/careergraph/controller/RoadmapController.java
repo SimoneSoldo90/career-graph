@@ -9,6 +9,7 @@ import net.bcsoft.careergraph.service.IRoadmapService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import net.bcsoft.careergraph.exception.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,7 +30,7 @@ public class RoadmapController {
         String sErrorMsg = "";
         try{
             roadmapDTOList =  roadmapService.findAll();
-        }catch (NoContentException e){
+        }catch (NoContentException | InternalException e){
             sErrorMsg = "Error getting list: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -49,7 +50,7 @@ public class RoadmapController {
         ResponseEntity responseEntity = null;
         try{
             roadmapDTO1 = roadmapService.create(roadmapDTO);
-        }catch(BadRequestException e){
+        }catch(BadRequestException | InternalException e){
             sErrorMsg = "Error creating roadmap: " + e.getMessage();
         }
 
@@ -73,7 +74,7 @@ public class RoadmapController {
         String sErrorMsg = "";
         try{
             roadmapDTO =  roadmapService.findById(roadmapId);
-        }catch (NotFoundException e){
+        }catch (NotFoundException | InternalException e){
             sErrorMsg = "Error getting roadmap: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -87,13 +88,19 @@ public class RoadmapController {
 
     @PutMapping("/roadmaps/{roadmapId}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity <RoadmapDTO> updateRoadmap(@RequestBody RoadmapDTO roadmapDTO){
+    public ResponseEntity <RoadmapDTO> updateRoadmap(@PathVariable Long roadmapId ,@RequestBody RoadmapDTO roadmapDTO){
         RoadmapDTO roadmapDTO1 = null;
         String sErrorMsg = "";
-        try{
-            roadmapDTO1 = roadmapService.update(roadmapDTO);
-        }catch (ConflictException e){
-            sErrorMsg = "error updating roadmap" + e.getMessage();
+
+        if(roadmapId != roadmapDTO.id()){
+            sErrorMsg= "ids in the roadmap mismatch the ones in the request body";
+        }else{
+            try{
+                roadmapDTO1 = roadmapService.update(roadmapDTO);
+            }catch (ConflictException | InternalException e){
+                sErrorMsg = "error updating roadmap" + e.getMessage();
+            }
+
         }
         ResponseEntity responseEntity = null;
 
@@ -108,7 +115,16 @@ public class RoadmapController {
 
     @DeleteMapping("/roadmaps/{roadmapId}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public void deleteRoadmap(@PathVariable Long roadmapId){
-        roadmapService.delete(roadmapId);
+    public ResponseEntity<String> deleteRoadmap(@PathVariable Long roadmapId){
+        ResponseEntity responseEntity = null;
+        try{
+            roadmapService.deleteRoadmap(roadmapId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
     }
 }

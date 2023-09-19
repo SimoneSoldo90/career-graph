@@ -12,7 +12,7 @@
         <result property="description" column="description"/>
     </resultMap>
 
-    <select id="selectAll" resultMap="stepResultMap">
+    <select id="selectAll" resultMap="stepResultMap" parameterType="net.bcsoft.careergraph.entity.Step">
         SELECT *
         FROM step
     </select>
@@ -39,5 +39,10 @@
         SET roadmap_id = #{roadmapId}, ord = #{ord}, title = #{title}, description = #{description}
         WHERE id = #{id}
     </update>
+
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.Step">
+        DELETE * FROM step
+        WHERE id = #{id}
+    </delete>
 
 </mapper>

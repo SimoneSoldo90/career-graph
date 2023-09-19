@@ -5,7 +5,12 @@ import net.bcsoft.careergraph.entity.Step;
 
 import java.util.List;
 
-public record StepDTO(Long id, @JsonProperty("roadmap_id") Long roadmapId, Integer ord, String title, String description, @JsonProperty("resources") List <ResourceDTO> rescourceDTOList, @JsonProperty("roadmap_links") List <RoadmapLinkDTO> roadmapLinkDTOList, @JsonProperty("skills") List <SkillDTO> skillDTOList) {
+public record StepDTO(Long id, @JsonProperty("roadmap_id") Long roadmapId, Integer ord, String title, String description,
+
+                               @JsonProperty("resources") List <ResourceDTO> rescourceDTOList,
+                               @JsonProperty("roadmap_links") List <RoadmapLinkDTO> roadmapLinkDTOList,
+                               @JsonProperty("skills") List <SkillDTO> skillDTOList) {
+
     public Step toEntity(){
         Step step = new Step();
         step.setId(this.id);

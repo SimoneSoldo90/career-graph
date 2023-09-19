@@ -4,6 +4,7 @@ import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.exception.BadRequestException;
 import net.bcsoft.careergraph.exception.ConflictException;
+import net.bcsoft.careergraph.exception.InternalException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.ISkillService;
@@ -30,7 +31,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
            skillDTOList = skillService.findAllSkills();
-        }catch(NoContentException e){
+        }catch(NoContentException | InternalException e){
             sErrorMsg = "Error getting list: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -49,7 +50,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
              skillDTO1 = skillService.createSkill(skillDTO);
-        }catch (BadRequestException e){
+        }catch (BadRequestException | InternalException e){
             sErrorMsg = "Error creating roadmap: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -73,7 +74,7 @@ public class SkillController {
         try{
             skillDTO = skillService.findSkillById(skillId);
             responseEntity = ResponseEntity.ok(skillDTO);
-        }catch(NotFoundException e){
+        }catch(NotFoundException | InternalException e){
             responseEntity = ResponseEntity.notFound().build();
         }
         return responseEntity;
@@ -81,14 +82,21 @@ public class SkillController {
 
     @PutMapping("/skills/{skillId}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity <SkillDTO> updateSkillId(@RequestBody SkillDTO skillDTO) {
+    public ResponseEntity <SkillDTO> updateSkillId(@PathVariable Long skillId, @RequestBody SkillDTO skillDTO) {
         SkillDTO skillDTO1 = null;
         String sErrorMsg = "";
-        try{
-            skillDTO1 = skillService.updateSkill(skillDTO);
-        }catch (ConflictException e){
-            sErrorMsg = "error updating skill" + e.getMessage();
+
+        if(skillId != skillDTO.id()){
+            sErrorMsg= "ids in the skill mismatch the ones in the request body";
+        }else{
+            try{
+                skillDTO1 = skillService.updateSkill(skillDTO);
+            }catch (ConflictException | InternalException e){
+                sErrorMsg = "error updating skill" + e.getMessage();
+            }
+
         }
+
         ResponseEntity responseEntity = null;
         if(skillDTO1 != null){
             responseEntity = ResponseEntity.ok(skillDTO);
@@ -103,11 +111,17 @@ public class SkillController {
     public ResponseEntity <ResourceDTO> createResource(@PathVariable Long skillId, @RequestBody ResourceDTO resourceDTO){
         ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
-        try{
-            resourceDTO1 = skillService.createResource(skillId, resourceDTO);
-        }catch (BadRequestException e){
-            sErrorMsg = "Error creating resource: " + e.getMessage();
+
+        if(skillId != resourceDTO.skillId()){
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
+        }else{
+            try{
+                resourceDTO1 = skillService.createResource(skillId, resourceDTO);
+            }catch (BadRequestException | InternalException e){
+                sErrorMsg = "Error creating resource: " + e.getMessage();
+            }
         }
+
         ResponseEntity responseEntity = null;
         if(resourceDTO1 != null) {
             try{
@@ -120,6 +134,7 @@ public class SkillController {
         }
         return responseEntity;
     }
+
     @GetMapping("/skills/{skillId}/resources")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <List<ResourceDTO>> findResources(@PathVariable Long skillId){
@@ -127,7 +142,7 @@ public class SkillController {
         String sErrorMsg = "";
         try{
             resourceDTOList = skillService.findAllResource(skillId);
-        }catch(NoContentException e){
+        }catch(NoContentException | InternalException e){
             sErrorMsg = "Error getting list: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -146,7 +161,7 @@ public class SkillController {
         String sErrorMsh = "";
         try{
             resourceDTO = skillService.findResourceById(skillId, resourceId);
-        }catch(NotFoundException e){
+        }catch(NotFoundException | InternalException e){
             sErrorMsh = "Error getting resource: " + e.getMessage();
         }
         ResponseEntity responseEntity = null;
@@ -157,22 +172,58 @@ public class SkillController {
         }
         return responseEntity;
     }
+
     @PutMapping("/skills/{skillId}/resources/{resourceId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <ResourceDTO> updateResource (@PathVariable Long skillId, @PathVariable Long resourceId, @RequestBody ResourceDTO resourceDTO ){
         ResourceDTO resourceDTO1 = null;
-        String sErrorMsg = "";
-        try{
-            resourceDTO1 = skillService.updateResource(resourceDTO);
-        }catch (ConflictException e){
-            sErrorMsg = "error updating resource" + e.getMessage();
+
+        String sErrorMsg = null;
+        if(skillId != resourceDTO.skillId() || resourceId != resourceDTO.id()){
+            sErrorMsg= "ids in the resource mismatch the ones in the request body";
+        } else {
+            try {
+                resourceDTO1 = skillService.updateResource(resourceDTO);
+            } catch (ConflictException | InternalException e) {
+                sErrorMsg = "error updating resource" + e.getMessage();
+            }
         }
         ResponseEntity responseEntity = null;
-        if(resourceDTO1 != null){
+        if(sErrorMsg == null){
             responseEntity = ResponseEntity.ok(resourceDTO);
         }
         else{
             responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body(sErrorMsg);
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping("/skills/{skillId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<String> deleteSkill(@PathVariable Long skillId){
+        ResponseEntity responseEntity = null;
+        try{
+            skillService.deleteSkill(skillId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping("/skills/{skillId}/resources/{resourceId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<String> deleteResource(@PathVariable Long skillId, @PathVariable Long resourceId){
+        ResponseEntity responseEntity = null;
+        try{
+            skillService.deleteResource(resourceId);
+            responseEntity = ResponseEntity.noContent().build();
+        }catch (NotFoundException e){
+            responseEntity = ResponseEntity.notFound().build();
+        }catch (ConflictException e){
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body("Errore cancellazione elemento");
         }
         return responseEntity;
     }

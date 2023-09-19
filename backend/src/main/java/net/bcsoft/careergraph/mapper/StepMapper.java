@@ -1,5 +1,6 @@
 package net.bcsoft.careergraph.mapper;
 
+import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.Step;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +13,6 @@ public interface StepMapper {
     int insert(Step step);
     int update(Step step);
     List <Step> findByRoadmapId(long roadmapId);
+    void delete(Long id);
 
 }

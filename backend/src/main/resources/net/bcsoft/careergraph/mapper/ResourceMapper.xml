@@ -44,4 +44,17 @@
         WHERE skill_id = #{skillId}
     </select>
 
+
+    <select id="selectResourcesByStepId" resultMap="resourceResultMap">
+        SELECT *
+        FROM  resource
+        WHERE step_id = #{stepId}
+    </select>
+
+    <delete id="delete" parameterType="net.bcsoft.careergraph.entity.Resource">
+        DELETE * FROM resource
+        WHERE id = #{id}
+    </delete>
+
+
 </mapper>

@@ -8,31 +8,33 @@ import net.bcsoft.careergraph.exception.ConflictException;
 import net.bcsoft.careergraph.exception.NoContentException;
 import net.bcsoft.careergraph.exception.NotFoundException;
 
-import javax.naming.NotContextException;
 import java.util.List;
 
 public interface IStepService {
-    StepDTO create(StepDTO stepDTO) throws BadRequestException;
+    StepDTO create(StepDTO stepDTO) throws BadRequestException, InternalException;
 
-    List<StepDTO> findAll() throws NoContentException;
+    List<StepDTO> findAll() throws NoContentException, InternalException;
 
-    List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException, NoContentException;
+    List<StepDTO> findByRoadmapId(Long roadmapId) throws NotFoundException, NoContentException, InternalException;
 
-    StepDTO findById(Long stepId) throws NotFoundException;
+    StepDTO findById(Long stepId) throws NotFoundException, InternalException;
 
-    StepDTO update(StepDTO stepDTO) throws ConflictException;
+    StepDTO update(StepDTO stepDTO) throws ConflictException, InternalException;
 
-    StepDTO delete(Long stepId);
-    ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO) throws BadRequestException;
+    ResourceDTO createResource(Long stepId, ResourceDTO resourceDTO) throws BadRequestException, InternalException;
 
-    List<ResourceDTO> findResourcesByStepId(Long stepId) throws NoContentException ;
 
-    ResourceDTO findByResourceId(Long resourceId) throws NotFoundException;
+    List<ResourceDTO> findResourcesByStepId(Long stepId) throws NoContentException, InternalException;
 
-    ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException;
-    RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException;
-    List<RoadmapLinkDTO> findRoadmapLinksByStepId(Long stepId) throws NoContentException;
-    RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException;
-    RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException;
+    ResourceDTO findByResourceId(Long resourceId) throws NotFoundException, InternalException;
+
+    ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException, InternalException;
+    RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException, InternalException;
+    List<RoadmapLinkDTO> findAllRoadmapLink(Long stepId) throws NoContentException, InternalException;
+    RoadmapLinkDTO findByRoadmapLinkId(Long roadmapLinkId) throws NotFoundException, InternalException;
+    RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException, InternalException;
+    void deleteStep(Long stepId) throws ConflictException, NotFoundException;
+    void deleteRoadmapLink(Long roadMapLinkId) throws ConflictException, NotFoundException;
+    void deleteResource(Long resourceId) throws ConflictException, NotFoundException;
 
 }
