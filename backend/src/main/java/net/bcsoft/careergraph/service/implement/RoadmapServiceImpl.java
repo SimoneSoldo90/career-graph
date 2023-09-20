@@ -3,8 +3,6 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.RoadmapDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Roadmap;
-import net.bcsoft.careergraph.entity.Skill;
-import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
@@ -13,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
