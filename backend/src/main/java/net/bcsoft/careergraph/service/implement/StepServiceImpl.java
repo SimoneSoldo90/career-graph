@@ -11,6 +11,8 @@ import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
 import net.bcsoft.careergraph.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ import java.util.List;
 
 @Service
 public class StepServiceImpl implements IStepService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     StepMapper stepMapper;
     RoadmapLinkMapper roadmapLinkMapper;
@@ -57,12 +61,14 @@ public class StepServiceImpl implements IStepService {
         try {
             stepMapper.insert(step);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Step result;
         try {
             result = stepMapper.selectById(step.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -77,6 +83,7 @@ public class StepServiceImpl implements IStepService {
         try {
             stepList = stepMapper.selectAll();
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<StepDTO> stepDTOList = new ArrayList<>();
@@ -88,12 +95,14 @@ public class StepServiceImpl implements IStepService {
             try {
                 resourceDTOList = findResourcesByStepId(step.getId());
             } catch(RuntimeException e) {
+                LOGGER.error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             List<RoadmapLinkDTO> roadmapLinkDTOList;
             try {
                 roadmapLinkDTOList = findAllRoadmapLink(step.getId());
             } catch(RuntimeException e) {
+                LOGGER.error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             List<SkillDTO> skillDTOList;
@@ -101,6 +110,7 @@ public class StepServiceImpl implements IStepService {
                 try {
                     skillDTOList = skillService.findSkillByStepId(step.getId());
                 } catch(RuntimeException e) {
+                    LOGGER.error(e.getMessage(), e);
                     throw new InternalException(e.getMessage());
                 }
             }catch (NotFoundException e){
@@ -118,6 +128,7 @@ public class StepServiceImpl implements IStepService {
         try {
             stepList = stepMapper.findByRoadmapId(roadmapId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(stepList == null){
@@ -129,18 +140,21 @@ public class StepServiceImpl implements IStepService {
             try {
                 resourceDTOList = findResourcesByStepId(step.getId());
             } catch(RuntimeException e) {
+                LOGGER.error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             List<RoadmapLinkDTO> roadmapLinkDTOList;
             try {
                 roadmapLinkDTOList = findAllRoadmapLink(step.getId());
             } catch(RuntimeException e) {
+                LOGGER.error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             List<SkillDTO> skillDTOList;
             try {
                 skillDTOList = skillService.findSkillByStepId(step.getId());
             } catch(RuntimeException e) {
+                LOGGER.error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             stepDTOList.add(new StepDTO(step.getId(), step.getRoadmapId(), step.getOrd(), step.getTitle(), step.getDescription(),
@@ -155,6 +169,7 @@ public class StepServiceImpl implements IStepService {
         try {
             result = stepMapper.selectById(stepId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -171,6 +186,7 @@ public class StepServiceImpl implements IStepService {
         try {
             result = stepMapper.selectById(step.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -179,6 +195,7 @@ public class StepServiceImpl implements IStepService {
         try {
             stepMapper.update(step);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
@@ -192,12 +209,14 @@ public class StepServiceImpl implements IStepService {
         try {
             resourceMapper.insert(resource);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Resource result;
         try {
             result = resourceMapper.selectById(resource.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -212,6 +231,7 @@ public class StepServiceImpl implements IStepService {
         try {
             resourceList = resourceMapper.selectResourcesByStepId(stepId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
@@ -233,6 +253,7 @@ public class StepServiceImpl implements IStepService {
         try {
             result = resourceMapper.selectById(resourceId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -249,11 +270,13 @@ public class StepServiceImpl implements IStepService {
         try {
             result = resourceMapper.selectById(resourceDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         try {
             resourceMapper.update(resource);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
@@ -265,12 +288,14 @@ public class StepServiceImpl implements IStepService {
         try {
             roadmapLinkMapper.insert(roadmapLink);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         RoadmapLink result;
         try {
             result = roadmapLinkMapper.selectById(roadmapLink.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -285,6 +310,7 @@ public class StepServiceImpl implements IStepService {
         try {
             roadmapLinkList = roadmapLinkMapper.selectAll();
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<RoadmapLinkDTO> roadmapLinkDTOList = new ArrayList<>();
@@ -305,6 +331,7 @@ public class StepServiceImpl implements IStepService {
         try {
             result = roadmapLinkMapper.selectById(roadmapLinkId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -320,12 +347,14 @@ public class StepServiceImpl implements IStepService {
         try {
             roadmapLink = roadmapLinkDTO.toEntity();
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         RoadmapLink roadmapLink1;
         try {
             roadmapLinkMapper.selectById(roadmapLinkDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(roadmapLink == null){
@@ -334,6 +363,7 @@ public class StepServiceImpl implements IStepService {
         try {
             roadmapLinkMapper.update(roadmapLink);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
