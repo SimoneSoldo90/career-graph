@@ -3,7 +3,6 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
-import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
@@ -145,7 +144,7 @@ public class SkillServiceImpl implements ISkillService {
 
 
     @Override
-    public List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException, InternalException{
+    public List<SkillDTO> findSkillByStepId(Long stepId) throws InternalException{
         List<Skill> skillList;
         try {
             skillList = skillMapper.findByStepId(stepId);

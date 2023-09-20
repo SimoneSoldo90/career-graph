@@ -11,12 +11,12 @@ import net.bcsoft.careergraph.exception.NotFoundException;
 import java.util.List;
 
 public interface IUserService {
-    public UserDTO findById(Long id) throws NotFoundException, InternalException;
-    public List<UserSkillDTO> findUserSkillByUserId(Long userId) throws NoContentException, InternalException;
-    public UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException, InternalException;
-    public UserSkillDTO updateUserSkill(UserSkillDTO userSkillDTO) throws ConflictException, InternalException;
-    public UserSkillDTO findUserSkillById(Long userSkillId) throws NotFoundException, InternalException;
-    public void deleteUserSkill(Long userSkillId) throws ConflictException, NotFoundException;
+    UserDTO findById(Long id) throws NotFoundException, InternalException;
+    List<UserSkillDTO> findUserSkillByUserId(Long userId) throws NoContentException, InternalException;
+    UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException, InternalException;
+    UserSkillDTO updateUserSkill(UserSkillDTO userSkillDTO) throws ConflictException, InternalException;
+    UserSkillDTO findUserSkillById(Long userSkillId) throws NotFoundException, InternalException;
+    void deleteUserSkill(Long userSkillId) throws ConflictException, NotFoundException;
 
 
 }
