@@ -2,7 +2,6 @@ package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.UserDTO;
 import net.bcsoft.careergraph.dto.UserSkillDTO;
-import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.User;
 import net.bcsoft.careergraph.entity.UserSkill;
 import net.bcsoft.careergraph.entity.Skill;
@@ -15,6 +14,8 @@ import net.bcsoft.careergraph.mapper.UserMapper;
 import net.bcsoft.careergraph.mapper.UserSkillMapper;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.service.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,7 @@ public class UserServiceImpl implements IUserService {
     UserMapper userMapper;
     UserSkillMapper userSkillMapper;
     SkillMapper skillMapper;
+    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     public UserServiceImpl(UserMapper userMapper, UserSkillMapper userSkillMapper, SkillMapper skillMapper) {
         this.userMapper = userMapper;
@@ -89,6 +91,7 @@ public class UserServiceImpl implements IUserService {
             throw new InternalException(e.getMessage());
         }
         if(user == null || skill == null) {
+            LOGGER.warn("Impossibile creare lo UserSkill");
             throw new BadRequestException("errore di creazione, inseriti dati non corretti");
         }
         UserSkill result;
@@ -110,6 +113,7 @@ public class UserServiceImpl implements IUserService {
             throw new InternalException(e.getMessage());
         }
         if(oldUserSkill == null){
+            LOGGER.warn("Impossibile aggiornare lo UserSkill");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         UserSkill userSkill = userSkillDTO.toEntity();
@@ -148,6 +152,7 @@ public class UserServiceImpl implements IUserService {
             try {
                 userSkillMapper.delete(userSkillId);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
