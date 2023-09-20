@@ -112,7 +112,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("");
+            LOGGER.warn("Impossibile creare la skill");
             throw new BadRequestException("Skill non creata");
         }
         return new SkillDTO(result.getId(), result.getTitle(), result.getDescription(), null);
@@ -130,7 +130,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldSkill == null){
-            LOGGER.warn("");
+            LOGGER.warn("Impossibile modificare la skill");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -194,7 +194,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("");
+            LOGGER.warn("Impossibile creare la risorsa");
             throw new BadRequestException("resource not created");
         }
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
@@ -226,6 +226,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
+            LOGGER.warn("Impossibile effettuare la modifica");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
             Resource resource = resourceDTO.toEntity();

@@ -97,7 +97,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn(" ");
+            LOGGER.warn("Roadmap non creata");
             throw new BadRequestException("roadmap non creata");
         }
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
@@ -114,7 +114,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(oldRoadmap == null){
-            LOGGER.warn("");
+            LOGGER.warn("Impossibile modificare la roadmap");
             throw new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {

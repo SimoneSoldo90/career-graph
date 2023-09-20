@@ -92,7 +92,7 @@ public class UserServiceImpl implements IUserService {
             throw new InternalException(e.getMessage());
         }
         if(user == null || skill == null) {
-            LOGGER.warn("");
+            LOGGER.warn("Impossibile creare lo UserSkill");
             throw new BadRequestException("errore di creazione, inseriti dati non corretti");
         }
         UserSkill result;
@@ -114,7 +114,7 @@ public class UserServiceImpl implements IUserService {
             throw new InternalException(e.getMessage());
         }
         if(oldUserSkill == null){
-            LOGGER.warn("");
+            LOGGER.warn("Impossibile aggiornare lo UserSkill");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         UserSkill userSkill = userSkillDTO.toEntity();
