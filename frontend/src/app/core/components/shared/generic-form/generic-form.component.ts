@@ -4,6 +4,7 @@ import { Skill } from 'src/app/core/models/skill';
 import { Resource } from 'src/app/core/models/resource.model';
 import { ResourceService } from 'src/app/core/services/resource.service';
 import { SkillService } from 'src/app/core/services/skill.service';
+import { RoadmapService } from 'src/app/core/services/roadmap.service';
 
 @Component({
   selector: 'app-generic-form',
@@ -22,6 +23,7 @@ export class GenericFormComponent implements OnInit {
   constructor(
     private skillService: SkillService,
     private resourceService: ResourceService,
+    private roadmapService: RoadmapService
   ) {}
 
   ngOnInit() {
@@ -31,8 +33,8 @@ export class GenericFormComponent implements OnInit {
     }
     this.createForm();
 
-    if (!this.formOptions.isCreation){
-      this.populateForm()
+    if (!this.formOptions.isCreation) {
+      this.populateForm();
     }
   }
 
@@ -68,13 +70,23 @@ export class GenericFormComponent implements OnInit {
         }
       });
     } else {
-      const form = this.genericForm.value
-       this.formOptions.formObject = {
-         id: this.formOptions.formObject.id,
-         title: form.title,
-         description: form.description,
-         enabled: form.enabled,
-       };
+      const form = this.genericForm.value;
+      this.formOptions.formObject = {
+        title: form.title,
+        description: form.description,
+        //enabled: form.enabled,
+      };
+      this.roadmapService.createRoadmap(this.formOptions.formObject).subscribe(
+        {
+          next:(response)=>{
+            console.log(response)
+          },
+          error(err) {
+            console.log(err)
+
+          },
+        }
+      )
     }
   }
 
@@ -84,12 +96,11 @@ export class GenericFormComponent implements OnInit {
 
       this.formOptions.fields.forEach((field: any) => {
         if (this.formOptions.formObject.hasOwnProperty(field.id)) {
-            form[field.id] = this.formOptions.formObject[field.id];
+          form[field.id] = this.formOptions.formObject[field.id];
         }
       });
       this.genericForm.patchValue(form);
     }
-
   }
 
   getDataSource(fieldId: string): any[] {
@@ -115,9 +126,9 @@ export class GenericFormComponent implements OnInit {
   addElement(fieldId: string, element: Resource) {
     if (fieldId === 'resources') {
       const index = this.resourcesList.findIndex(
-        (resource) =>{}
-          // resource.id === element.id
-          //TODO DA REIMPLEMENTARE LOGICA
+        (resource) => {}
+        // resource.id === element.id
+        //TODO DA REIMPLEMENTARE LOGICA
       );
       if (index === -1) {
         this.resourcesList.push(element);
@@ -130,18 +141,15 @@ export class GenericFormComponent implements OnInit {
   removeElement(fieldId: string, element: Resource, indice: number) {
     if (fieldId === 'resources') {
       const index = this.resourcesList.findIndex(
-        (resource) =>{}
-// resource.id === element.id
-          //TODO DA REIMPLEMENTARE LOGICA
-        );
-        this.resourcesList.splice(indice, 1);
-        this.genericForm.value['resources'] = this.resourcesList;
-        this.genericForm.patchValue(this.genericForm.value);
-      }
+        (resource) => {}
+        // resource.id === element.id
+        //TODO DA REIMPLEMENTARE LOGICA
+      );
+      this.resourcesList.splice(indice, 1);
+      this.genericForm.value['resources'] = this.resourcesList;
+      this.genericForm.patchValue(this.genericForm.value);
+    }
   }
-
-
-
 
   selectOption(fieldId: string, selected: any) {
     if (fieldId === 'parentSkill') {
