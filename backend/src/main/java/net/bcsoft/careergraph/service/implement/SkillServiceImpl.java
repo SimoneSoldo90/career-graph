@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class SkillServiceImpl implements ISkillService {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
+
     /*
     ### JSON skill
 {
@@ -50,6 +52,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillList = skillMapper.findAll();
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(skillList == null){
@@ -76,6 +79,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             result = skillMapper.findById(skillId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -85,6 +89,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             resourceList = resourceMapper.selectBySkillId(skillId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
@@ -102,12 +107,14 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillMapper.insert(skill);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Skill result;
         try {
             result = skillMapper.findById(skill.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -126,6 +133,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             oldSkill = skillMapper.findById(skillDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldSkill == null){
@@ -135,6 +143,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillMapper.update(skill);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription(), null);
@@ -149,6 +158,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillList = skillMapper.findByStepId(stepId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<SkillDTO> result = new ArrayList<>();
@@ -164,6 +174,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             resourceList = resourceMapper.selectBySkillId(skillId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
@@ -184,12 +195,14 @@ public class SkillServiceImpl implements ISkillService {
         try {
             resourceMapper.insert(resource);
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Resource result;
         try {
             result = resourceMapper.selectById(resource.getId());
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -206,6 +219,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             result = resourceMapper.selectById(resourceId);
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -222,6 +236,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             oldResource = resourceMapper.selectById(resourceDTO.id());
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
@@ -232,6 +247,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 resourceMapper.update(resource);
             } catch(RuntimeException e) {
+                LOGGER .error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getStepId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());

@@ -26,6 +26,8 @@ import java.util.List;
 // @Transactional si potrebbe mettere qui invece di sui singoli metodi
 public class UserServiceImpl implements IUserService {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
     UserMapper userMapper;
     UserSkillMapper userSkillMapper;
     SkillMapper skillMapper;
@@ -43,6 +45,7 @@ public class UserServiceImpl implements IUserService {
         try {
             result = userMapper.selectById(userId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -57,6 +60,7 @@ public class UserServiceImpl implements IUserService {
         try {
             userSkillList = userSkillMapper.selectByUserId(userId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(userSkillList == null){
@@ -76,18 +80,21 @@ public class UserServiceImpl implements IUserService {
         try {
             userSkillMapper.insert(userSkill);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         User user;
         try {
             user = userMapper.selectById(userSkillDTO.userId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Skill skill;
         try {
             skill = skillMapper.findById(userSkillDTO.skillId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(user == null || skill == null) {
@@ -98,6 +105,7 @@ public class UserServiceImpl implements IUserService {
         try {
             result = userSkillMapper.selectById(userSkill.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
@@ -110,6 +118,7 @@ public class UserServiceImpl implements IUserService {
         try {
             oldUserSkill = userSkillMapper.selectById(userSkillDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldUserSkill == null){
@@ -120,12 +129,14 @@ public class UserServiceImpl implements IUserService {
         try {
             userSkillMapper.update(userSkill);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         UserSkill result;
         try {
             result = userSkillMapper.selectById(userSkill.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
@@ -137,6 +148,7 @@ public class UserServiceImpl implements IUserService {
         try {
             result = userSkillMapper.selectById(userSkillId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
