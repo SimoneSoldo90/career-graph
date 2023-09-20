@@ -37,6 +37,7 @@ public class SkillServiceImpl implements ISkillService {
     SkillMapper skillMapper;
     StepSkillMapper stepSkillMapper;
     ResourceMapper resourceMapper;
+    private final Logger LOGGER = LoggerFactory.getLogger(SkillServiceImpl.class);
 
     @Autowired
     public SkillServiceImpl(SkillMapper skillMapper, StepSkillMapper stepSkillMapper, ResourceMapper resourceMapper) {
@@ -117,6 +118,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile creare la skill");
             throw new BadRequestException("Skill non creata");
         }
         return new SkillDTO(result.getId(), result.getTitle(), result.getDescription(), null);
@@ -135,6 +137,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldSkill == null){
+            LOGGER.warn("Impossibile modificare la skill");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -150,7 +153,7 @@ public class SkillServiceImpl implements ISkillService {
 
 
     @Override
-    public List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException, InternalException{
+    public List<SkillDTO> findSkillByStepId(Long stepId) throws InternalException{
         List<Skill> skillList;
         try {
             skillList = skillMapper.findByStepId(stepId);
@@ -203,6 +206,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile creare la risorsa");
             throw new BadRequestException("resource not created");
         }
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
@@ -236,6 +240,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
+            LOGGER.warn("Impossibile effettuare la modifica");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
             Resource resource = resourceDTO.toEntity();
@@ -255,6 +260,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 skillMapper.delete(id);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -271,6 +277,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 resourceMapper.delete(resourceId);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }

@@ -30,6 +30,7 @@ public class StepServiceImpl implements IStepService {
     ISkillService skillService;
     ResourceMapper resourceMapper;
     RoadmapMapper roadmapMapper;
+    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
     @Autowired
     public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper, RoadmapMapper roadmapMapper) {
@@ -72,6 +73,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile creare lo step");
             throw new BadRequestException("step non creata");
         }
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
@@ -190,6 +192,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile aggiornare lo step");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -220,6 +223,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile creare la risorsa");
             throw new BadRequestException("resource non creata");
         }
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
@@ -264,7 +268,7 @@ public class StepServiceImpl implements IStepService {
 
 
     @Override
-    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws ConflictException, InternalException {
+    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws InternalException {
         Resource resource = resourceDTO.toEntity();
         Resource result;
         try {
@@ -299,6 +303,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile creare il RoadmapLink");
             throw new BadRequestException("roadmaplink non creata");
         }
         return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
@@ -358,6 +363,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(roadmapLink == null){
+            LOGGER.warn("Impossibile aggiornare il roadmapLink");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -376,6 +382,7 @@ public class StepServiceImpl implements IStepService {
             try {
                 stepMapper.delete(stepId);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -392,6 +399,7 @@ public class StepServiceImpl implements IStepService {
             try {
                 roadmapLinkMapper.delete(roadMapLinkId);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -407,6 +415,7 @@ public class StepServiceImpl implements IStepService {
             try {
                 resourceMapper.delete(resourceId);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }

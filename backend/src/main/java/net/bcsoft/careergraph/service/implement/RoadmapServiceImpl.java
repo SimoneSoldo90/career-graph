@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
                 throw new InternalException(e.getMessage());
             }
         } catch (NoContentException e) {
-            stepDTOList = new ArrayList<StepDTO>();
+            stepDTOList = new ArrayList<>();
         }
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), stepDTOList);
     }
@@ -100,7 +101,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-
+            LOGGER.warn("Roadmap non creata");
             throw new BadRequestException("roadmap non creata");
         }
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
@@ -118,7 +119,8 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(oldRoadmap == null){
-            throw  new ConflictException("non e' stato possibile effettuare la modifica");
+            LOGGER.warn("Impossibile modificare la roadmap");
+            throw new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
             roadmapMapper.update(roadmap);
@@ -136,6 +138,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             try {
                 roadmapMapper.delete(roadmapId);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
