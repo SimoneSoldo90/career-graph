@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class RoadmapServiceImpl implements IRoadmapService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
     RoadmapMapper roadmapMapper;
     IStepService stepService;
 

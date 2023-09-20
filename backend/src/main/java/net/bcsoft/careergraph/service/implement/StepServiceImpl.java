@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 public class StepServiceImpl implements IStepService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
     StepMapper stepMapper;
     RoadmapLinkMapper roadmapLinkMapper;
