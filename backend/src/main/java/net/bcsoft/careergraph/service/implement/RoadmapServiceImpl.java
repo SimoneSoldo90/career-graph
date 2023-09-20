@@ -9,6 +9,8 @@ import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import net.bcsoft.careergraph.service.IStepService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class RoadmapServiceImpl implements IRoadmapService {
     RoadmapMapper roadmapMapper;
     IStepService stepService;
+    private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
 
     /*
     {
@@ -94,7 +97,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-
+            LOGGER.warn(" ");
             throw new BadRequestException("roadmap non creata");
         }
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
@@ -111,7 +114,8 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(oldRoadmap == null){
-            throw  new ConflictException("non e' stato possibile effettuare la modifica");
+            LOGGER.warn("");
+            throw new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
             roadmapMapper.update(roadmap);
@@ -128,6 +132,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             try {
                 roadmapMapper.delete(roadmapId);
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
