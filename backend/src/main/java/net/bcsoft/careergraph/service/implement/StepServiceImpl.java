@@ -80,7 +80,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         List<StepDTO> stepDTOList = new ArrayList<>();
-        if(stepDTOList == null){
+        if(stepList == null){
             throw new NoContentException ("no step disponibili");
         }
         for (Step step : stepList) {
@@ -322,9 +322,8 @@ public class StepServiceImpl implements IStepService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
-        RoadmapLink roadmapLink1;
         try {
-            roadmapLinkMapper.selectById(roadmapLinkDTO.id());
+            roadmapLink =roadmapLinkMapper.selectById(roadmapLinkDTO.id());
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }

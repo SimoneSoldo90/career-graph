@@ -8,10 +8,10 @@ import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.mapper.StepSkillMapper;
+import net.bcsoft.careergraph.service.ISkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import net.bcsoft.careergraph.service.ISkillService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +146,7 @@ public class SkillServiceImpl implements ISkillService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
+        if (skillList.isEmpty()) throw new NotFoundException("Skill non trovati per lo stepId "+stepId);
         List<SkillDTO> result = new ArrayList<>();
         for (Skill skill : skillList) {
             result.add(new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription(), null));

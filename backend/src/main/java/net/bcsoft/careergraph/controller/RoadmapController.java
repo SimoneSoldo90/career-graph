@@ -27,13 +27,13 @@ public class RoadmapController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List <RoadmapDTO>> findRoadmaps(){
         List <RoadmapDTO> roadmapDTOList = null;
-        String sErrorMsg = "";
+        //String sErrorMsg = "";
         try{
             roadmapDTOList =  roadmapService.findAll();
         }catch (NoContentException | InternalException e){
-            sErrorMsg = "Error getting list: " + e.getMessage();
+            //sErrorMsg = "Error getting list: " + e.getMessage();
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(roadmapDTOList != null){
             responseEntity = ResponseEntity.ok(roadmapDTOList);
         }else{
@@ -47,7 +47,7 @@ public class RoadmapController {
     public ResponseEntity <RoadmapDTO> createRoadmap(@RequestBody RoadmapDTO roadmapDTO){
         RoadmapDTO roadmapDTO1 = null;
         String sErrorMsg = "";
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         try{
             roadmapDTO1 = roadmapService.create(roadmapDTO);
         }catch(BadRequestException | InternalException e){
@@ -71,13 +71,13 @@ public class RoadmapController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity <RoadmapDTO> findRoadmapById(@PathVariable Long roadmapId){
         RoadmapDTO roadmapDTO = null;
-        String sErrorMsg = "";
+        //String sErrorMsg = "";
         try{
             roadmapDTO =  roadmapService.findById(roadmapId);
         }catch (NotFoundException | InternalException e){
-            sErrorMsg = "Error getting roadmap: " + e.getMessage();
+            //sErrorMsg = "Error getting roadmap: " + e.getMessage();
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(roadmapDTO != null){
             responseEntity = ResponseEntity.ok(roadmapDTO);
         }else{

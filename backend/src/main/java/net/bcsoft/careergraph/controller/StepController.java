@@ -32,7 +32,7 @@ public class StepController {
     public ResponseEntity<StepDTO> createStep(@RequestBody StepDTO stepDTO) {
             StepDTO stepDTO1 =null;
             String sErrorMsq = "";
-            ResponseEntity responseEntity = null;
+            ResponseEntity responseEntity;
         try {
             stepDTO1 = stepService.create(stepDTO);
         } catch (BadRequestException | InternalException e) {
@@ -54,12 +54,12 @@ public class StepController {
         @GetMapping("/steps/")
         @CrossOrigin(origins = "http://localhost:4200")
         public ResponseEntity<List <StepDTO>> findSteps(){
-                List <StepDTO> stepDTOList = null;
-                String sErrorMsq = "";
+            List <StepDTO> stepDTOList = null;
+            //String sErrorMsq = "";
             try {
                  stepDTOList = stepService.findAll();
             } catch (NoContentException | InternalException e){
-                sErrorMsq = "Error getting list:" + e.getMessage();
+                //sErrorMsq = "Error getting list:" + e.getMessage();
             }
             ResponseEntity responseEntity = null;
             if(stepDTOList != null){
@@ -74,14 +74,14 @@ public class StepController {
         @CrossOrigin(origins = "http://localhost:4200")
         public ResponseEntity <StepDTO> findStepById (@PathVariable Long stepId){
             StepDTO stepDTO =null;
-            String sErrorMsq = "";
+            //String sErrorMsq = "";
             try {
                 stepDTO = stepService.findById(stepId);
             } catch (NotFoundException | InternalException e) {
-                sErrorMsq = "Error getting step:" + e.getMessage();
+                //sErrorMsq = "Error getting step:" + e.getMessage();
             }
 
-            ResponseEntity responseEntity = null;
+            ResponseEntity responseEntity;
             if(stepDTO != null){
                 responseEntity = ResponseEntity.ok(stepDTO);
             }else{
@@ -101,7 +101,7 @@ public class StepController {
         }catch (ConflictException | InternalException e){
             sErrorMsq = "Error updating step:" + e.getMessage();
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(stepDTO1 != null){
             responseEntity = ResponseEntity.ok(stepDTO1);
         }else{
@@ -143,14 +143,13 @@ public class StepController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List <ResourceDTO>> findResourcesBySkillId(@PathVariable Long stepId){
         List<ResourceDTO> resourceDTOList = null;
-        String sErrorMsg = "Error updating roadmap:";
+        //String sErrorMsg = "Error updating roadmap:";
         try{
              resourceDTOList = stepService.findResourcesByStepId(stepId);
         }catch (NoContentException | InternalException e){
-            sErrorMsg = "Error getting list:" + e.getMessage();
-
+            //sErrorMsg = "Error getting list:" + e.getMessage();
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(resourceDTOList != null){
             responseEntity = ResponseEntity.ok(resourceDTOList);
         }else{
@@ -163,13 +162,13 @@ public class StepController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResourceDTO> findByIdResource(@PathVariable Long stepId, @PathVariable Long resourceId){
         ResourceDTO resourceDTO = null;
-        String sErrorMsq = "";
+        //String sErrorMsq = "";
         try{
              resourceDTO = stepService.findByResourceId(resourceId);
         }catch (NotFoundException | InternalException e){
-            sErrorMsq = "Error getting resource:" + e.getMessage();
+            //sErrorMsq = "Error getting resource:" + e.getMessage();
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(resourceDTO != null){
             responseEntity = ResponseEntity.ok(resourceDTO);
         }else{
@@ -194,7 +193,7 @@ public class StepController {
             }
 
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(resourceDTO1 != null){
             responseEntity = ResponseEntity.ok(resourceDTO1);
         }else{
@@ -218,9 +217,7 @@ public class StepController {
             }
 
         }
-        ResponseEntity responseEntity = null;
-
-
+        ResponseEntity responseEntity;
         if(roadmapLinkDTO1 != null){
             try {
                 responseEntity = ResponseEntity.created(new URI("/roadmap-links/" + roadmapLinkDTO1.id())).body(roadmapLinkDTO1);
@@ -237,13 +234,13 @@ public class StepController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<RoadmapLinkDTO>> findRoadmapLinksByStepId(@PathVariable Long stepId){
         List<RoadmapLinkDTO> roadmapLinkDTOList = null;
-        String sErrorMsq = null;
+        //String sErrorMsq = null;
         try{
             roadmapLinkDTOList = stepService.findRoadmapLinksByStepId(stepId);
         }catch (NoContentException | InternalException e){
-            sErrorMsq = "Error getting list:" + e.getMessage();
+            //sErrorMsq = "Error getting list:" + e.getMessage();
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(roadmapLinkDTOList != null){
             responseEntity = ResponseEntity.ok(roadmapLinkDTOList);
         }else{
@@ -256,13 +253,13 @@ public class StepController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RoadmapLinkDTO> findByRoadmapLinkId(@PathVariable Long stepId, @PathVariable Long roadmapLinkId){
         RoadmapLinkDTO roadmapLinkDTO = null;
-        String sErrorMsg = "";
+        //String sErrorMsg = "";
         try{
-             roadmapLinkDTO = stepService.findByRoadmapLinkId(roadmapLinkId);
+            roadmapLinkDTO = stepService.findByRoadmapLinkId(roadmapLinkId);
         }catch (NotFoundException | InternalException e){
-            sErrorMsg = "Error getting roadmaplink:" + e.getMessage();
+            //sErrorMsg = "Error getting roadmaplink:" + e.getMessage();
         }
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         if(roadmapLinkDTO != null){
             responseEntity = ResponseEntity.ok(roadmapLinkDTO);
         }else{
@@ -274,20 +271,19 @@ public class StepController {
     @PutMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RoadmapLinkDTO> updateStepRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId, RoadmapLinkDTO roadmapLinkDTO) {
-        RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsg = null;
         if(stepId != roadmapLinkDTO.stepId() || roadmapLinkId != roadmapLinkDTO.id()){
             sErrorMsg= "ids in the roadmapLink mismatch the ones in the request body";
         }else{
             try {
-                roadmapLinkDTO1 = stepService.updateRoadmapLink(roadmapLinkDTO);
+                stepService.updateRoadmapLink(roadmapLinkDTO);
             } catch (ConflictException | InternalException e) {
                 sErrorMsg = "Error updating roadmaplink:" + e.getMessage();
             }
         }
 
         ResponseEntity responseEntity = null;
-        if(roadmapLinkDTO != null){
+        if(sErrorMsg == null){
             responseEntity = ResponseEntity.ok(roadmapLinkDTO);
         }else{
             responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body(sErrorMsg);
@@ -298,7 +294,7 @@ public class StepController {
     @DeleteMapping("/steps/{stepId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> deleteStep(@PathVariable Long stepId){
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         try{
             stepService.deleteStep(stepId);
             responseEntity = ResponseEntity.noContent().build();
@@ -313,7 +309,7 @@ public class StepController {
     @DeleteMapping("/steps/{stepId}/resources/{resourceId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> deleteResource(@PathVariable Long stepId, @PathVariable Long resourceId){
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         try{
             stepService.deleteResource(resourceId);
             responseEntity = ResponseEntity.noContent().build();
@@ -328,7 +324,7 @@ public class StepController {
     @DeleteMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> deleteStepRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId){
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         try{
             stepService.deleteRoadmapLink(roadmapLinkId);
             responseEntity = ResponseEntity.noContent().build();
