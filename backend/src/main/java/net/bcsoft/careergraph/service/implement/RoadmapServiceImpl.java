@@ -9,6 +9,8 @@ import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import net.bcsoft.careergraph.service.IStepService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +22,7 @@ import java.util.List;
 public class RoadmapServiceImpl implements IRoadmapService {
     RoadmapMapper roadmapMapper;
     IStepService stepService;
-
+    private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
     /*
     {
     id: int, // non presente se POST request
@@ -85,12 +87,14 @@ public class RoadmapServiceImpl implements IRoadmapService {
         try {
             roadmapMapper.insert(roadmap);
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Roadmap result;
         try {
             result = roadmapMapper.selectById(roadmap.getId());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -108,6 +112,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         try {
             oldRoadmap = roadmapMapper.selectById(roadmapDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldRoadmap == null){
@@ -116,6 +121,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         try {
             roadmapMapper.update(roadmap);
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
@@ -128,6 +134,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             try {
                 roadmapMapper.delete(roadmapId);
             }catch (RuntimeException e) {
+                LOGGER.info(e.getMessage(), e);
                 throw new ConflictException("elemento non eliminabile");
             }
         }

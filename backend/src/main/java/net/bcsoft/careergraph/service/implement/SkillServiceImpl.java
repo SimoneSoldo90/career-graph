@@ -10,6 +10,8 @@ import net.bcsoft.careergraph.mapper.ResourceMapper;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.mapper.StepSkillMapper;
 import net.bcsoft.careergraph.service.ISkillService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.util.List;
 
 @Service
 public class SkillServiceImpl implements ISkillService {
+
 
     /*
     ### JSON skill
@@ -34,6 +37,7 @@ public class SkillServiceImpl implements ISkillService {
     SkillMapper skillMapper;
     StepSkillMapper stepSkillMapper;
     ResourceMapper resourceMapper;
+    private final Logger LOGGER = LoggerFactory.getLogger(SkillServiceImpl.class);
 
     @Autowired
     public SkillServiceImpl(SkillMapper skillMapper, StepSkillMapper stepSkillMapper, ResourceMapper resourceMapper) {
@@ -100,12 +104,14 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillMapper.insert(skill);
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Skill result;
         try {
             result = skillMapper.findById(skill.getId());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -123,6 +129,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             oldSkill = skillMapper.findById(skillDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldSkill == null){
@@ -131,6 +138,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillMapper.update(skill);
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription(), null);
@@ -180,12 +188,14 @@ public class SkillServiceImpl implements ISkillService {
         try {
             resourceMapper.insert(resource);
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Resource result;
         try {
             result = resourceMapper.selectById(resource.getId());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -217,6 +227,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             oldResource = resourceMapper.selectById(resourceDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
@@ -226,6 +237,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 resourceMapper.update(resource);
             } catch(RuntimeException e) {
+                LOGGER.info(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getStepId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
@@ -238,6 +250,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 skillMapper.delete(id);
             }catch (RuntimeException e) {
+                LOGGER.info(e.getMessage(), e);
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -254,6 +267,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 resourceMapper.delete(resourceId);
             }catch (RuntimeException e) {
+                LOGGER.info(e.getMessage(), e);
                 throw new ConflictException("elemento non eliminabile");
             }
         }

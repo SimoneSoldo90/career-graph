@@ -15,6 +15,8 @@ import net.bcsoft.careergraph.mapper.UserMapper;
 import net.bcsoft.careergraph.mapper.UserSkillMapper;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.service.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,7 @@ public class UserServiceImpl implements IUserService {
     UserMapper userMapper;
     UserSkillMapper userSkillMapper;
     SkillMapper skillMapper;
+    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     public UserServiceImpl(UserMapper userMapper, UserSkillMapper userSkillMapper, SkillMapper skillMapper) {
         this.userMapper = userMapper;
@@ -74,18 +77,21 @@ public class UserServiceImpl implements IUserService {
         try {
             userSkillMapper.insert(userSkill);
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         User user;
         try {
             user = userMapper.selectById(userSkillDTO.userId());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Skill skill;
         try {
             skill = skillMapper.findById(userSkillDTO.skillId());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(user == null || skill == null) {
@@ -95,6 +101,7 @@ public class UserServiceImpl implements IUserService {
         try {
             result = userSkillMapper.selectById(userSkill.getId());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
@@ -107,6 +114,7 @@ public class UserServiceImpl implements IUserService {
         try {
             oldUserSkill = userSkillMapper.selectById(userSkillDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldUserSkill == null){
@@ -116,12 +124,14 @@ public class UserServiceImpl implements IUserService {
         try {
             userSkillMapper.update(userSkill);
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         UserSkill result;
         try {
             result = userSkillMapper.selectById(userSkill.getId());
         } catch(RuntimeException e) {
+            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
@@ -148,6 +158,7 @@ public class UserServiceImpl implements IUserService {
             try {
                 userSkillMapper.delete(userSkillId);
             }catch (RuntimeException e) {
+                LOGGER.info(e.getMessage(), e);
                 throw new ConflictException("elemento non eliminabile");
             }
         }
