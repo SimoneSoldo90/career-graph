@@ -3,6 +3,7 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
+import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;

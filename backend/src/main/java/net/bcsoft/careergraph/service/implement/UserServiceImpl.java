@@ -2,6 +2,7 @@ package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.UserDTO;
 import net.bcsoft.careergraph.dto.UserSkillDTO;
+import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.User;
 import net.bcsoft.careergraph.entity.UserSkill;
 import net.bcsoft.careergraph.entity.Skill;
