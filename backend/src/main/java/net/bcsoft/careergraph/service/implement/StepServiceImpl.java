@@ -11,8 +11,6 @@ import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
 import net.bcsoft.careergraph.service.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +26,6 @@ public class StepServiceImpl implements IStepService {
     ISkillService skillService;
     ResourceMapper resourceMapper;
     RoadmapMapper roadmapMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
     @Autowired
     public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper, RoadmapMapper roadmapMapper) {
@@ -60,14 +57,12 @@ public class StepServiceImpl implements IStepService {
         try {
             stepMapper.insert(step);
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Step result;
         try {
             result = stepMapper.selectById(step.getId());
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -176,7 +171,6 @@ public class StepServiceImpl implements IStepService {
         try {
             result = stepMapper.selectById(step.getId());
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -185,7 +179,6 @@ public class StepServiceImpl implements IStepService {
         try {
             stepMapper.update(step);
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
@@ -199,14 +192,12 @@ public class StepServiceImpl implements IStepService {
         try {
             resourceMapper.insert(resource);
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Resource result;
         try {
             result = resourceMapper.selectById(resource.getId());
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -258,13 +249,11 @@ public class StepServiceImpl implements IStepService {
         try {
             result = resourceMapper.selectById(resourceDTO.id());
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         try {
             resourceMapper.update(resource);
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
@@ -276,14 +265,12 @@ public class StepServiceImpl implements IStepService {
         try {
             roadmapLinkMapper.insert(roadmapLink);
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         RoadmapLink result;
         try {
             result = roadmapLinkMapper.selectById(roadmapLink.getId());
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -333,14 +320,12 @@ public class StepServiceImpl implements IStepService {
         try {
             roadmapLink = roadmapLinkDTO.toEntity();
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         RoadmapLink roadmapLink1;
         try {
             roadmapLinkMapper.selectById(roadmapLinkDTO.id());
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(roadmapLink == null){
@@ -349,7 +334,6 @@ public class StepServiceImpl implements IStepService {
         try {
             roadmapLinkMapper.update(roadmapLink);
         } catch(RuntimeException e) {
-            LOGGER.info(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
@@ -362,7 +346,6 @@ public class StepServiceImpl implements IStepService {
             try {
                 stepMapper.delete(stepId);
             }catch (RuntimeException e) {
-                LOGGER.info(e.getMessage(), e);
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -379,7 +362,6 @@ public class StepServiceImpl implements IStepService {
             try {
                 roadmapLinkMapper.delete(roadMapLinkId);
             }catch (RuntimeException e) {
-                LOGGER.info(e.getMessage(), e);
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -395,7 +377,6 @@ public class StepServiceImpl implements IStepService {
             try {
                 resourceMapper.delete(resourceId);
             }catch (RuntimeException e) {
-                LOGGER.info(e.getMessage(), e);
                 throw new ConflictException("elemento non eliminabile");
             }
         }
