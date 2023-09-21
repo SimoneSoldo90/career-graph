@@ -117,7 +117,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile creare la skill");
+            LOGGER.warn("l'oggetto di tipo Skill non e' stato inserito correttamente");
             throw new BadRequestException("Skill non creata");
         }
         return new SkillDTO(result.getId(), result.getTitle(), result.getDescription(), null);
@@ -136,7 +136,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldSkill == null){
-            LOGGER.warn("Impossibile modificare la skill");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo Skill con id = " + skillDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -205,7 +205,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile creare la risorsa");
+            LOGGER.warn("l'oggetto di tipo Resource non e' stato inserito correttamente");
             throw new BadRequestException("resource not created");
         }
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
@@ -239,7 +239,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
-            LOGGER.warn("Impossibile effettuare la modifica");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo Resource con id =" + resourceDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
             Resource resource = resourceDTO.toEntity();
@@ -259,7 +259,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 skillMapper.delete(id);
             }catch (RuntimeException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn("non e' stato possibile eliminare l'oggetto di tipo Skill con id = " + id + ", in quanto non e' stato trovato");
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -276,7 +276,7 @@ public class SkillServiceImpl implements ISkillService {
             try {
                 resourceMapper.delete(resourceId);
             }catch (RuntimeException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn("non e' stato possibile eliminare l'oggetto di tipo Resource con id = " + resourceId + ", in quanto non e' stato trovato");
                 throw new ConflictException("elemento non eliminabile");
             }
         }

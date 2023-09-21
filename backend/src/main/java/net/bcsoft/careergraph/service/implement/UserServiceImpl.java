@@ -96,7 +96,7 @@ public class UserServiceImpl implements IUserService {
             throw new InternalException(e.getMessage());
         }
         if(user == null || skill == null) {
-            LOGGER.warn("Impossibile creare lo UserSkill");
+            LOGGER.warn("l'oggetto di tipo Skill non e' stato inserito correttamente" /*"non e' stato possinile creare l'oggetto di tipo UserSkill a causa dell'incorretto inserimento dei dati"*/);
             throw new BadRequestException("errore di creazione, inseriti dati non corretti");
         }
         UserSkill result;
@@ -120,7 +120,7 @@ public class UserServiceImpl implements IUserService {
             throw new InternalException(e.getMessage());
         }
         if(oldUserSkill == null){
-            LOGGER.warn("Impossibile aggiornare lo UserSkill");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo UserSkill con id = " + userSkillDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         UserSkill userSkill = userSkillDTO.toEntity();
@@ -162,7 +162,7 @@ public class UserServiceImpl implements IUserService {
             try {
                 userSkillMapper.delete(userSkillId);
             }catch (RuntimeException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn("non e' stato possibile eliminare l'oggetto di tipo UserSkill con id = " + userSkillId + ", in quanto non e' stato trovato");
                 throw new ConflictException("elemento non eliminabile");
             }
         }
