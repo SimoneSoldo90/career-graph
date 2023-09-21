@@ -74,19 +74,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException, InternalException {
-        UserSkill userSkill = userSkillDTO.toEntity();
-        try {
-            userSkillMapper.insert(userSkill);
-        } catch(RuntimeException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new InternalException(e.getMessage());
-        }
         User user;
         try {
             user = userMapper.selectById(userSkillDTO.userId());
         } catch(RuntimeException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
+        }
+        if(user == null) {
+            LOGGER.warn("non è possibile creare una UserSkill con userId = " + userSkillDTO.userId() + " non esistente");
+            throw new BadRequestException("non è possibile creare una UserSkill con userId = " + userSkillDTO.userId() + " non esistente");
         }
         Skill skill;
         try {
@@ -95,10 +92,19 @@ public class UserServiceImpl implements IUserService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
-        if(user == null || skill == null) {
-            LOGGER.warn("l'oggetto di tipo Skill non e' stato inserito correttamente" /*"non e' stato possinile creare l'oggetto di tipo UserSkill a causa dell'incorretto inserimento dei dati"*/);
-            throw new BadRequestException("errore di creazione, inseriti dati non corretti");
+        if(skill == null) {
+            LOGGER.warn("non è possibile creare una UserSkill con skillId = " + userSkillDTO.skillId() + " non esistente");
+            throw new BadRequestException("non è possibile creare una UserSkill con skillId = " + userSkillDTO.skillId() + " non esistente");
         }
+
+        UserSkill userSkill = userSkillDTO.toEntity();
+        try {
+            userSkillMapper.insert(userSkill);
+        } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new InternalException(e.getMessage());
+        }
+
         UserSkill result;
         try {
             result = userSkillMapper.selectById(userSkill.getId());

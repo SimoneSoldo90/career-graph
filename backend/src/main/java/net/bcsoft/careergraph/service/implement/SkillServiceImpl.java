@@ -117,7 +117,6 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("l'oggetto di tipo Skill non e' stato inserito correttamente");
             throw new BadRequestException("Skill non creata");
         }
         return new SkillDTO(result.getId(), result.getTitle(), result.getDescription(), null);
