@@ -3,8 +3,6 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.RoadmapDTO;
 import net.bcsoft.careergraph.dto.StepDTO;
 import net.bcsoft.careergraph.entity.Roadmap;
-import net.bcsoft.careergraph.entity.Skill;
-import net.bcsoft.careergraph.entity.Step;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
@@ -13,14 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
 public class RoadmapServiceImpl implements IRoadmapService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
     RoadmapMapper roadmapMapper;
     IStepService stepService;
     private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
@@ -45,6 +43,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         try {
             result = roadmapMapper.selectById(roadmapId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -55,10 +54,11 @@ public class RoadmapServiceImpl implements IRoadmapService {
             try{
                 stepDTOList = stepService.findByRoadmapId(roadmapId);
             } catch(RuntimeException e) {
+                LOGGER.error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
         } catch (NoContentException e) {
-            stepDTOList = new ArrayList<StepDTO>();
+            stepDTOList = new ArrayList<>();
         }
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), stepDTOList);
     }
@@ -69,6 +69,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         try {
             roadmapList = roadmapMapper.selectAll();
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List <RoadmapDTO> roadmapDTOList = new ArrayList<>();
@@ -89,16 +90,18 @@ public class RoadmapServiceImpl implements IRoadmapService {
         try {
             roadmapMapper.insert(roadmap);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Roadmap result;
         try {
             result = roadmapMapper.selectById(roadmap.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-
+            LOGGER.warn("Roadmap non creata");
             throw new BadRequestException("roadmap non creata");
         }
         LOGGER.info("creata roadmap con id " + result.getId());
@@ -113,14 +116,17 @@ public class RoadmapServiceImpl implements IRoadmapService {
         try {
             oldRoadmap = roadmapMapper.selectById(roadmapDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldRoadmap == null){
-            throw  new ConflictException("non e' stato possibile effettuare la modifica");
+            LOGGER.warn("Impossibile modificare la roadmap");
+            throw new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
             roadmapMapper.update(roadmap);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         LOGGER.info("update roadmap con id " + roadmap.getId());
@@ -135,6 +141,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
                 roadmapMapper.delete(roadmapId);
                 LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }

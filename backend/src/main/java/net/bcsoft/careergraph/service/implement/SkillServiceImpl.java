@@ -3,7 +3,6 @@ package net.bcsoft.careergraph.service.implement;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.entity.Resource;
-import net.bcsoft.careergraph.entity.Roadmap;
 import net.bcsoft.careergraph.entity.Skill;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.ResourceMapper;
@@ -38,13 +37,11 @@ public class SkillServiceImpl implements ISkillService {
     ResourceMapper resourceMapper;
     private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
-
     @Autowired
     public SkillServiceImpl(SkillMapper skillMapper, StepSkillMapper stepSkillMapper, ResourceMapper resourceMapper) {
         this.skillMapper = skillMapper;
         this.stepSkillMapper = stepSkillMapper;
         this.resourceMapper = resourceMapper;
-
     }
 
     @Override
@@ -53,6 +50,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillList = skillMapper.findAll();
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(skillList == null){
@@ -79,6 +77,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             result = skillMapper.findById(skillId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -88,6 +87,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             resourceList = resourceMapper.selectBySkillId(skillId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
@@ -105,15 +105,18 @@ public class SkillServiceImpl implements ISkillService {
         try {
             skillMapper.insert(skill);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Skill result;
         try {
             result = skillMapper.findById(skill.getId());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile creare la skill");
             throw new BadRequestException("Skill non creata");
         }
         LOGGER.info("creata roadmap con id " + result.getId());
@@ -129,14 +132,17 @@ public class SkillServiceImpl implements ISkillService {
         try {
             oldSkill = skillMapper.findById(skillDTO.id());
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldSkill == null){
+            LOGGER.warn("Impossibile modificare la skill");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
             skillMapper.update(skill);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         LOGGER.info("creata roadmap con id " + skill.getId());
@@ -147,11 +153,12 @@ public class SkillServiceImpl implements ISkillService {
 
 
     @Override
-    public List<SkillDTO> findSkillByStepId(Long stepId) throws NotFoundException, InternalException{
+    public List<SkillDTO> findSkillByStepId(Long stepId) throws InternalException{
         List<Skill> skillList;
         try {
             skillList = skillMapper.findByStepId(stepId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<SkillDTO> result = new ArrayList<>();
@@ -167,6 +174,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             resourceList = resourceMapper.selectBySkillId(skillId);
         } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         List<ResourceDTO> resourceDTOList = new ArrayList<>();
@@ -187,15 +195,18 @@ public class SkillServiceImpl implements ISkillService {
         try {
             resourceMapper.insert(resource);
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         Resource result;
         try {
             result = resourceMapper.selectById(resource.getId());
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
+            LOGGER.warn("Impossibile creare la risorsa");
             throw new BadRequestException("resource not created");
         }
         LOGGER.info("creata roadmap con id " + result.getId());
@@ -209,6 +220,7 @@ public class SkillServiceImpl implements ISkillService {
         try {
             result = resourceMapper.selectById(resourceId);
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(result == null){
@@ -225,15 +237,18 @@ public class SkillServiceImpl implements ISkillService {
         try {
             oldResource = resourceMapper.selectById(resourceDTO.id());
         } catch(RuntimeException e) {
+            LOGGER .error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
+            LOGGER.warn("Impossibile effettuare la modifica");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
             Resource resource = resourceDTO.toEntity();
             try {
                 resourceMapper.update(resource);
             } catch(RuntimeException e) {
+                LOGGER .error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
             LOGGER.info("creata roadmap con id " + resource.getId());
@@ -248,6 +263,7 @@ public class SkillServiceImpl implements ISkillService {
                 skillMapper.delete(id);
                 LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -265,6 +281,7 @@ public class SkillServiceImpl implements ISkillService {
                 resourceMapper.delete(resourceId);
                 LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
+                LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
             }
         }
