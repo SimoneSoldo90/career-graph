@@ -91,11 +91,11 @@ public class UserController {
             sErrorMsg = "ids in the url mismatch the ones in the request body";
         }else{
             try{
-            userSkillDTO1 = userService.updateUserSkill(userSkillDTO);
-        }catch (ConflictException | InternalException e){
-            sErrorMsg = "error updating skill : " + e.getMessage();
+                userSkillDTO1 = userService.updateUserSkill(userSkillDTO);
+            }catch (ConflictException | InternalException e){
+                sErrorMsg = "error updating skill : " + e.getMessage();
+            }
         }
-    }
 
         ResponseEntity responseEntity = null;
         if(userSkillDTO1 != null){

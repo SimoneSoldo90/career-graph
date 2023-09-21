@@ -21,7 +21,6 @@ public class RoadmapServiceImpl implements IRoadmapService {
     private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
     RoadmapMapper roadmapMapper;
     IStepService stepService;
-    private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
 
     /*
     {
