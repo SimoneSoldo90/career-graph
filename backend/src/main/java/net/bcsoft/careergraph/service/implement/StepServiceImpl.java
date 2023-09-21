@@ -11,6 +11,8 @@ import net.bcsoft.careergraph.mapper.RoadmapLinkMapper;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.mapper.StepMapper;
 import net.bcsoft.careergraph.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,9 @@ public class StepServiceImpl implements IStepService {
     ISkillService skillService;
     ResourceMapper resourceMapper;
     RoadmapMapper roadmapMapper;
+    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
+
+
 
     @Autowired
     public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper, RoadmapMapper roadmapMapper) {
@@ -68,6 +73,7 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new BadRequestException("step non creata");
         }
+        LOGGER.info("creata step con id " + result.getId());
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
@@ -181,6 +187,7 @@ public class StepServiceImpl implements IStepService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update step con id " + result.getId());
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
@@ -203,6 +210,7 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new BadRequestException("resource non creata");
         }
+        LOGGER.info("creata resource con id " + result.getId());
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
     }
 
@@ -256,6 +264,7 @@ public class StepServiceImpl implements IStepService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update resource con id " + result.getId());
         return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
     }
 
@@ -276,6 +285,7 @@ public class StepServiceImpl implements IStepService {
         if(result == null){
             throw new BadRequestException("roadmaplink non creata");
         }
+        LOGGER.info("creata roadmaplink con id " + result.getId());
         return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
 
@@ -336,6 +346,7 @@ public class StepServiceImpl implements IStepService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update roadmaplink con id " + roadmapLink.getId());
         return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
     }
 
@@ -345,6 +356,7 @@ public class StepServiceImpl implements IStepService {
         if(result != null) {
             try {
                 stepMapper.delete(stepId);
+                LOGGER.info("delete step con id " + result.getId());
             }catch (RuntimeException e) {
                 throw new ConflictException("elemento non eliminabile");
             }
@@ -361,6 +373,7 @@ public class StepServiceImpl implements IStepService {
         if(result != null) {
             try {
                 roadmapLinkMapper.delete(roadMapLinkId);
+                LOGGER.info("delete roadmaplink con id " + result.getId());
             }catch (RuntimeException e) {
                 throw new ConflictException("elemento non eliminabile");
             }
@@ -376,6 +389,7 @@ public class StepServiceImpl implements IStepService {
         if(result != null) {
             try {
                 resourceMapper.delete(resourceId);
+                LOGGER.info("delete resource con id " + result.getId());
             }catch (RuntimeException e) {
                 throw new ConflictException("elemento non eliminabile");
             }

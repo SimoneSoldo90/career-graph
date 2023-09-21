@@ -9,6 +9,8 @@ import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.mapper.RoadmapMapper;
 import net.bcsoft.careergraph.service.IRoadmapService;
 import net.bcsoft.careergraph.service.IStepService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +18,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class RoadmapServiceImpl implements IRoadmapService {
     RoadmapMapper roadmapMapper;
     IStepService stepService;
+    private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
 
     /*
     {
@@ -97,6 +101,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
 
             throw new BadRequestException("roadmap non creata");
         }
+        LOGGER.info("creata roadmap con id " + result.getId());
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
 
@@ -118,6 +123,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update roadmap con id " + roadmap.getId());
         return new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
     }
 
@@ -127,6 +133,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         if(result != null) {
             try {
                 roadmapMapper.delete(roadmapId);
+                LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
                 throw new ConflictException("elemento non eliminabile");
             }
