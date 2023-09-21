@@ -26,8 +26,6 @@ import java.util.List;
 // @Transactional si potrebbe mettere qui invece di sui singoli metodi
 public class UserServiceImpl implements IUserService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
-
     UserMapper userMapper;
     UserSkillMapper userSkillMapper;
     SkillMapper skillMapper;

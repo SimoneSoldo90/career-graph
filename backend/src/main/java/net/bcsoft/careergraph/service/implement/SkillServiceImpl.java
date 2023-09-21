@@ -21,7 +21,6 @@ import java.util.List;
 @Service
 public class SkillServiceImpl implements ISkillService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
     /*
     ### JSON skill

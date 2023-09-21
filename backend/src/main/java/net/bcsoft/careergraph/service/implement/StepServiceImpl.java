@@ -30,7 +30,6 @@ public class StepServiceImpl implements IStepService {
     ISkillService skillService;
     ResourceMapper resourceMapper;
     RoadmapMapper roadmapMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
     @Autowired
     public StepServiceImpl(StepMapper stepMapper, RoadmapLinkMapper roadmapLinkMapper, ISkillService skillService, ResourceMapper resourceMapper, RoadmapMapper roadmapMapper) {
@@ -89,7 +88,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         List<StepDTO> stepDTOList = new ArrayList<>();
-        if(stepDTOList == null){
+        if(stepList == null){
             throw new NoContentException ("no step disponibili");
         }
         for (Step step : stepList) {
@@ -268,14 +267,19 @@ public class StepServiceImpl implements IStepService {
 
 
     @Override
-    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws InternalException {
+    @Transactional
+    public ResourceDTO updateResource(ResourceDTO resourceDTO) throws InternalException, ConflictException {
         Resource resource = resourceDTO.toEntity();
-        Resource result;
+        Resource oldResource;
         try {
-            result = resourceMapper.selectById(resourceDTO.id());
+            oldResource = resourceMapper.selectById(resourceDTO.id());
         } catch(RuntimeException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
+        }
+        if(oldResource == null){
+            LOGGER.warn("Impossibile modificare la skill");
+            throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
             resourceMapper.update(resource);
@@ -287,6 +291,7 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
+    @Transactional
     public RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException, InternalException {
         RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
         try {
@@ -347,34 +352,35 @@ public class StepServiceImpl implements IStepService {
     }
 
     @Override
+    @Transactional
     public RoadmapLinkDTO updateRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws ConflictException, InternalException {
-        RoadmapLink roadmapLink;
+        RoadmapLink oldRoadmapLink;
         try {
-            roadmapLink = roadmapLinkDTO.toEntity();
+            oldRoadmapLink = roadmapLinkMapper.selectById(roadmapLinkDTO.id());
         } catch(RuntimeException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
-        RoadmapLink roadmapLink1;
-        try {
-            roadmapLinkMapper.selectById(roadmapLinkDTO.id());
-        } catch(RuntimeException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new InternalException(e.getMessage());
-        }
-        if(roadmapLink == null){
+        if(oldRoadmapLink == null){
             LOGGER.warn("Impossibile aggiornare il roadmapLink");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
+        RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
         try {
             roadmapLinkMapper.update(roadmapLink);
         } catch(RuntimeException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
-        return new RoadmapLinkDTO(roadmapLink.getId(), roadmapLink.getStepId(), roadmapLink.getRoadmapId(), null, null);
+        RoadmapLink result;
+        try {
+            result = roadmapLinkMapper.selectById(roadmapLinkDTO.id());
+        } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new InternalException(e.getMessage());
+        }
+        return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
-
     @Override
     public void deleteStep(Long stepId) throws ConflictException, NotFoundException {
         Step result = stepMapper.selectById(stepId);
