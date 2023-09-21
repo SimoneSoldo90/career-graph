@@ -99,8 +99,8 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Roadmap non creata");
-            throw new BadRequestException("roadmap non creata");
+            LOGGER.warn("L'oggetto di tipo Roadmap non è stato inserito correttamente");
+            throw new BadRequestException("Errore di creazione, inseriti dati non corretti");
         }
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
@@ -117,7 +117,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             throw new InternalException(e.getMessage());
         }
         if(oldRoadmap == null){
-            LOGGER.warn("Impossibile modificare la roadmap");
+            LOGGER.warn("Non è stato possibile aggiornare l'oggetto di tipo Roadmap con id" + roadmapDTO.id() + "poiché non esistente");
             throw new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -136,7 +136,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             try {
                 roadmapMapper.delete(roadmapId);
             }catch (RuntimeException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn("Non è stato possibile eliminare la Roadmap con id: " + roadmapId );
                 throw new ConflictException("elemento non eliminabile");
             }
         }
