@@ -1,7 +1,5 @@
 package net.bcsoft.careergraph.controller;
 
-import net.bcsoft.careergraph.dto.ResourceDTO;
-import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.dto.UserDTO;
 import net.bcsoft.careergraph.dto.UserSkillDTO;
 import net.bcsoft.careergraph.exception.BadRequestException;
@@ -12,7 +10,6 @@ import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -30,7 +27,7 @@ public class UserController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity <UserDTO> findUser(@PathVariable Long userId){
-        UserDTO userDTO = null;
+        UserDTO userDTO;
         ResponseEntity responseEntity = null;
         try {
             userDTO = userService.findById(userId);
