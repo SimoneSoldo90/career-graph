@@ -31,7 +31,7 @@ public class StepController {
     public ResponseEntity<StepDTO> createStep(@RequestBody StepDTO stepDTO) {
             StepDTO stepDTO1 =null;
             String sErrorMsq = "";
-            ResponseEntity responseEntity = null;
+            ResponseEntity responseEntity;
         try {
             stepDTO1 = stepService.create(stepDTO);
         } catch (BadRequestException | InternalException e) {
