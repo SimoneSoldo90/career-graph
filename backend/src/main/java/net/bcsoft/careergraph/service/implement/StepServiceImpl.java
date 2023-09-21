@@ -72,7 +72,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile creare lo step");
+            LOGGER.warn("l'oggetto di tipo Step non e' stato inserito correttamente");
             throw new BadRequestException("step non creata");
         }
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
@@ -89,7 +89,7 @@ public class StepServiceImpl implements IStepService {
         }
         List<StepDTO> stepDTOList = new ArrayList<>();
         if(stepList == null){
-            throw new NoContentException ("no step disponibili");
+            throw new NoContentException ("Lista di step vuota");
         }
         for (Step step : stepList) {
             List<ResourceDTO> resourceDTOList;
@@ -191,7 +191,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile aggiornare lo step");
+            LOGGER.warn("Non è stato possiile aggiornare l'oggetto di tipo Step con id: " + stepDTO.id() + "in quanto non esistente." );
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -222,7 +222,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile creare la risorsa");
+            LOGGER.warn("l'oggetto di tipo Resource non e' stato inserito correttamente");
             throw new BadRequestException("resource non creata");
         }
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
@@ -278,7 +278,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
-            LOGGER.warn("Impossibile modificare la skill");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo Resource con id = " + resourceDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -308,7 +308,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile creare il RoadmapLink");
+            LOGGER.warn("l'oggetto di tipo RoadmapLink non e' stato inserito correttamente");
             throw new BadRequestException("roadmaplink non creata");
         }
         return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
@@ -362,7 +362,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(oldRoadmapLink == null){
-            LOGGER.warn("Impossibile aggiornare il roadmapLink");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo RoadmapLink con id = " + roadmapLinkDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
@@ -389,7 +389,7 @@ public class StepServiceImpl implements IStepService {
                 stepMapper.delete(stepId);
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
-                throw new ConflictException("elemento non eliminabile");
+                throw new ConflictException("non e' stato possibile eliminare l'oggetto di tipo Step con id = " + stepId + ", in quanto non e' stato trovato");
             }
         }
         else {
@@ -406,7 +406,7 @@ public class StepServiceImpl implements IStepService {
                 roadmapLinkMapper.delete(roadMapLinkId);
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
-                throw new ConflictException("elemento non eliminabile");
+                throw new ConflictException("non e' stato possibile eliminare l'oggetto di tipo RoadmapLink con id = " + roadMapLinkId + ", in quanto non e' stato trovato");
             }
         }
         else {
@@ -422,7 +422,7 @@ public class StepServiceImpl implements IStepService {
                 resourceMapper.delete(resourceId);
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
-                throw new ConflictException("elemento non eliminabile");
+                throw new ConflictException("non e' stato possibile eliminare l'oggetto di tipo Resource con id = " + resourceId + ", in quanto non e' stato trovato");
             }
         }
         else {
