@@ -293,6 +293,14 @@ public class StepServiceImpl implements IStepService {
     @Override
     @Transactional
     public RoadmapLinkDTO createRoadmapLink(RoadmapLinkDTO roadmapLinkDTO) throws BadRequestException, InternalException {
+        if(roadmapLinkDTO.roadmapId() == null){
+            LOGGER.warn("l'oggetto di tipo RoadmapLink non e' stato inserito correttamente perché la roadmap non esiste ");
+            throw new BadRequestException("roadmaplink non creata");
+        }
+        if(roadmapLinkDTO.stepId() == null){
+            LOGGER.warn("l'oggetto di tipo RoadmapLink non e' stato inserito correttamente perché lo step non esiste ");
+            throw new BadRequestException("roadmaplink non creata");
+        }
         RoadmapLink roadmapLink = roadmapLinkDTO.toEntity();
         try {
             roadmapLinkMapper.insert(roadmapLink);
@@ -308,8 +316,7 @@ public class StepServiceImpl implements IStepService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("l'oggetto di tipo RoadmapLink non e' stato inserito correttamente");
-            throw new BadRequestException("roadmaplink non creata");
+
         }
         return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
