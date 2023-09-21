@@ -2,7 +2,6 @@ package net.bcsoft.careergraph.service.implement;
 
 import net.bcsoft.careergraph.dto.UserDTO;
 import net.bcsoft.careergraph.dto.UserSkillDTO;
-import net.bcsoft.careergraph.entity.Resource;
 import net.bcsoft.careergraph.entity.User;
 import net.bcsoft.careergraph.entity.UserSkill;
 import net.bcsoft.careergraph.entity.Skill;
@@ -15,6 +14,8 @@ import net.bcsoft.careergraph.mapper.UserMapper;
 import net.bcsoft.careergraph.mapper.UserSkillMapper;
 import net.bcsoft.careergraph.mapper.SkillMapper;
 import net.bcsoft.careergraph.service.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,8 @@ import java.util.List;
 @Service
 // @Transactional si potrebbe mettere qui invece di sui singoli metodi
 public class UserServiceImpl implements IUserService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
     UserMapper userMapper;
     UserSkillMapper userSkillMapper;
@@ -97,6 +100,7 @@ public class UserServiceImpl implements IUserService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("creata user skill con id " + result.getId());
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
     }
 
@@ -124,6 +128,7 @@ public class UserServiceImpl implements IUserService {
         } catch(RuntimeException e) {
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("aggiornata user skill con id " + result.getId());
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
     }
 
@@ -147,6 +152,7 @@ public class UserServiceImpl implements IUserService {
         if(result != null) {
             try {
                 userSkillMapper.delete(userSkillId);
+                LOGGER.info("eliminata user skill con id " + result.getId());
             }catch (RuntimeException e) {
                 throw new ConflictException("elemento non eliminabile");
             }
