@@ -21,7 +21,6 @@ import java.util.List;
 @Service
 public class SkillServiceImpl implements ISkillService {
 
-
     /*
     ### JSON skill
 {
@@ -36,7 +35,7 @@ public class SkillServiceImpl implements ISkillService {
     SkillMapper skillMapper;
     StepSkillMapper stepSkillMapper;
     ResourceMapper resourceMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(SkillServiceImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
 
     @Autowired
     public SkillServiceImpl(SkillMapper skillMapper, StepSkillMapper stepSkillMapper, ResourceMapper resourceMapper) {
@@ -120,6 +119,7 @@ public class SkillServiceImpl implements ISkillService {
             LOGGER.warn("Impossibile creare la skill");
             throw new BadRequestException("Skill non creata");
         }
+        LOGGER.info("creata roadmap con id " + result.getId());
         return new SkillDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
 
@@ -145,6 +145,7 @@ public class SkillServiceImpl implements ISkillService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("creata roadmap con id " + skill.getId());
         return new SkillDTO(skill.getId(), skill.getTitle(), skill.getDescription(), null);
 
     }
@@ -208,6 +209,7 @@ public class SkillServiceImpl implements ISkillService {
             LOGGER.warn("Impossibile creare la risorsa");
             throw new BadRequestException("resource not created");
         }
+        LOGGER.info("creata roadmap con id " + result.getId());
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
     }
 
@@ -249,6 +251,7 @@ public class SkillServiceImpl implements ISkillService {
                 LOGGER .error(e.getMessage(), e);
                 throw new InternalException(e.getMessage());
             }
+            LOGGER.info("creata roadmap con id " + resource.getId());
             return new ResourceDTO(resource.getId(), resource.getSkillId(), resource.getStepId(), resource.getResourceTypeId(), resource.getDescription(), resource.getUrl());
     }
 
@@ -258,6 +261,7 @@ public class SkillServiceImpl implements ISkillService {
         if(result != null) {
             try {
                 skillMapper.delete(id);
+                LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
@@ -275,6 +279,7 @@ public class SkillServiceImpl implements ISkillService {
         if(result != null) {
             try {
                 resourceMapper.delete(resourceId);
+                LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");

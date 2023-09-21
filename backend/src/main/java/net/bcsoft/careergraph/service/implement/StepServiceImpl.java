@@ -75,6 +75,7 @@ public class StepServiceImpl implements IStepService {
             LOGGER.warn("Impossibile creare lo step");
             throw new BadRequestException("step non creata");
         }
+        LOGGER.info("creata step con id " + result.getId());
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
@@ -200,6 +201,7 @@ public class StepServiceImpl implements IStepService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update step con id " + result.getId());
         return new StepDTO(result.getId(), result.getRoadmapId(), result.getOrd(), result.getTitle(), result.getDescription(), null, null, null);
     }
 
@@ -225,6 +227,7 @@ public class StepServiceImpl implements IStepService {
             LOGGER.warn("Impossibile creare la risorsa");
             throw new BadRequestException("resource non creata");
         }
+        LOGGER.info("creata resource con id " + result.getId());
         return new ResourceDTO(result.getId(), result.getStepId(), result.getSkillId(), result.getResourceTypeId(), result.getDescription(), result.getUrl());
     }
 
@@ -287,6 +290,7 @@ public class StepServiceImpl implements IStepService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update resource con id " + oldResource.getId());
         return new ResourceDTO(resource.getId(), resource.getStepId(), resource.getSkillId(), resource.getResourceTypeId(),resource.getUrl(), resource.getDescription());
     }
 
@@ -311,6 +315,7 @@ public class StepServiceImpl implements IStepService {
             LOGGER.warn("Impossibile creare il RoadmapLink");
             throw new BadRequestException("roadmaplink non creata");
         }
+        LOGGER.info("creata roadmaplink con id " + result.getId());
         return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
 
@@ -379,14 +384,17 @@ public class StepServiceImpl implements IStepService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update roadmaplink con id " + roadmapLink.getId());
         return new RoadmapLinkDTO(result.getId(), result.getStepId(), result.getRoadmapId(), null, null);
     }
+
     @Override
     public void deleteStep(Long stepId) throws ConflictException, NotFoundException {
         Step result = stepMapper.selectById(stepId);
         if(result != null) {
             try {
                 stepMapper.delete(stepId);
+                LOGGER.info("delete step con id " + result.getId());
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
@@ -404,6 +412,7 @@ public class StepServiceImpl implements IStepService {
         if(result != null) {
             try {
                 roadmapLinkMapper.delete(roadMapLinkId);
+                LOGGER.info("delete roadmaplink con id " + result.getId());
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
@@ -420,6 +429,7 @@ public class StepServiceImpl implements IStepService {
         if(result != null) {
             try {
                 resourceMapper.delete(resourceId);
+                LOGGER.info("delete resource con id " + result.getId());
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");

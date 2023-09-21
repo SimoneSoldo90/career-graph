@@ -26,10 +26,12 @@ import java.util.List;
 // @Transactional si potrebbe mettere qui invece di sui singoli metodi
 public class UserServiceImpl implements IUserService {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(StepServiceImpl.class);
+
     UserMapper userMapper;
     UserSkillMapper userSkillMapper;
     SkillMapper skillMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     public UserServiceImpl(UserMapper userMapper, UserSkillMapper userSkillMapper, SkillMapper skillMapper) {
         this.userMapper = userMapper;
@@ -106,6 +108,7 @@ public class UserServiceImpl implements IUserService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("creata user skill con id " + result.getId());
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
     }
 
@@ -137,6 +140,7 @@ public class UserServiceImpl implements IUserService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("aggiornata user skill con id " + result.getId());
         return new UserSkillDTO(result.getId(), result.getUserId(), result.getSkillId(), result.getSkillStatusId());
     }
 
@@ -161,6 +165,7 @@ public class UserServiceImpl implements IUserService {
         if(result != null) {
             try {
                 userSkillMapper.delete(userSkillId);
+                LOGGER.info("eliminata user skill con id " + result.getId());
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");

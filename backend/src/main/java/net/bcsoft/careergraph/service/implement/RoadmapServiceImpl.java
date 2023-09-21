@@ -14,12 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class RoadmapServiceImpl implements IRoadmapService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
     RoadmapMapper roadmapMapper;
     IStepService stepService;
+    private final Logger LOGGER = LoggerFactory.getLogger(RoadmapServiceImpl.class);
 
     /*
     {
@@ -102,6 +104,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             LOGGER.warn("Roadmap non creata");
             throw new BadRequestException("roadmap non creata");
         }
+        LOGGER.info("creata roadmap con id " + result.getId());
         return new RoadmapDTO(result.getId(), result.getTitle(), result.getDescription(), null);
     }
 
@@ -126,6 +129,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
+        LOGGER.info("update roadmap con id " + roadmap.getId());
         return new RoadmapDTO(roadmap.getId(), roadmap.getTitle(), roadmap.getDescription(), null);
     }
 
@@ -135,6 +139,7 @@ public class RoadmapServiceImpl implements IRoadmapService {
         if(result != null) {
             try {
                 roadmapMapper.delete(roadmapId);
+                LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
                 LOGGER.warn(e.getMessage());
                 throw new ConflictException("elemento non eliminabile");
