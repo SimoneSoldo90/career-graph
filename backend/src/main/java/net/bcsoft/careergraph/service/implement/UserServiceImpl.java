@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
     UserMapper userMapper;
     UserSkillMapper userSkillMapper;
     SkillMapper skillMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     public UserServiceImpl(UserMapper userMapper, UserSkillMapper userSkillMapper, SkillMapper skillMapper) {
         this.userMapper = userMapper;
