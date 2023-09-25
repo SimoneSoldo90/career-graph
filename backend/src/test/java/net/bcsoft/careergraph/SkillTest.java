@@ -12,9 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,4 +103,74 @@ public class SkillTest {
         ResponseEntity responseEntity = skillController.findResources(skillDTO.id());
         Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
+
+    @Test
+    void findResources_noContent() throws NoContentException, InternalException {
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new NoContentException("test")).when(skillService).findAllResource(skillDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.findResources(skillDTO.id());
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    void findResourceById_ok() throws NotFoundException, InternalException {
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        Mockito.doReturn(resourceDTO).when(skillService).findResourceById(skillDTO.id(), resourceDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.findResourceById(skillDTO.id(), resourceDTO.id());
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    void findResourceById_NotFound() throws NotFoundException, InternalException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new NotFoundException("test")).when(skillService).findResourceById(skillDTO.id(), resourceDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.findResourceById(skillDTO.id(), resourceDTO.id());
+        Assertions.assertEquals(responseEntity.getStatusCode() ,HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void createResource_Created() throws BadRequestException, InternalException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doReturn(resourceDTO).when(skillService).createResource(skillDTO.id(), resourceDTO);
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.createResource(skillDTO.id(), resourceDTO);
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
+    }
+
+    @Test
+    void createResource_BadRequest() throws BadRequestException, InternalException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new BadRequestException("test")).when(skillService).createResource(skillDTO.id(), resourceDTO);
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.createResource(skillDTO.id(), resourceDTO);
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void updateResource_Ok() throws ConflictException, InternalException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doReturn(resourceDTO).when(skillService).updateResource(resourceDTO);
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.updateResource(skillDTO.id(), resourceDTO.id(), resourceDTO);
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    void updateResource_Conflict() throws ConflictException, InternalException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new ConflictException("test")).when(skillService).updateResource(resourceDTO);
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.updateResource(skillDTO.id(), resourceDTO.id(), resourceDTO);
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.CONFLICT);
+    }
+
 }
