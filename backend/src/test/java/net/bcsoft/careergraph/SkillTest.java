@@ -173,4 +173,41 @@ public class SkillTest {
         Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.CONFLICT);
     }
 
+    @Test
+    void deleteSkill_NotFound() throws NotFoundException, ConflictException {
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new NotFoundException("test")).when(skillService).deleteSkill(skillDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.deleteSkill(skillDTO.id());
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void deleteSkill_Conflict() throws NotFoundException, ConflictException {
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new ConflictException("test")).when(skillService).deleteSkill(skillDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.deleteSkill(skillDTO.id());
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void deleteResource_NotFound() throws NotFoundException, ConflictException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new NotFoundException("test")).when(skillService).deleteResource(resourceDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.deleteResource(skillDTO.id(), resourceDTO.id());
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void deleteResource_Conflict() throws NotFoundException, ConflictException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doThrow(new ConflictException("test")).when(skillService).deleteResource(resourceDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity responseEntity = skillController.deleteResource(skillDTO.id(), resourceDTO.id());
+        Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.CONFLICT);
+    }
 }
