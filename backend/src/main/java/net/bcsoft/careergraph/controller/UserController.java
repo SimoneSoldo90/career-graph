@@ -33,7 +33,7 @@ public class UserController {
             userDTO = userService.findById(userId);
             responseEntity = ResponseEntity.ok(userDTO);
         } catch (NotFoundException | InternalException e) {
-            responseEntity = ResponseEntity.noContent().build();
+            responseEntity = ResponseEntity.notFound().build();
         }
         return responseEntity;
     }
@@ -75,7 +75,7 @@ public class UserController {
             userSkillDTOList = userService.findUserSkillByUserId(userId);
             responseEntity = ResponseEntity.ok(userSkillDTOList);
         }catch(NoContentException | InternalException e){
-            responseEntity = ResponseEntity.notFound().build();
+            responseEntity = ResponseEntity.noContent().build();
         }
         return responseEntity;
     }
@@ -119,10 +119,10 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}/user-skills/{userSkillId}")
-    public ResponseEntity<String> deleteUserSkill(@PathVariable Long userId, @PathVariable Long userSkillId){
+    public ResponseEntity<String> deleteUserSkill(@PathVariable Long userId){
         ResponseEntity responseEntity = null;
         try{
-            userService.deleteUserSkill(userSkillId);
+            userService.deleteUserSkill(userId);
             responseEntity = ResponseEntity.noContent().build();
         }catch (NotFoundException e){
             responseEntity = ResponseEntity.notFound().build();
