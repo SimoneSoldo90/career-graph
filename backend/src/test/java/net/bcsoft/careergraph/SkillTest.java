@@ -1,8 +1,10 @@
 package net.bcsoft.careergraph;
 
 import net.bcsoft.careergraph.controller.SkillController;
+import net.bcsoft.careergraph.controller.UserController;
 import net.bcsoft.careergraph.dto.ResourceDTO;
 import net.bcsoft.careergraph.dto.SkillDTO;
+import net.bcsoft.careergraph.dto.UserSkillDTO;
 import net.bcsoft.careergraph.exception.*;
 import net.bcsoft.careergraph.service.ISkillService;
 import org.junit.jupiter.api.Assertions;
@@ -174,6 +176,15 @@ public class SkillTest {
     }
 
     @Test
+    void deleteSkill_Ok() throws ConflictException, NotFoundException {
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doAnswer(invocation -> null).when(skillService).deleteSkill(skillDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity re = skillController.deleteSkill(skillDTO.id());
+        Assertions.assertEquals(re.getStatusCode(), HttpStatus.NO_CONTENT);
+    }
+
+    @Test
     void deleteSkill_NotFound() throws NotFoundException, ConflictException {
         SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
         Mockito.doThrow(new NotFoundException("test")).when(skillService).deleteSkill(skillDTO.id());
@@ -190,6 +201,17 @@ public class SkillTest {
         ResponseEntity responseEntity = skillController.deleteSkill(skillDTO.id());
         Assertions.assertEquals(responseEntity.getStatusCode(), HttpStatus.CONFLICT);
     }
+
+    @Test
+    void deleteResource_Ok() throws ConflictException, NotFoundException {
+        ResourceDTO resourceDTO = new ResourceDTO(0L, 0L, 0L, "test", "desc", "test");
+        SkillDTO skillDTO = new SkillDTO(0L, "test", "descr", null);
+        Mockito.doAnswer(invocation -> null).when(skillService).deleteResource(resourceDTO.id());
+        SkillController skillController = new SkillController(skillService);
+        ResponseEntity re = skillController.deleteResource(skillDTO.id(), resourceDTO.id());
+        Assertions.assertEquals(re.getStatusCode(), HttpStatus.NO_CONTENT);
+    }
+
 
     @Test
     void deleteResource_NotFound() throws NotFoundException, ConflictException {
