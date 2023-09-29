@@ -108,25 +108,25 @@ public class StepController {
 
     @PostMapping("/step/{stepId}/resources")
     public ResponseEntity<ResourceDTO> createResource(@PathVariable Long stepId, @RequestBody ResourceDTO resourceDTO){
-        ResourceDTO resourceDTO1 = resourceDTO;
+        ResourceDTO resourceDTO1 = null;
         String sErrorMsg = "";
 
         if(stepId != resourceDTO.stepId()){
             sErrorMsg= "ids in the resource mismatch the ones in the request body";
         }else{
             try{
-                resourceDTO = stepService.createResource(stepId, resourceDTO);
+                resourceDTO1 = stepService.createResource(stepId, resourceDTO);
             }catch (BadRequestException | InternalException e){
                 sErrorMsg = "Error creating resource:" + e.getMessage();
             }
         }
 
         ResponseEntity responseEntity = null;
-        if(resourceDTO != null) {
+        if(resourceDTO1 != null) {
             try {
                     responseEntity = ResponseEntity.created(new URI("/resource/" + resourceDTO1.stepId())).body(resourceDTO);
-            }catch(URISyntaxException e){
-            responseEntity = ResponseEntity.internalServerError().body(e.getMessage());
+            } catch(URISyntaxException e){
+                responseEntity = ResponseEntity.internalServerError().body(e.getMessage());
             }
         }else{
             responseEntity = ResponseEntity.badRequest().body(sErrorMsg);
@@ -263,7 +263,6 @@ public class StepController {
     }
 
     @PutMapping("/steps/{stepId}/roadmap-links/{roadmapLinkId}")
-
     public ResponseEntity<RoadmapLinkDTO> updateRoadmapLink(@PathVariable Long stepId, @PathVariable Long roadmapLinkId, @RequestBody RoadmapLinkDTO roadmapLinkDTO) {
         RoadmapLinkDTO roadmapLinkDTO1 = null;
         String sErrorMsg = null;
@@ -278,8 +277,8 @@ public class StepController {
         }
 
         ResponseEntity responseEntity = null;
-        if(roadmapLinkDTO != null){
-            responseEntity = ResponseEntity.ok(roadmapLinkDTO);
+        if(roadmapLinkDTO1 != null){
+            responseEntity = ResponseEntity.ok(roadmapLinkDTO1);
         }else{
             responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body(sErrorMsg);
         }

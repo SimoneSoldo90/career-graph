@@ -1,7 +1,5 @@
 package net.bcsoft.careergraph.controller;
 
-import net.bcsoft.careergraph.dto.ResourceDTO;
-import net.bcsoft.careergraph.dto.SkillDTO;
 import net.bcsoft.careergraph.dto.UserDTO;
 import net.bcsoft.careergraph.dto.UserSkillDTO;
 import net.bcsoft.careergraph.exception.BadRequestException;
@@ -12,7 +10,6 @@ import net.bcsoft.careergraph.exception.NotFoundException;
 import net.bcsoft.careergraph.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -30,13 +27,13 @@ public class UserController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity <UserDTO> findUser(@PathVariable Long userId){
-        UserDTO userDTO = null;
+        UserDTO userDTO;
         ResponseEntity responseEntity = null;
         try {
             userDTO = userService.findById(userId);
             responseEntity = ResponseEntity.ok(userDTO);
         } catch (NotFoundException | InternalException e) {
-            responseEntity = ResponseEntity.noContent().build();
+            responseEntity = ResponseEntity.notFound().build();
         }
         return responseEntity;
     }
@@ -78,7 +75,7 @@ public class UserController {
             userSkillDTOList = userService.findUserSkillByUserId(userId);
             responseEntity = ResponseEntity.ok(userSkillDTOList);
         }catch(NoContentException | InternalException e){
-            responseEntity = ResponseEntity.notFound().build();
+            responseEntity = ResponseEntity.noContent().build();
         }
         return responseEntity;
     }
@@ -91,11 +88,11 @@ public class UserController {
             sErrorMsg = "ids in the url mismatch the ones in the request body";
         }else{
             try{
-            userSkillDTO1 = userService.updateUserSkill(userSkillDTO);
-        }catch (ConflictException | InternalException e){
-            sErrorMsg = "error updating skill : " + e.getMessage();
+                userSkillDTO1 = userService.updateUserSkill(userSkillDTO);
+            }catch (ConflictException | InternalException e){
+                sErrorMsg = "error updating skill : " + e.getMessage();
+            }
         }
-    }
 
         ResponseEntity responseEntity = null;
         if(userSkillDTO1 != null){
@@ -122,10 +119,10 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}/user-skills/{userSkillId}")
-    public ResponseEntity<String> deleteUserSkill(@PathVariable Long userId, @PathVariable Long userSkillId){
+    public ResponseEntity<String> deleteUserSkill(@PathVariable Long userId){
         ResponseEntity responseEntity = null;
         try{
-            userService.deleteUserSkill(userSkillId);
+            userService.deleteUserSkill(userId);
             responseEntity = ResponseEntity.noContent().build();
         }catch (NotFoundException e){
             responseEntity = ResponseEntity.notFound().build();
