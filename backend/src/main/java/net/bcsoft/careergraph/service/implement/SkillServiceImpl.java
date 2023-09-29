@@ -116,7 +116,6 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile creare la skill");
             throw new BadRequestException("Skill non creata");
         }
         LOGGER.info("creata roadmap con id " + result.getId());
@@ -136,7 +135,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldSkill == null){
-            LOGGER.warn("Impossibile modificare la skill");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo Skill con id = " + skillDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         try {
@@ -206,7 +205,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(result == null){
-            LOGGER.warn("Impossibile creare la risorsa");
+            LOGGER.warn("l'oggetto di tipo Resource non e' stato inserito correttamente");
             throw new BadRequestException("resource not created");
         }
         LOGGER.info("creata roadmap con id " + result.getId());
@@ -241,7 +240,7 @@ public class SkillServiceImpl implements ISkillService {
             throw new InternalException(e.getMessage());
         }
         if(oldResource == null){
-            LOGGER.warn("Impossibile effettuare la modifica");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo Resource con id =" + resourceDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
             Resource resource = resourceDTO.toEntity();
@@ -263,7 +262,7 @@ public class SkillServiceImpl implements ISkillService {
                 skillMapper.delete(id);
                 LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn("non e' stato possibile eliminare l'oggetto di tipo Skill con id = " + id + ", in quanto non e' stato trovato");
                 throw new ConflictException("elemento non eliminabile");
             }
         }
@@ -281,7 +280,7 @@ public class SkillServiceImpl implements ISkillService {
                 resourceMapper.delete(resourceId);
                 LOGGER.info("creata roadmap con id " + result.getId());
             }catch (RuntimeException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn("non e' stato possibile eliminare l'oggetto di tipo Resource con id = " + resourceId + ", in quanto non e' stato trovato");
                 throw new ConflictException("elemento non eliminabile");
             }
         }

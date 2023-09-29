@@ -76,19 +76,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserSkillDTO createUserSkill(UserSkillDTO userSkillDTO) throws BadRequestException, InternalException {
-        UserSkill userSkill = userSkillDTO.toEntity();
-        try {
-            userSkillMapper.insert(userSkill);
-        } catch(RuntimeException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new InternalException(e.getMessage());
-        }
         User user;
         try {
             user = userMapper.selectById(userSkillDTO.userId());
         } catch(RuntimeException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
+        }
+        if(user == null) {
+            LOGGER.warn("non è possibile creare una UserSkill con userId = " + userSkillDTO.userId() + " non esistente");
+            throw new BadRequestException("non è possibile creare una UserSkill con userId = " + userSkillDTO.userId() + " non esistente");
         }
         Skill skill;
         try {
@@ -97,10 +94,19 @@ public class UserServiceImpl implements IUserService {
             LOGGER.error(e.getMessage(), e);
             throw new InternalException(e.getMessage());
         }
-        if(user == null || skill == null) {
-            LOGGER.warn("Impossibile creare lo UserSkill");
-            throw new BadRequestException("errore di creazione, inseriti dati non corretti");
+        if(skill == null) {
+            LOGGER.warn("non è possibile creare una UserSkill con skillId = " + userSkillDTO.skillId() + " non esistente");
+            throw new BadRequestException("non è possibile creare una UserSkill con skillId = " + userSkillDTO.skillId() + " non esistente");
         }
+
+        UserSkill userSkill = userSkillDTO.toEntity();
+        try {
+            userSkillMapper.insert(userSkill);
+        } catch(RuntimeException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new InternalException(e.getMessage());
+        }
+
         UserSkill result;
         try {
             result = userSkillMapper.selectById(userSkill.getId());
@@ -123,7 +129,7 @@ public class UserServiceImpl implements IUserService {
             throw new InternalException(e.getMessage());
         }
         if(oldUserSkill == null){
-            LOGGER.warn("Impossibile aggiornare lo UserSkill");
+            LOGGER.warn("non e' stato possibile modificare l'oggetto di tipo UserSkill con id = " + userSkillDTO.id() + ", in quanto non e' stato trovato");
             throw  new ConflictException("non e' stato possibile effettuare la modifica");
         }
         UserSkill userSkill = userSkillDTO.toEntity();
@@ -167,7 +173,7 @@ public class UserServiceImpl implements IUserService {
                 userSkillMapper.delete(userSkillId);
                 LOGGER.info("eliminata user skill con id " + result.getId());
             }catch (RuntimeException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn("non e' stato possibile eliminare l'oggetto di tipo UserSkill con id = " + userSkillId + ", in quanto non e' stato trovato");
                 throw new ConflictException("elemento non eliminabile");
             }
         }
