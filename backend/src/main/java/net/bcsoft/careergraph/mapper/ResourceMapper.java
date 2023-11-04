@@ -15,6 +15,4 @@ public interface ResourceMapper {
     int update(Resource resource);
     List<Resource> selectResourcesByStepId(Long stepId);
     void delete(Long id);
-
-
 }
